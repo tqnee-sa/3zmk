@@ -33,7 +33,7 @@
                     <div class="small-box bg-green">
                         <div class="inner">
                             <p>
-                                @lang('messages.restaurant_az_commission') :  6 %
+                                @lang('messages.restaurant_az_commission') :  {{$restaurant->az_commission}} %
                             </p>
                             <p>
                                 @lang('messages.commissions_payable') :
