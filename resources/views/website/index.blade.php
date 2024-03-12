@@ -20,6 +20,39 @@
     <!-- //main sytle -->
     <link rel="stylesheet" href="{{asset('site/css/main.css')}}"/>
     <link rel="stylesheet" href="{{asset('site/css/home.css')}}"/>
+    <style>
+        .collapsible {
+            background-color: white;
+            color: black;
+            /*padding: 13px;*/
+            width: 100%;
+            border: none;
+            text-align: right;
+            outline: none;
+            font-size: 14px;
+            margin: 2px;
+        }
+
+        .collapsible:after {
+            content: '\003E';
+            color: black;
+            font-weight: bold;
+            float: left;
+            margin-left: 10px;
+        }
+
+        .active:after {
+            content: "\005E";
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
 <div class="mycontainer">
@@ -92,20 +125,26 @@
                                         <hr/>
                                     @endforeach
                                 @elseif($branches->count() > 1)
-                                    @foreach($branches as $branch)
+                                    @foreach($cities as $city)
                                         <div>
-                                            <input
-                                                type="radio"
-                                                id="city{{$branch->id}}"
-                                                name="branch"
-                                                value="{{$branch->id}}"
-                                                required
-                                            />
-                                            <label for="city{{$branch->id}}">
-                                                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}
-                                                ({{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}}
-                                                )
-                                            </label>
+                                            <a class="collapsible">
+                                                {{app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en}}
+                                            </a>
+                                            <div class="content">
+                                                @foreach($city->branches as $branch)
+                                                    <input
+                                                        type="radio"
+                                                        id="city{{$branch->id}}"
+                                                        name="branch"
+                                                        value="{{$branch->id}}"
+                                                        required
+                                                    />
+                                                    <label for="city{{$branch->id}}">
+                                                        {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}
+                                                    </label>
+                                                    <br>
+                                                @endforeach
+                                            </div>
                                         </div>
                                         <hr/>
                                     @endforeach
@@ -128,5 +167,22 @@
 
 <script src="{{asset('site/js/file.js')}}"></script>
 <script src="{{asset('site/js/bootstrap.bundle.js')}}"></script>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Restaurant\Azmak\AZBranch;
 
 class City extends Model
 {
@@ -26,5 +27,9 @@ class City extends Model
     public function restaurants()
     {
         return $this->hasMany(Restaurant::class , 'city_id');
+    }
+    public function branches()
+    {
+        return $this->hasMany(AZBranch::class , 'city_id');
     }
 }

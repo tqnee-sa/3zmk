@@ -9,6 +9,7 @@ use App\Models\Restaurant\Azmak\AZBranch;
 use App\Models\Restaurant\Azmak\AZMenuCategory;
 use App\Models\Restaurant\Azmak\AZProduct;
 use App\Models\Restaurant;
+use App\Models\City;
 use App\Models\RestaurantTermsCondition;
 use App\Models\RestaurantAboutAzmak;
 use App\Models\RestaurantSlider;
@@ -23,7 +24,11 @@ class HomeController extends Controller
     {
         $restaurant = Restaurant::whereNameBarcode($res)->firstOrFail();
         $branches = AZBranch::whereRestaurantId($restaurant->id)->get();
-        return view('website.index' , compact('branches' , 'restaurant'));
+        $cities = City::with('branches')
+            ->whereHas('branches' , function ($q) use ($restaurant) {
+                $q->whereRestaurantId($restaurant->id);
+            })->get();
+        return view('website.index' , compact('branches' , 'restaurant' , 'cities'));
     }
 
     public function home(Request $request , $branch_id = null)
