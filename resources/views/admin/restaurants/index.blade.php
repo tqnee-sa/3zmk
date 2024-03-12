@@ -254,15 +254,15 @@
                                                 @lang('messages.restaurant_settings')
                                             </span>
                                         </li>
-                                        <li class="login_res">
-                                            <a class="btn btn-info"
-                                               href="{{ route('AzRestaurantCommissions', $restaurant->id) }}">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <span class="show_text">
-                                                @lang('messages.commission_system')
-                                            </span>
-                                        </li>
+{{--                                        <li class="login_res">--}}
+{{--                                            <a class="btn btn-info"--}}
+{{--                                               href="{{ route('AzRestaurantCommissions', $restaurant->id) }}">--}}
+{{--                                                <i class="fa fa-eye"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <span class="show_text">--}}
+{{--                                                @lang('messages.commission_system')--}}
+{{--                                            </span>--}}
+{{--                                        </li>--}}
                                         <!--</div>-->
                                         <!--</div>-->
 
