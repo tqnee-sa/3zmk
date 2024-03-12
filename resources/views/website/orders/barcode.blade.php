@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@lang('messages.order_details')</title>
     <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $order->restaurant->az_logo)}}" type="image/x-icon">
-
     <!-- //font -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
