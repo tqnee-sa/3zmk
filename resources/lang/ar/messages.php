@@ -278,8 +278,12 @@ return [
     'restaurant_commissions' => 'عمولات المطعم',
     'commissions_payable' => 'العمولات المستحقة',
     'restaurant_az_orders_count' => 'عدد الطلبات المدفوعة في عازمك ',
-    'orders_commissions' => 'عمولة الطلبات ',
+    'orders_commissions' => 'قيمة عمولة الطلبات ',
     'commission' => 'العمولة',
     'status' => 'حالة الطلب',
     'commission_system' => 'نظام العمولات',
+    'restaurant_az_commissions_count' => 'العمولات التي تم تسديدها للمطعم ',
+    'paid_commission_value' => 'قيمه العمولات المدفوعة',
+    'transfer_photo' => 'صوره الإيصال',
+    'added_by' => 'أضيف بواسطة',
 ];

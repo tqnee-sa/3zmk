@@ -281,4 +281,8 @@ return [
     'commission' => 'Commission',
     'status' => 'Status',
     'commission_system' => 'Commission System',
+    'restaurant_az_commissions_count' => 'Commission Paid For Restaurant',
+    'paid_commission_value' => 'Paid Commission Value',
+    'transfer_photo' => 'Transfer Photo',
+    'added_by' => 'Added By',
 ];

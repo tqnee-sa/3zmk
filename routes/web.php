@@ -429,6 +429,10 @@ Route::prefix('admin')->group(function () {
             Route::get('/restaurant_commissions/{id}', 'restaurant_commissions')->name('AzRestaurantCommissions');
             Route::get('/restaurant_az_orders/{id}', 'restaurant_az_orders')->name('AzRestaurantOrders');
             Route::get('/restaurant_az_order/{id}/show', 'show_order')->name('AdminOrderShow');
+            Route::get('/restaurant_az_commissions/{id}/history', 'commissions_history')->name('AzRestaurantCommissionsHistory');
+            Route::get('/restaurant_az_commissions/{id}/add_history', 'add_commissions_history')->name('addAzRestaurantCommission');
+            Route::post('/restaurant_az_commissions/{id}/store_history', 'store_commissions_history')->name('storeAzRestaurantCommission');
+            Route::get('/restaurant_az_commissions/delete/{id}', 'delete_commissions_history')->name('deleteAzRestaurantCommission');
         });
 
         // seller codes

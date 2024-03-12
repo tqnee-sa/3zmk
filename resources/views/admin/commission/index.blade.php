@@ -81,13 +81,13 @@
                     <div class="small-box bg-blue">
                         <div class="inner">
                             <p>
-                                @lang('messages.restaurant_az_orders_count') :
-                                {{$restaurant->az_orders->where('status' , '!=' , 'new')->count()}}
+                                @lang('messages.restaurant_az_commissions_count') :
+                                {{$restaurant->az_commissions->count()}}
                             </p>
                             <p>
-                                @lang('messages.orders_commissions') :
+                                @lang('messages.paid_commission_value') :
                                 <span style="color: red">
-                                    {{$orders_commissions}}
+                                    {{$restaurant_commissions}}
                                     {{ app()->getLocale() == 'ar' ? $restaurant->country->currency_ar : $restaurant->country->currency_en }}
                                 </span>
                             </p>
@@ -95,7 +95,7 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{route('AzRestaurantCommissionsHistory' , $restaurant->id)}}" class="small-box-footer">
                             <i class="fa fa-arrow-circle-left"></i>
                             @lang('messages.show')
                         </a>
