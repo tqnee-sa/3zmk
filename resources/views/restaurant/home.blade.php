@@ -95,6 +95,7 @@
                 @endif
             </div><!-- /.container-fluid -->
         </section>
+        <hr>
         <div class="col-sm-6">
             <form action="{{ route('RestaurantUpdateLogo') }}" class="form-horizontal"
                   method="post" enctype="multipart/form-data">
