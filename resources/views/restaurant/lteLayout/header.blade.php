@@ -18,10 +18,8 @@
                     } ?>
                 @endif
             </span>
- </li>
-        {{--        <li class="nav-item d-none d-sm-inline-block">--}}
-        {{--            <a href="#" class="nav-link">Contact</a>--}}
-        {{--        </li>--}}
+        </li>
+
 
     </ul>
 
@@ -58,16 +56,18 @@
             $setting = \App\Models\Setting::first();
         @endphp
         <li class="nav-item link_icon">
-            <a target="_blank" class="nav-link"  href="https://api.whatsapp.com/send?phone={{$setting->technical_support_number}}" style="color: green">
-                <i class="fab fa-whatsapp"style="color:green"></i>
+            <a target="_blank" class="nav-link"
+               href="https://api.whatsapp.com/send?phone={{$setting->technical_support_number}}" style="color: green">
+                <i class="fab fa-whatsapp" style="color:green"></i>
                 <span class="hidemob">
                     @lang('messages.contact_technical_support')
                 </span>
             </a>
         </li>
         <li class="nav-item link_icon ">
-            <a target="_blank" class="nav-link "  href="https://api.whatsapp.com/send?phone={{$setting->customer_services_number}}" style="color: green">
-                <i class="fab fa-whatsapp"style="color:green"></i>
+            <a target="_blank" class="nav-link "
+               href="https://api.whatsapp.com/send?phone={{$setting->customer_services_number}}" style="color: green">
+                <i class="fab fa-whatsapp" style="color:green"></i>
                 <span class="hidemob">
                     @lang('messages.contact_customer_services')
                 </span>
@@ -82,7 +82,6 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
 
-
                 <a onclick="document.getElementById('logout_form').submit()" class="dropdown-item">
                     <i class="fas fa-key"></i>
                     @lang('messages.logout')
@@ -90,7 +89,7 @@
             </div>
         </li>
         <!--lang-->
-           <li class="nav-item d-none d-sm-inline-block lang ">
+        <li class="nav-item d-none d-sm-inline-block lang ">
             {{--            <a href="#" class="nav-link">Lang</a>--}}
             @if(\Illuminate\Support\Facades\Auth::guard('restaurant')->user()->ar == 'true' && \Illuminate\Support\Facades\Auth::guard('restaurant')->user()->en == 'true')
                 @if(app()->getLocale() == 'en')
@@ -123,33 +122,36 @@
 </nav>
 <!-- /.navbar -->
 <style>
-.main-header{
-    display:flex;
-    flex-direction:row;
-    flex-wrap:wrap;
-    align-items:center;
-    row-gap:10px;
-     font-family:'cairo' !important;
-    /*justify-content: center;*/
-}
+    .main-header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        row-gap: 10px;
+        font-family: 'cairo' !important;
+        /*justify-content: center;*/
+    }
 
-.welcome_res{
-    /*background-color:red;*/
-    margin-top: 7px;
-}
-.link_icon{
-   background-color:#eeeeee;
-   border-radius:50%;
-   position:relative;
-   margin:0 7px !important;
-}
-    .hidemob{
-        display:none;
-        position:absolute;
-        left:0;
+    .welcome_res {
+        /*background-color:red;*/
+        margin-top: 7px;
+    }
+
+    .link_icon {
+        background-color: #eeeeee;
+        border-radius: 50%;
+        position: relative;
+        margin: 0 7px !important;
+    }
+
+    .hidemob {
+        display: none;
+        position: absolute;
+        left: 0;
 
     }
+
     .link_icon:hover .hidemob {
-    display:block;
-}
+        display: block;
+    }
 </style>
