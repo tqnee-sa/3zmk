@@ -1,4 +1,4 @@
-@extends('restaurant.lteLayout.master')
+@extends('admin.lteLayout.master')
 
 @section('title')
     @lang('messages.orders')
