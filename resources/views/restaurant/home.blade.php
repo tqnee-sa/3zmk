@@ -50,7 +50,7 @@
                 @elseif($subscription and $subscription->status == 'active' )
                     <h4 >@lang('messages.subscription_price') :
                         <span style="color: red">
-                            {{$subscription->price}}
+                            {{App\Models\AzmakSetting::first()->subscription_amount}}
                             {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
                         </span>
                     </h4>
@@ -75,6 +75,12 @@
                         </span>
                         </h4>
                     @endif
+                    <h4 >@lang('messages.total_price') :
+                        <span style="color: red">
+                            {{$subscription->price}}
+                            {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
+                        </span>
+                    </h4>
                     <h4 >@lang('messages.subscription_end_at') :
                         <span style="color: red">
                             {{$subscription->end_at->format('Y-m-d')}}
@@ -94,7 +100,7 @@
                   method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group type_image ">
-                    <label class="control-label col-md-3"> @lang('messages.photo') </label>
+                    <label class="control-label col-md-3"> @lang('messages.az_logo') </label>
                     <div class="col-md-9">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput"

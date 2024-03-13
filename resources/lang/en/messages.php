@@ -285,4 +285,7 @@ return [
     'paid_commission_value' => 'Paid Commission Value',
     'transfer_photo' => 'Transfer Photo',
     'added_by' => 'Added By',
+    'about_ar' => 'About In Arabic',
+    'about_en' => 'About In English',
+    'az_logo'  => 'Azmak Logo',
 ];
