@@ -42,7 +42,7 @@
         <li class="nav-item link_icon">
             <?php
             $restaurant = Auth::guard('restaurant')->user();
-            if ($restaurant->type == 'employee'):
+            if ($restaurant and $restaurant->type == 'employee'):
                 $restaurant = \App\Models\Restaurant::find($restaurant->restaurant_id);
             endif;
             $name = $restaurant->name_barcode == null ? $restaurant->name_en : $restaurant->name_barcode
