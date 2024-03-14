@@ -123,6 +123,8 @@ class OrderController extends Controller
             // send order details to user whatsapp
             $content = trans('messages.welcome') . $order->person_name . ' ' . trans('messages.at') .' ' . trans('messages.az_orders') . '%0a %0a';
             $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
+            $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
+            $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
             $content.= trans('messages.order_details'). '%0a %0a';
             $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
             $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
@@ -152,6 +154,8 @@ class OrderController extends Controller
         // send order details to user whatsapp
         $content = trans('messages.welcome') . $order->person_name . ' ' . trans('messages.at') .' ' . trans('messages.az_orders') . '%0a %0a';
         $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
+        $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
+        $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
         $content.= trans('messages.order_details'). '%0a %0a';
         $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
         $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
@@ -176,6 +180,8 @@ class OrderController extends Controller
         // send order details to user whatsapp
         $content = trans('messages.welcome') . $order->person_name . ' ' . trans('messages.at') .' ' . trans('messages.az_orders') . '%0a %0a';
         $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
+        $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
+        $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
         $content.= trans('messages.order_details'). '%0a %0a';
         $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
         $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
