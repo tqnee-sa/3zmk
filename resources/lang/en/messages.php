@@ -290,4 +290,5 @@ return [
     'az_logo'  => 'Azmak Logo',
     'order_finished_days' => 'Period To Terminate Order Without Receipt',
     'day' => 'Day',
+    'payment_by' => 'Payment By',
 ];

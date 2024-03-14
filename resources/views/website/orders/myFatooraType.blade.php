@@ -18,7 +18,7 @@
 
                 <div class="inf_3azema">
                     <div class="image d-inline-block">
-                        <img src="{{asset('/site/image/letter.jpg')}}" alt=""/>
+                        <img src="{{asset('/site/image/letter.jpg')}}" alt="" />
                     </div>
                     <!-- <img src="./image//letter.jpg" alt="" /> -->
                     <h5 class="d-inline-block">@lang('messages.order_info')</h5>
@@ -142,26 +142,6 @@
                                 @endif
                             </div>
                         </div>
-                        @if($order->restaurant->a_z_orders_payment_type == 'myFatoourah')
-                            <hr>
-                            <div class="container_input">
-                                <!-- <i class="fa fa-phone"></i> -->
-                                <label> @lang('messages.payment_by') </label>
-                                <select name="online_type" class="form-control" required>
-                                    <option disabled selected> @lang('messages.choose_one') </option>
-                                    <option value="2"> @lang('messages.visa') </option>
-                                    <option value="6"> @lang('messages.mada') </option>
-                                    <option value="11"> @lang('messages.apple_pay') </option>
-                                </select>
-                            </div>
-                            @if ($errors->has('online_type'))
-                                <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('online_type') }}</strong>
-                            </span>
-                            @endif
-                        @endif
-
-
                         <button class="global_btn d-block m-auto" type="submit">
                             @lang('messages.next')
                             <i class="fa-solid fa-angle-left"></i>

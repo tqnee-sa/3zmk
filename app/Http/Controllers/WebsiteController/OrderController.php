@@ -43,44 +43,34 @@ class OrderController extends Controller
             'occasion_message'   => $request->message,
         ]);
         // move to payment
-        return redirect()->route('AZOrderPayment' , $order->id);
-    }
-    public function payment($id)
-    {
-        $order = AZOrder::findOrFail($id);
         // check restaurant payment company
         if ($order->restaurant->a_z_orders_payment_type == 'tap')
         {
             // tap payment
             return redirect()->to(tap_payment($order->restaurant->a_z_tap_token, $order->total_price, $order->user->name, $order->user->email, $order->restaurant->country->code, $order->user->phone_number, route('AZOrderPaymentTapStatus' , $order->id), $order->order_id));
-        }elseif ($order->restaurant->a_z_orders_payment_type == 'edfa')
+        }
+        elseif ($order->restaurant->a_z_orders_payment_type == 'edfa')
         {
             // edfa payment
             $payment_url = edfa_payment($order->restaurant->a_z_edfa_merchant, $order->restaurant->a_z_edfa_password, $order->total_price,route('AZOrderPaymentEdfa_status' , $order->id), $order->order_id, $order->user->name, $order->user->email);
             return redirect()->to($payment_url);
-        }elseif ($order->restaurant->a_z_orders_payment_type == 'myFatoourah')
+        }
+        elseif ($order->restaurant->a_z_orders_payment_type == 'myFatoourah')
         {
-            // 1- my fatoourah payment
-//        if ($request->online_type == 'visa') {
-//            $charge = 2;
-//        } elseif ($request->online_type == 'mada') {
-//            $charge = 6;
-//        } elseif ($request->online_type == 'apple_pay') {
-//            $charge = 11;
-//        } else {
-//            $charge = 2;
-//        }
+            $this->validate($request , [
+                'online_type' => 'required|in:2,6,11',
+            ]);
             $name = $order->user->name;
             $token = $order->restaurant->a_z_myFatoourah_token;
-//            $amount = number_format((float)$order->total_price, 2, '.', '');
+            $amount = number_format((float)$order->total_price, 2, '.', '');
             $data = array(
-                'PaymentMethodId' => 2,
+                'PaymentMethodId' => $request->online_type,
                 'CustomerName' => $name,
                 'DisplayCurrencyIso' => 'SAR',
                 'MobileCountryCode' => $order->restaurant->country->code,
                 'CustomerMobile' => $order->user->phone_number,
                 'CustomerEmail' => $order->user->email,
-                'InvoiceValue' => $order->total_price,
+                'InvoiceValue' => $amount,
                 'CallBackUrl' => route('AZOrderPaymentFatoourahStatus' , $order->id),
                 'ErrorUrl' => route('AZUserCart' , $order->branch->id),
                 'Language' => app()->getLocale(),
@@ -97,8 +87,8 @@ class OrderController extends Controller
                 ),
                 'InvoiceItems' => [array(
                     'ItemName' => $order->occasion,
-                    'Quantity' => $order->items->count(),
-                    'UnitPrice' => $order->total_price,
+                    'Quantity' => 1,
+                    'UnitPrice' => $amount,
                 )],
             );
             $data = json_encode($data);
@@ -115,6 +105,7 @@ class OrderController extends Controller
             }
         }
     }
+
     public function check_order_fatoourah_status(Request $request , $id)
     {
         $order = AZOrder::find($id);
