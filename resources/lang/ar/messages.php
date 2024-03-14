@@ -294,4 +294,5 @@ return [
     'payment_by' => 'الدفع بواسطه',
     'not_paid' => 'جديد غير مكتمل الدفع',
     'cancel_reason' => 'سبب الإلغاء',
+    'renewAzmakSubscription' => 'تجديد الاشتراك في عازمك',
 ];

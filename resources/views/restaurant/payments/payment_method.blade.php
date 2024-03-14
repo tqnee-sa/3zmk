@@ -40,10 +40,10 @@
                                     <label class="control-label"> @lang('messages.online_payment_type') </label>
                                     <select name="payment_type" class="form-control" required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
-                                        <option value="1"> @lang('messages.kent') </option>
+{{--                                        <option value="1"> @lang('messages.kent') </option>--}}
                                         <option value="2"> @lang('messages.visa') </option>
-                                        <option value="3"> @lang('messages.amex') </option>
-                                        <option value="5"> @lang('messages.benefit') </option>
+{{--                                        <option value="3"> @lang('messages.amex') </option>--}}
+{{--                                        <option value="5"> @lang('messages.benefit') </option>--}}
                                         <option value="6"> @lang('messages.mada') </option>
                                         <option value="11"> @lang('messages.apple_pay') </option>
                                         <option value="14"> @lang('messages.stc_pay') </option>

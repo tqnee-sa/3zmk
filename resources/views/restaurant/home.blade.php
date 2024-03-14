@@ -45,7 +45,7 @@
                     <h4 style="color: red"> @lang('messages.finished_subscription') </h4>
                     <br>
                     <a href="{{route('AzmakSubscription' , $user->id)}}" class="btn btn-success">
-                        {{trans('messages.activeAzmak')}}
+                        {{trans('messages.renewAzmakSubscription')}}
                     </a>
                 @elseif($subscription and $subscription->status == 'active' )
                     <h4 >@lang('messages.subscription_price') :

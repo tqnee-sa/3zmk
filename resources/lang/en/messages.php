@@ -293,4 +293,5 @@ return [
     'payment_by' => 'Payment By',
     'not_paid' => 'New Not Paid',
     'cancel_reason' => 'Cancel Reason',
+    'renewAzmakSubscription' => 'Renew Azmak Subscription',
 ];
