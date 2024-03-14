@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use App\Models\Restaurant\Azmak\AZOrder;
+use App\Models\AzmakSetting;
 
 class OrderPeriod extends Command
 {
@@ -25,6 +28,20 @@ class OrderPeriod extends Command
      */
     public function handle()
     {
-
+        $today = today()->format('Y-m-d');
+        $setting = AzmakSetting::first();
+        $orders = AZOrder::whereStatus('active')->get();
+        if ($orders->count() > 0)
+        {
+            foreach ($orders as $order)
+            {
+                if ($order->created_at->addDays($setting->order_finished_days) < $today)
+                {
+                    $order->update([
+                        'status'   => 'finished',
+                    ]);
+                }
+            }
+        }
     }
 }
