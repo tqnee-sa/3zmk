@@ -291,4 +291,6 @@ return [
     'order_finished_days' => 'Period To Terminate Order Without Receipt',
     'day' => 'Day',
     'payment_by' => 'Payment By',
+    'not_paid' => 'New Not Paid',
+    'cancel_reason' => 'Cancel Reason',
 ];

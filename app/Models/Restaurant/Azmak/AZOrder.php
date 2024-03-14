@@ -29,6 +29,7 @@ class AZOrder extends Model
         'occasion_message',
         'order_code',
         'commission',
+        'cancel_reason',
     ];
     public function restaurant()
     {

@@ -196,7 +196,7 @@
                                         {{ \App\Models\Restaurant\Azmak\AZOrder::whereStatus('new')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
                                     </span>
                                     <p>
-                                        @lang('messages.new')
+                                        @lang('messages.not_paid')
                                     </p>
                                 </a>
                             </li>

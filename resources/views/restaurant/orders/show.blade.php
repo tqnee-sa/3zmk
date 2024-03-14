@@ -45,9 +45,10 @@
                                 @break
                                 @case('canceled')
                                 <a href="#" class="btn btn-danger">@lang('messages.canceled')</a>
+                                <span>{{$order->cancel_reason}}</span>
                                 @break
                                 @default
-                                <a href="#" class="btn btn-danger">@lang('messages.new_not_paid')</a>
+                                <a href="#" class="btn btn-danger">@lang('messages.not_paid')</a>
                             @endswitch
                         </h5>
                     </div>
@@ -177,15 +178,28 @@
 
                         <!-- this row will not appear when printing -->
                         <div class="row no-print">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <a href="#" id="printPage" class="btn btn-default">
                                     <i class="fas fa-print"></i> @lang('messages.print')
                                 </a>
+                            </div>
+                            <div class="col-sm-4">
                                 @if($order->status == 'active' or $order->status == 'new')
-                                    <a href="{{route('cancelAzmakOrder' , $order->id)}}" class="btn btn-danger">
-                                        <i class="far fa-credit-card"></i>
-                                        @lang('messages.cancel_order')
-                                    </a>
+                                    <form method="post" action="{{route('cancelAzmakOrder' , $order->id)}}">
+                                        @csrf
+                                        <input type="text" name="cancel_reason" required class="form-control"
+                                               placeholder="@lang('messages.cancel_reason')">
+                                        <button type="submit" class="btn btn-danger float-right"
+                                                style="margin-right: 5px;">
+                                            <i class="far fa-credit-card"></i>
+                                            @lang('messages.cancel_order')
+                                        </button>
+                                        @if ($errors->has('cancel_reason'))
+                                            <span class="help-block">
+                                                <strong style="color: red;">{{ $errors->first('cancel_reason') }}</strong>
+                                            </span>
+                                        @endif
+                                    </form>
                                 @endif
                             </div>
                             @if($order->status == 'active')

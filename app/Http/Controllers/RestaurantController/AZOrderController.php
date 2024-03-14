@@ -20,11 +20,15 @@ class AZOrderController extends Controller
         $order = AZOrder::findOrFail($id);
         return view('restaurant.orders.show'  , compact('order'));
     }
-    public function cancel($id)
+    public function cancel(Request $request , $id)
     {
         $order = AZOrder::findOrFail($id);
+        $this->validate($request , [
+            'cancel_reason' => 'required',
+        ]);
         $order->update([
             'status' => 'canceled',
+            'cancel_reason' => $request->cancel_reason,
         ]);
         flash(trans('messages.orderCanceledSuccessfully'))->success();
         return redirect()->back();

@@ -363,7 +363,7 @@ Route::prefix('restaurant')->group(function () {
                 Route::get('/azmak_orders/{status}', 'index')->name('AzmakOrders');
                 Route::get('/azmak_orders/delete/{id}', 'destroy')->name('DeleteAzmakOrder');
                 Route::get('/show/azmak_orders/{order_id}', 'show')->name('AzmakOrderShow');
-                Route::get('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
+                Route::post('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
                 Route::post('/complete/azmak_order/{order_id}', 'complete_order')->name('completeAzmakOrder');
             });
 
