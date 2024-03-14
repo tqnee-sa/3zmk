@@ -91,6 +91,7 @@
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-4 invoice-col">
+                                <b>@lang('messages.branch') :</b> {{app()->getLocale() == 'ar' ? $order->branch->name_ar : $order->branch->name_en}}<br>
                                 <b>@lang('messages.order_no') :</b> {{$order->order_id}}<br>
                                 <b>@lang('messages.payment_date') : </b> {{$order->created_at->format('d-m-Y')}}<br>
                             </div>
