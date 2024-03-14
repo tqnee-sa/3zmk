@@ -24,6 +24,7 @@ class SettingController extends Controller
             'subscription_amount'  => 'required',
             'online_payment_type'  => 'required',
             'online_token'  => 'required',
+            'order_finished_days' => 'required',
         ]);
         $settings->update([
             'subscription_type'  => $request->type,
@@ -31,6 +32,7 @@ class SettingController extends Controller
             'tax'  => $request->tax,
             'online_payment_type' => $request->online_payment_type,
             'online_token'  => $request->online_token,
+            'order_finished_days'  => $request->order_finished_days,
         ]);
         flash(trans('messages.updated'))->success();
         return redirect()->back();

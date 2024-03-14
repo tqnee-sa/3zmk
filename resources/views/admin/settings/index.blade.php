@@ -86,6 +86,22 @@
                                             %
                                         </div>
                                     </div>
+                                </div><div class="form-group">
+                                    <label class="control-label"> @lang('messages.subscription_tax') </label>
+
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <input name="tax" type="number" value="{{$settings->tax}}" class="form-control" placeholder="@lang('messages.subscription_tax')">
+                                            @if ($errors->has('tax'))
+                                                <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('tax') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-2">
+                                            %
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.token_payment_type') </label>
@@ -108,6 +124,23 @@
                                             <strong style="color: red;">{{ $errors->first('online_token') }}</strong>
                                         </span>
                                     @endif
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label class="control-label"> @lang('messages.order_finished_days') </label>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <input name="order_finished_days" type="number" value="{{$settings->order_finished_days}}" class="form-control" placeholder="@lang('messages.order_finished_days')">
+                                            @if ($errors->has('order_finished_days'))
+                                                <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('order_finished_days') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-2">
+                                            @lang('messages.day')
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->

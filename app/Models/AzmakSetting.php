@@ -15,5 +15,6 @@ class AzmakSetting extends Model
         'subscription_amount',
         'online_payment_type',
         'online_token',
+        'order_finished_days',
     ];
 }

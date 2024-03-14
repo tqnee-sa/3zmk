@@ -164,15 +164,15 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/products') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-list"></i>
                             <span class="badge badge-info right">
-                                    {{ \App\Models\Restaurant\Azmak\AZProduct::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
-                                </span>
+                                {{ \App\Models\Restaurant\Azmak\AZProduct::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
                             <p>
                                 @lang('messages.products')
                             </p>
                         </a>
                     </li>
                     <li
-                        class="nav-item has-treeview {{ strpos(URL::current(), '/restaurant/azmak_orders/active') !== false ? 'menu-open' : '' }}">
+                        class="nav-item has-treeview {{ strpos(URL::current(), ('/restaurant/azmak_orders/new' or '/restaurant/azmak_orders/active' or '/restaurant/azmak_orders/completed' or '/restaurant/azmak_orders/canceled' or '/restaurant/azmak_orders/finished')) !== false ? 'menu-open' : '' }}">
                         <a href="#"
                            class="nav-link {{ strpos(URL::current(), '/restaurant/azmak_orders/active') !== false ? 'active' : '' }}">
                             <i class="fas fa-shopping-cart"></i>
@@ -186,6 +186,9 @@
                                 <a href="{{ url('restaurant/azmak_orders/new') }}"
                                    class="nav-link {{ Request::is('restaurant/azmak_orders/new') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right">
+                                        {{ \App\Models\Restaurant\Azmak\AZorder::whereStatus('new')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                                    </span>
                                     <p>
                                         @lang('messages.new')
                                     </p>
@@ -195,6 +198,9 @@
                                 <a href="{{ url('restaurant/azmak_orders/active') }}"
                                    class="nav-link {{ strpos(URL::current(), '/restaurant/azmak_orders/active') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right">
+                                        {{ \App\Models\Restaurant\Azmak\AZorder::whereStatus('active')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                                    </span>
                                     <p>
                                         @lang('messages.active')
                                     </p>
@@ -204,6 +210,9 @@
                                 <a href="{{ url('restaurant/azmak_orders/completed') }}"
                                    class="nav-link {{ Request::is('restaurant/azmak_orders/completed') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right">
+                                        {{ \App\Models\Restaurant\Azmak\AZorder::whereStatus('completed')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                                    </span>
                                     <p>
                                         @lang('messages.completed')
                                     </p>
@@ -213,6 +222,9 @@
                                 <a href="{{ url('restaurant/azmak_orders/canceled') }}"
                                    class="nav-link {{ Request::is('restaurant/azmak_orders/canceled') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right">
+                                        {{ \App\Models\Restaurant\Azmak\AZorder::whereStatus('canceled')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                                    </span>
                                     <p>
                                         @lang('messages.canceled')
                                     </p>
@@ -222,13 +234,14 @@
                                 <a href="{{ url('restaurant/azmak_orders/finished') }}"
                                    class="nav-link {{ Request::is('restaurant/azmak_orders/finished') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
+                                    <span class="badge badge-info right">
+                                        {{ \App\Models\Restaurant\Azmak\AZorder::whereStatus('finished')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                                    </span>
                                     <p>
                                         @lang('messages.finished')
                                     </p>
                                 </a>
                             </li>
-
-
                         </ul>
                     </li>
                     <li class="nav-item sidebar-title">

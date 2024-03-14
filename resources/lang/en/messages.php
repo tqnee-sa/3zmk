@@ -288,4 +288,6 @@ return [
     'about_ar' => 'About In Arabic',
     'about_en' => 'About In English',
     'az_logo'  => 'Azmak Logo',
+    'order_finished_days' => 'Period To Terminate Order Without Receipt',
+    'day' => 'Day',
 ];
