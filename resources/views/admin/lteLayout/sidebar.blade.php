@@ -140,7 +140,7 @@
                                     {{\App\Models\AzSubscription::where('status', 'new')->count() }}
                                 </span>
                                 <p>
-                                    @lang('messages.new_restaurants')
+                                    @lang('messages.not_paid')
                                 </p>
                             </a>
                         </li>
