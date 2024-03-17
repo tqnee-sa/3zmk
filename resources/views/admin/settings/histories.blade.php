@@ -199,13 +199,16 @@
                                     <td><?php echo ++$i ?></td>
                                     <td> {{app()->getLocale() == 'ar' ? $history->restaurant->name_ar : $history->restaurant->name_en}} </td>
                                     <td>
-                                        {{number_format((float)($history->paid_amount - $history->tax), 0, '.', '')}}
+{{--                                        {{number_format((float)($history->paid_amount - $history->tax), 0, '.', '')}}--}}
+                                        {{$history->paid_amount - $history->tax}}
                                     </td>
                                     <td>
-                                        {{number_format((float)$history->tax, 0, '.', '')}}
+{{--                                        {{number_format((float)$history->tax, 0, '.', '')}}--}}
+                                        {{$history->tax}}
                                     </td>
                                     <td>
-                                        {{number_format((float)$history->paid_amount, 0, '.', '')}}
+{{--                                        {{number_format((float)$history->paid_amount, 0, '.', '')}}--}}
+                                        {{$history->paid_amount}}
                                     </td>
                                     <td>
                                         {{$history->seller_code ? $history->seller_code->seller_name : ''}}
