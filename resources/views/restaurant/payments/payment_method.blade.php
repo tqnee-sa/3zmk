@@ -37,25 +37,40 @@
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="control-label"> @lang('messages.online_payment_type') </label>
-                                    <select name="payment_type" class="form-control" required>
+                                    <label class="control-label"> @lang('messages.payment_method') </label>
+                                    <select name="payment_method" class="form-control" onchange="showDiv(this)" required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
-{{--                                        <option value="1"> @lang('messages.kent') </option>--}}
-                                        <option value="2"> @lang('messages.visa') </option>
-{{--                                        <option value="3"> @lang('messages.amex') </option>--}}
-{{--                                        <option value="5"> @lang('messages.benefit') </option>--}}
-                                        <option value="6"> @lang('messages.mada') </option>
-                                        <option value="11"> @lang('messages.apple_pay') </option>
-                                        <option value="14"> @lang('messages.stc_pay') </option>
+                                        <option value="bank"> @lang('messages.bank_transfer') </option>
+                                        <option value="online"> @lang('messages.online') </option>
                                     </select>
-                                    @if ($errors->has('payment_type'))
+                                    @if ($errors->has('payment_method'))
                                         <span class="help-block">
+                                            <strong
+                                                style="color: red;">{{ $errors->first('payment_method') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div id="online" style="display: none">
+                                    <div class="form-group">
+                                        <label class="control-label"> @lang('messages.online_payment_type') </label>
+                                        <select name="payment_type" class="form-control" required>
+                                            <option disabled selected> @lang('messages.choose_one') </option>
+                                            {{--                                        <option value="1"> @lang('messages.kent') </option>--}}
+                                            <option value="2"> @lang('messages.visa') </option>
+                                            {{--                                        <option value="3"> @lang('messages.amex') </option>--}}
+                                            {{--                                        <option value="5"> @lang('messages.benefit') </option>--}}
+                                            <option value="6"> @lang('messages.mada') </option>
+                                            <option value="11"> @lang('messages.apple_pay') </option>
+                                            <option value="14"> @lang('messages.stc_pay') </option>
+                                        </select>
+                                        @if ($errors->has('payment_type'))
+                                            <span class="help-block">
                                                 <strong
                                                     style="color: red;">{{ $errors->first('payment_type') }}</strong>
                                             </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.seller_code') </label>
                                     <input type="text" name="seller_code" class="form-control"
@@ -67,7 +82,6 @@
                                         </span>
                                     @endif
                                 </div>
-
                             </div>
                             <!-- /.card-body -->
 
@@ -85,4 +99,13 @@
     </section>
 @endsection
 @section('scripts')
+    <script>
+        function showDiv(element) {
+            if (element.value == 'online') {
+                document.getElementById('online').style.display = 'block';
+            } else if (element.value == 'bank') {
+                document.getElementById('online').style.display = 'none';
+            }
+        }
+    </script>
 @endsection

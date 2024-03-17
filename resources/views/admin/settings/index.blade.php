@@ -86,22 +86,6 @@
                                             %
                                         </div>
                                     </div>
-                                </div><div class="form-group">
-                                    <label class="control-label"> @lang('messages.subscription_tax') </label>
-
-                                    <div class="row">
-                                        <div class="col-sm-10">
-                                            <input name="tax" type="number" value="{{$settings->tax}}" class="form-control" placeholder="@lang('messages.subscription_tax')">
-                                            @if ($errors->has('tax'))
-                                                <span class="help-block">
-                                            <strong style="color: red;">{{ $errors->first('tax') }}</strong>
-                                        </span>
-                                            @endif
-                                        </div>
-                                        <div class="col-sm-2">
-                                            %
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.token_payment_type') </label>

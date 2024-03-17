@@ -178,11 +178,11 @@
                                 <th> @lang('messages.tax') </th>
                                 <th> @lang('messages.total') </th>
                                 <th> @lang('messages.seller_code') </th>
-{{--                                <th> @lang('messages.payment_way') </th>--}}
+                                {{--                                <th> @lang('messages.payment_way') </th>--}}
                                 <th> @lang('messages.invoice_id') </th>
                                 <th> @lang('messages.details') </th>
                                 <th> @lang('messages.date') </th>
-{{--                                <th> @lang('dashboard.accepted_by') </th>--}}
+                                <th> @lang('messages.accepted_by') </th>
                                 <th> @lang('messages.operations') </th>
                             </tr>
                             </thead>
@@ -198,11 +198,6 @@
                                     </td>
                                     <td><?php echo ++$i ?></td>
                                     <td> {{app()->getLocale() == 'ar' ? $history->restaurant->name_ar : $history->restaurant->name_en}} </td>
-                                    {{--                                    <td> --}}
-                                    {{--                                        @if($history->type != 'service')--}}
-                                    {{--                                        {{app()->getLocale() == 'ar' ? $history->package->name_ar : $history->package->name_en}}--}}
-                                    {{--                                        @endif--}}
-                                    {{--                                    </td>--}}
                                     <td>
                                         {{number_format((float)($history->paid_amount - $history->tax), 0, '.', '')}}
                                     </td>
@@ -215,13 +210,13 @@
                                     <td>
                                         {{$history->seller_code ? $history->seller_code->seller_name : ''}}
                                     </td>
-{{--                                    <td>--}}
-{{--                                        @if($history->payment_type == 'bank')--}}
-{{--                                            {{trans('messages.bank_transfer')}}--}}
-{{--                                        @elseif($history->payment_type == 'online')--}}
-{{--                                            @lang('messages.online')--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
+                                    {{--                                    <td>--}}
+                                    {{--                                        @if($history->payment_type == 'bank')--}}
+                                    {{--                                            {{trans('messages.bank_transfer')}}--}}
+                                    {{--                                        @elseif($history->payment_type == 'online')--}}
+                                    {{--                                            @lang('messages.online')--}}
+                                    {{--                                        @endif--}}
+                                    {{--                                    </td>--}}
                                     <td>
                                         @if($history->payment_type == 'bank')
                                             <button type="button" class="btn btn-info" data-toggle="modal"
@@ -242,7 +237,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <img
-                                                                src="{{asset('/uploads/transfers/' . $history->transfer_photo)}}"
+                                                                src="{{asset('/uploads/az_transfers/' . $history->transfer_photo)}}"
                                                                 width="475" height="400">
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
@@ -266,13 +261,11 @@
                                     <td>
                                         {{$history->created_at->format('Y-m-d')}}
                                     </td>
-{{--                                    <td>--}}
-{{--                                        @if (isset($history->acceptedAdmin->id))--}}
-{{--                                            <a href="{{route('admins.show' , $history->acceptedAdmin->id)}}">{{$history->acceptedAdmin->name}}</a>--}}
-{{--                                        @else--}}
-{{--                                            {{$history->accepted_admin_name}};--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
+                                    <td>
+                                        @if($history->admin)
+                                            {{$history->admin->name}}
+                                        @endif
+                                    </td>
                                     <td>
                                         <a class="delete_data btn btn-danger" data="{{ $history->id }}"
                                            data_name="{{app()->getLocale() == 'ar' ? $history->restaurant->name_ar : $history->restaurant->name_en}}">

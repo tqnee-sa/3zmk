@@ -187,8 +187,23 @@
                     <a href="{{ route('seller_codes.index') }}"
                        class="nav-link {{ strpos(URL::current(), '/admin/seller_codes') !== false ? 'active' : '' }}">
                         <i class="nav-icon fa fa-code"></i>
+                        <span class="badge badge-info right">
+                            {{\App\Models\AzSellerCode::count() }}
+                        </span>
                         <p>
                             @lang('messages.seller_codes')
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('AZBankTransfer') }}"
+                       class="nav-link {{ strpos(URL::current(), '/admin/az_bank_transfers') !== false ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-money-bill"></i>
+                        <span class="badge badge-info right">
+                            {{\App\Models\AzSubscription::whereNotNull('transfer_photo')->wherePayment('false')->count() }}
+                        </span>
+                        <p>
+                            @lang('messages.bank_transfers')
                         </p>
                     </a>
                 </li>

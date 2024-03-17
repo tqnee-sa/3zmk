@@ -77,6 +77,7 @@ use App\Http\Controllers\AdminController\AdminDetailController;
 use \App\Http\Controllers\AdminController\HomeController;
 use \App\Http\Controllers\AdminController\AZRestaurantController;
 use \App\Http\Controllers\AdminController\AZCommissionController;
+use \App\Http\Controllers\AdminController\BankTransferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,8 +91,7 @@ use \App\Http\Controllers\AdminController\AZCommissionController;
 */
 
 
-
-Route::get('locale/{locale}', function (Request $request , $locale) {
+Route::get('locale/{locale}', function (Request $request, $locale) {
     session()->put('locale', $locale);
     App::setLocale($locale);
     return redirect()->back();
@@ -106,50 +106,50 @@ Route::get('restaurant/locale/{locale}', function (Request $request, $locale) {
  *  Start @user routes
  */
 
-Route::get('/restaurants/{res_name}' , [AZHome::class , 'index']);
-Route::match(['get', 'post'],'/restaurants/branch/{branch_name?}' , [AZHome::class , 'home'])->name('homeBranch');
-Route::get('/restaurants/{res}/{branch_name}/{cat?}' , [AZHome::class , 'homeBranch'])->name('homeBranchIndex');
-Route::get('/restaurantAZ/{res_name}/terms&conditions/{branch?}' , [AZHome::class , 'terms'])->name('restaurantTerms');
-Route::get('/restaurantAZ/{res_name}/about_us/{branch?}' , [AZHome::class , 'about'])->name('restaurantAboutAzmak');
-Route::get('/restaurant_contact_us/{res_name}/{branch?}' , [ContactUsController::class , 'index'])->name('restaurantVisitorContactUs');
-Route::post('/restaurant_contact_us/{res_name}/send' , [ContactUsController::class , 'contact_us'])->name('restaurantVisitorContactUsSend');
-Route::get('/restaurantsAZ/products/{id}' , [AZHome::class , 'product_details'])->name('product_details');
-Route::get('/share/restaurantsAZ/products/{id}' , [AZHome::class , 'share_product'])->name('product_details_share');
+Route::get('/restaurants/{res_name}', [AZHome::class, 'index']);
+Route::match(['get', 'post'], '/restaurants/branch/{branch_name?}', [AZHome::class, 'home'])->name('homeBranch');
+Route::get('/restaurants/{res}/{branch_name}/{cat?}', [AZHome::class, 'homeBranch'])->name('homeBranchIndex');
+Route::get('/restaurantAZ/{res_name}/terms&conditions/{branch?}', [AZHome::class, 'terms'])->name('restaurantTerms');
+Route::get('/restaurantAZ/{res_name}/about_us/{branch?}', [AZHome::class, 'about'])->name('restaurantAboutAzmak');
+Route::get('/restaurant_contact_us/{res_name}/{branch?}', [ContactUsController::class, 'index'])->name('restaurantVisitorContactUs');
+Route::post('/restaurant_contact_us/{res_name}/send', [ContactUsController::class, 'contact_us'])->name('restaurantVisitorContactUsSend');
+Route::get('/restaurantsAZ/products/{id}', [AZHome::class, 'product_details'])->name('product_details');
+Route::get('/share/restaurantsAZ/products/{id}', [AZHome::class, 'share_product'])->name('product_details_share');
 
 // user routes
 Route::controller(UserController::class)->group(function () {
-    Route::get('user/restaurants/{res}/join_us/{branch?}' , 'join_us')->name('AZUserRegister');
-    Route::post('user/restaurants/{res}/join_us/{branch?}' ,'register')->name('AZUserRegisterSubmit');
-    Route::get('user/login/{res?}/{branch?}' ,'show_login')->name('AZUserLogin');
-    Route::post('user/restaurants/{res}/login/{branch?}' ,'login')->name('AZUserLoginSubmit');
+    Route::get('user/restaurants/{res}/join_us/{branch?}', 'join_us')->name('AZUserRegister');
+    Route::post('user/restaurants/{res}/join_us/{branch?}', 'register')->name('AZUserRegisterSubmit');
+    Route::get('user/login/{res?}/{branch?}', 'show_login')->name('AZUserLogin');
+    Route::post('user/restaurants/{res}/login/{branch?}', 'login')->name('AZUserLoginSubmit');
 
 });
 
 Route::controller(CartController::class)->group(function () {
-    Route::post('user/restaurants/add_to_cart' , 'add_to_cart')->name('addToAZCart');
-    Route::get('user_orders/azmak/orders/{order_id}' , 'order_details')->name('AZOrderDetails');
-    Route::get('user/orders/{order_id}/barcode' , 'barcode')->name('AZOrderBarcode');
+    Route::post('user/restaurants/add_to_cart', 'add_to_cart')->name('addToAZCart');
+    Route::get('user_orders/azmak/orders/{order_id}', 'order_details')->name('AZOrderDetails');
+    Route::get('user/orders/{order_id}/barcode', 'barcode')->name('AZOrderBarcode');
 
 });
 
 Route::group(['middleware' => 'auth:web'], function () {
     Route::controller(UserController::class)->group(function () {
         Route::post('logout/{res?}/{branch?}', 'logout')->name('azUser.logout');
-        Route::get('user/restaurants/{res}/profile/{branch?}' ,'profile')->name('AZUserProfile');
-        Route::post('user/restaurants/{res}/profile/{branch?}' , 'edit_profile')->name('AZUserProfileUpdate');
+        Route::get('user/restaurants/{res}/profile/{branch?}', 'profile')->name('AZUserProfile');
+        Route::post('user/restaurants/{res}/profile/{branch?}', 'edit_profile')->name('AZUserProfileUpdate');
     });
     Route::controller(CartController::class)->group(function () {
-        Route::get('user/restaurants/cart/{branch?}' , 'cart_details')->name('AZUserCart');
-        Route::get('user/delete/cart/{order_id}' , 'emptyCart')->name('emptyCart');
-        Route::get('user/delete/cart/items/{item_id}' , 'deleteCartItem')->name('deleteCartItem');
+        Route::get('user/restaurants/cart/{branch?}', 'cart_details')->name('AZUserCart');
+        Route::get('user/delete/cart/{order_id}', 'emptyCart')->name('emptyCart');
+        Route::get('user/delete/cart/items/{item_id}', 'deleteCartItem')->name('deleteCartItem');
     });
     Route::controller(OrderController::class)->group(function () {
-        Route::get('user/cart/orders/{order_id}' , 'order_info')->name('AZOrderInfo');
-        Route::post('user/cart/orders/{order_id}' , 'submit_order_info')->name('AZOrderInfoSubmit');
-        Route::get('user/orders/{order_id}/payment' , 'payment')->name('AZOrderPayment');
-        Route::get('user/orders/{order_id}/status/{id1?}/{id2?}' , 'check_order_fatoourah_status')->name('AZOrderPaymentFatoourahStatus');
-        Route::get('user/orders/{order_id}/tap_status' , 'check_order_tap_status')->name('AZOrderPaymentTapStatus');
-        Route::get('user/orders/{order_id}/edfa_status' , 'edfa_status')->name('AZOrderPaymentEdfa_status');
+        Route::get('user/cart/orders/{order_id}', 'order_info')->name('AZOrderInfo');
+        Route::post('user/cart/orders/{order_id}', 'submit_order_info')->name('AZOrderInfoSubmit');
+        Route::get('user/orders/{order_id}/payment', 'payment')->name('AZOrderPayment');
+        Route::get('user/orders/{order_id}/status/{id1?}/{id2?}', 'check_order_fatoourah_status')->name('AZOrderPaymentFatoourahStatus');
+        Route::get('user/orders/{order_id}/tap_status', 'check_order_tap_status')->name('AZOrderPaymentTapStatus');
+        Route::get('user/orders/{order_id}/edfa_status', 'edfa_status')->name('AZOrderPaymentEdfa_status');
     });
 });
 
@@ -195,9 +195,12 @@ Route::prefix('restaurant')->group(function () {
 
     Route::group(['middleware' => 'auth:restaurant'], function () {
         Route::get('/home', [ResHome::class, 'index'])->name('restaurant.home');
-        Route::get('/AzmakSubscription/{id}', [AzmakSubscriptionController::class, 'show_subscription'])->name('AzmakSubscription');
-        Route::get('/Azmak/payment_menthod/{id}', [AzmakSubscriptionController::class, 'show_payment_methods'])->name('AzmakPaymentMethod');
-        Route::get('/AZSubscriptionStatusF/{id1?}/{id2?}', [AzmakSubscriptionController::class, 'subscription_status'])->name('AZSubscriptionStatusF');
+        Route::controller(AzmakSubscriptionController::class)->group(function () {
+            Route::get('/AzmakSubscription/{id}',  'show_subscription')->name('AzmakSubscription');
+            Route::get('/Azmak/payment_menthod/{id}','show_payment_methods')->name('AzmakPaymentMethod');
+            Route::post('/Azmak/bank_transfer/{id}','bank_transfer')->name('AzmakBankTransfer');
+            Route::get('/AZSubscriptionStatusF/{id1?}/{id2?}', 'subscription_status')->name('AZSubscriptionStatusF');
+        });
     });
 
     Route::group(['middleware' => ['web']], function () {
@@ -302,9 +305,9 @@ Route::prefix('restaurant')->group(function () {
             Route::post('/offer/update-image', [OfferController::class, 'uploadImage'])->name('restaurant.offer.update_image');
             // products Routes
             Route::resource('/products', ProductController::class, []);
-            Route::get('/branch/products/{id}',  [ProductController::class, 'branch_products'])->name('BranchProducts');
-            Route::get('/get/branch_menu_categories/{id}',  [ProductController::class, 'branch_menu_categories'])->name('branch_menu_categories');
-            Route::get('/get_menu_sub_categories/{id}',  [ProductController::class, 'get_menu_sub_categories'])->name('get_menu_sub_categories');
+            Route::get('/branch/products/{id}', [ProductController::class, 'branch_products'])->name('BranchProducts');
+            Route::get('/get/branch_menu_categories/{id}', [ProductController::class, 'branch_menu_categories'])->name('branch_menu_categories');
+            Route::get('/get_menu_sub_categories/{id}', [ProductController::class, 'get_menu_sub_categories'])->name('get_menu_sub_categories');
 
             Route::post('/products/update-image', [ProductController::class, 'updateProductImage'])->name('restaurant.product.update_image');
             Route::get('/products/arrange/{id}', [ProductController::class, 'arrange'])->name('arrangeProduct');
@@ -340,7 +343,6 @@ Route::prefix('restaurant')->group(function () {
                 Route::post('/product_sizes/{id}/update', 'update')->name('updateProductSize');
                 Route::get('/product_sizes/delete/{id}', 'destroy')->name('deleteProductSize');
             });
-
 
 
             Route::get('/history/{id}', [SettingController::class, 'show_restaurant_history'])->name('show_restaurant_history');
@@ -404,7 +406,6 @@ Route::prefix('admin')->group(function () {
             Route::post('/restaurants/{id}/update', 'update')->name('updateRestaurant');
 
 
-
             Route::get('/restaurants/delete/{id}', 'destroy')->name('deleteRestaurant')->middleware('admin');
             Route::get('/restaurants/subscription/{id}/control', 'control_subscription')->name('ControlRestaurantSubscription');
             Route::post('/restaurants/subscription/{id}/control', 'controlChanges')->name('controlChanges');
@@ -423,7 +424,10 @@ Route::prefix('admin')->group(function () {
             Route::get('/histories', 'histories')->name('admin.histories');
             Route::get('/month_histories', 'report_histories')->name('admin.month_histories');
             Route::get('/histories/delete/{id}', 'delete_histories')->name('admin.delete_histories');
-
+        });
+        Route::controller(BankTransferController::class)->group(function () {
+            Route::get('/az_bank_transfers', 'transfers')->name('AZBankTransfer');
+            Route::get('/az_bank_transfer/{id}/{status}', 'transfer_status')->name('subscription.confirm_status');
         });
         Route::controller(AZCommissionController::class)->group(function () {
             Route::get('/restaurant_commissions/{id}', 'restaurant_commissions')->name('AzRestaurantCommissions');
@@ -436,9 +440,9 @@ Route::prefix('admin')->group(function () {
         });
 
         // seller codes
-        Route::resource('/seller_codes' , SellerCodeController::class);
-        Route::get('/seller_codes/delete/{id}' , [SellerCodeController::class , 'destroy'])->name('deleteSellerCode');
-        Route::get('/seller_codes/{id}/active/{status}' , [SellerCodeController::class , 'activate'])->name('activateSellerCode');
+        Route::resource('/seller_codes', SellerCodeController::class);
+        Route::get('/seller_codes/delete/{id}', [SellerCodeController::class, 'destroy'])->name('deleteSellerCode');
+        Route::get('/seller_codes/{id}/active/{status}', [SellerCodeController::class, 'activate'])->name('activateSellerCode');
 
         // restaurants
 

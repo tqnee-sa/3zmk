@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\AzSubscription;
 use App\Models\AzmakSetting;
 use App\Models\AzHistory;
+use App\Models\Bank;
 
 
 class AzmakSubscriptionController extends Controller
@@ -35,15 +36,16 @@ class AzmakSubscriptionController extends Controller
             return redirect()->back();
         }elseif ($settings->subscription_type == 'paid')
         {
-            // 2 - Online Payment
-            return view('restaurant.payments.payment_method');
+            // 2 - paid Payment
+            return view('restaurant.payments.payment_method' , compact('restaurant'));
         }
     }
 
     public function show_payment_methods(Request $request, $id)
     {
         $this->validate($request, [
-            'payment_type' => 'required',
+            'payment_method' => 'required|in:bank,online',
+            'payment_type' => 'required_if:payment_method,online|in:2,6,11,14',
             'seller_code' => 'nullable|exists:az_seller_codes,seller_name',
         ]);
         $restaurant = Restaurant::findOrFail($id);
@@ -82,54 +84,87 @@ class AzmakSubscriptionController extends Controller
             $tax_value = $amount * $tax / 100;
             $amount += $tax_value;
         }
-        $data = array(
-            'PaymentMethodId' => $request->payment_type,
-            'CustomerName' => $name,
-            'DisplayCurrencyIso' => 'SAR',
-            'MobileCountryCode' => $restaurant->country->code,
-            'CustomerMobile' => $restaurant->phone_number,
-            'CustomerEmail' => $restaurant->email,
-            'InvoiceValue' => $amount,
-            'CallBackUrl' => route('AZSubscriptionStatusF'),
-            'ErrorUrl' => route('restaurant.home'),
-            'Language' => app()->getLocale(),
-            'CustomerReference' => 'ref 1',
-            'CustomerCivilId' => '12345678',
-            'UserDefinedField' => 'Custom field',
-            'ExpireDate' => '',
-            'CustomerAddress' => array(
-                'Block' => '',
-                'Street' => '',
-                'HouseBuildingNo' => '',
-                'Address' => '',
-                'AddressInstructions' => '',
-            ),
-            'InvoiceItems' => [array(
-                'ItemName' => $restaurant->name_en,
-                'Quantity' => 1,
-                'UnitPrice' => $amount,
-            )],
-        );
-        $data = json_encode($data);
-        $fatooraRes = MyFatoorah($token, $data);
-        $result = json_decode($fatooraRes);
-        if ($result != null and $result->IsSuccess === true) {
+        if ($request->payment_method == 'bank')
+        {
             AzSubscription::updateOrCreate(
                 ['restaurant_id' => $restaurant->id],
                 [
-                    'invoice_id' => $result->Data->InvoiceId,
-                    'payment_type' => 'online',
+                    'payment_type' => 'bank',
                     'payment' => 'false',
                     'price' => $amount,
                     'seller_code_id' => $seller_code?->id,
                     'tax_value' => $tax_value,
                     'discount_value' => $discount,
                 ]);
-            return redirect()->to($result->Data->PaymentURL);
-        } else {
-            flash(trans('messages.paymentError'))->error();
-            return back();
+            $banks = Bank::whereNull('restaurant_id')->where('country_id', $restaurant->country_id)->get();
+            return view('restaurant.payments.bank_transfer' , compact('restaurant' , 'banks' , 'amount' , 'discount','tax', 'tax_value'));
+        }elseif ($request->payment_method == 'online')
+        {
+            $data = array(
+                'PaymentMethodId' => $request->payment_type,
+                'CustomerName' => $name,
+                'DisplayCurrencyIso' => 'SAR',
+                'MobileCountryCode' => $restaurant->country->code,
+                'CustomerMobile' => $restaurant->phone_number,
+                'CustomerEmail' => $restaurant->email,
+                'InvoiceValue' => $amount,
+                'CallBackUrl' => route('AZSubscriptionStatusF'),
+                'ErrorUrl' => route('restaurant.home'),
+                'Language' => app()->getLocale(),
+                'CustomerReference' => 'ref 1',
+                'CustomerCivilId' => '12345678',
+                'UserDefinedField' => 'Custom field',
+                'ExpireDate' => '',
+                'CustomerAddress' => array(
+                    'Block' => '',
+                    'Street' => '',
+                    'HouseBuildingNo' => '',
+                    'Address' => '',
+                    'AddressInstructions' => '',
+                ),
+                'InvoiceItems' => [array(
+                    'ItemName' => $restaurant->name_en,
+                    'Quantity' => 1,
+                    'UnitPrice' => $amount,
+                )],
+            );
+            $data = json_encode($data);
+            $fatooraRes = MyFatoorah($token, $data);
+            $result = json_decode($fatooraRes);
+            if ($result != null and $result->IsSuccess === true) {
+                AzSubscription::updateOrCreate(
+                    ['restaurant_id' => $restaurant->id],
+                    [
+                        'invoice_id' => $result->Data->InvoiceId,
+                        'payment_type' => 'online',
+                        'payment' => 'false',
+                        'price' => $amount,
+                        'seller_code_id' => $seller_code?->id,
+                        'tax_value' => $tax_value,
+                        'discount_value' => $discount,
+                    ]);
+                return redirect()->to($result->Data->PaymentURL);
+            }
+            else {
+                flash(trans('messages.paymentError'))->error();
+                return back();
+            }
         }
+    }
+
+    public function bank_transfer(Request $request , $id)
+    {
+        $this->validate($request, [
+            'bank_id'  => 'required',
+            'transfer_photo' => 'required|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000'
+        ]);
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->az_subscription->update([
+            'bank_id'    => $request->bank_id,
+            'transfer_photo' => UploadImage($request->file('transfer_photo'), 'transfer_photo', '/uploads/az_transfers'),
+        ]);
+        flash(trans('messages.waitAdminAccept'))->success();
+        return redirect()->to('/restaurant/home');
     }
 
     public function subscription_status(Request $request)
@@ -145,12 +180,10 @@ class AzmakSubscriptionController extends Controller
             // store operation at history
             AzHistory::create([
                 'restaurant_id'   => $subscription->restaurant_id,
-                'bank_id'         => $subscription->bank_id,
                 'seller_code_id'  => $subscription->seller_code_id,
                 'paid_amount'     => $subscription->price,
                 'discount'        => $subscription->discount_value,
                 'tax'             => $subscription->tax_value,
-                'transfer_photo'  => $subscription->transfer_photo,
                 'invoice_id'      => $subscription->invoice_id,
                 'payment_type'    => 'online',
                 'subscription_type' => $subscription->status == 'finished' ? 'renew' : 'new',
@@ -161,6 +194,7 @@ class AzmakSubscriptionController extends Controller
                 'payment' => 'true',
                 'end_at' => Carbon::now()->addYear(),
                 'subscription_type' => $subscription->status == 'finished' ? 'renew' : 'new',
+                'invoice_id' => null,
             ]);
             flash(trans('messages.paymentDoneSuccessfully'))->success();
             return redirect()->route('restaurant.home');
