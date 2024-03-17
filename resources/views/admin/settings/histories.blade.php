@@ -285,10 +285,8 @@
                     <!-- /.card-body -->
                 </div>
             </div>
-            <!-- /.col -->
         </div>
     {{$histories->links()}}
-    <!-- /.row -->
     </section>
 
 @endsection
