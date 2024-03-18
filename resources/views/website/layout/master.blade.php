@@ -9,7 +9,8 @@
     </title>
     <!-- //font -->
 
-    <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"  type="image/x-icon">
+    <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"
+          type="image/x-icon">
 
     <!--=============== SWIPER CSS ===============-->
     <link rel="stylesheet" href="{{asset('site/assets/css/swiper-bundle.min.css')}}"/>
@@ -61,9 +62,11 @@
             @endif
         </div>
         <!-- end location branch -->
-        <p class="description my-3 p-2">
-            {!! app()->getLocale() == 'ar' ? $restaurant->description_ar : $restaurant->description_en !!}
-        </p>
+        @if($restaurant->az_info)
+            <p class="description my-3 p-2">
+                {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
+            </p>
+        @endif
         @include('website.accessories.categories')
     </div>
 
@@ -71,7 +74,7 @@
     <div id="restaurant-products">
         @include('website.accessories.products')
     </div>
-<!-- </main> -->
+    <!-- </main> -->
     @include('website.layout.footer')
 </div>
 
@@ -97,8 +100,8 @@
     @if(Session::has('message'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.success("{{ session('message') }}");
     @endif
@@ -106,8 +109,8 @@
         @if(Session::has('error'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.error("{{ session('error') }}");
     @endif
@@ -115,8 +118,8 @@
         @if(Session::has('info'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.info("{{ session('info') }}");
     @endif
@@ -124,8 +127,8 @@
         @if(Session::has('warning'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.warning("{{ session('warning') }}");
     @endif

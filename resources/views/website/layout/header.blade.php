@@ -113,17 +113,19 @@
         </div>
     </div>
     <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt=""/>
-    <div class="icons">
-        @if(app()->getLocale() == 'ar')
-            <a href="{{route('language' , 'en')}}">
-                <i class="fa-solid fa-globe mx-2"></i>
-                En
-            </a>
-        @else
-            <a href="{{route('language' , 'ar')}}">
-                <i class="fa-solid fa-globe mx-2"></i>
-                ع
-            </a>
-        @endif
-    </div>
+    @if($restaurant->az_info and $restaurant->az_info->lang == 'both')
+        <div class="icons">
+            @if(app()->getLocale() == 'ar')
+                <a href="{{route('language' , 'en')}}">
+                    <i class="fa-solid fa-globe mx-2"></i>
+                    En
+                </a>
+            @else
+                <a href="{{route('language' , 'ar')}}">
+                    <i class="fa-solid fa-globe mx-2"></i>
+                    ع
+                </a>
+            @endif
+        </div>
+    @endif
 </header>

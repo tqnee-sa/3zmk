@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Restaurant\Azmak\AZProduct;
 use App\Models\Restaurant\Azmak\AZBranch;
 use App\Models\Restaurant\Azmak\AZOrder;
+use App\Models\Restaurant\Azmak\AZRestaurantInfo;
+use App\Models\Restaurant\Azmak\AZRestaurantColor;
 use App\Models\AzRestaurantCommission;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -258,4 +260,13 @@ class Restaurant extends Authenticatable
     {
         return $this->hasMany(AzRestaurantCommission::class , 'restaurant_id');
     }
+    public function az_info()
+    {
+        return $this->hasOne(AZRestaurantInfo::class , 'restaurant_id');
+    }
+    public function az_color()
+    {
+        return $this->hasOne(AZRestaurantColor::class , 'restaurant_id');
+    }
+
 }

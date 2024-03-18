@@ -7,6 +7,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use App\Models\Restaurant\Azmak\AZRestaurantInfo;
 use App\Models\AzSellerCode;
 use App\Models\Setting;
 use App\Models\AzSubscription;
@@ -32,6 +33,9 @@ class AzmakSubscriptionController extends Controller
                     'end_at' => Carbon::now()->addYears(10),
                     'subscription_type' => 'new',
                 ]);
+            AZRestaurantInfo::updateOrCreate(
+                ['restaurant_id' => $restaurant->id],
+                );
             flash(trans('messages.AzmakFreeSubscriptionDoneSuccessfully'))->success();
             return redirect()->back();
         }elseif ($settings->subscription_type == 'paid')
@@ -91,11 +95,15 @@ class AzmakSubscriptionController extends Controller
                 [
                     'payment_type' => 'bank',
                     'payment' => 'false',
+                    'status'  => 'new',
                     'price' => $amount,
                     'seller_code_id' => $seller_code?->id,
                     'tax_value' => $tax_value,
                     'discount_value' => $discount,
                 ]);
+            AZRestaurantInfo::updateOrCreate(
+                ['restaurant_id' => $restaurant->id],
+            );
             $banks = Bank::whereNull('restaurant_id')->where('country_id', $restaurant->country_id)->get();
             return view('restaurant.payments.bank_transfer' , compact('restaurant' , 'banks' , 'amount' , 'discount','tax', 'tax_value'));
         }elseif ($request->payment_method == 'online')
@@ -143,6 +151,9 @@ class AzmakSubscriptionController extends Controller
                         'tax_value' => $tax_value,
                         'discount_value' => $discount,
                     ]);
+                AZRestaurantInfo::updateOrCreate(
+                    ['restaurant_id' => $restaurant->id],
+                );
                 return redirect()->to($result->Data->PaymentURL);
             }
             else {

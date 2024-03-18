@@ -13,8 +13,7 @@ use App\Models\Order;
 use App\Models\Package;
 use App\Models\Report;
 use App\Models\Restaurant;
-use App\Models\RestaurantBioColor;
-use App\Models\RestaurantColors;
+use App\Models\Restaurant\Azmak\AZRestaurantColor;
 use App\Models\RestaurantPermission;
 use App\Models\RestaurantUser;
 use App\Models\SellerCode;
@@ -31,14 +30,15 @@ class RestaurantController extends Controller
     {
         $this->middleware('auth:restaurant');
     }
+
     public function my_profile()
     {
-        if(!auth('restaurant')->check()){
+        if (!auth('restaurant')->check()) {
             return redirect(url('restaurant/login'));
         }
         $user = Auth::guard('restaurant')->user();
         if ($user->type == 'employee'):
-            if (check_restaurant_permission($user->id , 2) == false):
+            if (check_restaurant_permission($user->id, 2) == false):
                 abort(404);
             endif;
             $user = Restaurant::find($user->restaurant_id);
@@ -46,32 +46,36 @@ class RestaurantController extends Controller
         $cities = City::whereCountryId($user->country_id)->get();
         return view('restaurant.user.my_subscription', compact('user', 'cities'));
     }
+
     public function update_logo(Request $request)
     {
         $user = Auth::guard('restaurant')->user();
-        $this->validate($request , [
-            'logo'   => 'nullable|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000'
+        $this->validate($request, [
+            'logo' => 'nullable|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000'
         ]);
         $user->update([
-            'az_logo' => $request->file('logo') == null ? $user->az_logo  : UploadImageEdit($request->file('logo' ) , 'logo' ,'/uploads/restaurants/logo' , $user->az_logo),
+            'az_logo' => $request->file('logo') == null ? $user->az_logo : UploadImageEdit($request->file('logo'), 'logo', '/uploads/restaurants/logo', $user->az_logo),
         ]);
         flash(trans('messages.updated'))->success();
         return redirect()->back();
     }
+
     public function my_restaurant_users()
     {
-        if(!auth('restaurant')->check()){
+        if (!auth('restaurant')->check()) {
             return redirect(url('restaurant/login'));
         }
         $restaurant = Auth::guard('restaurant')->user();
         // $users = RestaurantUser::whereRestaurantId($restaurant->id)
         //     ->paginate(500);
-        $usersId = Order::where('restaurant_id' , $restaurant->id)->get()->pluck('user_id');
-        $users = User::whereIn('id' , $usersId)->paginate(500);
+        $usersId = Order::where('restaurant_id', $restaurant->id)->get()->pluck('user_id');
+        $users = User::whereIn('id', $usersId)->paginate(500);
         return view('restaurant.user.my_users', compact('users'));
     }
-    public function updateMyInformation(Request $request  , $id = null){
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
+
+    public function updateMyInformation(Request $request, $id = null)
+    {
+        if (!auth('admin')->check() and !auth('restaurant')->check()) {
             abort(401);
         }
         if ($id != null) {
@@ -79,19 +83,19 @@ class RestaurantController extends Controller
         } else {
             $user = Auth::guard('restaurant')->user();
             if ($user->type == 'employee'):
-                if (check_restaurant_permission($user->id , 6) == false):
+                if (check_restaurant_permission($user->id, 6) == false):
                     abort(404);
                 endif;
                 $user = Restaurant::find($user->restaurant_id);
             endif;
         }
-        if($request->method() == 'POST'):
+        if ($request->method() == 'POST'):
 
             $this->validate($request, [
                 'is_call_phone' => 'required|in:true,false',
                 'is_whatsapp' => 'required|in:true,false',
-                'call_phone' => 'required_if:is_call_phone,true|nullable|numeric' ,
-                'whatsapp_number' => 'required_if:is_whatsapp,true|nullable|numeric' ,
+                'call_phone' => 'required_if:is_call_phone,true|nullable|numeric',
+                'whatsapp_number' => 'required_if:is_whatsapp,true|nullable|numeric',
             ]);
 
             $user->update([
@@ -105,10 +109,12 @@ class RestaurantController extends Controller
         endif;
 
 
-        return view('restaurant.user.contact_information' , compact('user'));
+        return view('restaurant.user.contact_information', compact('user'));
     }
-    public function updateBarcode(Request $request  , $id = null){
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
+
+    public function updateBarcode(Request $request, $id = null)
+    {
+        if (!auth('admin')->check() and !auth('restaurant')->check()) {
             abort(401);
         }
         if ($id != null) {
@@ -116,7 +122,7 @@ class RestaurantController extends Controller
         } else {
             $user = Auth::guard('restaurant')->user();
             if ($user->type == 'employee'):
-                if (check_restaurant_permission($user->id , 2) == false):
+                if (check_restaurant_permission($user->id, 2) == false):
                     abort(404);
                 endif;
                 $user = Restaurant::find($user->restaurant_id);
@@ -131,8 +137,8 @@ class RestaurantController extends Controller
             'name_en' => 'required|string|max:191',
 //            'name_barcode' => 'required|string|max:191|unique:restaurants,name_barcode,' . $user->id,
         ]);
-        foreach([' ' , ',' , '.'] as $value):
-            if(count(explode($value , $request->name_barcode)) > 1):
+        foreach ([' ', ',', '.'] as $value):
+            if (count(explode($value, $request->name_barcode)) > 1):
                 throw ValidationException::withMessages([
                     'name_barcode' => trans('messages.error_barcode_name')
                 ]);
@@ -159,9 +165,10 @@ class RestaurantController extends Controller
         flash(trans('messages.updated'))->success();
         return redirect()->back();
     }
+
     public function my_profile_edit(Request $request, $id = null)
     {
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
+        if (!auth('admin')->check() and !auth('restaurant')->check()) {
             abort(401);
         }
         if ($id != null) {
@@ -169,67 +176,34 @@ class RestaurantController extends Controller
         } else {
             $user = Auth::guard('restaurant')->user();
             if ($user->type == 'employee'):
-                if (check_restaurant_permission($user->id , 2) == false):
+                if (check_restaurant_permission($user->id, 2) == false):
                     abort(404);
                 endif;
                 $user = Restaurant::find($user->restaurant_id);
             endif;
         }
-        if ($request->ar == 'false' && $request->en == 'false') {
-            flash(trans('messages.languageError'))->error();
-            return redirect()->back();
-        }
 
         $this->validate($request, [
-
-            'email' => 'required|email|max:191|unique:restaurants,email,' . $user->id,
-//            'phone_number' => ['required', 'unique:restaurants,phone_number,'.$user->id, 'regex:/^((05)|(01))[0-9]{8}/'],
+//            'phone_number' => ['required', 'unique:restaurants,phone_number,' . $user->id, 'regex:/^((05)|(01))[0-9]{8}/'],
 //            'city_id' => 'required|exists:cities,id',
-            // 'logo' => 'sometimes|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000',
-            'ar' => 'required|in:true,false',
-            'en' => 'required|in:true,false',
-            'enable_fixed_category' => 'required|in:true,false',
-
-//            'tax' => 'required|in:true,false',
-//            'total_tax_price' => 'required|in:true,false',
-//            'tax_value' => "required_if:tax,==,ture",
-        ]);
-        if($request->ar == 'true' and $request->en == 'false'):
-            $dlang = 'ar';
-        elseif($request->en == 'true' and $request->ar == 'false'):
-            $dlang = 'en';
-        else:
-            $dlang = $request->default_lang ;
-        endif;
-        $user->update([
-
-            'email' => $request->email,
-//            'city_id' => $request->city_id,
-//            'phone_number' => $request->phone_number,
-            'ar' => $request->ar,
-            'en' => $request->en,
-            'default_lang' => $dlang,
-//            'total_tax_price' => $request->total_tax_price,
-//            'tax' => $request->tax,
-//            'tax_value' => $request->tax_value,
-            'enable_fixed_category' => $request->enable_fixed_category,
-            'product_menu_view' => $request->product_menu_view ,
-            'menu' => $request->menu ,
-            'show_branches_list' => $request->show_branches_list ,
-            // 'logo' => $request->file('logo') == null ? $user->logo : UploadImageEdit($request->file('logo'), 'logo', '/uploads/restaurants/logo', $user->logo),
+            'logo' => 'sometimes|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000',
+            'lang' => 'required|in:ar,en,both',
+            'menu_show_type' => 'required|in:style1,style2,style3',
+            'description_ar' => 'nullable|string',
+            'description_en' => 'nullable|string',
         ]);
 
-        // here the main branch should be edited with his restaurant
-        $branch = Branch::whereRestaurantId($user->id)
-            ->where('main', 'true')
-            ->first();
-        if ($branch) {
-            $branch->update([
-                'email' => $request->email,
-                // 'city_id' => $request->city_id,
-                'phone_number' => $request->phone_number,
+        if ($request->logo != null):
+            $user->update([
+                'az_logo' => $request->file('logo') == null ? $user->az_logo : UploadImageEdit($request->file('logo'), 'logo', '/uploads/restaurants/logo', $user->az_logo),
             ]);
-        }
+        endif;
+        $user->az_info->update([
+            'lang'  => $request->lang,
+            'menu_show_type' => $request->menu_show_type,
+            'description_ar' => $request->description_ar,
+            'description_en' => $request->description_en
+        ]);
         flash(trans('messages.updated'))->success();
         return redirect()->back();
     }
@@ -238,7 +212,7 @@ class RestaurantController extends Controller
     {
         $model = Auth::guard('restaurant')->user();
         if ($model->type == 'employee'):
-            if (check_restaurant_permission($model->id , 2) == false):
+            if (check_restaurant_permission($model->id, 2) == false):
                 abort(404);
             endif;
             $model = Restaurant::find($model->restaurant_id);
@@ -250,18 +224,19 @@ class RestaurantController extends Controller
     {
         $model = Auth::guard('restaurant')->user();
         if ($model->type == 'employee'):
-            if (check_restaurant_permission($model->id , 2) == false):
+            if (check_restaurant_permission($model->id, 2) == false):
                 abort(404);
             endif;
             $model = Restaurant::find($model->restaurant_id);
         endif;
         return view('restaurant.user.barcode_pdf', compact('model'));
     }
+
     public function urgentBarcode()
     {
         $model = Auth::guard('restaurant')->user();
         if ($model->type == 'employee'):
-            if (check_restaurant_permission($model->id , 2) == false):
+            if (check_restaurant_permission($model->id, 2) == false):
                 abort(404);
             endif;
             $model = Restaurant::find($model->restaurant_id);
@@ -271,7 +246,7 @@ class RestaurantController extends Controller
 
     public function change_pass_update(Request $request, $id = null)
     {
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
+        if (!auth('admin')->check() and !auth('restaurant')->check()) {
             abort(401);
         }
         if ($id != null) {
@@ -279,7 +254,7 @@ class RestaurantController extends Controller
         } else {
             $user = Auth::guard('restaurant')->user();
             if ($user->type == 'employee'):
-                if (check_restaurant_permission($user->id , 2) == false):
+                if (check_restaurant_permission($user->id, 2) == false):
                     abort(404);
                 endif;
                 $user = Restaurant::find($user->restaurant_id);
@@ -294,31 +269,31 @@ class RestaurantController extends Controller
         return redirect()->back();
     }
 
-    public function renew_subscription($id , $admin = null)
+    public function renew_subscription($id, $admin = null)
     {
         $user = Restaurant::findOrFail($id);
         $admin = $admin == null ? 'restaurant' : 'admin';
-        return view('restaurant.user.subscription', compact('user' , 'admin'));
+        return view('restaurant.user.subscription', compact('user', 'admin'));
     }
 
     public function information()
     {
-        if(!auth('restaurant')->check()){
+        if (!auth('restaurant')->check()) {
             return redirect(url('restaurant/login'));
         }
         $restaurant = Auth::guard('restaurant')->user();
         if ($restaurant->type == 'employee'):
-            if (check_restaurant_permission($restaurant->id , 6) == false):
+            if (check_restaurant_permission($restaurant->id, 6) == false):
                 abort(404);
             endif;
             $restaurant = Restaurant::find($restaurant->restaurant_id);
         endif;
-        return view('restaurant.user.information' , compact('restaurant'));
+        return view('restaurant.user.information', compact('restaurant'));
     }
 
     public function store_information(Request $request)
     {
-        if(!auth('restaurant')->check()){
+        if (!auth('restaurant')->check()) {
             return redirect(url('restaurant/login'));
         }
         $this->validate($request, [
@@ -327,7 +302,7 @@ class RestaurantController extends Controller
         ]);
         $restaurant = Auth::guard('restaurant')->user();
         if ($restaurant->type == 'employee'):
-            if (check_restaurant_permission($restaurant->id , 6) == false):
+            if (check_restaurant_permission($restaurant->id, 6) == false):
                 abort(404);
             endif;
             $restaurant = Restaurant::find($restaurant->restaurant_id);
@@ -342,7 +317,7 @@ class RestaurantController extends Controller
 
     public function RestaurantChangeExternal(Request $request, $id = null)
     {
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
+        if (!auth('admin')->check() and !auth('restaurant')->check()) {
             abort(401);
         }
         $this->validate($request, [
@@ -352,7 +327,7 @@ class RestaurantController extends Controller
             'show_branches_list' => 'nullable|in:true,false',
             'description_ar' => 'nullable|string',
             'description_en' => 'nullable|string',
-            'latitude' => 'sometimes' ,
+            'latitude' => 'sometimes',
             'product_menu_view' => 'nullable|string'
         ]);
 //        dd($request->all());
@@ -361,7 +336,7 @@ class RestaurantController extends Controller
         } else {
             $restaurant = Auth::guard('restaurant')->user();
             if ($restaurant->type == 'employee'):
-                if (check_restaurant_permission($restaurant->id , 2) == false):
+                if (check_restaurant_permission($restaurant->id, 2) == false):
                     abort(404);
                 endif;
                 $restaurant = Restaurant::find($restaurant->restaurant_id);
@@ -394,7 +369,7 @@ class RestaurantController extends Controller
 
     public function RestaurantChangeColors(Request $request, $id)
     {
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
+        if (!auth('admin')->check() and !auth('restaurant')->check()) {
             abort(401);
         }
         $this->validate($request, [
@@ -408,12 +383,12 @@ class RestaurantController extends Controller
         ]);
         $restaurant = Restaurant::findOrFail($id);
         if ($restaurant->type == 'employee'):
-            if (check_restaurant_permission($restaurant->id , 2) == false):
+            if (check_restaurant_permission($restaurant->id, 2) == false):
                 abort(404);
             endif;
             $restaurant = Restaurant::find($restaurant->restaurant_id);
         endif;
-        RestaurantColors::updateOrCreate(
+        AZRestaurantColor::updateOrCreate(
             ['restaurant_id' => $restaurant->id],
             [
                 'main_heads' => $request->main_heads,
@@ -427,61 +402,21 @@ class RestaurantController extends Controller
         flash(trans('messages.updated'))->success();
         return redirect()->back();
     }
-    public function RestaurantChangeBioColors(Request $request, $id)
-    {
-        if(!auth('admin')->check() and !auth('restaurant')->check()){
-            abort(401);
-        }
-        $this->validate($request, [
-            'restaurant_id' => 'sometimes',
-            'main_line'     => 'sometimes',
-            'background'    => 'sometimes',
-            'main_cats'     => 'sometimes',
-            'sub_cats'      => 'sometimes',
-            'sub_background' => 'sometimes',
-            'sub_cats_line' => 'sometimes',
-            'background_image' => 'nullable|mimes:jpg,jpeg,png,gif,tif,psd,pmp|max:50000',
-        ]);
-        $restaurant = Restaurant::findOrFail($id);
-        if ($restaurant->type == 'employee'):
-            if (check_restaurant_permission($restaurant->id , 2) == false):
-                abort(404);
-            endif;
-            $restaurant = Restaurant::find($restaurant->restaurant_id);
-        endif;
-        $bio = RestaurantBioColor::updateOrCreate(
-            ['restaurant_id' => $restaurant->id],
-            [
-                'main_line'      => $request->main_line,
-                'background'     => $request->background,
-                'main_cats'      => $request->main_cats,
-                'sub_cats'       => $request->sub_cats,
-                'sub_background' => $request->sub_background,
-                'sub_cats_line'  => $request->sub_cats_line,
-            ]
-        );
-        if ($request->file('background_image') != null)
-        {
-            $bio->update([
-                'background_image' => UploadImageEdit($request->file('background_image') , 'background' , '/uploads/bio_backgrounds' , $bio->background_image)
-            ]);
-        }
-        flash(trans('messages.updated'))->success();
-        return redirect()->back();
-    }
+
 
 
     public function Reset_to_main($id)
     {
         $restaurant = Restaurant::findOrFail($id);
         if ($restaurant) {
-            if ($restaurant->color != null) {
-                $restaurant->color->delete();
+            if ($restaurant->az_color != null) {
+                $restaurant->az_color->delete();
             }
             flash(trans('messages.updated'))->success();
             return redirect()->back();
         }
     }
+
     public function Reset_to_bio_main($id)
     {
         $restaurant = Restaurant::findOrFail($id);
@@ -494,59 +429,60 @@ class RestaurantController extends Controller
         }
     }
 
-    public function uploadImage(Request $request){
+    public function uploadImage(Request $request)
+    {
 
         $request->validate([
-            'photo' => 'required|mimes:png,jepg,jpg,svg' ,
-            'action' => 'required|in:edit' ,
-            'item_id' => 'required_if:action,edit|integer|exists:restaurants,id' ,
+            'photo' => 'required|mimes:png,jepg,jpg,svg',
+            'action' => 'required|in:edit',
+            'item_id' => 'required_if:action,edit|integer|exists:restaurants,id',
         ]);
-        if($request->action == 'edit')
+        if ($request->action == 'edit')
             $item = Restaurant::findOrFail($request->item_id);
 
-        if ($request->photo != null)
-        {
-            $photo = UploadImageEdit($request->file('photo'),'photo' , '/uploads/restaurants/logo' , (isset($item->photo) ? $item->photo : null));
-            if(isset($item->id))
+        if ($request->photo != null) {
+            $photo = UploadImageEdit($request->file('photo'), 'photo', '/uploads/restaurants/logo', (isset($item->photo) ? $item->photo : null));
+            if (isset($item->id))
                 $item->update([
-                    'logo' => $photo ,
+                    'logo' => $photo,
                 ]);
             return response([
-                'photo' =>  $photo,
-                'status' => true ,
+                'photo' => $photo,
+                'status' => true,
             ]);
         }
-        return response('error' , 500);
+        return response('error', 500);
     }
+
     public function myfatoora_token()
     {
-        if(!auth('restaurant')->check()):
+        if (!auth('restaurant')->check()):
             return redirect(url('restaurant/login'));
         endif;
         $restaurant = auth('restaurant')->user();
-        return view('restaurant.user.myfatoora_token' , compact('restaurant'));
+        return view('restaurant.user.myfatoora_token', compact('restaurant'));
     }
+
     public function update_myfatoora_token(Request $request)
     {
-        if(!auth('restaurant')->check()):
+        if (!auth('restaurant')->check()):
             return redirect(url('restaurant/login'));
         endif;
 
-        $data = $this->validate($request , [
+        $data = $this->validate($request, [
             'payment_company' => 'nullable|in:myFatoourah,tap,express',
             'online_token' => 'nullable|string',
             'merchant_key' => 'nullable|string',
             'express_password' => 'nullable|string',
             'enable_reservation_online_pay' => 'nullable|in:true,false',
             'enable_party_payment_online' => 'nullable|in:true,false',
-            'online_payment_fees' => 'nullable|numeric|min:0.01|max:100' ,
+            'online_payment_fees' => 'nullable|numeric|min:0.01|max:100',
         ]);
         $restaurant = auth('restaurant')->user();
         $restaurant->update($data);
         flash(trans('messages.updated'))->success();
         return redirect()->back();
     }
-
 
 
 }

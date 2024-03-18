@@ -25,31 +25,38 @@ class HomeController extends Controller
         $restaurant = Restaurant::whereNameBarcode($res)->firstOrFail();
         $branches = AZBranch::whereRestaurantId($restaurant->id)->get();
         $cities = City::with('branches')
-            ->whereHas('branches' , function ($q) use ($restaurant) {
+            ->whereHas('branches', function ($q) use ($restaurant) {
                 $q->whereRestaurantId($restaurant->id);
             })->get();
-        return view('website.index' , compact('branches' , 'restaurant' , 'cities'));
+        if ($restaurant->az_info and $restaurant->az_info->lang != 'both'):
+            session()->put('locale', $restaurant->az_info->lang);
+            App::setLocale($restaurant->az_info->lang);
+        endif;
+        return view('website.index', compact('branches', 'restaurant', 'cities'));
     }
 
-    public function home(Request $request , $branch_id = null)
+    public function home(Request $request, $branch_id = null)
     {
-        if ($request->branch)
-        {
+        if ($request->branch) {
             $branch = AZBranch::find($request->branch);
-        }else{
+        } else {
             $branch = AZBranch::find($branch_id);
         }
-        return redirect()->route('homeBranchIndex' , [$branch->restaurant->name_barcode , $branch->name_en]);
+        if ($branch->restaurant->az_info and $branch->restaurant->az_info->lang != 'both'):
+            session()->put('locale', $branch->restaurant->az_info->lang);
+            App::setLocale($branch->restaurant->az_info->lang);
+        endif;
+        return redirect()->route('homeBranchIndex', [$branch->restaurant->name_barcode, $branch->name_en]);
     }
-    public function homeBranch(Request $request , $res , $branch , $category_id = null)
+
+    public function homeBranch(Request $request, $res, $branch, $category_id = null)
     {
         $restaurant = Restaurant::whereNameBarcode($res)->firstOrFail();
         /**
          * @check for restaurant subscription to show menu
-        */
+         */
         $subscription = AzSubscription::whereRestaurantId($restaurant->id)->first();
-        if ($subscription and ($subscription->status == 'active' or $subscription->status == 'free'))
-        {
+        if ($subscription and ($subscription->status == 'active' or $subscription->status == 'free')) {
             $branch = AZBranch::whereNameEn($branch)->first();
             $sliders = $restaurant->sliders()
                 ->whereStop('false')
@@ -60,8 +67,7 @@ class HomeController extends Controller
                 ->where('active', 'true')
                 ->orderBy(DB::raw('ISNULL(arrange), arrange'), 'ASC')
                 ->get();
-            if ($category_id)
-            {
+            if ($category_id) {
                 $products = AZProduct::whereRestaurantId($restaurant->id)
                     ->where('branch_id', $branch->id)
                     ->where('menu_category_id', $category_id)
@@ -69,8 +75,8 @@ class HomeController extends Controller
                     ->where('available', 'true')
                     ->orderBy(DB::raw('ISNULL(arrange), arrange'), 'ASC')
                     ->paginate(100);
-            }else{
-                $menu_category =AZMenuCategory::whereRestaurantId($restaurant->id)
+            } else {
+                $menu_category = AZMenuCategory::whereRestaurantId($restaurant->id)
                     ->where('branch_id', $branch->id)
                     ->where('active', 'true')
                     ->orderBy(DB::raw('ISNULL(arrange), arrange'), 'ASC')
@@ -93,34 +99,38 @@ class HomeController extends Controller
                         ->paginate(100);
                 }
             }
-            if ($request->is_category == 'true')
-            {
+            if ($request->is_category == 'true') {
                 return response([
                     'status' => true,
                     'data' => [
-                        'products' => view('website.accessories.products', compact(['restaurant' ,'products', 'branch' ,'categories', 'sliders' , 'branches' , 'category_id']))->render(),
+                        'products' => view('website.accessories.products', compact(['restaurant', 'products', 'branch', 'categories', 'sliders', 'branches', 'category_id']))->render(),
                     ],
                 ]);
             }
-            return view('website.home' , compact('restaurant' ,'products', 'branch' ,'categories', 'sliders' , 'branches' , 'category_id'));
-        }else{
+            if ($restaurant->az_info and $restaurant->az_info->lang != 'both'):
+                session()->put('locale', $restaurant->az_info->lang);
+                App::setLocale($restaurant->az_info->lang);
+            endif;
+            return view('website.home', compact('restaurant', 'products', 'branch', 'categories', 'sliders', 'branches', 'category_id'));
+        } else {
             return $this->index($restaurant->name_barcode);
         }
     }
 
-    public function terms($res , $branch)
+    public function terms($res, $branch)
     {
         $restaurant = Restaurant::whereNameBarcode($res)->firstOrFail();
         $branch = AZBranch::whereNameEn($branch)->first();
         $terms = RestaurantTermsCondition::whereRestaurantId($restaurant->id)->first();
-        return view('website.pages.terms' , compact('restaurant' , 'branch','terms'));
+        return view('website.pages.terms', compact('restaurant', 'branch', 'terms'));
     }
-    public function about($res , $branch)
+
+    public function about($res, $branch)
     {
         $restaurant = Restaurant::whereNameBarcode($res)->firstOrFail();
         $branch = AZBranch::whereNameEn($branch)->first();
         $about = RestaurantAboutAzmak::whereRestaurantId($restaurant->id)->first();
-        return view('website.pages.about' , compact('restaurant' , 'branch','about'));
+        return view('website.pages.about', compact('restaurant', 'branch', 'about'));
     }
 
     public function product_details($id)
@@ -128,7 +138,7 @@ class HomeController extends Controller
         $product = AZProduct::findOrFail($id);
         $restaurant = $product->restaurant;
         $branch = $product->branch;
-        $route = route('product_details' , $product->id);
+        $route = route('product_details', $product->id);
         $details = (app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en) . ' ' . (app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)));
         $shareComponent = \Share::page(
             $route,
@@ -140,6 +150,6 @@ class HomeController extends Controller
             ->telegram()
             ->whatsapp()
             ->reddit();
-        return view('website.accessories.product_details' , compact('product' ,'restaurant' , 'branch','shareComponent'));
+        return view('website.accessories.product_details', compact('product', 'restaurant', 'branch', 'shareComponent'));
     }
 }

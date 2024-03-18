@@ -95,50 +95,6 @@
                 @endif
             </div><!-- /.container-fluid -->
         </section>
-        <hr>
-        <div class="col-sm-6">
-            <form action="{{ route('RestaurantUpdateLogo') }}" class="form-horizontal"
-                  method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group type_image ">
-                    <label class="control-label col-md-3"> @lang('messages.az_logo') </label>
-                    <div class="col-md-9">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <div class="fileinput-preview thumbnail" data-trigger="fileinput"
-                                 style="width: 200px; height: 150px; border: 1px solid black;">
-                                @if ($user->az_logo != null)
-                                    <img src="{{ asset('/uploads/restaurants/logo/' . $user->az_logo) }}">
-                                @endif
-                            </div>
-                            <div>
-                                <span class="btn red btn-outline btn-file">
-                                    <span class="fileinput-new btn btn-info"> @lang('messages.choose_photo') </span>
-                                    <span class="fileinput-exists btn btn-primary"> @lang('messages.change')
-                                    </span>
-                                    <input type="file" name="logo">
-                                </span>
-                                <a href="javascript:;" class="btn btn-danger fileinput-exists"
-                                   data-dismiss="fileinput">
-                                    @lang('messages.remove')
-                                </a>
-                            </div>
-                        </div>
-                        @if ($errors->has('logo'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('logo') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-danger">@lang('messages.save')</button>
-                    </div>
-                </div>
-            </form>
-        </div>
         <!-- /.content -->
     @endif
 @endsection

@@ -212,6 +212,10 @@ Route::prefix('restaurant')->group(function () {
             Route::post('/profileEdit/{id?}', 'my_profile_edit')->name('RestaurantUpdateProfile');
             Route::post('/RestaurantUpdateLogo', 'update_logo')->name('RestaurantUpdateLogo');
             Route::post('/updateBarcode/{id?}', 'updateBarcode')->name('RestaurantUpdateBarcode');
+            Route::post('/profileChangePass/{id?}', 'change_pass_update')->name('RestaurantChangePassword');
+            Route::post('/RestaurantChangeExternal/{id?}', 'RestaurantChangeExternal')->name('RestaurantChangeExternal');
+            Route::get('/reset_to_main/{id}', 'Reset_to_main')->name('Reset_to_main');
+            Route::post('/RestaurantChangeColors/{id}', 'RestaurantChangeColors')->name('RestaurantChangeColors');
             // restaurant colors
         });
         //branches routes

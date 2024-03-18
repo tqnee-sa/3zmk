@@ -76,15 +76,15 @@
                         <i class="nav-icon far fa-user"></i>
                         <p class="">{{ trans('messages.account_settings') }}</p>
                     </li>
-                    {{--                    <li class="nav-item">--}}
-                    {{--                        <a href="{{ route('RestaurantProfile') }}"--}}
-                    {{--                           class="nav-link {{ strpos(URL::current(), '/restaurant/profile') !== false ? 'active' : '' }}">--}}
-                    {{--                            <i class="nav-icon far fa-user"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                @lang('messages.profile')--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{ route('RestaurantProfile') }}"
+                           class="nav-link {{ strpos(URL::current(), '/restaurant/profile') !== false ? 'active' : '' }}">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                @lang('messages.profile')
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ url('/restaurant/barcode') }}"
                            class="nav-link {{ strpos(URL::current(), '/restaurant/barcode') !== false ? 'active' : '' }}">

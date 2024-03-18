@@ -28,7 +28,7 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
-                    class="nav-link active"
+                    class="nav-link {{$restaurant->az_info->menu_show_type == 'style3' ? 'active' : ''}}"
                     id="home-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#home"
@@ -42,7 +42,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button
-                    class="nav-link"
+                    class="nav-link {{$restaurant->az_info->menu_show_type == 'style2' ? 'active' : ''}}"
                     id="profile-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#profile"
@@ -56,7 +56,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button
-                    class="nav-link"
+                    class="nav-link {{$restaurant->az_info->menu_show_type == 'style1' ? 'active' : ''}}"
                     id="contact-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#contact"
@@ -71,7 +71,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div
-                class="tab-pane fade show active"
+                class="tab-pane fade {{$restaurant->az_info->menu_show_type == 'style3' ? 'show active' : ''}}"
                 id="home"
                 role="tabpanel"
                 aria-labelledby="home-tab"
@@ -145,7 +145,7 @@
             </div>
             <!-- end home-tab -->
             <div
-                class="tab-pane fade"
+                class="tab-pane fade {{$restaurant->az_info->menu_show_type == 'style2' ? 'show active' : ''}}"
                 id="profile"
                 role="tabpanel"
                 aria-labelledby="profile-tab">
@@ -194,7 +194,7 @@
                                 </div>
                                 <div class="price">
                                     <span>{{$product->price}}</span>
-                                    <small> @lang('messages.SR')</small>
+                                    <small> {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}</small>
                                 </div>
                             </div>
                             <div style="display: none" class="shareBtn" id="share2Div-{{$product->id}}">
@@ -207,7 +207,7 @@
             </div>
             <!-- profile-tab -->
             <div
-                class="tab-pane fade"
+                class="tab-pane fade {{$restaurant->az_info->menu_show_type == 'style1' ? 'show active' : ''}}"
                 id="contact"
                 role="tabpanel"
                 aria-labelledby="contact-tab"
@@ -257,7 +257,7 @@
                                 </div>
                                 <div class="price">
                                     <span>{{$product->price}}</span>
-                                    <small>@lang('messages.SR')</small>
+                                    <small>{{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}</small>
                                 </div>
                             </div>
                             <div style="display: none" class="shareBtn" id="share3Div-{{$product->id}}">
