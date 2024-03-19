@@ -16,11 +16,12 @@
         margin: auto;
     }
 </style>
-<footer class="px-4 py-3 d-flex align-items-center justify-content-around">
+<footer class="px-4 py-3 d-flex align-items-center justify-content-around"
+        style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important;">
     <hr>
     @if(auth()->guard('web')->check())
         <div id="cart-count" class="cart-count " style="z-index: 1;">
-            <a href="{{route('AZUserCart' , $branch->id)}}" class="cart-btn" style="background-color: #d38301">
+            <a href="{{route('AZUserCart' , $branch->id)}}" class="cart-btn" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#d38301'}}">
                 <i class="fa fa-shopping-cart"></i>
                 @php
                 $count = App\Models\Restaurant\Azmak\AZOrderItem::with('order')

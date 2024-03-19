@@ -546,7 +546,7 @@
                                         <div class="form-group">
                                             <label class="control-label"> @lang('messages.main_heads') </label>
                                             <input name="main_heads" type="color" class="form-control"
-                                                   value="{{ $user->az_color == null ? null : $user->az_color->main_heads }}">
+                                                   value="{{ $user->az_color?->main_heads }}">
                                             @if ($errors->has('main_heads'))
                                                 <span class="help-block">
                                                     <strong
@@ -557,7 +557,7 @@
                                         <div class="form-group">
                                             <label class="control-label"> @lang('messages.icons') </label>
                                             <input name="icons" type="color" class="form-control"
-                                                   value="{{ $user->az_color == null ? null : $user->az_color->icons }}">
+                                                   value="{{ $user->az_color?->icons }}">
                                             @if ($errors->has('icons'))
                                                 <span class="help-block">
                                                     <strong style="color: red;">{{ $errors->first('icons') }}</strong>
@@ -567,7 +567,7 @@
                                         <div class="form-group">
                                             <label class="control-label"> @lang('messages.options_description') </label>
                                             <input name="options_description" type="color" class="form-control"
-                                                   value="{{ $user->az_color == null ? null : $user->az_color->options_description }}">
+                                                   value="{{ $user->az_color?->options_description }}">
                                             @if ($errors->has('options_description'))
                                                 <span class="help-block">
                                                     <strong
@@ -578,7 +578,7 @@
                                         <div class="form-group">
                                             <label class="control-label"> @lang('messages.background') </label>
                                             <input name="background" type="color" class="form-control"
-                                                   value="{{ $user->az_color == null ? null : $user->az_color->background }}">
+                                                   value="{{ $user->az_color?->background }}">
                                             @if ($errors->has('background'))
                                                 <span class="help-block">
                                                     <strong
@@ -589,7 +589,7 @@
                                         <div class="form-group">
                                             <label class="control-label"> @lang('messages.product_background') </label>
                                             <input name="product_background" type="color" class="form-control"
-                                                   value="{{ $user->az_color == null ? null : $user->az_color->product_background }}">
+                                                   value="{{ $user->az_color?->product_background }}">
                                             @if ($errors->has('product_background'))
                                                 <span class="help-block">
                                                     <strong
@@ -597,17 +597,17 @@
                                                 </span>
                                             @endif
                                         </div>
-{{--                                        <div class="form-group">--}}
-{{--                                            <label class="control-label"> @lang('messages.category_background') </label>--}}
-{{--                                            <input name="category_background" type="color" class="form-control"--}}
-{{--                                                   value="{{ $user->color == null ? null : $user->color->category_background }}">--}}
-{{--                                            @if ($errors->has('category_background'))--}}
-{{--                                                <span class="help-block">--}}
-{{--                                                    <strong--}}
-{{--                                                        style="color: red;">{{ $errors->first('category_background') }}</strong>--}}
-{{--                                                </span>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
+                                        <div class="form-group">
+                                            <label class="control-label"> @lang('messages.category_background') </label>
+                                            <input name="category_background" type="color" class="form-control"
+                                                   value="{{ $user->az_color?->category_background }}">
+                                            @if ($errors->has('category_background'))
+                                                <span class="help-block">
+                                                    <strong
+                                                        style="color: red;">{{ $errors->first('category_background') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="submit"

@@ -1,4 +1,4 @@
-<div class="card__container swiper">
+<div class="card__container swiper" style="background-color: {{$restaurant->az_color?->category_background}} !important;">
     <div class="card__content">
         <div class="swiper-wrapper">
             @if($categories->count() > 0)
@@ -14,7 +14,8 @@
 
                             <div class="card__data">
                                 <h3 class="card__name">
-                                    <a href="javascript:;" id="{{$category->id}}" class="category_item">
+                                    <a href="javascript:;" id="{{$category->id}}" class="category_item"
+                                       style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
                                         {{app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en}}
                                     </a>
                                 </h3>

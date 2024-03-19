@@ -44,14 +44,14 @@
 </head>
 <body>
 
-<div class="mycontainer">
+<div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
     <header
-        class="d-flex align-items-center justify-content-between bg-white p-3"
+        class="d-flex align-items-center justify-content-between  p-3"
     >
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
         </a>
-        <h5>@lang('messages.login')</h5>
+        <h5 style="color: {{$restaurant->az_color?->main_heads}} !important;">@lang('messages.login')</h5>
         @if(app()->getLocale() == 'ar')
             <a href="{{route('language' , 'en')}}">
                 En
@@ -74,7 +74,7 @@
             </div>
         @endif
         <div
-            class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center bg-white"
+            class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center"
         >
             <br><br><br>
             <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="75" height="75" alt="logo" />
@@ -83,8 +83,11 @@
                 <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
                 <div class="m-2 px-1 container_form">
                     <div class="phone_number">
-                        <label for="type_company"> @lang('messages.country')</label>
-                        <select name="country_id" class="form-control" required>
+                        <label for="type_company" style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
+                            @lang('messages.country')
+                        </label>
+                        <select name="country_id" class="form-control"
+                                style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important;" required>
                             <option disabled  selected> @lang('messages.choose_one') </option>
                             @foreach($countries as $country)
                                 <option value="{{$country->id}}">
@@ -101,13 +104,15 @@
                 </div>
                 <div class="m-2 px-1 container_form">
                     <div class="phone_number">
-                        <label for="type_company"> @lang('messages.phone_number') :</label>
+                        <label for="type_company" style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
+                            @lang('messages.phone_number') :
+                        </label>
                         <div class="container_input">
-                            <i class="fa fa-phone"></i>
+                            <i class="fa fa-phone" style="color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>
                             <input
-                                style="direction: rtl"
                                 type="tel"
                                 id="phone_number"
+                                style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important; direction: rtl"
                                 name="phone_number"
                                 value="{{old('phone_number')}}"
                                 placeholder="@lang('messages.phone_number')"
@@ -121,7 +126,7 @@
                         @endif
                     </div>
                 </div>
-                <input type="submit" value="@lang('messages.login')" class="my-5" />
+                <input type="submit" value="@lang('messages.login')" class="my-5" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"/>
             </form>
         </div>
     </main>

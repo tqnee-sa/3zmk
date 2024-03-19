@@ -43,14 +43,16 @@
 
 </head>
 <body>
-<div class="mycontainer">
+<div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
     <header
-        class="d-flex align-items-center justify-content-between bg-white p-3"
+        class="d-flex align-items-center {{$restaurant->az_color == null ? 'bg-white' : ''}} justify-content-between p-3"
     >
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
         </a>
-        <h5>@lang('messages.my_account')</h5>
+        <h5 style="color: {{$restaurant->az_color?->main_heads}} !important;">
+            @lang('messages.my_account')
+        </h5>
         @if(app()->getLocale() == 'ar')
             <a href="{{route('language' , 'en')}}">
                 En
@@ -64,8 +66,7 @@
     <main>
         @include('flash::message')
         <div
-            class="my_account d-flex flex-column align-items-center px-1 m-3 justify-content-center bg-white"
-        >
+            class="my_account d-flex flex-column align-items-center px-1 m-3 {{$restaurant->az_color == null ? 'bg-white' : ''}} justify-content-center">
             <br><br><br>
             <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="75" height="75" alt="logo" />
             <br>
@@ -75,7 +76,7 @@
                     <div class="name">
                         <label for="name">@lang('messages.name') :</label>
                         <div class="container_input">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-user" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input type="text" id="name" name="name" value="{{$user->name}}" placeholder="@lang('messages.name')" />
                         </div>
                         @if ($errors->has('name'))
@@ -87,7 +88,7 @@
                     <div class="email">
                         <label for="name">@lang('messages.email') :</label>
                         <div class="container_input">
-                            <i class="fa-solid fa-envelope"></i>
+                            <i class="fa-solid fa-envelope" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input
                                 type="email"
                                 id="email"
@@ -105,7 +106,7 @@
                     <div class="password">
                         <label for="name">@lang('messages.password') :</label>
                         <div class="container_input">
-                            <i class="fa-solid fa-envelope"></i>
+                            <i class="fa-solid fa-key" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input
                                 type="password"
                                 id="password"
@@ -122,7 +123,7 @@
                     <div class="password_confirmation">
                         <label for="name">@lang('messages.password_confirmation') :</label>
                         <div class="container_input">
-                            <i class="fa-solid fa-envelope"></i>
+                            <i class="fa-solid fa-key" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input
                                 type="password"
                                 id="password"
@@ -139,7 +140,7 @@
                     <div class="name_company">
                         <label for="name_company">@lang('messages.company_name') :</label>
                         <div class="container_input">
-                            <i class="fa-solid fa-building"></i>
+                            <i class="fa-solid fa-building" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input
                                 type="text"
                                 id="name_company"
@@ -157,7 +158,7 @@
                     <div class="type_company">
                         <label for="type_company">@lang('messages.company_type') :</label>
                         <div class="container_input">
-                            <i class="fa fa-email"></i>
+                            <i class="fa fa-email" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input
                                 type="text"
                                 id="type_company"
@@ -175,7 +176,7 @@
                     <div class="phone_number">
                         <label for="type_company"> @lang('messages.contact_number') :</label>
                         <div class="container_input">
-                            <i class="fa fa-phone"></i>
+                            <i class="fa fa-phone" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             <input
                                 style="direction: rtl"
                                 type="tel"
@@ -192,7 +193,7 @@
                         @endif
                     </div>
                 </div>
-                <input type="submit" value="@lang('messages.edit')" class="my-5" />
+                <input type="submit" style="background-color: {{$restaurant->az_color?->icons}} !important;" value="@lang('messages.edit')" class="my-5" />
             </form>
         </div>
     </main>

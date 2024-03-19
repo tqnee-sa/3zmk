@@ -35,29 +35,26 @@
     </style>
 </head>
 <body>
-<div class="mycontainer">
+<div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
     <header
-        class="d-flex align-items-center justify-content-between bg-white p-3">
+        class="d-flex align-items-center justify-content-between {{$restaurant->az_color == null ? 'bg-white' : ''}} p-3">
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
         </a>
-        <h5>@lang('messages.about_app')</h5>
-        <i class="fa-regular fa-bell"></i>
+        <h5 style="color: {{$restaurant->az_color?->main_heads}} !important;">@lang('messages.about_app')</h5>
+        <i class="fa-regular fa"></i>
     </header>
     <div
-        class="about_us d-flex flex-column align-items-center justify-content-center">
+        class="about_us d-flex flex-column align-items-center {{$restaurant->az_color == null ? 'bg-white' : ''}} justify-content-center">
         <br>
         <br>
-        <br>
-        <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->logo)}}" width="80" height="80" alt="logo"/>
-        <br>
-        <br>
-        <br>
-        <p class="bg-white p-4">
+        <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="80" height="80" alt="logo"/>
+
+        <h6 style="color: {{$restaurant->az_color?->options_description}} !important;" class="p-4">
             @if($about)
                 {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $about->about_ar)) : strip_tags(str_replace('&nbsp;', ' ', $about->about_en))}}
             @endif
-        </p>
+        </h6>
 
     </div>
     @include('website.layout.footer')

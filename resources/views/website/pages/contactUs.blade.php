@@ -30,54 +30,63 @@
     </style>
 </head>
 <body>
-<div class="mycontainer contact_us">
+<div class="mycontainer contact_us" style="background-color: {{$restaurant->az_color?->background}} !important;">
     <header
-        class="d-flex align-items-center justify-content-between bg-white p-3"
+        class="d-flex align-items-center justify-content-between p-3 {{$restaurant->az_color == null ? 'bg-white' : ''}}"
     >
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
         </a>
-        <h5>
+        <h5 style="color: {{$restaurant->az_color?->main_heads}} !important;">
             @lang('messages.contact_us')
         </h5>
-        <i class="fa-regular fa-bell"></i>
+        <i class="fa-regular fa-"></i>
     </header>
     @include('flash::message')
     <main>
         <form method="post" action="{{route('restaurantVisitorContactUsSend' , $restaurant->name_barcode)}}">
             @csrf
-            <div class="bg-white m-3 py-4 px-3 container_form">
+            <div class=" m-3 py-4 px-3 container_form {{$restaurant->az_color == null ? 'bg-white' : ''}}">
                 <div class="name">
-                    <label for="name">@lang('messages.name') : </label>
+                    <label for="name" style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                        @lang('messages.name') :
+                    </label>
                     <div class="container_input">
-                        <i class="fa fa-user"></i>
-                        <input type="text" id="name" name="name" placeholder="@lang('messages.name')"/>
+                        <i class="fa fa-user" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                        <input type="text" id="name" name="name" placeholder="@lang('messages.name')" style="background-color: {{$restaurant->az_color?->background}} !important;"/>
                     </div>
                 </div>
                 <div class="email">
-                    <label for="name">@lang('messages.email') :</label>
+                    <label for="name" style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                        @lang('messages.email') :
+                    </label>
                     <div class="container_input">
-                        <i class="fa-solid fa-envelope"></i>
+                        <i class="fa-solid fa-envelope"
+                           style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                         <input
                             name="email"
                             type="email"
                             id="email"
                             placeholder="@lang('messages.email')"
+                            style="background-color: {{$restaurant->az_color?->background}} !important;"
                         />
                     </div>
                 </div>
                 <div class="message">
-                    <label for="message">@lang('messages.message') :</label>
+                    <label for="message" style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                        @lang('messages.message') :
+                    </label>
                     <div class="container_input">
                         <textarea
                             id="message"
+                            style="background-color: {{$restaurant->az_color?->background}} !important;"
                             name="message"
                             placeholder="@lang('messages.message')"
                             rows="5"></textarea>
                     </div>
                 </div>
             </div>
-            <input type="submit" value="@lang('messages.send')"/>
+            <input type="submit" value="@lang('messages.send')" style="background-color: {{$restaurant->az_color?->icons}} !important;"/>
         </form>
     </main>
     @include('website.layout.footer')

@@ -329,6 +329,7 @@ return [
     'options_description' => 'الأضافات والوصف',
     'background' => 'الخلفية',
     'product_background' => 'خلفية المنتجات',
-    'category_background' => 'خلفية الأقسام الرأسية',
+    'category_background' => 'خلفية الأقسام',
     'reset_to_main' => 'الرجوع الي الألوان الأصلية',
+    'invite_me' => 'اعزمني',
 ];

@@ -31,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
 <body>
-<div class="mycontainer">
+<div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
     @include('website.layout.header')
     <br>
     <!-- <img src="./image//cartempty.jpg" -->

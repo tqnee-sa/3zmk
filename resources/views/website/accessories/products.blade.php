@@ -23,11 +23,11 @@
         background-color: #e1ca6c;
     }
 </style>
-<div class="show_meals bg-white p-3">
+<div class="show_meals bg-white p-3" style="background-color: {{$restaurant->az_color?->background}} !important;">
     @if($products->count() > 0)
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button
+                <button style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
                     class="nav-link {{$restaurant->az_info->menu_show_type == 'style3' ? 'active' : ''}}"
                     id="home-tab"
                     data-bs-toggle="tab"
@@ -41,7 +41,7 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button
+                <button style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
                     class="nav-link {{$restaurant->az_info->menu_show_type == 'style2' ? 'active' : ''}}"
                     id="profile-tab"
                     data-bs-toggle="tab"
@@ -55,7 +55,7 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button
+                <button style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
                     class="nav-link {{$restaurant->az_info->menu_show_type == 'style1' ? 'active' : ''}}"
                     id="contact-tab"
                     data-bs-toggle="tab"
@@ -92,8 +92,10 @@
                                 ->whatsapp()
                                 ->reddit();
                         @endphp
-                        <div class="col-6 mt-3">
-                            <div class="list_Galler th_large p-2" id="product1">
+                        <div class="col-6 mt-3" >
+                            <div class="list_Galler th_large p-2"
+                                 style="background-color: {{$restaurant->az_color?->product_background}} !important;"
+                                 id="product1">
                                 <div class="image">
                                     <a href='{{route('product_details' , $product->id)}}'>
                                         <img src="{{asset('/uploads/products/' . $product->photo)}}" alt=""/>
@@ -101,13 +103,15 @@
                                 </div>
                                 <div class="content_list p-2">
                                     <h3>
-                                        <a href='{{route('product_details' , $product->id)}}'>
+                                        <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
+                                            href='{{route('product_details' , $product->id)}}'>
                                             {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                         </a>
                                     </h3>
                                     <p>
-                                        <a href='{{route('product_details' , $product->id)}}'>
-                                            {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
+                                        <a style="color: {{$restaurant->az_color?->options_description}} !important;"
+                                            href='{{route('product_details' , $product->id)}}'>
+                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}
                                         </a>
                                     </p>
                                     <div
@@ -120,15 +124,18 @@
                                                 data-product-id="product1"
                                             >
                                                 <a href='{{route('product_details' , $product->id)}}'>
-                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                    <i style="background-color: {{$restaurant->az_color?->icons}} !important;"
+                                                        class="fa-solid fa-cart-plus"></i>
                                                 </a>
                                             </button>
-                                            <button class="share_btn" id="{{$product->id}}">
-                                                <i class="fa-solid fa-share-nodes"></i>
+                                            <button
+                                                class="share_btn" id="{{$product->id}}">
+                                                <i style="background-color: {{$restaurant->az_color?->icons}} !important;"
+                                                    class="fa-solid fa-share-nodes"></i>
                                             </button>
                                         </div>
-                                        <div class="price">
-                                            <span style="font-size: 13px">{{$product->price}} </span>
+                                        <div class="price" style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                            <span style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}" >{{$product->price}} </span>
                                             <small>
                                                 {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
                                             </small>
@@ -164,7 +171,7 @@
                             ->whatsapp()
                             ->reddit();
                     @endphp
-                    <div class="list_Gallery mt-3">
+                    <div class="list_Gallery mt-3" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
                         <div class="image">
                             <a href='{{route('product_details' , $product->id)}}'>
                                 <img src="{{asset('/uploads/products/'.$product->photo)}}" alt=""/>
@@ -172,12 +179,14 @@
                         </div>
                         <div class="content_list p-2">
                             <h3>
-                                <a href='{{route('product_details' , $product->id)}}'>
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
+                                    href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                 </a>
                             </h3>
                             <p>
-                                <a href='{{route('product_details' , $product->id)}}'>
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
+                                    href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
                                 </a>
                             </p>
@@ -186,15 +195,21 @@
                             >
                                 <div class="action">
                                     <a href='{{route('product_details' , $product->id)}}'>
-                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <i class="fa-solid fa-cart-plus"
+                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>
                                     </a>
                                     <button class="share2_btn" id="{{$product->id}}">
-                                        <i class="fa-solid fa-share-nodes"></i>
+                                        <i class="fa-solid fa-share-nodes"
+                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>
                                     </button>
                                 </div>
-                                <div class="price">
-                                    <span>{{$product->price}}</span>
-                                    <small> {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}</small>
+                                <div class="price" style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                    <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                        {{$product->price}}
+                                    </span>
+                                    <small>
+                                        {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                    </small>
                                 </div>
                             </div>
                             <div style="display: none" class="shareBtn" id="share2Div-{{$product->id}}">
@@ -227,7 +242,9 @@
                             ->whatsapp()
                             ->reddit();
                     @endphp
-                    <div class="list mt-3 d-flex align-items-center gap-2">
+                    <div class="list mt-3 d-flex align-items-center gap-2"
+                         style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;"
+                    >
                         <div class="image">
                             <a href='{{route('product_details' , $product->id)}}'>
                                 <img src="{{asset('/uploads/products/'.$product->photo)}}" alt=""/>
@@ -235,12 +252,14 @@
                         </div>
                         <div class="content_list p-2 w-100">
                             <h3>
-                                <a href='{{route('product_details' , $product->id)}}'>
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
+                                    href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                 </a>
                             </h3>
                             <p>
-                                <a href='{{route('product_details' , $product->id)}}'>
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
+                                    href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
                                 </a>
                             </p>
@@ -249,14 +268,16 @@
                             >
                                 <div class="action">
                                     <a href='{{route('product_details' , $product->id)}}'>
-                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <i style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"
+                                            class="fa-solid fa-cart-plus"></i>
                                     </a>
                                     <button class="share3_btn" id="{{$product->id}}">
-                                        <i class="fa-solid fa-share-nodes"></i>
+                                        <i style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"
+                                            class="fa-solid fa-share-nodes"></i>
                                     </button>
                                 </div>
-                                <div class="price">
-                                    <span>{{$product->price}}</span>
+                                <div class="price" style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                    <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">{{$product->price}}</span>
                                     <small>{{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}</small>
                                 </div>
                             </div>

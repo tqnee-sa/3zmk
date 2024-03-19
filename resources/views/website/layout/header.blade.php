@@ -1,4 +1,4 @@
-<header
+<header style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important;"
     class="bg-white p-3 d-flex align-items-center justify-content-between"
 >
     <!-- show mobile -->
@@ -10,11 +10,12 @@
             data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight"
         >
-            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-bars" ></i>
         </button>
 
         <div
             class="offcanvas offcanvas-end offcanvas_mobile"
+            style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important;"
             tabindex="-1"
             id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel"
@@ -33,29 +34,29 @@
                         <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="3azmak_title"/>
                     </div>
                     @if(auth()->guard('web')->check())
-                        <h2 class="name">
+                        <h2 class="name" style="color: {{$restaurant->az_color?->main_heads}} !important;">
                             {{auth()->guard('web')->user()->name}}
                         </h2>
                     @else
-                        <button class="joinUs_btn">
+                        <button class="btn" style="background-color: {{$restaurant->az_color?->icons}} !important; width: 135px">
                             <a href="{{route('AZUserLogin' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-regular fa-star mx-1"></i>
                                 @lang('messages.login')
                             </a>
                         </button>
                     @endif
                     <ul class="p-0">
                         <li class="my-2">
-                            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa fa-home mx-1"></i>
+                            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                <i class="fa fa-home mx-1" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.home')
                             </a>
                         </li>
                         <hr/>
                         @if(auth()->guard('web')->check())
                             <li class="my-2">
-                                <a href="{{route('AZUserProfile' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                    <i class="fa-regular fa-user mx-1"></i>
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
+                                    href="{{route('AZUserProfile' , [$restaurant->name_barcode , $branch->name_en])}}">
+                                    <i class="fa-regular fa-user mx-1" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     @lang('messages.my_account')
                                 </a>
                             </li>
@@ -66,22 +67,28 @@
                         </li>
                         <hr /> -->
                         <li class="my-2">
-                            <a href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-solid fa-file-contract mx-2"></i>
+                            <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
+                                href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
+                                <i class="fa-solid fa-file-contract mx-2"
+                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.terms_conditions')
                             </a>
                         </li>
                         <hr/>
                         <li class="my-2">
-                            <a href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-solid fa-envelope mx-2"></i>
+                            <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
+                                href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
+                                <i class="fa-solid fa-envelope mx-2"
+                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.contact_us')
                             </a>
                         </li>
                         <hr/>
                         <li class="my-2">
-                            <a href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-solid fa-circle-exclamation mx-2"></i>
+                            <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
+                                href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
+                                <i class="fa-solid fa-circle-exclamation mx-2"
+                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.about_app')
                             </a>
                         </li>
@@ -91,8 +98,10 @@
                         {{--                        <a href="#" class="joinUs_btn">--}}
                         {{--                            @lang('messages.logout')--}}
                         {{--                        </a>--}}
-                        <a onclick="document.getElementById('logout_form').submit()" class="dropdown-item">
-                            <i class="fas fa-key"></i>
+                        <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
+                            onclick="document.getElementById('logout_form').submit()" class="dropdown-item">
+                            <i class="fas fa-key"
+                               style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             @lang('messages.logout')
                         </a>
                         <form style="display: none;" id="logout_form"
@@ -101,12 +110,12 @@
                             {!! csrf_field() !!}
                         </form>
                     @else
-                        <button class="joinUs_btn">
-                            <a href="{{route('AZUserRegister' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-regular fa-star mx-1"></i>
-                                @lang('messages.join_us')
-                            </a>
-                        </button>
+{{--                        <button class="joinUs_btn">--}}
+{{--                            <a href="{{route('AZUserRegister' , [$restaurant->name_barcode , $branch->name_en])}}">--}}
+{{--                                <i class="fa-regular fa-star mx-1"></i>--}}
+{{--                                @lang('messages.join_us')--}}
+{{--                            </a>--}}
+{{--                        </button>--}}
                     @endif
                 </div>
             </div>
@@ -117,12 +126,10 @@
         <div class="icons">
             @if(app()->getLocale() == 'ar')
                 <a href="{{route('language' , 'en')}}">
-                    <i class="fa-solid fa-globe mx-2"></i>
                     En
                 </a>
             @else
                 <a href="{{route('language' , 'ar')}}">
-                    <i class="fa-solid fa-globe mx-2"></i>
                     ع
                 </a>
             @endif

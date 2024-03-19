@@ -34,20 +34,22 @@
 
 </head>
 <body>
-<div class="mycontainer">
+<div class="mycontainer"  style="background-color: {{$restaurant->az_color?->background}} !important;">
     <header
-        class="d-flex align-items-center justify-content-between bg-white p-3"
+        class="d-flex align-items-center {{$restaurant->az_color == null ? 'bg-white' : ''}} justify-content-between p-3"
     >
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
         </a>
-        <h5>@lang('messages.terms_conditions')</h5>
-        <i class="fa-regular fa-bell"></i>
+        <h5 style="color: {{$restaurant->az_color?->main_heads}} !important;">
+            @lang('messages.terms_conditions')
+        </h5>
+        <i class="fa-regular fa-"></i>
     </header>
     <div
-        class="about_us d-flex flex-column align-items-center p-3 justify-content-center bg-white my-3"
+        class="about_us d-flex flex-column align-items-center p-3 justify-content-center {{$restaurant->az_color == null ? 'bg-white' : ''}} my-3"
     >
-        <p>
+        <p style="color: {{$restaurant->az_color?->options_description}} !important;">
             @if($terms)
                 {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $terms->terms_ar)) : strip_tags(str_replace('&nbsp;', ' ', $terms->terms_en))}}
             @endif

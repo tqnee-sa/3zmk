@@ -1,6 +1,5 @@
 <style>
     .collapsible {
-        background-color: white;
         color: black;
         /*padding: 13px;*/
         width: 100%;
@@ -33,6 +32,7 @@
 </style>
 <div>
     <button
+        style="background-color: {{$restaurant->az_color?->icons}} !important;"
         class="btn btn_custom"
         type="button"
         data-bs-toggle="offcanvas"
@@ -42,14 +42,15 @@
         @lang('messages.change_branch')
     </button>
 
-    <div
+    <div style="background-color: {{$restaurant->az_color?->background}} !important;"
         class="offcanvas offcanvas-bottom"
         tabindex="-1"
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
     >
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel"
+                style="color: {{$restaurant->az_color?->main_heads}} !important;">
                 @lang('messages.choose_branch')
             </h5>
             <button
@@ -70,10 +71,11 @@
                 @csrf
                 @foreach($cities as $city)
                     <div>
-                        <a class="collapsible">
+                        <a class="collapsible"
+                           style="color: {{$restaurant->az_color?->main_heads}} !important;">
                             {{app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en}}
                         </a>
-                        <div class="content">
+                        <div class="content" style="background-color: {{$restaurant->az_color?->background}} !important;">
                             @foreach($city->branches as $zbranch)
                                 <input
                                     type="radio"
@@ -83,7 +85,7 @@
                                     required
                                     {{$zbranch->id == $branch->id ? 'checked' : ''}}
                                 />
-                                <label for="city{{$zbranch->id}}">
+                                <label for="city{{$zbranch->id}}" style="color: {{$restaurant->az_color?->options_description}} !important;">
                                     {{app()->getLocale() == 'ar' ? $zbranch->name_ar : $zbranch->name_en}}
                                 </label>
                                 <br>
@@ -92,7 +94,7 @@
                     </div>
                     <hr/>
                 @endforeach
-                <input type="submit" value="@lang('messages.change')"/>
+                <input type="submit" value="@lang('messages.change')" style="background-color: {{$restaurant->az_color?->icons}} !important;"/>
             </form>
         </div>
     </div>

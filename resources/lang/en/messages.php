@@ -329,4 +329,5 @@ return [
     'product_background' => 'Meals Background',
     'category_background' => 'Vertical Categories Background',
     'reset_to_main' => 'Back To Main Colors',
+    'invite_me' => 'Invite Me',
 ];

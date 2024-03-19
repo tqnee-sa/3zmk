@@ -5,6 +5,7 @@
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a href="{{url()->previous()}}"
+                       style="background-color: {{$restaurant->az_color ?->icons}} !important;"
                        class="nav-link"
                        role="tab"
                        aria-controls="pills-profile"
@@ -14,7 +15,7 @@
                 </li>
             </ul>
 
-            <div class="bg-white main_wrap">
+            <div class="{{$restaurant->az_color == null ? 'bg-white' : ''}} main_wrap">
 
                 <div class="inf_3azema">
                     <div class="image d-inline-block">
@@ -25,16 +26,17 @@
                     <form method="post" action="{{route('AZOrderInfoSubmit' , $order->id)}}">
                         @csrf
                         @if($order->user->name == null)
-                            <h5 class="text-center">
+                            <h5 class="text-center" style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
                                 @lang('messages.your_data')
                             </h5>
                             <div class="inner_form">
                                 <div class="name">
                                     <div class="container_input">
-                                        <i class="fa fa-user"></i>
+                                        <i class="fa fa-user" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                         <input
                                             type="text"
                                             id="name"
+                                            style="background-color: {{$restaurant->az_color?->background}} !important;"
                                             name="name"
                                             value="{{old('name')}}"
                                             placeholder="@lang('messages.yourName')"
@@ -48,11 +50,11 @@
                                 </div>
                                 <div class="phone_number">
                                     <div class="container_input">
-                                        <i class="fa fa-envelope"></i>
+                                        <i class="fa fa-envelope" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                         <input
-                                            style="direction: rtl"
                                             type="email"
                                             name="email"
+                                            style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"
                                             id="email"
                                             value="{{old('email')}}"
                                             placeholder="@lang('messages.yourEmail')"
@@ -73,10 +75,11 @@
                         <div class="inner_form">
                             <div class="name">
                                 <div class="container_input">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-user" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     <input
                                         type="text"
                                         id="name"
+                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"
                                         name="person_name"
                                         value="{{old('person_name')}}"
                                         placeholder="@lang('messages.personName')"
@@ -90,10 +93,9 @@
                             </div>
                             <div class="phone_number">
                                 <div class="container_input">
-                                    <i class="fa fa-phone"></i>
+                                    <i class="fa fa-phone" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     <input
-                                        style="direction: rtl"
-                                        type="tel"
+                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"                                        type="tel"
                                         name="person_phone"
                                         id="phone_number"
                                         value="{{old('person_phone')}}"
@@ -108,10 +110,9 @@
                             </div>
                             <div class="suitable">
                                 <div class="container_input">
-                                    <i class="fa-solid fa-heart"></i>
+                                    <i class="fa-solid fa-heart" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     <input
-                                        style="direction: rtl"
-                                        type="text"
+                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"                                        type="text"
                                         id="occasion"
                                         name="occasion"
                                         value="{{old('occasion')}}"
@@ -131,7 +132,7 @@
                                         id="message"
                                         placeholder="@lang('messages.message')"
                                         rows="5"
-                                        value="{{old('message')}}"
+                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"
                                         name="message"
                                     ></textarea>
                                 </div>
@@ -146,8 +147,9 @@
                             <hr>
                             <div class="container_input">
                                 <!-- <i class="fa fa-phone"></i> -->
-                                <label> @lang('messages.payment_by') </label>
-                                <select name="online_type" class="form-control" required>
+                                <label style="color: {{$restaurant->az_color ?->main_heads}} !important;"> @lang('messages.payment_by') </label>
+                                <select style="background-color: {{$restaurant->az_color ?->background}} !important;"
+                                    name="online_type" class="form-control" required>
                                     <option disabled selected> @lang('messages.choose_one') </option>
                                     <option value="2"> @lang('messages.visa') </option>
                                     <option value="6"> @lang('messages.mada') </option>
@@ -162,7 +164,7 @@
                         @endif
 
 
-                        <button class="global_btn d-block m-auto" type="submit">
+                        <button style="background-color: {{$restaurant->az_color ?->icons}} !important;" class="global_btn d-block m-auto" type="submit">
                             @lang('messages.next')
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
@@ -172,3 +174,4 @@
         </div>
     </main>
 @endsection
+

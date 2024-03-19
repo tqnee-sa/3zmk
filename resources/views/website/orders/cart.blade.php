@@ -7,6 +7,7 @@
                     <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}"
                        class="nav-link"
                        role="tab"
+                       style="background-color: {{$restaurant->az_color?->icons}} !important;"
                        aria-controls="pills-profile"
                        aria-selected="false">
                         <i class="fa fa-arrow-left"></i>
@@ -17,6 +18,7 @@
                         <a href="{{route('emptyCart' , $order->id)}}"
                            class="nav-link"
                            role="tab"
+                           style="background-color: {{$restaurant->az_color?->icons}} !important;"
                            aria-controls="pills-profile"
                            aria-selected="false"
                            style="color: red"
@@ -30,14 +32,14 @@
             @if($order)
                 <div class="tab-content" id="pills-tabContent">
                     <div
-                        class="tab-pane fade show active"
+                        class="tab-pane fade show active {{$restaurant->az_color == null ? 'bg-white' : ''}}"
                         id="pills-home"
                         role="tabpanel"
                         aria-labelledby="pills-home-tab">
                         <!-- <div id="cartItemsContainer" class="p-5 m-auto">
                       </div> -->
                         <div calss="cartItemsContainer" class="m-auto">
-                            <div class="bg-white main_wrap">
+                            <div class="main_wrap" style="background-color: {{$restaurant->az_color?->product_background}} !important;">
                                 @if($order->items->count() > 0)
                                     @foreach($order->items as $item)
                                         <div class="cart-item">
@@ -46,28 +48,37 @@
                                                      alt=""/>
                                             </div>
                                             <div class="details">
-                                                <h6>
+                                                <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
                                                     {{app()->getLocale() == 'ar' ?  $item->product->name_ar : $item->product->name_en}}
                                                     {{$item->product_count}} x
                                                 </h6>
-                                                <p class="my-1">
+                                                <p style="color: {{$restaurant->az_color?->options_description}} !important;" class="my-1">
                                                     {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $item->product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $item->product->description_en))}}
                                                 </p>
                                                 <div class="action d-flex align-items-center justify-content-between">
                                                     <div>
-                                                        <span>{{$item->price}}</span>
-                                                        <small>{{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}</small>
+                                                        <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                            {{$item->price}}
+                                                        </span>
+                                                        <small style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                            {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
+                                                        </small>
                                                     </div>
                                                 </div>
                                             </div>
                                             @if($item->size)
                                                 <div class="details">
-                                                    <h6>@lang('messages.sizes')</h6>
+                                                    <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                                        @lang('messages.sizes')</h6>
                                                     <div
                                                         class="action d-flex align-items-center justify-content-between">
                                                         <div>
-                                                            <span>{{$item->size->price}}</span>
-                                                            <small>{{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}</small>
+                                                            <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                                {{$item->size->price}}
+                                                            </span>
+                                                            <small style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                                {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
+                                                            </small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +100,7 @@
                                                 <div class="details">
                                                     @foreach($item->options as $option)
                                                         <div class="row">
-                                                            <h6>
+                                                            <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
                                                                 {{app()->getLocale() == 'ar' ? $option->option->name_ar : $option->option->name_en }}
                                                                 {{$option->option_count}} x
                                                             </h6>
@@ -97,8 +108,12 @@
                                                                 class="action d-flex align-items-center justify-content-between"
                                                                 style="padding-right: 400px;">
                                                                 <div>
-                                                                    <span>{{$option->option->price * $option->option_count}}</span>
-                                                                    <small>{{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}</small>
+                                                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                                        {{$option->option->price * $option->option_count}}
+                                                                    </span>
+                                                                    <small style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                                        {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
+                                                                    </small>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -115,16 +130,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="total bg-white px-4 py-2" id="total_followPayment">
-                    <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="total px-4 {{$restaurant->az_color == null ? 'bg-white' : ''}} py-2" id="total_followPayment">
+                    <div class="d-flex align-items-center justify-content-between w-100 ">
                         <div class="total_price">
-                            <p>@lang('messages.total_price')</p>
+                            <p style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                @lang('messages.total_price')
+                            </p>
                             <p>
-                                <span> {{$order->total_price}}</span>
+                                <span style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                    {{$order->total_price}}
+                                </span>
                                 {{app()->getLocale() == 'ar' ? $order->restaurant->country->currency_ar : $order->restaurant->country->currency_en}}
                             </p>
                         </div>
-                        <div class="payment">
+                        <div class="payment" style="background-color: {{$restaurant->az_color?->icons}} !important;">
                             <a href="{{route('AZOrderInfo' , $order->id)}}">
                                 @lang('messages.next')
                                 <i class="fa-solid fa-angle-left"></i>
