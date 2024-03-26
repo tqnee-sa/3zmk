@@ -16,6 +16,7 @@ class AZRestaurantInfo extends Model
         'description_ar',
         'description_en',
         'lang',
+        'commission_payment',
     ];
 
     public function restaurant()

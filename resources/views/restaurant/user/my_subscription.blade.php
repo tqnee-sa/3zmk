@@ -339,6 +339,28 @@
                                                 </div>
                                             @endif
                                         </div>
+                                        <div class="form-group">
+                                            <label for="cart"
+                                                   class="col-sm-12 control-label">@lang('messages.commission_style')</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="radio" name="commission_payment" value="restaurant"
+                                                    {{ $user->az_info->commission_payment == 'restaurant' ? 'checked' : '' }}>
+                                                <i class=" fas fa-user"></i>
+                                                @lang('messages.restaurant')
+                                                <input type="radio" name="commission_payment" value="user"
+                                                    {{ $user->az_info->commission_payment == 'user' ? 'checked' : '' }}>
+                                                <i class="far fa-user"></i>
+                                                @lang('messages.user')
+
+                                            </div>
+                                            @if ($errors->has('commission_payment'))
+                                                <div class="alert alert-danger">
+                                                    <button class="close" data-close="alert"></button>
+                                                    <span> {{ $errors->first('commission_payment') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
                                         <h6>@lang('messages.az_restaurant_description')</h6>
                                         <div class="form-group">
                                             <label class="control-label"> @lang('messages.description_ar') </label>

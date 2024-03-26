@@ -148,7 +148,14 @@
                                                                     </h6>
                                                                     <h6 class="text-center btn btn-info">
                                                                         <div class="text-center">
-                                                                            <span>{{$option->option->price * $option->option_count}}</span>
+                                                                            @php
+                                                                                if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
+                                                                                      $option_price = (($item->product->restaurant->az_commission * $option->option->price) / 100) + $option->option->price;
+                                                                                else:
+                                                                                      $option_price = $option->option->price;
+                                                                                endif;
+                                                                            @endphp
+                                                                            <span>{{$option_price * $option->option_count}}</span>
                                                                             <small>{{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}</small>
                                                                         </div>
                                                                     </h6>

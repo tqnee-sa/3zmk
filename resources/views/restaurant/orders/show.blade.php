@@ -137,7 +137,43 @@
                             </div>
                             <!-- /.col -->
                         </div>
-                        <!-- /.row -->
+
+                        @if($item->options->count() > 0)
+                            {{--item options--}}
+                            <div>
+                                <h6>@lang('messages.options')</h6>
+                                <br>
+                                <div class="details">
+                                    @foreach($item->options as $option)
+                                        <div class="total col-sm-6"
+                                             id="total_followPayment">
+                                            <div
+                                                class="d-flex align-items-center justify-content-between w-100">
+                                                <h6>
+                                                    {{app()->getLocale() == 'ar' ? $option->option->name_ar : $option->option->name_en }}
+                                                    <span style="color: red">{{$option->option_count}} x</span>
+                                                </h6>
+                                                <h6>
+                                                    <div>
+                                                        @php
+                                                            if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
+                                                                  $option_price = (($item->product->restaurant->az_commission * $option->option->price) / 100) + $option->option->price;
+                                                            else:
+                                                                  $option_price = $option->option->price;
+                                                            endif;
+                                                        @endphp
+                                                        <span>{{$option_price * $option->option_count}}</span>
+                                                        <small>{{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}</small>
+                                                    </div>
+                                                </h6>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <hr>
+                        @endif
 
                         <div class="row">
                             <!-- accepted payments column -->

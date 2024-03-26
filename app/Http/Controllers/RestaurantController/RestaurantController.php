@@ -191,6 +191,7 @@ class RestaurantController extends Controller
             'menu_show_type' => 'required|in:style1,style2,style3',
             'description_ar' => 'nullable|string',
             'description_en' => 'nullable|string',
+            'commission_payment' => 'nullable|in:user,restaurant'
         ]);
 
         if ($request->logo != null):
@@ -202,7 +203,8 @@ class RestaurantController extends Controller
             'lang'  => $request->lang,
             'menu_show_type' => $request->menu_show_type,
             'description_ar' => $request->description_ar,
-            'description_en' => $request->description_en
+            'description_en' => $request->description_en,
+            'commission_payment' => $request->commission_payment,
         ]);
         flash(trans('messages.updated'))->success();
         return redirect()->back();

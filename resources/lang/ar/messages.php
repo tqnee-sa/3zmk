@@ -332,4 +332,5 @@ return [
     'category_background' => 'خلفية الأقسام',
     'reset_to_main' => 'الرجوع الي الألوان الأصلية',
     'invite_me' => 'اعزمني',
+    'commission_style' => 'من سيقوم بدفع عمولة الطلبات ؟ ',
 ];

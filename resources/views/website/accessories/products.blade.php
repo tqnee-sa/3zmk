@@ -135,7 +135,14 @@
                                             </button>
                                         </div>
                                         <div class="price" style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                            <span style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}" >{{$product->price}} </span>
+                                            <span style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}" >
+                                                @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+{{--                                                    add the commission to product--}}
+                                                    {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                                @else
+                                                    {{$product->price}}
+                                                @endif
+                                            </span>
                                             <small>
                                                 {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
                                             </small>
@@ -205,7 +212,12 @@
                                 </div>
                                 <div class="price" style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
                                     <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
-                                        {{$product->price}}
+                                        @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                            {{--                                                    add the commission to product--}}
+                                            {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                        @else
+                                            {{$product->price}}
+                                        @endif
                                     </span>
                                     <small>
                                         {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
@@ -277,7 +289,14 @@
                                     </button>
                                 </div>
                                 <div class="price" style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
-                                    <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">{{$product->price}}</span>
+                                    <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                        @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                            {{--                                                    add the commission to product--}}
+                                            {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                        @else
+                                            {{$product->price}}
+                                        @endif
+                                    </span>
                                     <small>{{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}</small>
                                 </div>
                             </div>

@@ -12,7 +12,8 @@
         href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400&display=swap"
         rel="stylesheet"
     />
-    <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"  type="image/x-icon">
+    <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"
+          type="image/x-icon">
 
     <!-- //bootstrap -->
     <link rel="stylesheet" href="{{asset('site/css/bootstrap-grid.min.css')}}"/>
@@ -139,6 +140,7 @@
             font-size: 14px;
             /*!* -webkit-appearance: none;*/
         }
+
         .shareBtn ul {
             list-style-type: none;
             margin: 0;
@@ -158,18 +160,20 @@
             padding: 16px;
             text-decoration: none;
         }
+
         .shareBtn ul li a:hover {
             background-color: #e1ca6c;
         }
     </style>
 </head>
 <body>
-<div class="mycontainer bg-white" >
+<div class="mycontainer bg-white">
     <header
         style="background-color: {{$restaurant->az_color?->background}} !important;"
         class="d-flex align-items-center justify-content-between bg-white p-3"
     >
-        <a href="{{route('homeBranchIndex' , [$product->restaurant->name_barcode , $product->branch->name_en , $product->menu_category->id])}}" style='color: black'>
+        <a href="{{route('homeBranchIndex' , [$product->restaurant->name_barcode , $product->branch->name_en , $product->menu_category->id])}}"
+           style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
         </a>
         <h6 style="color: {{$restaurant->az_color?->main_heads}}">
@@ -225,20 +229,27 @@
             </div>
         </div>
         <!-- end slider -->
-        <div class="meals_deatails my-2 p-3" style="background-color: {{$restaurant->az_color?->background}} !important;">
+        <div class="meals_deatails my-2 p-3"
+             style="background-color: {{$restaurant->az_color?->background}} !important;">
             <h4 class="name_meal" style="color: {{$restaurant->az_color?->main_heads}}">
                 {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
             </h4>
             <p class="description_meal" style="color: {{$restaurant->az_color?->options_description}}">
                 {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
             </p>
-            <div class="choose_details pt-4 mb-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
+            <div class="choose_details pt-4 mb-2"
+                 style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
                 <div class="d-flex justify-content-between px-4">
                     <h4 style="color: {{$restaurant->az_color?->main_heads}}">
                         {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                     </h4>
                     <span class="main_prcie" style="color: {{$restaurant->az_color?->options_description}}">
-                        {{$product->price}}
+                        @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                            {{--                                                    add the commission to product--}}
+                            {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                        @else
+                            {{$product->price}}
+                        @endif
                         {{ app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en }}
                     </span>
                 </div>
@@ -253,13 +264,24 @@
                             </p>
                             @foreach($product->sizes as $size)
                                 @if($size->status == 'true')
+                                    @php
+                                        if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user'):
+                                              $size_price = (($product->restaurant->az_commission * $size->price) / 100) + $size->price;
+                                        else:
+                                              $size_price = $size->price;
+                                        endif;
+                                    @endphp
                                     <div class="my-3 d-flex">
-                                        <input type="radio" id="size-{{$size->id}}" class="size_class" name="size_id" data="{{$size->price}}" value="{{$size->id}}"/>
-                                        <label for="size-{{$size->id}}" style="color: {{$restaurant->az_color?->options_description}}">
+                                        <input type="radio" id="size-{{$size->id}}" class="size_class" name="size_id"
+                                               data="{{$size_price}}" value="{{$size->id}}"/>
+                                        <label for="size-{{$size->id}}"
+                                               style="color: {{$restaurant->az_color?->options_description}}">
                                             {{app()->getLocale() == 'ar' ? $size->name_ar : $size->name_en}}
                                         </label>
-                                        <div style="margin-right: 150px;color: {{$restaurant->az_color?->options_description}}">
-                                            {{$size->price}} {{ app()->getLocale() == 'ar' ? $size->product->restaurant->country->currency_ar : $size->product->restaurant->country->currency_en }}
+                                        <div
+                                            style="margin-right: 150px;color: {{$restaurant->az_color?->options_description}}">
+                                            {{$size_price}}
+                                            {{ app()->getLocale() == 'ar' ? $size->product->restaurant->country->currency_ar : $size->product->restaurant->country->currency_en }}
                                         </div>
                                     </div>
                                 @endif
@@ -306,25 +328,33 @@
                                                 <div>
                                                     <input type="checkbox" id="{{$option->id}}" name="options[]"
                                                            value="{{$option->option->id}}" class="optionCheckBox"/>
-                                                    <label for="option-{{$option->id}}" style="color: {{$restaurant->az_color?->options_description}}">
+                                                    <label for="option-{{$option->id}}"
+                                                           style="color: {{$restaurant->az_color?->options_description}}">
                                                         {{app()->getLocale() == 'ar' ? $option->option->name_ar : $option->option->name_en }}
                                                     </label>
                                                 </div>
                                                 <div style="text-align: left">
+                                                    @php
+                                                        if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user'):
+                                                              $option_price = (($product->restaurant->az_commission * $option->option->price) / 100) + $option->option->price;
+                                                        else:
+                                                              $option_price = $option->option->price;
+                                                        endif;
+                                                    @endphp
                                                     <button style="background-color: {{$restaurant->az_color?->icons}}"
-                                                        class="border-0 p-1 optionIncrease" data="{{$option->id}}"
+                                                            class="border-0 p-1 optionIncrease" data="{{$option->id}}"
                                                             id="optionIncrease-{{$option->id}}">+
                                                     </button>
                                                     <input name="option_count-{{$option->option->id}}" type="text"
                                                            id="option_count-{{$option->id}}" class="optionCount"
                                                            value="1">
                                                     <button style="background-color: {{$restaurant->az_color?->icons}}"
-                                                        class="border-0 p-1 optionDecrease" data="{{$option->id}}"
+                                                            class="border-0 p-1 optionDecrease" data="{{$option->id}}"
                                                             id="decreaseBtn1">-
                                                     </button>
                                                     <span id="option_price-{{$option->id}}"
-                                                          data="{{$option->option->price}}">
-                                                        {{$option->option->price}}
+                                                          data="{{$option_price}}">
+                                                        {{$option_price}}
                                                     </span>
                                                     <span id="choose_addValue"> </span>
                                                 </div>
@@ -337,20 +367,29 @@
                     </div>
                     <!-- end choose Add-ons -->
                     <div style="background-color: {{$restaurant->az_color?->product_background}}"
-                        class="addition text-white w-100 p-3 d-flex justify-content-between align-items-center">
+                         class="addition text-white w-100 p-3 d-flex justify-content-between align-items-center">
                         <div>
                             <button style="background-color: {{$restaurant->az_color?->icons}}"
-                                class="border-0 p-1" id="totalIncrease">+</button>
+                                    class="border-0 p-1" id="totalIncrease">+
+                            </button>
                             <input name="product_count" type="text" id="count" class="totalCount" value="1" readonly>
                             <button style="background-color: {{$restaurant->az_color?->icons}}"
-                                class="border-0 p-1" id="totalDecrease">-</button>
+                                    class="border-0 p-1" id="totalDecrease">-
+                            </button>
                         </div>
-                        <div class="price_addition" id="totalPrice">{{$product->price}}</div>
+                        <div class="price_addition" id="totalPrice">
+                            @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                {{--                                                    add the commission to product--}}
+                                {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                            @else
+                                {{$product->price}}
+                            @endif
+                        </div>
                         {{ app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en }}
 
                     </div>
-                    <input  style="background-color: {{$restaurant->az_color?->icons}}"
-                        type="submit" class="text-white btn btn-success" value="@lang('messages.add_to_cart')">
+                    <input style="background-color: {{$restaurant->az_color?->icons}}"
+                           type="submit" class="text-white btn btn-success" value="@lang('messages.add_to_cart')">
                 </form>
                 <!-- end form -->
             </div>
@@ -359,7 +398,7 @@
         <!-- end meals_deatails -->
         <div class="share_icon d-flex justify-content-end mx-3">
             <button style="background-color: {{$restaurant->az_color?->icons}}"
-                class="border-0 text-center" id="share">
+                    class="border-0 text-center" id="share">
                 <i class="fa-solid fa-share-nodes mx-2"></i>
                 @lang('messages.invite_me')
             </button>
@@ -374,7 +413,13 @@
 <script src="{{asset('site/js/bootstrap.bundle.js')}}"></script>
 <script>
     $(document).ready(function () {
-        var product_price = {{$product->price}};
+        var product_price =
+            @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                {{--                                                    add the commission to product--}}
+                {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                @else
+                {{$product->price}}
+                @endif;
         // sizes
         $('input:radio').change(function () {
             var size_prcie = $(this).attr('data');
@@ -446,7 +491,7 @@
             }
         });
 
-        $("#share").click(function(){
+        $("#share").click(function () {
             document.getElementById('shareDiv').style.display = 'block';
         });
 
@@ -456,8 +501,8 @@
     @if(Session::has('message'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.success("{{ session('message') }}");
     @endif
@@ -465,8 +510,8 @@
         @if(Session::has('error'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.error("{{ session('error') }}");
     @endif
@@ -474,8 +519,8 @@
         @if(Session::has('info'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.info("{{ session('info') }}");
     @endif
@@ -483,8 +528,8 @@
         @if(Session::has('warning'))
         toastr.options =
         {
-            "closeButton" : true,
-            "progressBar" : true
+            "closeButton": true,
+            "progressBar": true
         }
     toastr.warning("{{ session('warning') }}");
     @endif

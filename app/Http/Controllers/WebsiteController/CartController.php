@@ -46,6 +46,11 @@ class CartController extends Controller
             ->first();
         $product_count = $request->product_count;
         $order_price = $product_count * ($request->size_id ? AZProductSize::find($request->size_id)->price : $product->price);
+        if ($restaurant->az_info and $restaurant->az_info->commission_payment == 'user')
+        {
+            $order_commission = ($restaurant->az_commission * $order_price) / 100;
+            $order_price += $order_commission;
+        }
         if ($check_order) {
             $order = $check_order;
         } else {
@@ -80,6 +85,11 @@ class CartController extends Controller
                     'option_count' => $request->$option_count,
                 ]);
                 $option_price = AZOption::find($option)->price * $item_option->option_count;
+                if ($restaurant->az_info and $restaurant->az_info->commission_payment == 'user')
+                {
+                    $option_commission = ($restaurant->az_commission * $option_price) / 100;
+                    $option_price += $option_commission;
+                }
                 $order_price += $option_price;
             }
         }

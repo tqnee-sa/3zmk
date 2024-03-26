@@ -330,4 +330,5 @@ return [
     'category_background' => 'Vertical Categories Background',
     'reset_to_main' => 'Back To Main Colors',
     'invite_me' => 'Invite Me',
+    'commission_style' => 'How Will Pay Orders Commissions ? ',
 ];

@@ -74,7 +74,14 @@
                                                         class="action d-flex align-items-center justify-content-between">
                                                         <div>
                                                             <span style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                                                {{$item->size->price}}
+                                                                @php
+                                                                    if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
+                                                                          $size_price = (($item->product->restaurant->az_commission * $item->size->price) / 100) + $item->size->price;
+                                                                    else:
+                                                                          $size_price = $item->size->price;
+                                                                    endif;
+                                                                @endphp
+                                                                {{$size_price}}
                                                             </span>
                                                             <small style="color: {{$restaurant->az_color?->options_description}} !important;">
                                                                 {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
@@ -108,8 +115,15 @@
                                                                 class="action d-flex align-items-center justify-content-between"
                                                                 style="padding-right: 400px;">
                                                                 <div>
+                                                                    @php
+                                                                        if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
+                                                                              $option_price = (($item->product->restaurant->az_commission * $option->option->price) / 100) + $option->option->price;
+                                                                        else:
+                                                                              $option_price = $option->option->price;
+                                                                        endif;
+                                                                    @endphp
                                                                     <span style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                                                        {{$option->option->price * $option->option_count}}
+                                                                        {{$option_price * $option->option_count}}
                                                                     </span>
                                                                     <small style="color: {{$restaurant->az_color?->options_description}} !important;">
                                                                         {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
