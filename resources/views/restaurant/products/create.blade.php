@@ -104,7 +104,13 @@
                                     <select id="menu_category_id" name="menu_category_id[]" class="select2 form-control"
                                             multiple required>
                                         {{--                                        <option disabled selected> @lang('messages.choose_one') </option>--}}
-
+                                        @if($branches->count() == 1)
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}">
+                                                    {{app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en}}
+                                                </option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     @if ($errors->has('menu_category_id'))
                                         <span class="help-block">

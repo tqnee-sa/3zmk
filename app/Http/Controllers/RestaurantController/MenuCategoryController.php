@@ -7,7 +7,7 @@ use App\Models\Restaurant\Azmak\AZMenuCategory;
 use App\Models\Restaurant\Azmak\AZBranch;
 use App\Models\Restaurant\Azmak\AZMenuCategoryDay;
 use App\Models\Restaurant;
-use App\Models\RestaurantPoster;
+use App\Models\AZRestaurantPoster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -76,7 +76,7 @@ class MenuCategoryController extends Controller
         endif;
         $branches = AZBranch::whereRestaurantId($restaurant->id)
             ->get();
-        $posters = RestaurantPoster::whereRestaurantId($restaurant->id)->get();
+        $posters = AZRestaurantPoster::whereRestaurantId($restaurant->id)->get();
         return view('restaurant.menu_categories.create', compact('branches' , 'posters','restaurant'));
     }
 
@@ -110,7 +110,7 @@ class MenuCategoryController extends Controller
             'start_at' => 'sometimes',
             'end_at' => 'sometimes',
             'time' => 'sometimes|in:true,false',
-            'poster_id'         => 'nullable|exists:restaurant_posters,id',
+            'poster_id'         => 'nullable|exists:a_z_restaurant_posters,id',
         ]);
 
         if ($request->name_ar == null && $request->name_en == null) {
@@ -184,7 +184,7 @@ class MenuCategoryController extends Controller
         endif;
         $category = AZMenuCategory::findOrFail($id);
         $branches = AZBranch::whereRestaurantId($restaurant->id)->get();
-        $posters = RestaurantPoster::whereRestaurantId($restaurant->id)->get();
+        $posters = AZRestaurantPoster::whereRestaurantId($restaurant->id)->get();
         return view('restaurant.menu_categories.edit', compact('branches', 'posters','category'));
     }
 
@@ -211,7 +211,7 @@ class MenuCategoryController extends Controller
             'start_at' => 'sometimes',
             'end_at' => 'sometimes',
             'time' => 'sometimes|in:true,false',
-            'poster_id'         => 'nullable|exists:restaurant_posters,id',
+            'poster_id'         => 'nullable|exists:a_z_restaurant_posters,id',
         ]);
         if ($request->name_ar == null && $request->name_en == null) {
             flash(trans('messages.name_required'))->error();

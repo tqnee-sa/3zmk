@@ -53,8 +53,13 @@
 <aside class="main-sidebar elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('restaurant.home') }}" class="brand-link">
-        <img src="{{asset('/uploads/restaurants/logo/' . $user->az_logo)}}" alt="AdminLTE Logo" class="brand-image"
-             style="opacity: .8">
+        @if($user->az_logo)
+            <img src="{{asset('/uploads/restaurants/logo/' . $user->az_logo)}}" alt="AdminLTE Logo" class="brand-image"
+                 style="opacity: .8">
+        @else
+            <img src="{{asset('/3azmkheader.jpg')}}" alt="AdminLTE Logo" class="brand-image"
+                 style="opacity: .8">
+        @endif
         <span class="brand-text font-weight-light"> @lang('messages.control_panel') </span>
     </a>
     <!-- Sidebar -->
@@ -152,10 +157,22 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/posters') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-image"></i>
                             <span class="badge badge-info right">
-                                    {{ \App\Models\RestaurantPoster::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
-                                </span>
+                                {{ \App\Models\AZRestaurantPoster::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
                             <p>
                                 @lang('messages.posters')
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/restaurant/sensitivities') }}"
+                           class="nav-link {{ strpos(URL::current(), '/restaurant/sensitivities') !== false ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-image"></i>
+                            <span class="badge badge-info right">
+                                {{ \App\Models\AZRestaurantSensitivity::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
+                            <p>
+                                @lang('messages.sensitivities')
                             </p>
                         </a>
                     </li>

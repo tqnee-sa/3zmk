@@ -81,7 +81,7 @@
                                 @if(\Illuminate\Support\Facades\Auth::guard('restaurant')->user()->menu_arrange == 'true')
                                     <th> @lang('messages.arrange') </th>
                                 @endif
-                                <th> {{app()->getLocale() == 'ar' ? 'رابط القسم':'Category Link'}} </th>
+                                {{--                                <th> {{app()->getLocale() == 'ar' ? 'رابط القسم':'Category Link'}} </th>--}}
                                 <th> @lang('messages.sub_categories') </th>
                                 <th> @lang('messages.activity') </th>
                                 <th> @lang('messages.operations') </th>
@@ -155,21 +155,21 @@
                                             </a>
                                         </td>
                                     @endif
-                                    <td>
-                                        {{--                                        @if($category->branch->main == 'true')--}}
-                                        {{--                                            <a class="btn btn-secondary" target="_blank"--}}
-                                        {{--                                               href="{{route('sliverHome' , [$category->restaurant->name_barcode , $category->id])}}">--}}
-                                        {{--                                                <i class="fa fa-eye"></i>--}}
-                                        {{--                                                @lang('messages.show')--}}
-                                        {{--                                            </a>--}}
-                                        {{--                                        @else--}}
-                                        {{--                                            <a class="btn btn-secondary" target="_blank"--}}
-                                        {{--                                               href="{{route('sliverHomeBranch' , [$category->restaurant->name_barcode , $category->branch->name_barcode , $category->id])}}">--}}
-                                        {{--                                                <i class="fa fa-eye"></i>--}}
-                                        {{--                                                @lang('messages.show')--}}
-                                        {{--                                            </a>--}}
-                                        {{--                                        @endif--}}
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        @if($category->branch->main == 'true')--}}
+{{--                                            <a class="btn btn-secondary" target="_blank"--}}
+{{--                                               href="{{route('sliverHome' , [$category->restaurant->name_barcode , $category->id])}}">--}}
+{{--                                                <i class="fa fa-eye"></i>--}}
+{{--                                                @lang('messages.show')--}}
+{{--                                            </a>--}}
+{{--                                        @else--}}
+{{--                                            <a class="btn btn-secondary" target="_blank"--}}
+{{--                                               href="{{route('sliverHomeBranch' , [$category->restaurant->name_barcode , $category->branch->name_barcode , $category->id])}}">--}}
+{{--                                                <i class="fa fa-eye"></i>--}}
+{{--                                                @lang('messages.show')--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td>
                                         <a class="btn btn-primary"
                                            href="{{route('sub_categories.index' , $category->id)}}">

@@ -4,6 +4,7 @@ namespace App\Models\Restaurant\Azmak;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\AZRestaurantSensitivity;
 
 class AZProductSensitivity extends Model
 {
@@ -20,6 +21,6 @@ class AZProductSensitivity extends Model
     }
     public function sensitivity()
     {
-        return $this->belongsTo(RestaurantSensitivity::class , 'sensitivity_id');
+        return $this->belongsTo(AZRestaurantSensitivity::class , 'sensitivity_id');
     }
 }

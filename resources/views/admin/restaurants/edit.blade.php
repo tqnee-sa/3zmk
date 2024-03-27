@@ -44,6 +44,19 @@
                             <input type='hidden' name='_token' value='{{Session::token()}}'>
 
                             <div class="card-body">
+{{--                                <div class="form-group">--}}
+{{--                                    <label class="control-label"> @lang('messages.token_payment_type') </label>--}}
+{{--                                    <select name="az_online_payment_type" class="form-control">--}}
+{{--                                        <option disabled selected> @lang('messages.choose_one') </option>--}}
+{{--                                        <option value="test" {{$restaurant->az_online_payment_type == 'test' ? 'selected' : ''}}> @lang('messages.test') </option>--}}
+{{--                                        <option value="online" {{$restaurant->az_online_payment_type == 'online' ? 'selected' : ''}}> @lang('messages.online') </option>--}}
+{{--                                    </select>--}}
+{{--                                    @if ($errors->has('az_online_payment_type'))--}}
+{{--                                        <span class="help-block">--}}
+{{--                                            <strong style="color: red;">{{ $errors->first('az_online_payment_type') }}</strong>--}}
+{{--                                        </span>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.az_payment_type') </label>
                                     <select name="a_z_orders_payment_type" class="form-control">

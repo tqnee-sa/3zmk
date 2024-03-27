@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
-    <link type="text/css" rel="icon" href="{{ URL::asset('/uploads/img/logo.png') }}" type="image/x-icon">
-    <!-- Tell the browser to be responsive to screen width -->
+    <link type="text/css" rel="icon" href="{{auth('restaurant')->user()->az_logo ? asset('/uploads/restaurants/logo/' . auth('restaurant')->user()->az_logo) : asset('/3azmkheader.jpg')}}"
+          type="image/x-icon">    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">

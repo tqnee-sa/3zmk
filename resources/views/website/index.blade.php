@@ -11,7 +11,8 @@
         href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400&display=swap"
         rel="stylesheet"
     />
-    <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"  type="image/x-icon">
+    <link type="text/css" rel="icon" href="{{$restaurant->az_logo ? asset('/uploads/restaurants/logo/' . $restaurant->az_logo) : asset('/3azmkheader.jpg')}}"
+          type="image/x-icon">
 
     <!-- icons -->
     <link rel="stylesheet" href="{{asset('site/css/all.min.css')}}"/>
@@ -58,8 +59,13 @@
 <div class="mycontainer">
     <div class="main_open">
         <div class="image">
-            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="150" height="100"
-                 alt="3azmak_title"/>
+            @if($restaurant->az_logo)
+                <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="150" height="100"
+                     alt="3azmak_title"/>
+            @else
+                <img src="{{asset('/3azmkheader.jpg')}}" width="150" height="100"
+                     alt="3azmak_title"/>
+            @endif
         </div>
         <div>
             @php
@@ -173,10 +179,10 @@
     var i;
 
     for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
+        coll[i].addEventListener("click", function () {
             this.classList.toggle("active");
             var content = this.nextElementSibling;
-            if (content.style.maxHeight){
+            if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {
                 content.style.maxHeight = content.scrollHeight + "px";

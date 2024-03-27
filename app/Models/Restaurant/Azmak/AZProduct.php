@@ -5,6 +5,8 @@ namespace App\Models\Restaurant\Azmak;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \App\Models\Restaurant;
+use \App\Models\AZRestaurantPoster;
+use \App\Models\AZRestaurantSensitivity;
 
 class AZProduct extends Model
 {
@@ -52,7 +54,7 @@ class AZProduct extends Model
     }
     public function poster()
     {
-        return $this->belongsTo(RestaurantPoster::class , 'poster_id');
+        return $this->belongsTo(AZRestaurantPoster::class , 'poster_id');
     }
     public function modifiers()
     {
@@ -65,5 +67,9 @@ class AZProduct extends Model
     public function sizes()
     {
         return $this->hasMany(AZProductSize::class , 'product_id');
+    }
+    public function sensitivities()
+    {
+        return $this->hasMany(AZProductSensitivity::class , 'product_id');
     }
 }

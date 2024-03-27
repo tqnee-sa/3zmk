@@ -25,6 +25,7 @@ class AZMenuCategory extends Model
         'time',
         'start_at',
         'end_at',
+        'poster_id',
     ];
 
     public function restaurant()

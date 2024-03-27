@@ -4,8 +4,8 @@ namespace App\Http\Controllers\RestaurantController;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
-use App\Models\RestaurantPoster;
-use App\Models\RestaurantSensitivity;
+use App\Models\AZRestaurantPoster;
+use App\Models\AZRestaurantSensitivity;
 use App\Models\RestaurantSubCategory;
 use App\Models\ServiceSubscription;
 use App\Models\SilverOrder;
@@ -84,8 +84,8 @@ class ProductController extends Controller
         $restaurant = Restaurant::whereId($restaurant->id)->firstOrFail();
         $branches = AZBranch::whereRestaurantId($restaurant->id)
             ->get();
-        $posters = RestaurantPoster::whereRestaurantId($restaurant->id)->get();
-        $sensitivities = RestaurantSensitivity::whereRestaurantId($restaurant->id)->get();
+        $posters = AZRestaurantPoster::whereRestaurantId($restaurant->id)->get();
+        $sensitivities = $restaurant->sensitivities;
         $categories = AZMenuCategory::whereRestaurantId($restaurant->id)->get();
         return view('restaurant.products.create', compact('branches', 'categories','sensitivities', 'restaurant', 'posters'));
     }
@@ -121,7 +121,7 @@ class ProductController extends Controller
             'branch_id'         => 'required|exists:a_z_branches,id',
             'menu_category_id'  => 'required',
             'menu_category_id*' => 'exists:a_z_menu_categories,id',
-            'poster_id'         => 'nullable|exists:restaurant_posters,id',
+            'poster_id'         => 'nullable|exists:a_z_restaurant_posters,id',
             'sub_category_id'   => 'nullable|exists:a_z_restaurant_sub_categories,id',
             'name_ar'           => 'nullable|string|max:191',
             'name_en'           => 'nullable|string|max:191',
@@ -242,8 +242,8 @@ class ProductController extends Controller
             $branches = AZBranch::whereRestaurantId($restaurant->id)
                 ->get();
         }
-        $posters = RestaurantPoster::whereRestaurantId($restaurant->id)->get();
-        $sensitivities = RestaurantSensitivity::whereRestaurantId($restaurant->id)->get();
+        $posters = AZRestaurantPoster::whereRestaurantId($restaurant->id)->get();
+        $sensitivities = AZRestaurantSensitivity::whereRestaurantId($restaurant->id)->get();
         $cats = AZMenuCategory::whereBranchId($product->branch->id)->get();
         return view('restaurant.products.edit', compact('branches', 'cats', 'sensitivities', 'product', 'posters'));
     }
@@ -273,7 +273,7 @@ class ProductController extends Controller
         $this->validate($request, [
             'branch_id'         => 'required|exists:a_z_branches,id',
             'menu_category_id'  => 'required|exists:a_z_menu_categories,id',
-            'poster_id'         => 'nullable|exists:restaurant_posters,id',
+            'poster_id'         => 'nullable|exists:a_z_restaurant_posters,id',
             'sub_category_id'   => 'nullable|exists:a_z_restaurant_sub_categories,id',
             'name_ar'           => 'nullable|string|max:191',
             'name_en'           => 'nullable|string|max:191',
@@ -534,7 +534,7 @@ class ProductController extends Controller
         endif;
         $branches = AZBranch::whereRestaurantId($restaurant->id)
             ->get();
-        $posters = RestaurantPoster::whereRestaurantId($restaurant->id)->get();
+        $posters = AZRestaurantPoster::whereRestaurantId($restaurant->id)->get();
         $sensitivities = RestaurantSensitivity::whereRestaurantId($restaurant->id)->get();
         //        $categories = MenuCategory::whereRestaurantId(Auth::guard('restaurant')->user()->id)->get();
         return view('restaurant.products.copy', compact('branches', 'sensitivities', 'product', 'posters'));

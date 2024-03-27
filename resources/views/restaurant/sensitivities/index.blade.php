@@ -21,13 +21,13 @@
                 <!--<div class="col-sm-6">-->
                 <!--    <ol class="breadcrumb float-sm-right">-->
                 <!--        <li class="breadcrumb-item">-->
-                <!--            <a href="{{url('/restaurant/home')}}">-->
-                <!--                @lang('messages.control_panel')-->
+            <!--            <a href="{{url('/restaurant/home')}}">-->
+            <!--                @lang('messages.control_panel')-->
                 <!--            </a>-->
                 <!--        </li>-->
                 <!--        <li class="breadcrumb-item active">-->
-                <!--            <a href="{{route('sensitivities.index')}}"></a>-->
-                <!--            @lang('messages.sensitivities')-->
+            <!--            <a href="{{route('sensitivities.index')}}"></a>-->
+            <!--            @lang('messages.sensitivities')-->
                 <!--        </li>-->
                 <!--    </ol>-->
                 <!--</div>-->
@@ -124,18 +124,10 @@
                                            href="{{route('sensitivities.edit' , $sensitivity->id)}}">
                                             <i class="fa fa-user-edit"></i>
                                         </a>
-                                        @php
-                                            $user = Auth::guard('restaurant')->user();
-                                            $deletePermission = \App\Models\RestaurantPermission::whereRestaurantId($user->id)
-                                            ->wherePermissionId(7)
-                                            ->first();
-                                        @endphp
-                                        @if($user->type == 'restaurant' or $deletePermission)
-                                            <a class="delete_data btn btn-danger" data="{{ $sensitivity->id }}"
-                                               data_name="{{ app()->getLocale() == 'ar' ? ($sensitivity->name_ar == null ? $sensitivity->name_en : $sensitivity->name_ar) : ($sensitivity->name_en == null ? $sensitivity->name_ar : $sensitivity->name_en) }}">
-                                                <i class="fa fa-trash"></i> 
-                                            </a>
-                                        @endif
+                                        <a class="delete_data btn btn-danger" data="{{ $sensitivity->id }}"
+                                           data_name="{{ app()->getLocale() == 'ar' ? ($sensitivity->name_ar == null ? $sensitivity->name_en : $sensitivity->name_ar) : ($sensitivity->name_en == null ? $sensitivity->name_ar : $sensitivity->name_en) }}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

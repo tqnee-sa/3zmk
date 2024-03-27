@@ -427,7 +427,7 @@ function MyFatoorahStatus($api, $PaymentId)
     // dd($PaymentId);
     $token = $api;
     $setting = AzmakSetting::first();
-    if ($setting->online_payment_type == 'test') {
+    if ($setting->online_payment_type == 'test' or substr($token, 0, 10) == 'rLtt6JWvbU') {
         $basURL = "https://apitest.myfatoorah.com/";
     } else {
         $basURL = "https://api-sa.myfatoorah.com/";
@@ -455,7 +455,7 @@ function MyFatoorah($api, $userData)
 {
     $setting = AzmakSetting::first();
     $token = $api;
-    if ($setting->online_payment_type == 'test') {
+    if ($setting->online_payment_type == 'test' or substr($token, 0, 10) == 'rLtt6JWvbU') {
         $basURL = "https://apitest.myfatoorah.com/";
     } else {
         $basURL = "https://api-sa.myfatoorah.com/";

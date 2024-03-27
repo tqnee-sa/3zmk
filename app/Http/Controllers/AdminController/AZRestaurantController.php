@@ -40,6 +40,7 @@ class AZRestaurantController extends Controller
             'a_z_edfa_merchant'         => 'required_if:a_z_orders_payment_type,edfa',
             'a_z_edfa_password'         => 'required_if:a_z_orders_payment_type,edfa',
             'az_commission'             => 'required',
+//            'az_online_payment_type'    => 'required|in:test,online'
         ]);
         $restaurant->update([
             'a_z_orders_payment_type'   => $request->a_z_orders_payment_type,
@@ -48,6 +49,7 @@ class AZRestaurantController extends Controller
             'a_z_edfa_merchant'         => $request->a_z_edfa_merchant == null ? $restaurant->a_z_edfa_merchant : $request->a_z_edfa_merchant,
             'a_z_edfa_password'         => $request->a_z_edfa_password == null ? $restaurant->a_z_edfa_password : $request->a_z_edfa_password,
             'az_commission'             => $request->az_commission,
+//            'az_online_payment_type'    => $request->az_online_payment_type,
         ]);
         flash(trans('messages.updated'))->success();
         return redirect()->route('restaurants', $restaurant->az_subscription->status);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\RestaurantController;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
-use App\Models\RestaurantPoster;
+use App\Models\AZRestaurantPoster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +24,7 @@ class PosterController extends Controller
             endif;
             $restaurant = Restaurant::find($restaurant->restaurant_id);
         endif;
-        $posters = RestaurantPoster::whereRestaurantId($restaurant->id)
+        $posters = AZRestaurantPoster::whereRestaurantId($restaurant->id)
             ->orderBy('id' , 'desc')
             ->paginate(500);
         return view('restaurant.posters.index' , compact('posters'));
@@ -60,7 +60,7 @@ class PosterController extends Controller
             'name_ar'  => 'nullable|string|max:191',
             'name_en'  => 'nullable|string|max:191',
         ]);
-        RestaurantPoster::create([
+        AZRestaurantPoster::create([
             'restaurant_id' => $restaurant->id,
             'poster'        => $request->file('poster') == null ? null : UploadImage($request->file('poster') , 'poster' , '/uploads/posters'),
             'name_ar'       => $request->name_ar,
@@ -89,7 +89,7 @@ class PosterController extends Controller
      */
     public function edit($id)
     {
-        $poster = RestaurantPoster::findOrFail($id);
+        $poster = AZRestaurantPoster::findOrFail($id);
         return view('restaurant.posters.edit' , compact('poster'));
     }
 
@@ -102,7 +102,7 @@ class PosterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $poster = RestaurantPoster::findOrFail($id);
+        $poster = AZRestaurantPoster::findOrFail($id);
         $this->validate($request , [
             'poster'   => 'nullable|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000',
             'name_ar'  => 'nullable|string|max:191',
@@ -125,7 +125,7 @@ class PosterController extends Controller
      */
     public function destroy($id)
     {
-        $poster = RestaurantPoster::findOrFail($id);
+        $poster = AZRestaurantPoster::findOrFail($id);
         if ($poster->poster != null)
         {
             @unlink(public_path('/uploads/posters/' . $poster->poster));

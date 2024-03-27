@@ -456,3 +456,9 @@ Route::prefix('admin')->group(function () {
  * End @admin Routes
  */
 
+//ALTER TABLE `restaurants` ADD `online_type` ENUM('test','online') NOT NULL DEFAULT 'test' AFTER `slider_down_contact_us_title`;
+// az_info table
+// az_color table
+// az_posters table
+//menu_category and product change poster_id
+// restaurant sensitivity and product sensittity

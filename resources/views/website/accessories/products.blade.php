@@ -27,7 +27,8 @@
     @if($products->count() > 0)
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
+                <button
+                    style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
                     class="nav-link {{$restaurant->az_info->menu_show_type == 'style3' ? 'active' : ''}}"
                     id="home-tab"
                     data-bs-toggle="tab"
@@ -41,7 +42,8 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
+                <button
+                    style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
                     class="nav-link {{$restaurant->az_info->menu_show_type == 'style2' ? 'active' : ''}}"
                     id="profile-tab"
                     data-bs-toggle="tab"
@@ -55,7 +57,8 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
+                <button
+                    style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
                     class="nav-link {{$restaurant->az_info->menu_show_type == 'style1' ? 'active' : ''}}"
                     id="contact-tab"
                     data-bs-toggle="tab"
@@ -92,7 +95,7 @@
                                 ->whatsapp()
                                 ->reddit();
                         @endphp
-                        <div class="col-6 mt-3" >
+                        <div class="col-6 mt-3">
                             <div class="list_Galler th_large p-2"
                                  style="background-color: {{$restaurant->az_color?->product_background}} !important;"
                                  id="product1">
@@ -104,13 +107,27 @@
                                 <div class="content_list p-2">
                                     <h3>
                                         <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                                            href='{{route('product_details' , $product->id)}}'>
+                                           href='{{route('product_details' , $product->id)}}'>
                                             {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                         </a>
+                                        @if ($product->poster != null)
+                                            <img style="text-align: right"
+                                                 src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
+                                                 height="30" width="30" class="poster-image">
+                                        @endif
+                                        @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                                            @foreach ($product->sensitivities as $product_sensitivity)
+                                                <i>
+                                                    <img
+                                                        src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                                                        height="25" width="25" class="sens-image">
+                                                </i>
+                                            @endforeach
+                                        @endif
                                     </h3>
                                     <p>
                                         <a style="color: {{$restaurant->az_color?->options_description}} !important;"
-                                            href='{{route('product_details' , $product->id)}}'>
+                                           href='{{route('product_details' , $product->id)}}'>
                                             {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}
                                         </a>
                                     </p>
@@ -125,19 +142,21 @@
                                             >
                                                 <a href='{{route('product_details' , $product->id)}}'>
                                                     <i style="background-color: {{$restaurant->az_color?->icons}} !important;"
-                                                        class="fa-solid fa-cart-plus"></i>
+                                                       class="fa-solid fa-cart-plus"></i>
                                                 </a>
                                             </button>
                                             <button
                                                 class="share_btn" id="{{$product->id}}">
                                                 <i style="background-color: {{$restaurant->az_color?->icons}} !important;"
-                                                    class="fa-solid fa-share-nodes"></i>
+                                                   class="fa-solid fa-share-nodes"></i>
                                             </button>
                                         </div>
-                                        <div class="price" style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                            <span style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}" >
+                                        <div class="price"
+                                             style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                            <span
+                                                style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}">
                                                 @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-{{--                                                    add the commission to product--}}
+                                                    {{--                                                    add the commission to product--}}
                                                     {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
                                                 @else
                                                     {{$product->price}}
@@ -178,7 +197,8 @@
                             ->whatsapp()
                             ->reddit();
                     @endphp
-                    <div class="list_Gallery mt-3" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
+                    <div class="list_Gallery mt-3"
+                         style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
                         <div class="image">
                             <a href='{{route('product_details' , $product->id)}}'>
                                 <img src="{{asset('/uploads/products/'.$product->photo)}}" alt=""/>
@@ -187,13 +207,27 @@
                         <div class="content_list p-2">
                             <h3>
                                 <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
-                                    href='{{route('product_details' , $product->id)}}'>
+                                   href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                 </a>
+                                @if ($product->poster != null)
+                                    <img style="text-align: right"
+                                         src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
+                                         height="30" width="30" class="poster-image">
+                                @endif
+                                @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                                    @foreach ($product->sensitivities as $product_sensitivity)
+                                        <i>
+                                            <img
+                                                src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                                                height="25" width="25" class="sens-image">
+                                        </i>
+                                    @endforeach
+                                @endif
                             </h3>
                             <p>
                                 <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
-                                    href='{{route('product_details' , $product->id)}}'>
+                                   href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
                                 </a>
                             </p>
@@ -210,8 +244,10 @@
                                            style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>
                                     </button>
                                 </div>
-                                <div class="price" style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
-                                    <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                <div class="price"
+                                     style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                    <span
+                                        style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
                                         @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
                                             {{--                                                    add the commission to product--}}
                                             {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
@@ -265,13 +301,27 @@
                         <div class="content_list p-2 w-100">
                             <h3>
                                 <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
-                                    href='{{route('product_details' , $product->id)}}'>
+                                   href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                 </a>
+                                @if ($product->poster != null)
+                                    <img style="text-align: right"
+                                         src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
+                                         height="30" width="30" class="poster-image">
+                                @endif
+                                @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                                    @foreach ($product->sensitivities as $product_sensitivity)
+                                        <i>
+                                            <img
+                                                src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                                                height="25" width="25" class="sens-image">
+                                        </i>
+                                    @endforeach
+                                @endif
                             </h3>
                             <p>
                                 <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
-                                    href='{{route('product_details' , $product->id)}}'>
+                                   href='{{route('product_details' , $product->id)}}'>
                                     {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
                                 </a>
                             </p>
@@ -281,15 +331,17 @@
                                 <div class="action">
                                     <a href='{{route('product_details' , $product->id)}}'>
                                         <i style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"
-                                            class="fa-solid fa-cart-plus"></i>
+                                           class="fa-solid fa-cart-plus"></i>
                                     </a>
                                     <button class="share3_btn" id="{{$product->id}}">
                                         <i style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"
-                                            class="fa-solid fa-share-nodes"></i>
+                                           class="fa-solid fa-share-nodes"></i>
                                     </button>
                                 </div>
-                                <div class="price" style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
-                                    <span style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                <div class="price"
+                                     style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                    <span
+                                        style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
                                         @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
                                             {{--                                                    add the commission to product--}}
                                             {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
@@ -315,15 +367,15 @@
     @endif
 </div>
 <script>
-    $(".share_btn").click(function(){
+    $(".share_btn").click(function () {
         var id = this.id;
         document.getElementById('shareDiv-' + id).style.display = 'block';
     });
-    $(".share2_btn").click(function(){
+    $(".share2_btn").click(function () {
         var id = this.id;
         document.getElementById('share2Div-' + id).style.display = 'block';
     });
-    $(".share3_btn").click(function(){
+    $(".share3_btn").click(function () {
         var id = this.id;
         document.getElementById('share3Div-' + id).style.display = 'block';
     });

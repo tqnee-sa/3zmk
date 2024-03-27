@@ -4,7 +4,7 @@ namespace App\Http\Controllers\RestaurantController;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
-use App\Models\RestaurantSensitivity;
+use App\Models\AZRestaurantSensitivity;
 use App\Models\Sensitivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +19,7 @@ class SensitivityController extends Controller
     public function index()
     {
         $restaurant = Auth::guard('restaurant')->user();
-        if ($restaurant->type == 'employee'):
-            if (check_restaurant_permission($restaurant->id , 6) == false):
-                abort(404);
-            endif;
-            $restaurant = Restaurant::find($restaurant->restaurant_id);
-        endif;
-        $sensitivities = RestaurantSensitivity::whereRestaurantId($restaurant->id)->orderBy('id' , 'desc')->paginate(500);
+        $sensitivities = AZRestaurantSensitivity::whereRestaurantId($restaurant->id)->orderBy('id' , 'desc')->paginate(500);
         return view('restaurant.sensitivities.index' , compact('sensitivities'));
     }
 
@@ -48,12 +42,6 @@ class SensitivityController extends Controller
     public function store(Request $request)
     {
         $restaurant = Auth::guard('restaurant')->user();
-        if ($restaurant->type == 'employee'):
-            if (check_restaurant_permission($restaurant->id , 6) == false):
-                abort(404);
-            endif;
-            $restaurant = Restaurant::find($restaurant->restaurant_id);
-        endif;
         $this->validate($request , [
             'name_ar'    => 'nullable|string|max:191',
             'name_en'    => 'nullable|string|max:191',
@@ -61,7 +49,7 @@ class SensitivityController extends Controller
             'details_ar' => 'nullable|string',
             'details_en' => 'nullable|string',
         ]);
-        RestaurantSensitivity::create([
+        AZRestaurantSensitivity::create([
             'restaurant_id' => $restaurant->id,
             'name_ar'       => $request->name_ar,
             'name_en'       => $request->name_en,
@@ -92,7 +80,7 @@ class SensitivityController extends Controller
      */
     public function edit($id)
     {
-        $sensitivity = RestaurantSensitivity::findOrFail($id);
+        $sensitivity = AZRestaurantSensitivity::findOrFail($id);
         return view('restaurant.sensitivities.edit' , compact('sensitivity'));
     }
 
@@ -105,7 +93,7 @@ class SensitivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sensitivity = RestaurantSensitivity::findOrFail($id);
+        $sensitivity = AZRestaurantSensitivity::findOrFail($id);
         $this->validate($request , [
             'name_ar'    => 'nullable|string|max:191',
             'name_en'    => 'nullable|string|max:191',
@@ -132,7 +120,7 @@ class SensitivityController extends Controller
      */
     public function destroy($id)
     {
-        $sensitivity = RestaurantSensitivity::findOrFail($id);
+        $sensitivity = AZRestaurantSensitivity::findOrFail($id);
         $dataPhotos = Sensitivity::all()->pluck('photo')->toArray();
         if ($sensitivity->photo != null and !in_array($sensitivity->photo , $dataPhotos))
         {

@@ -125,7 +125,8 @@ class Restaurant extends Authenticatable
         'a_z_edfa_merchant',
         'a_z_edfa_password',
         'az_logo',
-        'az_commission'
+        'az_commission',
+        'az_online_payment_type',
     ];
     protected $hidden = [
         'password', 'remember_token',
@@ -214,7 +215,7 @@ class Restaurant extends Authenticatable
     }
     public function sensitivities()
     {
-        return $this->hasMany(RestaurantSensitivity::class, 'restaurant_id');
+        return $this->hasMany(AZRestaurantSensitivity::class, 'restaurant_id');
     }
     public function offers()
     {
@@ -238,7 +239,7 @@ class Restaurant extends Authenticatable
 
     public function posters()
     {
-        return $this->hasMany(RestaurantPoster::class, 'restaurant_id');
+        return $this->hasMany(AZRestaurantPoster::class, 'restaurant_id');
     }
     public function answer()
     {
