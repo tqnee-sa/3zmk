@@ -234,6 +234,20 @@
             <h4 class="name_meal" style="color: {{$restaurant->az_color?->main_heads}}">
                 {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
             </h4>
+            @if ($product->poster != null)
+                <img style="text-align: right"
+                     src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
+                     height="30" width="30" class="poster-image">
+            @endif
+            @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                @foreach ($product->sensitivities as $product_sensitivity)
+                    <i>
+                        <img
+                            src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                            height="25" width="25" class="sens-image">
+                    </i>
+                @endforeach
+            @endif
             <p class="description_meal" style="color: {{$restaurant->az_color?->options_description}}">
                 {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
             </p>
@@ -377,7 +391,7 @@
                                     class="border-0 p-1" id="totalDecrease">-
                             </button>
                         </div>
-                        <div class="price_addition" id="totalPrice">
+                        <div id="totalPrice">
                             @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
                                 {{--                                                    add the commission to product--}}
                                 {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
@@ -388,15 +402,18 @@
                         {{ app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en }}
 
                     </div>
-                    <input style="background-color: {{$restaurant->az_color?->icons}}"
-                           type="submit" class="text-white btn btn-success" value="@lang('messages.add_to_cart')">
+                    <div style="padding-bottom: 3px;">
+                        <input style="background-color: {{$restaurant->az_color?->icons}}"
+                               type="submit" class="text-white btn btn-success" value="@lang('messages.add_to_cart')">
+                    </div>
+
                 </form>
                 <!-- end form -->
             </div>
             <!-- end choose_details -->
         </div>
         <!-- end meals_deatails -->
-        <div class="share_icon d-flex justify-content-end mx-3">
+        <div class="share_icon d-flex justify-content-end mx-3" style="padding-bottom: 10px;">
             <button style="background-color: {{$restaurant->az_color?->icons}}"
                     class="border-0 text-center" id="share">
                 <i class="fa-solid fa-share-nodes mx-2"></i>
