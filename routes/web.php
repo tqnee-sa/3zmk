@@ -285,6 +285,10 @@ Route::prefix('restaurant')->group(function () {
                 Route::get('/sub_categories/delete/{id}', 'destroy');
             });
 
+            // employees Routes
+            Route::resource('/employees', EmployeeController::class, []);
+            Route::get('/employees/delete/{id}', [EmployeeController::class, 'destroy']);
+
             // home_icons
 
             Route::resource('home_icons', IconController::class, ['as' => 'restaurant']);
@@ -455,10 +459,42 @@ Route::prefix('admin')->group(function () {
 /**
  * End @admin Routes
  */
+/**
+ * Start @Employees Routes
+ */
+Route::get('/casher/home', [EmployeeHome::class, 'index'])->name('employee.home');
+Route::prefix('casher')->group(function () {
 
-//ALTER TABLE `restaurants` ADD `online_type` ENUM('test','online') NOT NULL DEFAULT 'test' AFTER `slider_down_contact_us_title`;
-// az_info table
-// az_color table
-// az_posters table
-//menu_category and product change poster_id
-// restaurant sensitivity and product sensittity
+    Route::get('login', [EmployeeLogin::class, 'showLoginForm'])->name('employee.login');
+    Route::post('login', [EmployeeLogin::class, 'login'])->name('employee.login.submit');
+    Route::post('logout', [EmployeeLogin::class, 'logout'])->name('employee.logout');
+
+    Route::group(['middleware' => ['web', 'auth:employee']], function () {
+        Route::controller(UserEmployee::class)->group(function () {
+            Route::get('/profile', 'my_profile')->name('employeeProfile');
+            Route::post('/profileEdit/{id?}', 'my_profile_edit')->name('employeeUpdateProfile');
+        });
+        Route::get('waiter/orders', [WaiterControllerWaiterOrderController::class, 'index'])->name('casher.waiter.orders.index');
+        Route::post('waiter/orders/change-status', [WaiterControllerWaiterOrderController::class, 'changeStatus'])->name('casher.waiter.orders.change-status');
+        Route::controller(EmployeeOrder::class)->group(function () {
+            Route::get('/{status}/orders', 'index')->name('casher.order.index');
+            Route::get('orders', 'index')->name('casher.orders.index');
+            Route::get('order/{id}/print', 'printOrder')->name('casher.orders.print');
+            Route::get('/delivery/orders/{status}', 'delivery_orders')->name('employeeDeliveryOrders');
+            Route::get('/takeaway/orders/{status}', 'takeaway_orders')->name('employeeTakeawayOrders');
+            Route::get('/previous/orders/{status}', 'previous_orders')->name('employeePreviousOrders');
+            Route::get('/tables/orders/{status}', 'table_orders')->name('employeeTableOrders');
+            Route::post('/change_order_status/{order}', 'change_order_status')->name('change_order_status');
+            Route::post('/order/change-payment-method/{order}', 'changePaymentMethod')->name('changePaymentMethod');
+            Route::post('/change_table_order_status/{order}', 'change_table_order_status')->name('change_table_order_status');
+            Route::post('/change_order_payment/{order}', 'change_order_payment')->name('change_order_payment');
+            Route::get('/show_order_details/{id}', 'show_order_details')->name('show_order_details');
+            Route::get('/show_audios', 'show_audios')->name('show_audios');
+            Route::post('/store_audios', 'store_audios')->name('store_audios');
+        });
+        Route::match( ['get' , 'post'] , 'order/report' , [OrderOrderController::class , 'report'])->name('casher.order.report');
+    });
+});
+/**
+ * End @Employees Routes
+ */

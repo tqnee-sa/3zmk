@@ -188,6 +188,18 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('employees.index') }}"
+                           class="nav-link {{ strpos(URL::current(), '/restaurant/employees') !== false ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-users"></i>
+                            <span class="badge badge-info right">
+                                {{ \App\Models\AZRestaurantEmployee::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
+                            <p>
+                                @lang('messages.employees')
+                            </p>
+                        </a>
+                    </li>
                     <li
                         class="nav-item has-treeview {{ strpos(URL::current(), '/restaurant/azmak_orders') !== false ? 'menu-open' : '' }}">
                         <a href="#"

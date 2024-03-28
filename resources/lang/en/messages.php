@@ -333,4 +333,5 @@ return [
     'commission_style' => 'How Will Pay Orders Commissions ? ',
     'no_poster' => 'No Poster',
     'icon'  => 'Icon',
+    'employees' => 'Casher Employees',
 ];
