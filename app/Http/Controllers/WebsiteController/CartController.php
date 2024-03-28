@@ -126,6 +126,10 @@ class CartController extends Controller
     public function deleteCartItem($id)
     {
         $item = AZOrderItem::find($id);
+        $item->order->update([
+            'order_price'  => $item->order->order_price - $item->price,
+            'total_price'  => $item->order->total_price - $item->price,
+        ]);
         $item->delete();
         if ($item->order->items->count() == 0):
             $item->order->delete();
