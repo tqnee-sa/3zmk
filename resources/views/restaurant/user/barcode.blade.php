@@ -56,7 +56,7 @@
                                         {!! QrCode::size(200)->generate(url('/restaurants/' . $name)) !!}
                                         <div class="description" style="margin-top:10px;">
                                             <img width="20px" height="20px"
-                                                 src="{{asset('/uploads/restaurants/logo/' . $model->logo)}}">
+                                                 src="{{asset('/uploads/restaurants/logo/' . $model->az_logo)}}">
 
                                             <p class="footer-copyright pb-3 mb-1 pt-0 mt-0 font-13 font-600"
                                                style="    text-align: center;font-size:12px;display:inline; margin-right:5px;">
