@@ -391,7 +391,7 @@
                                     class="border-0 p-1" id="totalDecrease">-
                             </button>
                         </div>
-                        <div id="totalPrice">
+                        <div id="totalPrice" style="padding-right: 100px;color: {{$restaurant->az_color?->options_description}}">
                             @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
                                 {{--                                                    add the commission to product--}}
                                 {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
@@ -399,12 +399,13 @@
                                 {{$product->price}}
                             @endif
                         </div>
-                        {{ app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en }}
-
+                        <span style="color: {{$restaurant->az_color?->options_description}}">
+                            {{ app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en }}
+                        </span>
                     </div>
                     <div style="padding-bottom: 3px;">
-                        <input style="background-color: {{$restaurant->az_color?->icons}}"
-                               type="submit" class="text-white btn btn-success" value="@lang('messages.add_to_cart')">
+                        <input style="background-color: {{$restaurant->az_color?->icons}}; color: {{$restaurant->az_color?->options_description}}"
+                               type="submit" class="btn btn-success" value="@lang('messages.add_to_cart')">
                     </div>
 
                 </form>
