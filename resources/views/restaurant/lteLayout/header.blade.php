@@ -6,7 +6,7 @@
             <a class="nav-link " id="btn-sidebar-menu" data-widget="pushmenux" href="#"><i class="fas fa-bars"></i></a>
         </li>
         <li class="welcome_res">
-            <span> مرحبا ,</span>
+            <span> @lang('messages.welcome') ,</span>
             <span>
                 @if(app()->getLocale() == 'ar')
                     <?php if (Auth::guard('restaurant')->check()) {

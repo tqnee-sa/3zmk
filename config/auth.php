@@ -49,6 +49,10 @@ return [
             'driver' => 'session',
             'provider' => 'restaurants',
         ],
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employee',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -86,6 +90,10 @@ return [
         'restaurants' => [
             'driver' => 'eloquent',
             'model' => App\Models\Restaurant::class,
+        ],
+        'employee'=> [
+            'driver' => 'eloquent',
+            'model' => App\Models\AZRestaurantEmployee::class,
         ],
 
         // 'users' => [
@@ -128,6 +136,12 @@ return [
         ],
         'restaurants' => [
             'provider' => 'restaurants',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'employee' => [
+            'provider' => 'a_z_restaurant_employees',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

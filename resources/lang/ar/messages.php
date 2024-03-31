@@ -178,7 +178,7 @@ return [
     'new' => 'جديد غير مدفوع',
     'order_items' => 'عناصر الطلب',
     'restaurant_login' => 'تسجيل دخول المطاعم',
-    'welcome_login_message' => 'مرحبا بكرم في لوحه تحكم عازمك',
+    'welcome_login_message' => 'مرحبا بكم في لوحه تحكم عازمك',
     'az_orders' => 'طلبات عازمك',
     'new_not_paid' => 'جديد غير مدفوع',
     'orders' => 'الطلبات',
@@ -336,4 +336,7 @@ return [
     'no_poster' => 'بدون ملصق',
     'icon'  => 'الملصق',
     'employees' => ' موظفين الكاشير',
+    'employee_control_panel' => 'لوحة تحكم كاشير عازمك',
+    'alarm_tones' => 'نغمات التنبيه',
+    'technical_support' => 'الدعم الفني',
 ];

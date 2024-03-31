@@ -334,4 +334,7 @@ return [
     'no_poster' => 'No Poster',
     'icon'  => 'Icon',
     'employees' => 'Casher Employees',
+    'employee_control_panel' => 'Azmak Casher Control Panel',
+    'alarm_tones' => 'Alarm Tones',
+    'technical_support' => 'Technical Support',
 ];

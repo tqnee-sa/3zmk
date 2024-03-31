@@ -79,6 +79,12 @@ use \App\Http\Controllers\AdminController\AZRestaurantController;
 use \App\Http\Controllers\AdminController\AZCommissionController;
 use \App\Http\Controllers\AdminController\BankTransferController;
 
+// Employees EmployeeHome
+use \App\Http\Controllers\EmployeeController\Employee\LoginController as EmployeeLogin;
+use \App\Http\Controllers\EmployeeController\HomeController as EmployeeHome;
+use \App\Http\Controllers\EmployeeController\UserController as UserEmployee;
+use \App\Http\Controllers\EmployeeController\Order\OrderController as EmployeeOrder;
+use App\Http\Controllers\EmployeeController\Order\OrderController as OrderOrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -352,6 +358,14 @@ Route::prefix('restaurant')->group(function () {
                 Route::get('/product_sizes/delete/{id}', 'destroy')->name('deleteProductSize');
             });
 
+            Route::controller(AZOrderController::class)->group(function () {
+                Route::get('/azmak_orders/{status}', 'index')->name('AzmakOrders');
+                Route::get('/azmak_orders/delete/{id}', 'destroy')->name('DeleteAzmakOrder');
+                Route::get('/show/azmak_orders/{order_id}', 'show')->name('AzmakOrderShow');
+                Route::post('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
+                Route::post('/complete/azmak_order/{order_id}', 'complete_order')->name('completeAzmakOrder');
+
+            });
 
             Route::get('/history/{id}', [SettingController::class, 'show_restaurant_history'])->name('show_restaurant_history');
 
@@ -366,16 +380,6 @@ Route::prefix('restaurant')->group(function () {
             // about azmak routes
             Route::get('/az_contacts', [TermsConditionController::class, 'az_contacts'])->name('restaurant.az_contacts.index');
             Route::get('/az_contacts/delete/{id}', [TermsConditionController::class, 'delete_az_contact'])->name('restaurant.delete_az_contact');
-
-
-            // restaurant azmak orders Routes
-            Route::controller(AZOrderController::class)->group(function () {
-                Route::get('/azmak_orders/{status}', 'index')->name('AzmakOrders');
-                Route::get('/azmak_orders/delete/{id}', 'destroy')->name('DeleteAzmakOrder');
-                Route::get('/show/azmak_orders/{order_id}', 'show')->name('AzmakOrderShow');
-                Route::post('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
-                Route::post('/complete/azmak_order/{order_id}', 'complete_order')->name('completeAzmakOrder');
-            });
 
         });
     });
@@ -474,21 +478,15 @@ Route::prefix('casher')->group(function () {
             Route::get('/profile', 'my_profile')->name('employeeProfile');
             Route::post('/profileEdit/{id?}', 'my_profile_edit')->name('employeeUpdateProfile');
         });
-        Route::get('waiter/orders', [WaiterControllerWaiterOrderController::class, 'index'])->name('casher.waiter.orders.index');
-        Route::post('waiter/orders/change-status', [WaiterControllerWaiterOrderController::class, 'changeStatus'])->name('casher.waiter.orders.change-status');
+
         Route::controller(EmployeeOrder::class)->group(function () {
-            Route::get('/{status}/orders', 'index')->name('casher.order.index');
-            Route::get('orders', 'index')->name('casher.orders.index');
+            Route::get('/azmak_orders/{status}', 'index')->name('AzmakOrders');
+            Route::get('/azmak_orders/delete/{id}', 'destroy')->name('DeleteAzmakOrder');
+            Route::get('/show/azmak_orders/{order_id}', 'show')->name('AzmakOrderShow');
+            Route::post('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
+            Route::post('/complete/azmak_order/{order_id}', 'complete_order')->name('completeAzmakOrder');
+
             Route::get('order/{id}/print', 'printOrder')->name('casher.orders.print');
-            Route::get('/delivery/orders/{status}', 'delivery_orders')->name('employeeDeliveryOrders');
-            Route::get('/takeaway/orders/{status}', 'takeaway_orders')->name('employeeTakeawayOrders');
-            Route::get('/previous/orders/{status}', 'previous_orders')->name('employeePreviousOrders');
-            Route::get('/tables/orders/{status}', 'table_orders')->name('employeeTableOrders');
-            Route::post('/change_order_status/{order}', 'change_order_status')->name('change_order_status');
-            Route::post('/order/change-payment-method/{order}', 'changePaymentMethod')->name('changePaymentMethod');
-            Route::post('/change_table_order_status/{order}', 'change_table_order_status')->name('change_table_order_status');
-            Route::post('/change_order_payment/{order}', 'change_order_payment')->name('change_order_payment');
-            Route::get('/show_order_details/{id}', 'show_order_details')->name('show_order_details');
             Route::get('/show_audios', 'show_audios')->name('show_audios');
             Route::post('/store_audios', 'store_audios')->name('store_audios');
         });

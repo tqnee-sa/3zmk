@@ -51,7 +51,6 @@ class AZOrderController extends Controller
             return redirect()->back();
         }
     }
-
     public function destroy($id)
     {
         $order = AZOrder::findOrFail($id);
