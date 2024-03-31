@@ -21,7 +21,7 @@ class OrderController extends Controller
         $restaurant = $casher->restaurant;
         $branch  = $casher->branch;
         $orders = AZorder::whereStatus($status)
-            ->whereRestaurantId(auth('restaurant')->user()->id)
+            ->whereRestaurantId($restaurant->id)
             ->whereBranchId($branch->id)
             ->paginate(100);
         return view('employee.orders.index', compact('casher',  'restaurant', 'branch', 'orders', 'status'));

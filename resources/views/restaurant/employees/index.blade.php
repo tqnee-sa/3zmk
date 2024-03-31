@@ -27,10 +27,10 @@
         <div class="row">
             <div class="col-12">
                 <h3>
-{{--                    <a href="{{route('employee.login')}}" target="_blank" class="btn">--}}
-{{--                        <i class="fas fa-sign-in"></i>--}}
-{{--                        @lang('messages.employee_login')--}}
-{{--                    </a>--}}
+                    <a href="{{route('employee.login')}}" target="_blank" class="btn">
+                        <i class="fas fa-sign-in"></i>
+                        @lang('messages.employee_control_panel')
+                    </a>
                     <a href="{{route('employees.create')}}" class="btn">
                         <i class="fa fa-plus"></i>
                         @lang('messages.add_new')
