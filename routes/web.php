@@ -135,7 +135,7 @@ Route::controller(CartController::class)->group(function () {
     Route::post('user/restaurants/add_to_cart', 'add_to_cart')->name('addToAZCart');
     Route::get('user_orders/azmak/orders/{order_id}', 'order_details')->name('AZOrderDetails');
     Route::get('user/orders/{order_id}/barcode', 'barcode')->name('AZOrderBarcode');
-
+    Route::get('user/my_orders/{branch_id}/{status?}', 'my_orders')->name('AZUserOrders');
 });
 
 Route::group(['middleware' => 'auth:web'], function () {

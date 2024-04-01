@@ -1,5 +1,5 @@
 <header style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important;"
-    class="bg-white p-3 d-flex align-items-center justify-content-between"
+        class="bg-white p-3 d-flex align-items-center justify-content-between"
 >
     <!-- show mobile -->
     <div class="mobile_screen">
@@ -10,7 +10,7 @@
             data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight"
         >
-            <i class="fa-solid fa-bars" ></i>
+            <i class="fa-solid fa-bars"></i>
         </button>
 
         <div
@@ -38,7 +38,8 @@
                             {{auth()->guard('web')->user()->name}}
                         </h2>
                     @else
-                        <button class="btn" style="background-color: {{$restaurant->az_color?->icons}} !important; width: 135px">
+                        <button class="btn"
+                                style="background-color: {{$restaurant->az_color?->icons}} !important; width: 135px">
                             <a href="{{route('AZUserLogin' , [$restaurant->name_barcode , $branch->name_en])}}">
                                 @lang('messages.login')
                             </a>
@@ -46,8 +47,10 @@
                     @endif
                     <ul class="p-0">
                         <li class="my-2">
-                            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style="color: {{$restaurant->az_color?->main_heads}} !important;">
-                                <i class="fa fa-home mx-1" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}"
+                               style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                <i class="fa fa-home mx-1"
+                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.home')
                             </a>
                         </li>
@@ -55,20 +58,29 @@
                         @if(auth()->guard('web')->check())
                             <li class="my-2">
                                 <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
-                                    href="{{route('AZUserProfile' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                    <i class="fa-regular fa-user mx-1" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                   href="{{route('AZUserOrders',$branch->id)}}">
+                                    <i class="fa fa-shopping-cart mx-1"
+                                       style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                    @lang('messages.my_orders')
+                                    <span style="color: red">
+                                       ({{ \App\Models\Restaurant\Azmak\AZOrder::whereUserId(auth()->guard('web')->user()->id)->where('status' , '!=' , 'new')->whereBranchId($branch->id)->count() }})
+                                    </span>
+                                </a>
+                            </li>
+                            <hr>
+                            <li class="my-2">
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
+                                   href="{{route('AZUserProfile' , [$restaurant->name_barcode , $branch->name_en])}}">
+                                    <i class="fa-regular fa-user mx-1"
+                                       style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     @lang('messages.my_account')
                                 </a>
                             </li>
                             <hr/>
-                    @endif
-                    <!-- <li class="my-2">
-                          <i class="fa-solid fa-gear mx-2"></i> الإعدادت
-                        </li>
-                        <hr /> -->
+                        @endif
                         <li class="my-2">
                             <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                                href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
+                               href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
                                 <i class="fa-solid fa-file-contract mx-2"
                                    style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.terms_conditions')
@@ -77,7 +89,7 @@
                         <hr/>
                         <li class="my-2">
                             <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                                href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
+                               href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
                                 <i class="fa-solid fa-envelope mx-2"
                                    style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.contact_us')
@@ -86,7 +98,7 @@
                         <hr/>
                         <li class="my-2">
                             <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                                href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
+                               href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
                                 <i class="fa-solid fa-circle-exclamation mx-2"
                                    style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                 @lang('messages.about_app')
@@ -99,7 +111,7 @@
                         {{--                            @lang('messages.logout')--}}
                         {{--                        </a>--}}
                         <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                            onclick="document.getElementById('logout_form').submit()" class="dropdown-item">
+                           onclick="document.getElementById('logout_form').submit()" class="dropdown-item">
                             <i class="fas fa-key"
                                style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                             @lang('messages.logout')
@@ -110,12 +122,12 @@
                             {!! csrf_field() !!}
                         </form>
                     @else
-{{--                        <button class="joinUs_btn">--}}
-{{--                            <a href="{{route('AZUserRegister' , [$restaurant->name_barcode , $branch->name_en])}}">--}}
-{{--                                <i class="fa-regular fa-star mx-1"></i>--}}
-{{--                                @lang('messages.join_us')--}}
-{{--                            </a>--}}
-{{--                        </button>--}}
+                        {{--                        <button class="joinUs_btn">--}}
+                        {{--                            <a href="{{route('AZUserRegister' , [$restaurant->name_barcode , $branch->name_en])}}">--}}
+                        {{--                                <i class="fa-regular fa-star mx-1"></i>--}}
+                        {{--                                @lang('messages.join_us')--}}
+                        {{--                            </a>--}}
+                        {{--                        </button>--}}
                     @endif
                 </div>
             </div>

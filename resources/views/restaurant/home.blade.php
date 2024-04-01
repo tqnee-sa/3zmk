@@ -31,69 +31,184 @@
     @if(auth('restaurant')->check())
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
-                <h3>
-                    @lang('messages.welcome') {{app()->getLocale() == 'ar' ? $user->name_ar : $user->name_en}}
-                </h3>
-                <!-- /.row (main row) -->
+            <div class="timeline timeline-inverse">
+
+                <div>
+                    <i class="fas fa-user bg-info"></i>
+
+                    <div class="timeline-item">
+                        <h3 class="timeline-header border-0">
+                            @lang('messages.welcome')
+                            <a href="#">
+                                {{ app()->getLocale() == 'ar' ? $user->name_ar : $user->name_en }}
+                            </a>
+                            @lang('messages.at')
+                            @lang('messages.control_panel')
+                        </h3>
+                    </div>
+                </div>
+                @php
+                    $subscription = $user->az_subscription;
+                @endphp
                 @if($subscription == null)
-                    <a href="{{route('AzmakSubscription' , $user->id)}}" class="btn btn-success">
+                    <a href="{{route('AzmakSubscription' , $user->id)}}"
+                       class="btn btn-success">
                         {{trans('messages.activeAzmak')}}
                     </a>
                 @elseif($subscription and $subscription->status == 'finished')
                     <br>
                     <h4 style="color: red"> @lang('messages.finished_subscription') </h4>
                     <br>
-                    <a href="{{route('AzmakSubscription' , $user->id)}}" class="btn btn-success">
+                    <a href="{{route('AzmakSubscription' , $user->id)}}"
+                       class="btn btn-success">
                         {{trans('messages.renewAzmakSubscription')}}
                     </a>
                 @elseif($subscription and $subscription->status == 'active' )
-                    <h4 >@lang('messages.subscription_price') :
-                        <span style="color: red">
-                            {{App\Models\AzmakSetting::first()->subscription_amount}}
-                            {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
-                        </span>
-                    </h4>
-                    <h4 >@lang('messages.tax_value') :
-                        <span style="color: red">
-                            {{$subscription->tax_value}}
-                            {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
-                        </span>
-                    </h4>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.subscription_price')
+                                <a href="#">
+                                    {{App\Models\AzmakSetting::first()->subscription_amount}}
+                                    {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.tax_value')
+                                <a href="#">
+                                    {{$subscription->tax_value}}
+                                    {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
                     @if($subscription->discount_value)
-                        <h4 >@lang('messages.discount_value') :
-                            <span style="color: red">
-                            {{$subscription->discount_value}}
-                                {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
-                        </span>
-                        </h4>
+                        <div>
+                            <i class="fas fa-money-bill bg-info"></i>
+                            <div class="timeline-item">
+                                <h3 class="timeline-header border-0">
+                                    @lang('messages.discount_value')
+                                    <a href="#">
+                                        {{$subscription->discount_value}}
+                                        {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
                     @endif
+
                     @if($subscription->seller_code)
-                        <h4 >@lang('messages.seller_code') :
-                            <span style="color: red">
-                            {{$subscription->seller_code->seller_name}}
-                        </span>
-                        </h4>
+                        <div>
+                            <i class="fas fa-money-bill bg-info"></i>
+                            <div class="timeline-item">
+                                <h3 class="timeline-header border-0">
+                                    @lang('messages.seller_code')
+                                    <a href="#">
+                                        {{$subscription->seller_code->seller_name}}
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
                     @endif
-                    <h4 >@lang('messages.total_price') :
-                        <span style="color: red">
-                            {{$subscription->price}}
-                            {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
-                        </span>
-                    </h4>
-                    <h4 >@lang('messages.subscription_end_at') :
-                        <span style="color: red">
-                            {{$subscription->end_at->format('Y-m-d')}}
-                        </span>
-                    </h4>
-                    <h4 class="text-center"></h4>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.total_price')
+                                <a href="#">
+                                    {{$subscription->price}}
+                                    {{app()->getLocale() == 'ar' ? $subscription->restaurant->country->currency_ar : $subscription->restaurant->country->currency_en}}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.subscription_end_at')
+                                <a href="#">
+                                    {{$subscription->end_at->format('Y-m-d')}}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.total_menu_views')
+                                <a href="#">
+                                    {{$user->az_info->menu_views}}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.restaurant_az_commission')
+                                <a href="#">
+                                    {{$user->az_commission}} %
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.orders_commissions') :
+                                <a href="#">
+                                    {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission')}}
+                                    {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.paid_commission_value') :
+                                <a href="#">
+                                    {{$user->az_commissions->sum('commission_value')}}
+                                    {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-money-bill bg-info"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header border-0">
+                                @lang('messages.commissions_payable') :
+                                <a href="#">
+                                    {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission') - $user->az_commissions->sum('commission_value')}}
+                                    {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
                 @elseif($subscription and $subscription->status == 'free' )
                     <h4>
                         @lang('messages.subscription_type') :
                         <span style="color: red">@lang('messages.free_subscription')</span>
                     </h4>
                 @endif
-            </div><!-- /.container-fluid -->
+                <div>
+                    <i class="far fa-clock bg-gray"></i>
+                </div>
+            </div>
         </section>
         <!-- /.content -->
     @endif

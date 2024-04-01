@@ -337,4 +337,7 @@ return [
     'employee_control_panel' => 'Azmak Casher Control Panel',
     'alarm_tones' => 'Alarm Tones',
     'technical_support' => 'Technical Support',
+    'total_menu_views' => 'Total Menu Views',
+    'total_paid_orders' => 'Total Paid Orders',
+    'noOrdersYet' => 'No Orders Found ! ',
 ];

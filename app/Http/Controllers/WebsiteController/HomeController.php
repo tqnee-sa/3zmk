@@ -111,6 +111,8 @@ class HomeController extends Controller
                 session()->put('locale', $restaurant->az_info->lang);
                 App::setLocale($restaurant->az_info->lang);
             endif;
+            // update restaurant menu views
+            $restaurant->az_info->update(['menu_views' => $restaurant->az_info->menu_views + 1]);
             return view('website.home', compact('restaurant', 'products', 'branch', 'categories', 'sliders', 'branches', 'category_id'));
         } else {
             return $this->index($restaurant->name_barcode);

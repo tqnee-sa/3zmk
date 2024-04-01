@@ -103,76 +103,40 @@
                             </span>
                         @endif
                     </div>
-                    <div class="password">
-                        <label for="name">@lang('messages.password') :</label>
-                        <div class="container_input">
-                            <i class="fa-solid fa-key" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="@lang('messages.password')"
-                            />
-                        </div>
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('password') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                    <div class="password_confirmation">
-                        <label for="name">@lang('messages.password_confirmation') :</label>
-                        <div class="container_input">
-                            <i class="fa-solid fa-key" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password_confirmation"
-                                placeholder="@lang('messages.password_confirmation')"
-                            />
-                        </div>
-                        @if ($errors->has('password_confirmation'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('password_confirmation') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                    <div class="name_company">
-                        <label for="name_company">@lang('messages.company_name') :</label>
-                        <div class="container_input">
-                            <i class="fa-solid fa-building" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                            <input
-                                type="text"
-                                id="name_company"
-                                name="company"
-                                value="{{$user->company}}"
-                                placeholder="@lang('messages.company_name')"
-                            />
-                        </div>
-                        @if ($errors->has('company'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('company') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                    <div class="type_company">
-                        <label for="type_company">@lang('messages.company_type') :</label>
-                        <div class="container_input">
-                            <i class="fa fa-email" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                            <input
-                                type="text"
-                                id="type_company"
-                                name="company_type"
-                                value="{{$user->company_type}}"
-                                placeholder="@lang('messages.company_type')"
-                            />
-                        </div>
-                        @if ($errors->has('company_type'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('company_type') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+{{--                    <div class="password">--}}
+{{--                        <label for="name">@lang('messages.password') :</label>--}}
+{{--                        <div class="container_input">--}}
+{{--                            <i class="fa-solid fa-key" style="color: {{$restaurant->az_color?->icons}} !important;"></i>--}}
+{{--                            <input--}}
+{{--                                type="password"--}}
+{{--                                id="password"--}}
+{{--                                name="password"--}}
+{{--                                placeholder="@lang('messages.password')"--}}
+{{--                            />--}}
+{{--                        </div>--}}
+{{--                        @if ($errors->has('password'))--}}
+{{--                            <span class="help-block">--}}
+{{--                                <strong style="color: red;">{{ $errors->first('password') }}</strong>--}}
+{{--                            </span>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                    <div class="password_confirmation">--}}
+{{--                        <label for="name">@lang('messages.password_confirmation') :</label>--}}
+{{--                        <div class="container_input">--}}
+{{--                            <i class="fa-solid fa-key" style="color: {{$restaurant->az_color?->icons}} !important;"></i>--}}
+{{--                            <input--}}
+{{--                                type="password"--}}
+{{--                                id="password"--}}
+{{--                                name="password_confirmation"--}}
+{{--                                placeholder="@lang('messages.password_confirmation')"--}}
+{{--                            />--}}
+{{--                        </div>--}}
+{{--                        @if ($errors->has('password_confirmation'))--}}
+{{--                            <span class="help-block">--}}
+{{--                                <strong style="color: red;">{{ $errors->first('password_confirmation') }}</strong>--}}
+{{--                            </span>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
                     <div class="phone_number">
                         <label for="type_company"> @lang('messages.contact_number') :</label>
                         <div class="container_input">

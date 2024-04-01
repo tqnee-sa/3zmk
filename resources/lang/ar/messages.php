@@ -339,4 +339,7 @@ return [
     'employee_control_panel' => 'لوحة تحكم كاشير عازمك',
     'alarm_tones' => 'نغمات التنبيه',
     'technical_support' => 'الدعم الفني',
+    'total_menu_views' => 'أجمالي زيارات المنيو',
+    'total_paid_orders' => 'أجمالي الطلبات المدفوعة',
+    'noOrdersYet' => 'لا توجد طلبات !',
 ];

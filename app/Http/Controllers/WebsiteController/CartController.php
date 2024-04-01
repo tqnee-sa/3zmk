@@ -146,4 +146,25 @@ class CartController extends Controller
         $order = AZOrder::findOrFail($id);
         return view('website.orders.order_details' , compact('order'));
     }
+    public function my_orders($branch_id , $status = null)
+    {
+        $user = auth('web')->user();
+        $branch = AZBranch::find($branch_id);
+        $restaurant = $branch->restaurant;
+        if ($status)
+        {
+            $orders = AZOrder::whereUserId($user->id)
+                ->where('status' , $status)
+                ->whereBranchId($branch_id)
+                ->orderBy('id', 'desc')
+                ->paginate(20);
+        }else{
+            $orders = AZOrder::whereUserId($user->id)
+                ->where('status' , '!=' , 'new')
+                ->whereBranchId($branch_id)
+                ->orderBy('id', 'desc')
+                ->paginate(20);
+        }
+        return view('website.orders.my_orders' , compact('orders' , 'branch','restaurant'));
+    }
 }
