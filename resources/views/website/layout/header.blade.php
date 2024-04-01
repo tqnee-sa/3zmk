@@ -38,7 +38,7 @@
                             {{auth()->guard('web')->user()->name}}
                         </h2>
                     @else
-                        <button class="btn"
+                        <button class="{{$restaurant->az_color == null ? 'joinUs_btn' : 'btn'}}"
                                 style="background-color: {{$restaurant->az_color?->icons}} !important; width: 135px">
                             <a href="{{route('AZUserLogin' , [$restaurant->name_barcode , $branch->name_en])}}">
                                 @lang('messages.login')

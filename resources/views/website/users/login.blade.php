@@ -46,7 +46,7 @@
 
 <div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
     <header
-        class="d-flex align-items-center justify-content-between  p-3"
+        class="d-flex align-items-center justify-content-between bg-white p-3"
     >
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
             <i class="fa-solid fa-angle-right"></i>
@@ -74,7 +74,7 @@
             </div>
         @endif
         <div
-            class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center"
+            class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center {{$restaurant->az_color ? '' : 'bg-white'}}"
         >
             <br><br><br>
             <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="75" height="75" alt="logo" />
@@ -83,7 +83,7 @@
                 <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
                 <div class="m-2 px-1 container_form">
                     <div class="phone_number">
-                        <label for="type_company" style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
+                        <label for="type_company" style="color: {{$restaurant->az_color?->main_heads}} !important;">
                             @lang('messages.country')
                         </label>
                         <select name="country_id" class="form-control"
