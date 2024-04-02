@@ -244,6 +244,66 @@
                                                     </h3>
                                                 </div>
                                             </div>
+
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        @lang('messages.total_menu_views')
+                                                        <a href="#">
+                                                            {{$user->az_info?->menu_views}}
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        @lang('messages.restaurant_az_commission')
+                                                        <a href="#">
+                                                            {{$user->az_commission}} %
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        @lang('messages.orders_commissions') :
+                                                        <a href="#">
+                                                            {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission')}}
+                                                            {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        @lang('messages.paid_commission_value') :
+                                                        <a href="#">
+                                                            {{$user->az_commissions->sum('commission_value')}}
+                                                            {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        @lang('messages.commissions_payable') :
+                                                        <a href="#">
+                                                            {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission') - $user->az_commissions->sum('commission_value')}}
+                                                            {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
                                         @elseif($subscription and $subscription->status == 'free' )
                                             <h4>
                                                 @lang('messages.subscription_type') :

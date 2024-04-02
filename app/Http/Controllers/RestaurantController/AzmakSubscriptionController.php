@@ -14,6 +14,9 @@ use App\Models\AzSubscription;
 use App\Models\AzmakSetting;
 use App\Models\AzHistory;
 use App\Models\Bank;
+use App\Models\RestaurantTermsCondition;
+use App\Models\AzRestaurantSlider;
+use App\Models\RestaurantAboutAzmak;
 
 
 class AzmakSubscriptionController extends Controller
@@ -21,13 +24,9 @@ class AzmakSubscriptionController extends Controller
     public function show_subscription($id)
     {
         $restaurant = Restaurant::find($id);
-        $restaurant->update([
-            'a_z_myFatoourah_token' => 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
-        ]);
         // get azmak setting subscription type
         $settings = AzmakSetting::first();
-        if ($settings->subscription_type == 'free')
-        {
+        if ($settings->subscription_type == 'free') {
             // 1 - free subscription
             AzSubscription::updateOrCreate(
                 ['restaurant_id' => $restaurant->id],
@@ -36,15 +35,12 @@ class AzmakSubscriptionController extends Controller
                     'end_at' => Carbon::now()->addYears(10),
                     'subscription_type' => 'new',
                 ]);
-            AZRestaurantInfo::updateOrCreate(
-                ['restaurant_id' => $restaurant->id],
-                );
+            $this->create_default_data($restaurant->id);
             flash(trans('messages.AzmakFreeSubscriptionDoneSuccessfully'))->success();
             return redirect()->back();
-        }elseif ($settings->subscription_type == 'paid')
-        {
+        } elseif ($settings->subscription_type == 'paid') {
             // 2 - paid Payment
-            return view('restaurant.payments.payment_method' , compact('restaurant'));
+            return view('restaurant.payments.payment_method', compact('restaurant'));
         }
     }
 
@@ -91,14 +87,13 @@ class AzmakSubscriptionController extends Controller
             $tax_value = $amount * $tax / 100;
             $amount += $tax_value;
         }
-        if ($request->payment_method == 'bank')
-        {
+        $this->create_default_data($restaurant->id);
+        if ($request->payment_method == 'bank') {
             AzSubscription::updateOrCreate(
                 ['restaurant_id' => $restaurant->id],
                 [
                     'payment_type' => 'bank',
                     'payment' => 'false',
-                    'status'  => 'new',
                     'price' => $amount,
                     'seller_code_id' => $seller_code?->id,
                     'tax_value' => $tax_value,
@@ -108,9 +103,8 @@ class AzmakSubscriptionController extends Controller
                 ['restaurant_id' => $restaurant->id],
             );
             $banks = Bank::whereNull('restaurant_id')->where('country_id', $restaurant->country_id)->get();
-            return view('restaurant.payments.bank_transfer' , compact('restaurant' , 'banks' , 'amount' , 'discount','tax', 'tax_value'));
-        }elseif ($request->payment_method == 'online')
-        {
+            return view('restaurant.payments.bank_transfer', compact('restaurant', 'banks', 'amount', 'discount', 'tax', 'tax_value'));
+        } elseif ($request->payment_method == 'online') {
             $data = array(
                 'PaymentMethodId' => $request->payment_type,
                 'CustomerName' => $name,
@@ -158,23 +152,22 @@ class AzmakSubscriptionController extends Controller
                     ['restaurant_id' => $restaurant->id],
                 );
                 return redirect()->to($result->Data->PaymentURL);
-            }
-            else {
+            } else {
                 flash(trans('messages.paymentError'))->error();
                 return back();
             }
         }
     }
 
-    public function bank_transfer(Request $request , $id)
+    public function bank_transfer(Request $request, $id)
     {
         $this->validate($request, [
-            'bank_id'  => 'required',
+            'bank_id' => 'required',
             'transfer_photo' => 'required|mimes:jpg,jpeg,png,gif,tif,psd,pmp,webp|max:5000'
         ]);
         $restaurant = Restaurant::findOrFail($id);
         $restaurant->az_subscription->update([
-            'bank_id'    => $request->bank_id,
+            'bank_id' => $request->bank_id,
             'transfer_photo' => UploadImage($request->file('transfer_photo'), 'transfer_photo', '/uploads/az_transfers'),
         ]);
         flash(trans('messages.waitAdminAccept'))->success();
@@ -193,15 +186,15 @@ class AzmakSubscriptionController extends Controller
             $subscription = AzSubscription::whereInvoiceId($InvoiceId)->first();
             // store operation at history
             AzHistory::create([
-                'restaurant_id'   => $subscription->restaurant_id,
-                'seller_code_id'  => $subscription->seller_code_id,
-                'paid_amount'     => $subscription->price,
-                'discount'        => $subscription->discount_value,
-                'tax'             => $subscription->tax_value,
-                'invoice_id'      => $subscription->invoice_id,
-                'payment_type'    => 'online',
+                'restaurant_id' => $subscription->restaurant_id,
+                'seller_code_id' => $subscription->seller_code_id,
+                'paid_amount' => $subscription->price,
+                'discount' => $subscription->discount_value,
+                'tax' => $subscription->tax_value,
+                'invoice_id' => $subscription->invoice_id,
+                'payment_type' => 'online',
                 'subscription_type' => $subscription->status == 'finished' ? 'renew' : 'new',
-                'details'         => $subscription->status == 'finished' ? trans('messages.renew_subscription') : trans('messages.new_subscription'),
+                'details' => $subscription->status == 'finished' ? trans('messages.renew_subscription') : trans('messages.new_subscription'),
             ]);
             $subscription->update([
                 'status' => 'active',
@@ -215,6 +208,68 @@ class AzmakSubscriptionController extends Controller
         } else {
             flash(trans('messages.paymentError'))->error();
             return back();
+        }
+    }
+
+    public function create_default_data($restaurant_id)
+    {
+        // check sliders
+        $sliders = AzRestaurantSlider::whereRestaurantId($restaurant_id)->get();
+        if ($sliders->count() == 0)
+        {
+            // 1- create restaurant slider
+            AzRestaurantSlider::create([
+                'restaurant_id' => $restaurant_id,
+                'photo' => 'default1.png',
+                'type' => 'image',
+                'stop' => 'false',
+            ]);
+            AzRestaurantSlider::create([
+                'restaurant_id' => $restaurant_id,
+                'photo' => 'default2.png',
+                'type' => 'image',
+                'stop' => 'false',
+            ]);
+        }
+        if (RestaurantTermsCondition::whereRestaurantId($restaurant_id)->first() == null)
+        {
+            // create default terms and condition
+            RestaurantTermsCondition::create([
+                'restaurant_id' => $restaurant_id,
+                'terms_ar' => 'الشروط والأحكام نص يتم أدخاله وتعديله من لوحه تحكم المطعم',
+                'terms_en' => 'Text Entered And Edited From Restaurant Control Panel',
+            ]);
+        }
+        if (RestaurantAboutAzmak::whereRestaurantId($restaurant_id)->first() == null)
+        {
+            // create restaurant About
+            RestaurantAboutAzmak::create([
+                'restaurant_id' => $restaurant_id,
+                'about_ar' => 'من نحن نص يتم إدخاله وتعديله من لوحه تحكم أداره المطعم',
+                'about_en' => 'About Us Text Entered And Edited From Restaurant Control Panel',
+            ]);
+        }
+        $restaurant = Restaurant::find($restaurant_id);
+        if ($restaurant->az_logo == null) {
+            $restaurant->update([
+                'az_logo' => 'default_logo.jpg',
+            ]);
+        } elseif ($restaurant->a_z_myFatoourah_token == null) {
+            $restaurant->update([
+                'a_z_myFatoourah_token' => 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
+            ]);
+        }
+        if ($restaurant->az_info and $restaurant->az_info->description_ar == null and $restaurant->az_info->description_en == null) {
+            $restaurant->az_info->update([
+                'description_ar' => 'وصف المطعم يتم أدخاله وتعديل من لوحه تحكم المطعم',
+                'description_en' => 'Restaurant Description Entered And Edited From RestaurantControl Panel',
+            ]);
+        } elseif ($restaurant->az_info == null) {
+            AZRestaurantInfo::create([
+                'restaurant_id' => $restaurant->id,
+                'description_ar' => 'وصف المطعم يتم أدخاله وتعديل من لوحه تحكم المطعم',
+                'description_en' => 'Restaurant Description Entered And Edited From RestaurantControl Panel',
+            ]);
         }
     }
 }

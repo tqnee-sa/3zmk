@@ -39,6 +39,7 @@
         data-bs-target="#offcanvasBottom"
         aria-controls="offcanvasBottom"
     >
+        <i class="fa fa-cog fa-spin"></i>
         @lang('messages.change_branch')
     </button>
 
@@ -76,7 +77,7 @@
                             {{app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en}}
                         </a>
                         <div class="content" style="background-color: {{$restaurant->az_color?->background}} !important;">
-                            @foreach($city->branches as $zbranch)
+                            @foreach($city->branches()->whereRestaurantId($restaurant->id)->get() as $zbranch)
                                 <input
                                     type="radio"
                                     id="city{{$zbranch->id}}"

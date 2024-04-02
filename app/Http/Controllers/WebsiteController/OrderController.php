@@ -120,23 +120,7 @@ class OrderController extends Controller
                 'status'  => 'active',
                 'commission' => $commission_value,
             ]);
-            // send order details to user whatsapp
-            $content = trans('messages.welcome') . $order->person_name . ' ' . trans('messages.at') .' ' . trans('messages.az_orders') . '%0a %0a';
-            $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
-            $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
-            $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
-            $content.= trans('messages.order_details'). '%0a %0a';
-            $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
-            $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
-
-            $check = substr($order->person_phone, 0, 2) === '05';
-            if ($check == true) {
-                $phone = '+966' . ltrim($order->person_phone, '0');
-            } else {
-                $phone = '+2' . $order->person_phone;
-            }
-            $url = 'https://api.whatsapp.com/send?phone=' . $phone . '&text='.$content;
-            return redirect()->to($url);
+            return redirect()->to($this->whats_redirect($order));
         } else {
             Toastr::warning(trans('messages.paymentError'), trans('messages.cart'), ["positionClass" => "toast-top-right"]);
             return back();
@@ -152,21 +136,7 @@ class OrderController extends Controller
             'commission' => $commission_value,
         ]);
         // send order details to user whatsapp
-        $content = trans('messages.welcome') . $order->person_name . ' ' . trans('messages.at') .' ' . trans('messages.az_orders') . '%0a %0a';
-        $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
-        $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
-        $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
-        $content.= trans('messages.order_details'). '%0a %0a';
-        $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
-        $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
-        $check = substr($order->person_phone, 0, 2) === '05';
-        if ($check == true) {
-            $phone = '+966' . ltrim($order->person_phone, '0');
-        } else {
-            $phone = '+2' . $order->person_phone;
-        }
-        $url = 'https://api.whatsapp.com/send?phone=' . $phone . '&text='.$content;
-        return redirect()->to($url);
+        return redirect()->to($this->whats_redirect($order));
     }
     public function check_order_tap_status(Request $request , $id)
     {
@@ -177,6 +147,10 @@ class OrderController extends Controller
             'status'  => 'active',
             'commission' => $commission_value,
         ]);
+        return redirect()->to($this->whats_redirect($order));
+    }
+    public function whats_redirect($order)
+    {
         // send order details to user whatsapp
         $content = trans('messages.welcome') . $order->person_name . ' ' . trans('messages.at') .' ' . trans('messages.az_orders') . '%0a %0a';
         $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
@@ -185,14 +159,14 @@ class OrderController extends Controller
         $content.= trans('messages.order_details'). '%0a %0a';
         $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
         $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
+
         $check = substr($order->person_phone, 0, 2) === '05';
         if ($check == true) {
             $phone = '+966' . ltrim($order->person_phone, '0');
         } else {
             $phone = '+2' . $order->person_phone;
         }
-        $url = 'https://api.whatsapp.com/send?phone=' . $phone . '&text='.$content;
-        return redirect()->to($url);
+        return 'https://api.whatsapp.com/send?phone=' . $phone . '&text='.$content;
     }
 }
 //gM2ir(XJsO9z

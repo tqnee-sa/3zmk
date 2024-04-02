@@ -107,7 +107,7 @@
                                 <div class="content_list p-2">
                                     <h3>
                                         <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                                           href='{{route('product_details' , $product->id)}}'>
+                                           href="{{route('product_details' , $product->id)}}">
                                             {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                         </a>
                                         @if ($product->poster != null)
@@ -125,15 +125,30 @@
                                             @endforeach
                                         @endif
                                     </h3>
-{{--                                    <p>--}}
-{{--                                        <a style="color: {{$restaurant->az_color?->options_description}} !important;"--}}
-{{--                                           href='{{route('product_details' , $product->id)}}'>--}}
-{{--                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}--}}
-{{--                                        </a>--}}
-{{--                                    </p>--}}
-                                    <div
-                                        class="more_details d-flex align-items-center justify-content-between"
-                                    >
+                                    <p>
+                                        <a style="color: {{$restaurant->az_color?->options_description}} !important;"
+                                           href='{{route('product_details' , $product->id)}}'>
+                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}
+                                        </a>
+                                    </p>
+                                    <div class="more_details d-flex align-items-center justify-content-between">
+                                        <div class="price"
+                                             style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                            <span
+                                                style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}">
+                                                @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                                    {{--                                                    add the commission to product--}}
+                                                    {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                                @else
+                                                    {{$product->price}}
+                                                @endif
+                                            </span>
+                                            <small>
+                                                {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="more_details d-flex align-items-center justify-content-between">
                                         <div class="action">
                                             <button
                                                 id="addToCartBtn"
@@ -150,21 +165,6 @@
                                                 <i style="background-color: {{$restaurant->az_color?->icons}} !important;"
                                                    class="fa-solid fa-share-nodes"></i>
                                             </button>
-                                        </div>
-                                        <div class="price"
-                                             style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                            <span
-                                                style="font-size: 13px; color: {{$restaurant->az_color?->options_description}}">
-                                                @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                                    {{--                                                    add the commission to product--}}
-                                                    {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
-                                                @else
-                                                    {{$product->price}}
-                                                @endif
-                                            </span>
-                                            <small>
-                                                {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
-                                            </small>
                                         </div>
                                     </div>
                                     <div style="display: none" class="shareBtn" id="shareDiv-{{$product->id}}">

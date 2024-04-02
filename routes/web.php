@@ -455,7 +455,6 @@ Route::prefix('admin')->group(function () {
         Route::resource('/seller_codes', SellerCodeController::class);
         Route::get('/seller_codes/delete/{id}', [SellerCodeController::class, 'destroy'])->name('deleteSellerCode');
         Route::get('/seller_codes/{id}/active/{status}', [SellerCodeController::class, 'activate'])->name('activateSellerCode');
-
         // restaurants
 
     });
@@ -496,4 +495,4 @@ Route::prefix('casher')->group(function () {
 /**
  * End @Employees Routes
  */
-//Nour@1000#1000
+//Nour@1000

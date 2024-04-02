@@ -95,7 +95,7 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/barcode') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-barcode"></i>
                             <p>
-                                {{ app()->getLocale() == 'ar' ? 'باركود المينو' : 'Print Barcode' }}
+                                @lang('messages.barcode')
                             </p>
                         </a>
                     </li>
@@ -104,9 +104,8 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/branches') !== false ? 'active' : '' }}">
                             <i class="nav-icon far fa-flag"></i>
                             <span class="badge badge-info right">
-                                    {{ \App\Models\Restaurant\Azmak\AZBranch::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
-
-                                </span>
+                                {{ \App\Models\Restaurant\Azmak\AZBranch::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
                             <p>
                                 @lang('messages.branches')
                             </p>
@@ -121,8 +120,8 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/menu_categories') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-bars"></i>
                             <span class="badge badge-info right">
-                                    {{ \App\Models\Restaurant\Azmak\AZMenuCategory::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
-                                </span>
+                                {{ \App\Models\Restaurant\Azmak\AZMenuCategory::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
                             <p>
                                 @lang('messages.menu_categories')
                             </p>
@@ -133,8 +132,8 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/modifiers') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-plus"></i>
                             <span class="badge badge-info right">
-                                    {{ \App\Models\Restaurant\Azmak\AZModifier::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
-                                </span>
+                                {{ \App\Models\Restaurant\Azmak\AZModifier::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
                             <p>
                                 @lang('messages.modifiers')
                             </p>
@@ -145,8 +144,8 @@
                            class="nav-link {{ strpos(URL::current(), '/restaurant/additions') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-plus"></i>
                             <span class="badge badge-info right">
-                                    {{ \App\Models\Restaurant\Azmak\AZOption::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
-                                </span>
+                                {{ \App\Models\Restaurant\Azmak\AZOption::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
+                            </span>
                             <p>
                                 @lang('messages.options')
                             </p>

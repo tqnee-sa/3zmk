@@ -137,7 +137,7 @@
                                                 {{app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en}}
                                             </a>
                                             <div class="content">
-                                                @foreach($city->branches as $branch)
+                                                @foreach($city->branches()->whereRestaurantId($restaurant->id)->get() as $branch)
                                                     <input
                                                         type="radio"
                                                         id="city{{$branch->id}}"

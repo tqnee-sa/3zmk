@@ -55,6 +55,8 @@
             class="location_branch bg-white my-4 d-flex align-items-center justify-content-between"
         >
             <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                <i class="fa fa-map-marker-alt" style="color: #e74343"></i>
+                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,
                 {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}
             </span>
             @if($branches->count() > 1)

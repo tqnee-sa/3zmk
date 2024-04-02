@@ -279,7 +279,7 @@ function UploadVideoEdit($file, $old)
 //}
 function UploadImageEdit($inputRequest, $prefix, $folderNam, $oldImage, $height = null, $width = 1500)
 {
-    if ($oldImage != 'logo.png' && $oldImage != 'slider2.png' && $oldImage != 'slider1.png' && $oldImage != 'fish.png' && $oldImage != 'egg.png' && $oldImage != 'hop.png' && $oldImage != 'aqra.png' && $oldImage != 'milk.png' && $oldImage != 'kardal.png' && $oldImage != 'raky.png' && $oldImage != 'butter.png' && $oldImage != 'capret.png' && $oldImage != 'rfs.png' && $oldImage != 'kago.png' && $oldImage != 'smsm.png' && $oldImage != 'soia.png' && $oldImage != 'terms.png') {
+    if ($oldImage != 'default_logo.jpg' and $oldImage != 'default1.png' and $oldImage != 'default2.png') {
         // if(Storage::disk('public_storage')->exists('/' . $folderNam . '/' . $oldImage))
         @unlink(public_path('/' . $folderNam . '/' . $oldImage));
     }

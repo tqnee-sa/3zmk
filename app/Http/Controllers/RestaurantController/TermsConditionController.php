@@ -16,23 +16,11 @@ class TermsConditionController extends Controller
     public function index()
     {
         $terms = RestaurantTermsCondition::whereRestaurantId(auth()->guard('restaurant')->user()->id)->first();
-        if ($terms == null)
-        {
-            $terms = RestaurantTermsCondition::create([
-                'restaurant_id' => auth()->guard('restaurant')->user()->id
-            ]);
-        }
         return view('restaurant.terms.index' , compact('terms'));
     }
     public function azmak_about()
     {
         $about = RestaurantAboutAzmak::whereRestaurantId(auth()->guard('restaurant')->user()->id)->first();
-        if ($about == null)
-        {
-            $about = RestaurantAboutAzmak::create([
-                'restaurant_id' => auth()->guard('restaurant')->user()->id
-            ]);
-        }
         return view('restaurant.terms.about' , compact('about'));
     }
 
