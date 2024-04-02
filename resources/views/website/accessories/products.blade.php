@@ -125,12 +125,12 @@
                                             @endforeach
                                         @endif
                                     </h3>
-                                    <p>
-                                        <a style="color: {{$restaurant->az_color?->options_description}} !important;"
-                                           href='{{route('product_details' , $product->id)}}'>
-                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}
-                                        </a>
-                                    </p>
+{{--                                    <p>--}}
+{{--                                        <a style="color: {{$restaurant->az_color?->options_description}} !important;"--}}
+{{--                                           href='{{route('product_details' , $product->id)}}'>--}}
+{{--                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}--}}
+{{--                                        </a>--}}
+{{--                                    </p>--}}
                                     <div class="more_details d-flex align-items-center justify-content-between">
                                         <div class="price"
                                              style="color: {{$restaurant->az_color?->options_description}} !important;">
