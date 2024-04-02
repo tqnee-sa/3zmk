@@ -7,6 +7,7 @@ use App\Models\Restaurant\Azmak\AZBranch;
 use App\Models\Restaurant\Azmak\AZOrder;
 use App\Models\Restaurant\Azmak\AZRestaurantInfo;
 use App\Models\Restaurant\Azmak\AZRestaurantColor;
+use App\Models\Restaurant\Azmak\AZMenuCategory;
 use App\Models\AzRestaurantCommission;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -138,30 +139,7 @@ class Restaurant extends Authenticatable
     {
         return 'uploads/restaurants/logo/' . $this->logo;
     }
-    public function getBioDescriptionAttribute()
-    {
-        return app()->getLocale() == 'ar' ? $this->bio_description_ar : $this->bio_description_en;
-    }
-    public function getNameAttribute()
-    {
-        return app()->getLocale() == 'en' ? $this->name_en : $this->name_ar;
-    }
-    public function getDescriptionAttribute()
-    {
-        return app()->getLocale() == 'en' ? $this->description_en : $this->description_ar;
-    }
-    public function getWaitingPrivacyAttribute()
-    {
-        return app()->getLocale() == 'en' ? $this->waiting_privacy_en : $this->waiting_privacy_ar;
-    }
-    public function getReservationTitleAttribute()
-    {
-        return app()->getLocale() == 'en' ? $this->reservation_title_en : $this->reservation_title_ar;
-    }
-    public function getPartyDescriptionAttribute()
-    {
-        return app()->getLocale() == 'en' ? $this->party_description_en : $this->party_description_ar;
-    }
+
     public function archiveBy()
     {
         return $this->belongsTo(Admin::class, 'archived_by_id');
@@ -175,44 +153,19 @@ class Restaurant extends Authenticatable
         return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function marketerOperations()
-    {
-        return $this->hasMany(MarketerOperation::class, 'restaurant_id');
-    }
-
-    public function color()
-    {
-        return $this->hasOne(RestaurantColors::class, 'restaurant_id');
-    }
-
     public function menu_categories()
     {
-        return $this->hasMany(MenuCategory::class, 'restaurant_id');
-    }
-    public function restaurantCategories()
-    {
-        return $this->belongsToMany(Category::class, 'restaurant_categories', 'restaurant_id', 'category_id');
+        return $this->hasMany(AZMenuCategory::class, 'restaurant_id');
     }
     public function branches()
     {
         return $this->hasMany(AZBranch::class, 'restaurant_id');
     }
-    public function tables()
-    {
-        return $this->hasMany(Table::class, 'restaurant_id');
-    }
     public function products()
     {
         return $this->hasMany(AZProduct::class, 'restaurant_id');
     }
-    public function deliveries()
-    {
-        return $this->hasMany(RestaurantDelivery::class, 'restaurant_id');
-    }
-    public function socials()
-    {
-        return $this->hasMany(RestaurantSocial::class, 'restaurant_id');
-    }
+
     public function sensitivities()
     {
         return $this->hasMany(AZRestaurantSensitivity::class, 'restaurant_id');
