@@ -176,9 +176,9 @@
                                             @endif
                                             </span>
                                         <div class="price">
-                                            @if($product->price_before_discount)
-                                                <span
-                                                    style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                            <span
+                                                style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                                @if($product->price_before_discount)
                                                     @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
                                                         {{--                                                    add the commission to product--}}
                                                         {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
@@ -188,9 +188,9 @@
                                                             {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
                                                         </del>
                                                     @endif
-                                                </span>
-                                                <br>
-                                            @endif
+                                                @endif
+                                            </span>
+                                            <br>
                                             <span
                                                 style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
                                                 @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
