@@ -277,8 +277,9 @@
                                 </span>
                                 <br>
                             @endif
-                            <div style="text-align: left !important;">
-                                @if ($product->sensitivities and $product->sensitivities->count() > 0)
+
+                            @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                                <div style="text-align: left !important;">
                                     @foreach ($product->sensitivities as $product_sensitivity)
                                         <i>
                                             <img
@@ -286,8 +287,8 @@
                                                 height="25" width="25" class="sens-image">
                                         </i>
                                     @endforeach
-                                @endif
-                            </div>
+                                </div>
+                            @endif
                             @if($product->description_ar or $product->description_en)
                                 <p>
                                     <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
