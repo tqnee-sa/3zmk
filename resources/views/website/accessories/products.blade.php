@@ -30,11 +30,11 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-        font-weight: 800;
+        font-weight: 1000;
         color: #000;
         font-family: "Tajawal", sans-serif !important;
         margin-bottom: 1px;
-        font-size: 15px;
+        font-size: 13px;
         letter-spacing: -0.4px;
     }
 
