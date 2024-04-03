@@ -288,12 +288,14 @@
                                     @endforeach
                                 @endif
                             </div>
-                            <p>
-                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
-                                   href='{{route('product_details' , $product->id)}}'>
-                                    {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
-                                </a>
-                            </p>
+                            @if($product->description_ar or $product->description_en)
+                                <p>
+                                    <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
+                                       href='{{route('product_details' , $product->id)}}'>
+                                        {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
+                                    </a>
+                                </p>
+                            @endif
                             <div
                                 class="more_details d-flex align-items-center justify-content-between"
                             >
@@ -303,30 +305,30 @@
                                              src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
                                              height="30" width="30" class="poster-image">
                                     @endif
-{{--                                    <a href='{{route('product_details' , $product->id)}}'>--}}
-{{--                                        <i class="fa-solid fa-cart-plus"--}}
-{{--                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>--}}
-{{--                                    </a>--}}
-{{--                                    <button class="share2_btn" id="{{$product->id}}">--}}
-{{--                                        <i class="fa-solid fa-share-nodes"--}}
-{{--                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>--}}
-{{--                                    </button>--}}
+                                    {{--                                    <a href='{{route('product_details' , $product->id)}}'>--}}
+                                    {{--                                        <i class="fa-solid fa-cart-plus"--}}
+                                    {{--                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>--}}
+                                    {{--                                    </a>--}}
+                                    {{--                                    <button class="share2_btn" id="{{$product->id}}">--}}
+                                    {{--                                        <i class="fa-solid fa-share-nodes"--}}
+                                    {{--                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>--}}
+                                    {{--                                    </button>--}}
                                 </div>
                                 <div class="price" style="margin: 8px">
-                                            <span
-                                                style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
-                                                @if($product->price_before_discount)
-                                                    @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                                        {{--                                                    add the commission to product--}}
-                                                        {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
-                                                    @else
-                                                        <del>
-                                                            {{$product->price_before_discount}}
-                                                            {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
-                                                        </del>
-                                                    @endif
-                                                @endif
-                                            </span>
+                                    <span
+                                        style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                        @if($product->price_before_discount)
+                                            @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                                {{--                                                    add the commission to product--}}
+                                                {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                            @else
+                                                <del>
+                                                    {{$product->price_before_discount}}
+                                                    {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                                </del>
+                                            @endif
+                                        @endif
+                                    </span>
                                     <br>
                                     <span
                                         style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
@@ -336,15 +338,15 @@
                                         @else
                                             {{$product->price}}
                                         @endif
-                                                 <small>
-                                                     {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
-                                                 </small>
-                                            </span>
+                                        <small>
+                                            {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                        </small>
+                                    </span>
                                 </div>
                             </div>
-{{--                            <div style="display: none" class="shareBtn" id="share2Div-{{$product->id}}">--}}
-{{--                                {!! $shareComponent !!}--}}
-{{--                            </div>--}}
+                            {{--                            <div style="display: none" class="shareBtn" id="share2Div-{{$product->id}}">--}}
+                            {{--                                {!! $shareComponent !!}--}}
+                            {{--                            </div>--}}
                         </div>
                     </div>
                 @endforeach
