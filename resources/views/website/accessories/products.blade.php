@@ -194,7 +194,7 @@
                                             <span
                                                 style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
                                                 @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                                    {{--                                                    add the commission to product--}}
+                                                    {{-- add the commission to product --}}
                                                     {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
                                                 @else
                                                     {{$product->price}}
@@ -257,21 +257,27 @@
                     <div class="list_Gallery mt-3"
                          style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
                         <div class="image">
-                            <a href='{{route('product_details' , $product->id)}}'>
+                            <a href="{{route('product_details' , $product->id)}}">
                                 <img src="{{asset('/uploads/products/'.$product->photo)}}" alt=""/>
                             </a>
                         </div>
                         <div class="content_list p-2">
-                            <h3>
-                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
-                                   href='{{route('product_details' , $product->id)}}'>
+                            <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
+                               href='{{route('product_details' , $product->id)}}'>
+                                <h5>
                                     {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
-                                </a>
-                                @if ($product->poster != null)
-                                    <img style="text-align: right"
-                                         src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
-                                         height="30" width="30" class="poster-image">
-                                @endif
+                                </h5>
+                            </a>
+                            @if ($product->calories === 0.0 or $product->calories > 0 )
+                                <span class="pl-1 calories" style="margin:0 6px;">
+                                    <span
+                                        style="color: {{ $product->restaurant->color == null ? '' : $product->restaurant->color->main_heads }} !important">
+                                        {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
+                                    </span>
+                                </span>
+                                <br>
+                            @endif
+                            <div style="text-align: left !important;">
                                 @if ($product->sensitivities and $product->sensitivities->count() > 0)
                                     @foreach ($product->sensitivities as $product_sensitivity)
                                         <i>
@@ -281,7 +287,7 @@
                                         </i>
                                     @endforeach
                                 @endif
-                            </h3>
+                            </div>
                             <p>
                                 <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
                                    href='{{route('product_details' , $product->id)}}'>
@@ -292,34 +298,53 @@
                                 class="more_details d-flex align-items-center justify-content-between"
                             >
                                 <div class="action">
-                                    <a href='{{route('product_details' , $product->id)}}'>
-                                        <i class="fa-solid fa-cart-plus"
-                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>
-                                    </a>
-                                    <button class="share2_btn" id="{{$product->id}}">
-                                        <i class="fa-solid fa-share-nodes"
-                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>
-                                    </button>
+                                    @if ($product->poster != null)
+                                        <img style="text-align: right"
+                                             src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
+                                             height="30" width="30" class="poster-image">
+                                    @endif
+{{--                                    <a href='{{route('product_details' , $product->id)}}'>--}}
+{{--                                        <i class="fa-solid fa-cart-plus"--}}
+{{--                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>--}}
+{{--                                    </a>--}}
+{{--                                    <button class="share2_btn" id="{{$product->id}}">--}}
+{{--                                        <i class="fa-solid fa-share-nodes"--}}
+{{--                                           style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;"></i>--}}
+{{--                                    </button>--}}
                                 </div>
-                                <div class="price"
-                                     style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
+                                <div class="price" style="margin: 8px">
+                                            <span
+                                                style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                                @if($product->price_before_discount)
+                                                    @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                                        {{--                                                    add the commission to product--}}
+                                                        {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                                    @else
+                                                        <del>
+                                                            {{$product->price_before_discount}}
+                                                            {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                                        </del>
+                                                    @endif
+                                                @endif
+                                            </span>
+                                    <br>
                                     <span
-                                        style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;">
-                                        @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                            {{--                                                    add the commission to product--}}
+                                        style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                                @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                            {{-- add the commission to product --}}
                                             {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
                                         @else
                                             {{$product->price}}
                                         @endif
-                                    </span>
-                                    <small>
-                                        {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
-                                    </small>
+                                                 <small>
+                                                     {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                                 </small>
+                                            </span>
                                 </div>
                             </div>
-                            <div style="display: none" class="shareBtn" id="share2Div-{{$product->id}}">
-                                {!! $shareComponent !!}
-                            </div>
+{{--                            <div style="display: none" class="shareBtn" id="share2Div-{{$product->id}}">--}}
+{{--                                {!! $shareComponent !!}--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 @endforeach
