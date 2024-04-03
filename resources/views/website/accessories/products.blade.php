@@ -163,9 +163,9 @@
                                             </span>
                                             <br>
                                         @endif
-                                        <p class="description_meal">
-                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}
-                                        </p>
+{{--                                        <p class="description_meal">--}}
+{{--                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}--}}
+{{--                                        </p>--}}
                                         <div style="text-align: left !important;">
                                             @if ($product->sensitivities and $product->sensitivities->count() > 0)
                                                 @foreach ($product->sensitivities as $product_sensitivity)
