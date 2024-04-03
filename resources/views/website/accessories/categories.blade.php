@@ -13,12 +13,12 @@
                             </div>
 
                             <div class="card__data">
-                                <h3 class="card__name">
+                                <h5 class="card__name">
                                     <a href="javascript:;" id="{{$category->id}}" class="category_item"
                                        style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
                                         {{app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en}}
                                     </a>
-                                </h3>
+                                </h5>
                             </div>
                         </article>
                     @elseif($category->time == 'true' and check_time_between($category->start_at , $category->end_at))
@@ -31,11 +31,11 @@
                             </div>
 
                             <div class="card__data">
-                                <h3 class="card__name">
+                                <h5 class="card__name">
                                     <a href="javascript:;" id="{{$category->id}}" class="category_item">
                                         {{app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en}}
                                     </a>
-                                </h3>
+                                </h5>
                             </div>
                         </article>
                     @endif
