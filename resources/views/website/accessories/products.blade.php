@@ -143,10 +143,10 @@
                                     <img src="{{asset('/uploads/products/' . $product->photo)}}" alt=""/>
                                 </div>
                                 <div class="content_list p-2">
-                                    <h3>
+                                    <h6>
                                         <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
                                            href="{{route('product_details' , $product->id)}}">
-                                            <h3>{{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}</h3>
+                                            <h6>{{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}</h6>
                                         </a>
                                         @if ($product->calories === 0.0 or $product->calories > 0 )
                                             <span class="pl-1 calories" style="margin:0 6px;">
@@ -171,7 +171,7 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                    </h3>
+                                    </h6>
 
                                     <div class="more_details d-flex align-items-center justify-content-between">
                                         <span style="text-align: right !important;">
