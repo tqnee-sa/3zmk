@@ -176,19 +176,21 @@
                                             @endif
                                             </span>
                                         <div class="price">
-                                            <span
-                                                style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
-                                                @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                                    {{--                                                    add the commission to product--}}
-                                                    {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
-                                                @else
-                                                    <del>
-                                                        {{$product->price}}
-                                                        {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
-                                                    </del>
-                                                @endif
-                                            </span>
-                                            <br>
+                                            @if($product->price_before_discount)
+                                                <span
+                                                    style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                                    @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                                        {{--                                                    add the commission to product--}}
+                                                        {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                                    @else
+                                                        <del>
+                                                            {{$product->price_before_discount}}
+                                                            {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                                        </del>
+                                                    @endif
+                                                </span>
+                                                <br>
+                                            @endif
                                             <span
                                                 style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
                                                 @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
