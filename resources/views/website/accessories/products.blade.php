@@ -34,6 +34,7 @@
         color: #000;
         font-family: "Tajawal", sans-serif !important;
         margin-bottom: 1px;
+        font-size: 15px;
         letter-spacing: -0.4px;
     }
 
