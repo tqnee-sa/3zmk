@@ -59,3 +59,9 @@
         </button>
     </div>
 </div>
+<style>
+    .show_main_info .slider {
+        width: 100%;
+        margin-top: -20px;
+    }
+</style>
