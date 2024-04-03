@@ -62,6 +62,11 @@
         border-radius: 15px 15px 15px 15px;
         height: 110px;
     }
+
+    .description_meal {
+        font-size: 12px !important;
+        font-weight: 300 !important;
+    }
 </style>
 <div class=" p-3"
      style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
@@ -158,9 +163,9 @@
                                             </span>
                                             <br>
                                         @endif
-                                        {{--                                        <p class="description">--}}
-                                        {{--                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,70)}}--}}
-                                        {{--                                        </p>--}}
+                                        <p class="description_meal">
+                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,70)}}
+                                        </p>
                                         <div style="text-align: left !important;">
                                             @if ($product->sensitivities and $product->sensitivities->count() > 0)
                                                 @foreach ($product->sensitivities as $product_sensitivity)
@@ -297,12 +302,13 @@
                                 </div>
                             @endif
                             @if($product->description_ar or $product->description_en)
-                                <p>
-                                    <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
-                                       href='{{route('product_details' , $product->id)}}'>
+
+                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
+                                   href='{{route('product_details' , $product->id)}}'>
+                                    <p class="description_meal">
                                         {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
-                                    </a>
-                                </p>
+                                    </p>
+                                </a>
                             @endif
                             <div
                                 class="more_details d-flex align-items-center justify-content-between"
@@ -406,12 +412,13 @@
                                     @endforeach
                                 @endif
                             </div>
-                            <p>
-                                <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
-                                   href='{{route('product_details' , $product->id)}}'>
+                            <a style="color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important;"
+                               href='{{route('product_details' , $product->id)}}'>
+                                <p class="description_meal">
                                     {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
-                                </a>
-                            </p>
+                                </p>
+                            </a>
+
                             <div
                                 class="more_details d-flex align-items-center justify-content-between">
                                 <div class="action">
@@ -460,9 +467,9 @@
                                     </span>
                                 </div>
                             </div>
-{{--                            <div style="display: none" class="shareBtn" id="share3Div-{{$product->id}}">--}}
-{{--                                {!! $shareComponent !!}--}}
-{{--                            </div>--}}
+                            {{--                            <div style="display: none" class="shareBtn" id="share3Div-{{$product->id}}">--}}
+                            {{--                                {!! $shareComponent !!}--}}
+                            {{--                            </div>--}}
                         </div>
                     </div>
                 @endforeach
