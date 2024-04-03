@@ -160,14 +160,26 @@
                                                class="btn btn-success">
                                                 {{trans('messages.activeAzmak')}}
                                             </a>
-                                        @elseif($subscription and $subscription->status == 'finished')
-                                            <br>
-                                            <h4 style="color: red"> @lang('messages.finished_subscription') </h4>
-                                            <br>
-                                            <a href="{{route('AzmakSubscription' , $user->id)}}"
-                                               class="btn btn-success">
-                                                {{trans('messages.renewAzmakSubscription')}}
-                                            </a>
+                                        @elseif($subscription and $subscription->status == 'finished')                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 style="color: red" class="timeline-header border-0">
+                                                        @lang('messages.finished_subscription')
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        <a href="{{route('AzmakSubscription' , $user->id)}}"
+                                                           class="btn btn-success">
+                                                            {{trans('messages.renewAzmakSubscription')}}
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+
                                         @elseif($subscription and $subscription->status == 'active' )
                                             <div>
                                                 <i class="fas fa-money-bill bg-info"></i>

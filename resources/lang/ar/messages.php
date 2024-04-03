@@ -342,4 +342,6 @@ return [
     'total_menu_views' => 'أجمالي زيارات المنيو',
     'total_paid_orders' => 'أجمالي الطلبات المدفوعة',
     'noOrdersYet' => 'لا توجد طلبات !',
+    'no_calories' => '(بدون سعرات حرارية)' ,
+    'calories_des' => '(:num سعرة حرارية)' ,
 ];

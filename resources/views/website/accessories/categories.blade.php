@@ -1,4 +1,4 @@
-<div class="card__container swiper" style="background-color: {{$restaurant->az_color?->category_background}} !important;">
+<div class="card__container swiper" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->category_background : '#FFF'}} !important;">
     <div class="card__content">
         <div class="swiper-wrapper">
             @if($categories->count() > 0)

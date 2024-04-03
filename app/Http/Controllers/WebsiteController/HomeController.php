@@ -12,7 +12,6 @@ use App\Models\Restaurant;
 use App\Models\City;
 use App\Models\RestaurantTermsCondition;
 use App\Models\RestaurantAboutAzmak;
-use App\Models\RestaurantSlider;
 use App\Models\AzSubscription;
 use DB;
 use Illuminate\Support\Facades\App;

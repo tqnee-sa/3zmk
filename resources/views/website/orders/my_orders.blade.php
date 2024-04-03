@@ -23,7 +23,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a href="{{route('AZUserOrders' , [$branch->id , 'active'])}}"
-                       class="btn btn-success"
+                       class="btn btn-success btn-sm"
                        role="tab"
                        aria-controls="pills-profile"
                        aria-selected="false">
@@ -35,7 +35,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a href="{{route('AZUserOrders' , [$branch->id , 'completed'])}}"
-                       class="btn btn-info"
+                       class="btn btn-info btn-sm"
                        role="tab"
                        aria-controls="pills-profile"
                        aria-selected="false">
@@ -47,7 +47,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a href="{{route('AZUserOrders' , [$branch->id , 'canceled'])}}"
-                       class=" btn btn-danger"
+                       class=" btn btn-danger btn-sm"
                        role="tab"
                        aria-controls="pills-profile"
                        aria-selected="false">
@@ -59,7 +59,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a href="{{route('AZUserOrders' , [$branch->id , 'finished'])}}"
-                       class=" btn btn-danger"
+                       class=" btn btn-danger btn-sm"
                        role="tab"
                        aria-controls="pills-profile"
                        aria-selected="false">

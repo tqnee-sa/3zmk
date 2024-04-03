@@ -59,25 +59,10 @@ class Restaurant extends Authenticatable
         'show_branches_list',
         'menu',        // ENUM('vertical','horizontal'),
         'state',       // ENUM('open','closed','busy' , 'un_available')
-        'enable_feedback',
-        'foodics_status', // Emun (true,false)
-        'foodics_referance',
-        'foodics_state',
-        'foodics_access_token', // text
-        'delivery_price',     // delivery price used for foodics deliveries
         'enable_bank', // Emun (true,false)
-        'enable_reservation_online_pay', 'enable_reservation_bank',
         'enable_online_payment', // Emun (true,false)
-        'reservation_description_ar',
-        'reservation_description_en',
-        'reservation_service',     // true , false
         'answer_id',
         'orders',
-        'foodics_orders',
-        'whatsapp_orders',
-        'enable_fixed_category',  //true , false
-        'enable_contact_us',  //true , false
-        'enable_reservation_cash', //true , false
         'default_lang',
         'is_call_phone', //true , false
         'is_whatsapp', //true , false
@@ -96,30 +81,13 @@ class Restaurant extends Authenticatable
         'last_session',
         'reservation_to_restaurant', // true , false
         'last_activity',
-        'reservation_call_number', 'reservation_is_call_phone', 'reservation_whatsapp_number', 'reservation_tax_value', 'reservation_is_whatsapp', 'reservation_tax',
-        'enable_loyalty_point', // true, false
-        'enable_loyalty_point_paymet_method', //true , false
-        'header', 'footer',
+        'header',
+        'footer',
         'sms_method', // enum [taqnyat]
         'sms_sender',  'sms_token',
         'slider_down_contact_us_title',
         'archive_reason', 'archived_by_id',
-        'enable_party_payment_bank',  // enum [true , false]
-        'enable_party_payment_online',  // enum [true , false]
-        'enable_party', // enum [true , false]
-        'reservation_title_ar', 'reservation_title_en', 'party_description_ar', 'party_description_en', 'enable_party_payment_cash', // enum [true , false]
-        'party_to_restaurant', 'party_is_call_phone', 'party_is_whatsapp', 'party_tax', 'party_tax_value', 'party_call_phone', 'party_whatsapp_number',
         'product_menu_view',
-        'enable_reservation_email_notification', // enum [true , false]
-        'reservation_sms_otp', 'reservation_sms_success', // enum [true , false]
-        'reservation_email_notification',
-        'enable_party_email_notification', // enum [true , false]
-        'party_email_notification',
-        'enable_waiter', // enum [true , false]
-        'bio_description_ar', 'bio_description_en', // description of restaurant show in bio links
-        'waiting_progress_time', 'waiting_max_new_request', 'waiting_new_request', 'waiting_alert_type', 'enable_waiting', 'waiting_privacy_en', 'waiting_privacy_ar',
-        'lucky_day_wins_count', 'enable_lucky_wheel',
-        'enable_loyalty_offer', 'enable_contact_us_links' ,
         'a_z_orders_payment_type',
         'a_z_tap_token',
         'a_z_myFatoourah_token',

@@ -495,4 +495,7 @@ Route::prefix('casher')->group(function () {
 /**
  * End @Employees Routes
  */
-//Nour@1000
+//Nour@1000#1000
+
+// الملقات بره والحساسيه جوه
+// اظهار السعرات الحراريه

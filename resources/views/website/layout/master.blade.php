@@ -43,16 +43,16 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #ebebeb">
 <div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
 @include('website.layout.header')
 
 <!-- <main class="py-1"> -->
-    <div class="show_main_info px-1 py-3" style="background-color: {{$restaurant->az_color?->background}} !important;">
+    <div class="show_main_info px-1 py-3" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @include('website.accessories.slider')
     <!-- end  main slider  -->
         <div
-            class="location_branch bg-white my-4 d-flex align-items-center justify-content-between"
+            class="location_branch my-4 d-flex align-items-center justify-content-between"
         >
             <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">
                 <i class="fa fa-map-marker-alt" style="color: #e74343"></i>

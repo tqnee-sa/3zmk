@@ -340,4 +340,6 @@ return [
     'total_menu_views' => 'Total Menu Views',
     'total_paid_orders' => 'Total Paid Orders',
     'noOrdersYet' => 'No Orders Found ! ',
+    'no_calories' => '(without calories)' ,
+    'calories_des' => '(:num calories)' ,
 ];
