@@ -1,3 +1,12 @@
+<style>
+    .poster-image {
+        position: absolute;
+        top: 5px;
+        width: 20px !important;
+        height: 20px !important;
+        left: 5px;
+    }
+</style>
 <div class="card__container swiper" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->category_background : '#FFF'}} !important;">
     <div class="card__content">
         <div class="swiper-wrapper">
@@ -5,10 +14,15 @@
                 @foreach($categories as $category)
                     @if($category->time == 'false')
                         <article class="card__article swiper-slide">
-                            <div class="card__image {{$category->id == $category_id ? 'active_categery' : ''}}">
+                            <div class="card__image {{$category->id == $category_id ? 'active_category' : ''}}">
                                 <a href="javascript:;" id="{{$category->id}}" class="category_item">
                                     <img src="{{asset('/uploads/menu_categories/' . $category->photo)}}" alt="image"
                                          width="200" height="200" class="card__img"/>
+                                    @if ($category->poster != null)
+                                        <img style="text-align: right"
+                                             src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
+                                             height="10" width="10" class="poster-image">
+                                    @endif
                                 </a>
                             </div>
 
@@ -23,7 +37,7 @@
                         </article>
                     @elseif($category->time == 'true' and check_time_between($category->start_at , $category->end_at))
                         <article class="card__article swiper-slide">
-                            <div class="card__image">
+                            <div class="card__image {{$category->id == $category_id ? 'active_category' : ''}}">
                                 <a href="javascript:;" id="{{$category->id}}" class="category_item">
                                     <img src="{{asset('/uploads/menu_categories/' . $category->photo)}}" alt="image"
                                          class="card__img"/>

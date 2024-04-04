@@ -5,6 +5,8 @@ namespace App\Models\Restaurant\Azmak;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \App\Models\Restaurant;
+use \App\Models\AZRestaurantPoster;
+
 
 class AZMenuCategory extends Model
 {
@@ -39,5 +41,9 @@ class AZMenuCategory extends Model
     public function sub_categories()
     {
         return $this->hasMany(AZRestaurantSubCategory::class , 'menu_category_id');
+    }
+    public function poster()
+    {
+        return $this->belongsTo(AZRestaurantPoster::class , 'poster_id');
     }
 }

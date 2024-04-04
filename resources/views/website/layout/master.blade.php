@@ -37,7 +37,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <style>
-        .active_categery {
+        .active_category {
             border: 3px solid var(--main_color);
             border-radius: 8px;
         }
@@ -88,11 +88,11 @@
             card.addEventListener("click", function () {
                 // Remove "active" class from all cards
                 cardArticles.forEach(function (card) {
-                    card.classList.remove("active_categery");
+                    card.classList.remove("active_category");
                 });
 
                 // Add "active" class to the clicked card
-                this.classList.add("active_categery");
+                this.classList.add("active_category");
             });
         });
     });

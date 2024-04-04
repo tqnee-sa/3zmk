@@ -112,27 +112,27 @@
 
                                         <div class="more_details d-flex align-items-center justify-content-between">
                                         <span style="text-align: right !important;">
-                                                @if ($product->poster != null)
+                                            @if ($product->poster != null)
                                                 <img style="text-align: right"
                                                      src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
                                                      height="30" width="30" class="poster-image">
                                             @endif
-                                            </span>
+                                        </span>
                                             <div class="price">
-                                            <span
-                                                style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
-                                                @if($product->price_before_discount)
-                                                    @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                                        {{--                                                    add the commission to product--}}
-                                                        {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
-                                                    @else
-                                                        <del>
-                                                            {{$product->price_before_discount}}
-                                                            {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
-                                                        </del>
+                                                <span
+                                                    style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                                    @if($product->price_before_discount)
+                                                        @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
+                                                            {{--                                                    add the commission to product--}}
+                                                            {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                                        @else
+                                                            <del>
+                                                                {{$product->price_before_discount}}
+                                                                {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
+                                                            </del>
+                                                        @endif
                                                     @endif
-                                                @endif
-                                            </span>
+                                                </span>
                                                 <br>
                                                 <span
                                                     style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
