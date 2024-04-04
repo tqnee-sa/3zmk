@@ -29,142 +29,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <style>
-        .name_meal {
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        .description_meal {
-            font-size: 12px !important;
-            font-weight: 300 !important;
-        }
-
-        .choose_details {
-            background-color: var(--bg-second);
-            border-radius: 8px;
-        }
-
-        .choose_details label,
-        h4 {
-            font-size: 14px;
-        }
-
-        .choose_details .main_prcie {
-            font-size: 14px !important;
-            font-size: 500 !important;
-        }
-
-        @media (max-width: 768px) {
-            .choose_details h4,
-            label {
-                font-size: 12px !important;
-                font-weight: 500;
-            }
-
-            .choose_details,
-            .add_cart button,
-            .price_addition {
-                font-size: 14px;
-                font-weight: 500;
-            }
-        }
-
-        .meals_deatails p {
-            font-size: 13px;
-            font-weight: 400;
-        }
-
-        .choose_details .addition {
-            background-color: var(--main_color);
-            border-radius: 0px 0 15px 15px;
-        }
-
-        .addition button,
-        form button {
-            background: #fdb96f;
-            border-radius: 5px;
-            width: 24px;
-            height: 24px;
-            line-height: 10px;
-            color: var(--main_color);
-        }
-
-        .addition button:active,
-        .addition button:focus {
-            background: white;
-        }
-
-        form button:active,
-        form button:focus {
-            color: white;
-        }
-
-        .addition button:active,
-        .addition button:focus {
-            color: var(--main_color);
-        }
-
-        .share_icon button {
-            width: 154px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: max-content;
-            background-color: #f8f8f8;
-            font-size: 12px;
-            padding: 6px;
-        }
-
-        .totalCount {
-            background-color: rgba(0, 0, 0, 0);
-            border-radius: 3px !important;
-            border-color: rgba(0, 0, 0, 0.1);
-            /* display: block; */
-            width: 10%;
-            height: 25px;
-            line-height: 47px;
-            padding: -52px 78px;
-            font-size: 14px;
-            /*!* -webkit-appearance: none;*/
-        }
-
-        .optionCount {
-            background-color: rgba(0, 0, 0, 0);
-            border-radius: 3px !important;
-            border-color: rgba(0, 0, 0, 0.1);
-            /* display: block; */
-            width: 10%;
-            height: 25px;
-            line-height: 47px;
-            padding: -52px 78px;
-            font-size: 14px;
-            /*!* -webkit-appearance: none;*/
-        }
-
-        .shareBtn ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            /*background-color: #333333;*/
-        }
-
-        .shareBtn ul li {
-            float: left;
-        }
-
-        .shareBtn ul li a {
-            display: block;
-            /*color: white;*/
-            text-align: center;
-            padding: 16px;
-            text-decoration: none;
-        }
-
-        .shareBtn ul li a:hover {
-            background-color: #e1ca6c;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('site/css/product_details.css')}}">
 </head>
 <body>
 <div class="mycontainer bg-white">
@@ -202,30 +67,6 @@
                         <img src="{{asset('/uploads/products/' . $product->photo)}}" class="d-block w-100" alt="..."/>
                     </div>
                 </div>
-                <button
-                    class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleControls"
-                    data-bs-slide="prev"
-                >
-              <span
-                  class="carousel-control-prev-icon"
-                  aria-hidden="true"
-              ></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button
-                    class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleControls"
-                    data-bs-slide="next"
-                >
-              <span
-                  class="carousel-control-next-icon"
-                  aria-hidden="true"
-              ></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
         </div>
         <!-- end slider -->
@@ -234,20 +75,30 @@
             <h4 class="name_meal" style="color: {{$restaurant->az_color?->main_heads}}">
                 {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
             </h4>
-            @if ($product->poster != null)
-                <img style="text-align: right"
-                     src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
-                     height="30" width="30" class="poster-image">
+            @if ($product->calories === 0.0 or $product->calories > 0 )
+                <span class="pl-1 calories" style="margin:0 6px;">
+                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                        {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
+                                    </span>
+                                </span>
+                <br>
             @endif
-            @if ($product->sensitivities and $product->sensitivities->count() > 0)
-                @foreach ($product->sensitivities as $product_sensitivity)
-                    <i>
-                        <img
-                            src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
-                            height="25" width="25" class="sens-image">
-                    </i>
-                @endforeach
-            @endif
+{{--            @if ($product->poster != null)--}}
+{{--                <img style="text-align: right"--}}
+{{--                     src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"--}}
+{{--                     height="30" width="30" class="poster-image">--}}
+{{--            @endif--}}
+            <div style="text-align: left !important;">
+                @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                    @foreach ($product->sensitivities as $product_sensitivity)
+                        <i>
+                            <img
+                                src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                                height="25" width="25" class="sens-image">
+                        </i>
+                    @endforeach
+                @endif
+            </div>
             <p class="description_meal" style="color: {{$restaurant->az_color?->options_description}}">
                 {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
             </p>

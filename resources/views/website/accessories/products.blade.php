@@ -1,73 +1,4 @@
-<style>
-    .shareBtn ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        /*background-color: #333333;*/
-    }
-
-    .shareBtn ul li {
-        float: left;
-    }
-
-    .shareBtn ul li a {
-        display: block;
-        /*color: white;*/
-        text-align: center;
-        padding: 16px;
-        text-decoration: none;
-    }
-
-    .shareBtn ul li a:hover {
-        background-color: #e1ca6c;
-    }
-
-    span.calories {
-        font-size: 10px;
-        font-weight: 300;
-        font-style: italic;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        font-weight: 1000;
-        color: #000;
-        font-family: "Tajawal", sans-serif !important;
-        margin-bottom: 1px;
-        font-size: 13px;
-        letter-spacing: -0.4px;
-    }
-
-    h3 {
-        font-size: 18px !important;
-        line-height: 23px;
-    }
-
-    .list_Galler .image {
-        width: 100%;
-        height: 120px;
-    }
-
-    .list_Galler .image img {
-        width: 100%;
-        height: 100%;
-        -o-object-fit: cover;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .list .image {
-        overflow: hidden;
-        width: 185px;
-        border-radius: 15px 15px 15px 15px;
-        height: 110px;
-    }
-
-    .description_meal {
-        font-size: 12px !important;
-        font-weight: 300 !important;
-    }
-</style>
+<link rel="stylesheet" href="{{asset('site/css/products.css')}}">
 <div class=" p-3"
      style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @if($products->count() > 0)
@@ -142,44 +73,44 @@
                         {{--                                ->reddit();--}}
                         {{--                        @endphp--}}
                         <div class="col-6 mt-3">
-                            <div class="list_Galler th_large p-2"
-                                 style="background-color: {{$restaurant->az_color?->product_background}} !important;"
-                                 id="product1">
-                                <div class="image">
-                                    <img src="{{asset('/uploads/products/' . $product->photo)}}" alt=""/>
-                                </div>
-                                <div class="content_list p-2">
-                                    <h6>
-                                        <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                                           href="{{route('product_details' , $product->id)}}">
-                                            <h6>{{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}</h6>
-                                        </a>
-                                        @if ($product->calories === 0.0 or $product->calories > 0 )
-                                            <span class="pl-1 calories" style="margin:0 6px;">
-                                                <span
-                                                    style="color: {{ $product->restaurant->color == null ? '' : $product->restaurant->color->main_heads }} !important">
-                                                    {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
+                            <a href="{{route('product_details' , $product->id)}}">
+                                <div class="list_Galler th_large p-2"
+                                     style="background-color: {{$restaurant->az_color?->product_background}} !important;"
+                                     id="product1">
+                                    <div class="image">
+                                        <img src="{{asset('/uploads/products/' . $product->photo)}}" alt=""/>
+                                    </div>
+                                    <div class="content_list p-2">
+                                        <h6>
+                                            <a href="{{route('product_details' , $product->id)}}">
+                                                <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                                    {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
+                                                </h6>
+                                            </a>
+                                            @if ($product->calories === 0.0 or $product->calories > 0 )
+                                                <span class="pl-1 calories" style="margin:0 6px;">
+                                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                        {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
+                                                    </span>
                                                 </span>
-                                            </span>
-                                            <br>
-                                        @endif
-{{--                                        <p class="description_meal">--}}
-{{--                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}--}}
-{{--                                        </p>--}}
-                                        <div style="text-align: left !important;">
-                                            @if ($product->sensitivities and $product->sensitivities->count() > 0)
-                                                @foreach ($product->sensitivities as $product_sensitivity)
-                                                    <i>
-                                                        <img
-                                                            src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
-                                                            height="25" width="25" class="sens-image">
-                                                    </i>
-                                                @endforeach
                                             @endif
-                                        </div>
-                                    </h6>
+                                            {{--                                        <p class="description_meal">--}}
+                                            {{--                                            {{substr(app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)),0,50)}}--}}
+                                            {{--                                        </p>--}}
+                                            <div style="text-align: left !important;">
+                                                @if ($product->sensitivities and $product->sensitivities->count() > 0)
+                                                    @foreach ($product->sensitivities as $product_sensitivity)
+                                                        <i>
+                                                            <img
+                                                                src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                                                                height="25" width="25" class="sens-image">
+                                                        </i>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </h6>
 
-                                    <div class="more_details d-flex align-items-center justify-content-between">
+                                        <div class="more_details d-flex align-items-center justify-content-between">
                                         <span style="text-align: right !important;">
                                                 @if ($product->poster != null)
                                                 <img style="text-align: right"
@@ -187,7 +118,7 @@
                                                      height="30" width="30" class="poster-image">
                                             @endif
                                             </span>
-                                        <div class="price">
+                                            <div class="price">
                                             <span
                                                 style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
                                                 @if($product->price_before_discount)
@@ -202,45 +133,46 @@
                                                     @endif
                                                 @endif
                                             </span>
-                                            <br>
-                                            <span
-                                                style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
+                                                <br>
+                                                <span
+                                                    style="font-size: 11px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">
                                                 @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
-                                                    {{-- add the commission to product --}}
-                                                    {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
-                                                @else
-                                                    {{$product->price}}
-                                                @endif
+                                                        {{-- add the commission to product --}}
+                                                        {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
+                                                    @else
+                                                        {{$product->price}}
+                                                    @endif
                                                  <small>
                                                      {{app()->getLocale() == 'ar' ? $product->restaurant->country->currency_ar : $product->restaurant->country->currency_en}}
                                                  </small>
                                             </span>
+                                            </div>
                                         </div>
+                                        {{--                                    <div class="more_details d-flex align-items-center justify-content-between">--}}
+                                        {{--                                        <div class="action">--}}
+                                        {{--                                            <button--}}
+                                        {{--                                                id="addToCartBtn"--}}
+                                        {{--                                                class="cart-btn"--}}
+                                        {{--                                                data-product-id="product1"--}}
+                                        {{--                                            >--}}
+                                        {{--                                                <a href='{{route('product_details' , $product->id)}}'>--}}
+                                        {{--                                                    <i style="background-color: {{$restaurant->az_color?->icons}} !important;"--}}
+                                        {{--                                                       class="fa-solid fa-cart-plus"></i>--}}
+                                        {{--                                                </a>--}}
+                                        {{--                                            </button>--}}
+                                        {{--                                            <button--}}
+                                        {{--                                                class="share_btn" id="{{$product->id}}">--}}
+                                        {{--                                                <i style="background-color: {{$restaurant->az_color?->icons}} !important;"--}}
+                                        {{--                                                   class="fa-solid fa-share-nodes"></i>--}}
+                                        {{--                                            </button>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    </div>--}}
+                                        {{--                                    <div style="display: none" class="shareBtn" id="shareDiv-{{$product->id}}">--}}
+                                        {{--                                        {!! $shareComponent !!}--}}
+                                        {{--                                    </div>--}}
                                     </div>
-                                    {{--                                    <div class="more_details d-flex align-items-center justify-content-between">--}}
-                                    {{--                                        <div class="action">--}}
-                                    {{--                                            <button--}}
-                                    {{--                                                id="addToCartBtn"--}}
-                                    {{--                                                class="cart-btn"--}}
-                                    {{--                                                data-product-id="product1"--}}
-                                    {{--                                            >--}}
-                                    {{--                                                <a href='{{route('product_details' , $product->id)}}'>--}}
-                                    {{--                                                    <i style="background-color: {{$restaurant->az_color?->icons}} !important;"--}}
-                                    {{--                                                       class="fa-solid fa-cart-plus"></i>--}}
-                                    {{--                                                </a>--}}
-                                    {{--                                            </button>--}}
-                                    {{--                                            <button--}}
-                                    {{--                                                class="share_btn" id="{{$product->id}}">--}}
-                                    {{--                                                <i style="background-color: {{$restaurant->az_color?->icons}} !important;"--}}
-                                    {{--                                                   class="fa-solid fa-share-nodes"></i>--}}
-                                    {{--                                            </button>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                    <div style="display: none" class="shareBtn" id="shareDiv-{{$product->id}}">--}}
-                                    {{--                                        {!! $shareComponent !!}--}}
-                                    {{--                                    </div>--}}
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -274,16 +206,14 @@
                             </a>
                         </div>
                         <div class="content_list p-2">
-                            <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
-                               href='{{route('product_details' , $product->id)}}'>
-                                <h5>
+                            <a href='{{route('product_details' , $product->id)}}'>
+                                <h5 style="color: {{$restaurant->az_color?->main_heads}} !important;">
                                     {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
                                 </h5>
                             </a>
                             @if ($product->calories === 0.0 or $product->calories > 0 )
                                 <span class="pl-1 calories" style="margin:0 6px;">
-                                    <span
-                                        style="color: {{ $product->restaurant->color == null ? '' : $product->restaurant->color->main_heads }} !important">
+                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
                                         {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
                                     </span>
                                 </span>
@@ -389,7 +319,7 @@
                             ->reddit();
                     @endphp
                     <div class="list mt-3 d-flex align-items-center gap-2"
-                         style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;"
+                         style="background-color: {{$restaurant->az_color?->product_background}} !important;"
                     >
                         <div class="image">
                             <a href='{{route('product_details' , $product->id)}}'>
@@ -397,10 +327,19 @@
                             </a>
                         </div>
                         <div class="content_list p-2 w-100">
-                            <a style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;"
-                               href='{{route('product_details' , $product->id)}}'>
-                                <h6>{{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}</h6>
+                            <a href='{{route('product_details' , $product->id)}}'>
+                                <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                    {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
+                                </h6>
                             </a>
+                            @if ($product->calories === 0.0 or $product->calories > 0 )
+                                <span class="pl-1 calories" style="margin:0 6px;">
+                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                        {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
+                                    </span>
+                                </span>
+                                <br>
+                            @endif
                             <div style="text-align: left">
                                 @if ($product->sensitivities and $product->sensitivities->count() > 0)
                                     @foreach ($product->sensitivities as $product_sensitivity)
