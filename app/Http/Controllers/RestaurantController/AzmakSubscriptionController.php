@@ -16,8 +16,9 @@ use App\Models\AzHistory;
 use App\Models\Bank;
 use App\Models\RestaurantTermsCondition;
 use App\Models\AzRestaurantSlider;
+use App\Models\AZRestaurantSensitivity;
 use App\Models\RestaurantAboutAzmak;
-
+use App\Models\AZRestaurantPoster;
 
 class AzmakSubscriptionController extends Controller
 {
@@ -87,11 +88,9 @@ class AzmakSubscriptionController extends Controller
             $tax_value = $amount * $tax / 100;
             $amount += $tax_value;
         }
-        $this->create_default_data($restaurant->id);
         if ($request->payment_method == 'bank') {
-            AzSubscription::updateOrCreate(
-                ['restaurant_id' => $restaurant->id],
-                [
+            if ($restaurant->az_subscription) {
+                $restaurant->az_subscription->update([
                     'payment_type' => 'bank',
                     'payment' => 'false',
                     'price' => $amount,
@@ -99,6 +98,19 @@ class AzmakSubscriptionController extends Controller
                     'tax_value' => $tax_value,
                     'discount_value' => $discount,
                 ]);
+            } else {
+                AzSubscription::create([
+                    'restaurant_id' => $restaurant->id,
+                    'payment_type' => 'bank',
+                    'payment' => 'false',
+                    'status' => 'new',
+                    'subscription_type' => 'new',
+                    'price' => $amount,
+                    'seller_code_id' => $seller_code?->id,
+                    'tax_value' => $tax_value,
+                    'discount_value' => $discount,
+                ]);
+            }
             AZRestaurantInfo::updateOrCreate(
                 ['restaurant_id' => $restaurant->id],
             );
@@ -170,6 +182,7 @@ class AzmakSubscriptionController extends Controller
             'bank_id' => $request->bank_id,
             'transfer_photo' => UploadImage($request->file('transfer_photo'), 'transfer_photo', '/uploads/az_transfers'),
         ]);
+        $this->create_default_data($restaurant->id);
         flash(trans('messages.waitAdminAccept'))->success();
         return redirect()->to('/restaurant/home');
     }
@@ -203,6 +216,7 @@ class AzmakSubscriptionController extends Controller
                 'subscription_type' => $subscription->status == 'finished' ? 'renew' : 'new',
                 'invoice_id' => null,
             ]);
+            $this->create_default_data($subscription->restaurant_id);
             flash(trans('messages.paymentDoneSuccessfully'))->success();
             return redirect()->route('restaurant.home');
         } else {
@@ -215,8 +229,7 @@ class AzmakSubscriptionController extends Controller
     {
         // check sliders
         $sliders = AzRestaurantSlider::whereRestaurantId($restaurant_id)->get();
-        if ($sliders->count() == 0)
-        {
+        if ($sliders->count() == 0) {
             // 1- create restaurant slider
             AzRestaurantSlider::create([
                 'restaurant_id' => $restaurant_id,
@@ -231,8 +244,7 @@ class AzmakSubscriptionController extends Controller
                 'stop' => 'false',
             ]);
         }
-        if (RestaurantTermsCondition::whereRestaurantId($restaurant_id)->first() == null)
-        {
+        if (RestaurantTermsCondition::whereRestaurantId($restaurant_id)->first() == null) {
             // create default terms and condition
             RestaurantTermsCondition::create([
                 'restaurant_id' => $restaurant_id,
@@ -240,8 +252,7 @@ class AzmakSubscriptionController extends Controller
                 'terms_en' => 'Text Entered And Edited From Restaurant Control Panel',
             ]);
         }
-        if (RestaurantAboutAzmak::whereRestaurantId($restaurant_id)->first() == null)
-        {
+        if (RestaurantAboutAzmak::whereRestaurantId($restaurant_id)->first() == null) {
             // create restaurant About
             RestaurantAboutAzmak::create([
                 'restaurant_id' => $restaurant_id,
@@ -269,6 +280,195 @@ class AzmakSubscriptionController extends Controller
                 'restaurant_id' => $restaurant->id,
                 'description_ar' => 'وصف المطعم يتم أدخاله وتعديل من لوحه تحكم المطعم',
                 'description_en' => 'Restaurant Description Entered And Edited From RestaurantControl Panel',
+            ]);
+        }
+        // sensitivities
+        if ($restaurant->sensitivities->count() == 0) {
+            // create new sensitivities
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الأسماك ومنتجاتها',
+                'name_en' => 'Fish and its products',
+                'photo' => 'fish.png',
+                'details_ar' => 'مثل لحوم الأسماك وزيت السمك',
+                'details_en' => 'Like fish and fish oil',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'البيض ومنتجاته',
+                'name_en' => 'eggs and its products',
+                'photo' => 'egg.png',
+                'details_ar' => 'مثل المايونيز',
+                'details_en' => 'Like mayonnaise',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الحبوب التي تحتوي على مادة الجلوتين',
+                'name_en' => 'Cereals that contain gluten',
+                'photo' => 'seeds.png',
+                'details_ar' => 'مثل (القمح والشعير والشوفان والشيلم ســـواء الأنواع الأصلية منها أو المهجنة أو منتجاتها).',
+                'details_en' => 'Such as (wheat, barley, oats and rye, whether original or hybrid types or their products).',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'القشـــريات ومنتجاتها',
+                'name_en' => 'Crustaceans and their products',
+                'photo' => 'jamp.png',
+                'details_ar' => 'مثل (ربيان، ســـرطان البحر أو ما يعرف بالسلطعون، جراد البحر أو ما يعرف باللوبستر).',
+                'details_en' => 'Such as (prawns, crabs or what is known as crab, lobster or what is known as lobster).',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الحليب ومنتجاته (التـــي تحتوي على ال?كتوز)',
+                'name_en' => 'Milk and milk products (containing lactose)',
+                'photo' => 'milk.png',
+                'details_ar' => 'مثل الحليب والحليب المنكه',
+                'details_en' => 'Like milk and flavored milk',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الخردل ومنتجاته',
+                'name_en' => 'Mustard and its products',
+                'photo' => 'ghrdl.png',
+                'details_ar' => 'مثل بـــذور الخردل، زيـــتالخردل، صلصة الخردل',
+                'details_en' => 'Like mustard seeds, mustard oil, mustard sauce',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الرخويات ومنتجاتها',
+                'name_en' => 'Mollusks and their products',
+                'photo' => 'rghoyat.png',
+                'details_ar' => 'مثل (الحبار، الحلـــزون البحري، بلح البحر، واأسكالوب)',
+                'details_en' => 'Such as (squid, sea snail, mussels, and scallops)',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الفول السوداني ومنتجاته',
+                'name_en' => 'Peanut and its products',
+                'photo' => 'foul.png',
+                'details_ar' => 'مثل زبدة الـفول السوداني',
+                'details_en' => 'Like peanut butter',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الكبريتيت',
+                'name_en' => 'sulfites',
+                'photo' => 'kbret.png',
+                'details_ar' => 'بتركيز 10 جزء في المليون أو أكثر',
+                'details_en' => 'At a concentration of 10 ppm or more',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الكرفس ومنتجاته',
+                'name_en' => 'Celery and its products',
+                'photo' => 'krfs.png',
+                'details_ar' => 'مثل بذور الكرفس وملح الكرفس',
+                'details_en' => 'Like celery seeds and celery salt',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'المكسرات ومنتجاتها',
+                'name_en' => 'Nuts and their products',
+                'photo' => 'mksrat.png',
+                'details_ar' => 'مثـــل الكاجو والفســـتق وغيرها',
+                'details_en' => 'Like cashews, pistachios, etc',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'فول الصويا ومنتجاته',
+                'name_en' => 'Soybean and its products',
+                'photo' => 'soya.png',
+                'details_ar' => 'مثل حليب الصويا',
+                'details_en' => 'like soy milk',
+            ]);
+            AZRestaurantSensitivity::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'لوبين (الترمس ومنتجاتها)',
+                'name_en' => 'Lupine (lupine and its products)',
+                'photo' => 'trms.png',
+                'details_ar' => 'مثل زيت الترمس',
+                'details_en' => 'like lupine oil',
+            ]);
+        }
+        if ($restaurant->posters->count() == 0) {
+            // create restaurant posters
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الأفضل مبيعاً',
+                'name_en' => 'best selling',
+                'poster' => 'best.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'عرض جديد',
+                'name_en' => 'new offer',
+                'poster' => 'new.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'الافضل مبيعاً (نجمه)',
+                'name_en' => 'Best selling',
+                'poster' => 'Best_selling.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'جديد',
+                'name_en' => 'New',
+                'poster' => 'New1.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'شيف',
+                'name_en' => 'Chef',
+                'poster' => 'Chef.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'عرض',
+                'name_en' => 'Offer',
+                'poster' => 'Offer.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'قريبا',
+                'name_en' => 'Coming soon',
+                'poster' => 'Coming_soon.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'قريبا (ساعه رمليه)',
+                'name_en' => 'Coming soon',
+                'poster' => 'Coming_soon1.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'ثلج',
+                'name_en' => 'Ice',
+                'poster' => 'Ice.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'شتاء',
+                'name_en' => 'Winter',
+                'poster' => 'Winter.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'رجل الثلج',
+                'name_en' => 'Ice man',
+                'poster' => 'Ice_man.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'سبايسي',
+                'name_en' => 'Spicy',
+                'poster' => 'Spicy.png',
+            ]);
+            AZRestaurantPoster::create([
+                'restaurant_id' => $restaurant->id,
+                'name_ar' => 'جديد (عربي)',
+                'name_en' => 'New (Arabic)',
+                'poster' => 'gdeed.png',
             ]);
         }
     }

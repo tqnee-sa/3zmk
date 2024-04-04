@@ -13,7 +13,7 @@ class AZRestaurantPoster extends Model
         'restaurant_id',
         'name_ar',
         'name_en',
-        'poster'
+        'poster',
     ];
 
     public function restaurant()

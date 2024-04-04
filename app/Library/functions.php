@@ -279,13 +279,12 @@ function UploadVideoEdit($file, $old)
 //}
 function UploadImageEdit($inputRequest, $prefix, $folderNam, $oldImage, $height = null, $width = 1500)
 {
-    if ($oldImage != 'default_logo.jpg' and $oldImage != 'default1.png' and $oldImage != 'default2.png') {
-        // if(Storage::disk('public_storage')->exists('/' . $folderNam . '/' . $oldImage))
+    $fixed_images = array('default_logo.jpg', 'default1.png' , 'default2.png', 'fish.png', 'egg.png', 'seeds.png', 'jamp.png', 'milk.png', 'ghrdl.png', 'rghoyat.png', 'foul.png', 'kbret.png', 'krfs.png', 'mksrat.png', 'soya.png', 'trms.png' , 'best.png' , 'new.png', 'Best_selling.png', 'New1.png', 'Chef.png', 'Offer.png', 'Coming_soon.png', 'Coming_soon1.png', 'Ice.png', 'Winter.png', 'Ice_man.png', 'Spicy.png', 'gdeed.png');
+    if (!in_array($oldImage, $fixed_images)) {
         @unlink(public_path('/' . $folderNam . '/' . $oldImage));
     }
+
     $path = public_path() . $folderNam;
-
-
     if (!file_exists($path)) :
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
     endif;
