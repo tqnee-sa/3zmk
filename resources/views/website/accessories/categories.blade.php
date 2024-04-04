@@ -1,5 +1,5 @@
 <style>
-    .poster-image {
+    .poster_image {
         position: absolute;
         top: 5px;
         width: 20px !important;
@@ -21,7 +21,7 @@
                                     @if ($category->poster != null)
                                         <img style="text-align: right"
                                              src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
-                                             height="10" width="10" class="poster-image">
+                                             height="10" width="10" class="poster_image">
                                     @endif
                                 </a>
                             </div>
@@ -41,6 +41,11 @@
                                 <a href="javascript:;" id="{{$category->id}}" class="category_item">
                                     <img src="{{asset('/uploads/menu_categories/' . $category->photo)}}" alt="image"
                                          class="card__img"/>
+                                    @if ($category->poster != null)
+                                        <img style="text-align: right"
+                                             src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
+                                             height="10" width="10" class="poster_image">
+                                    @endif
                                 </a>
                             </div>
 
