@@ -261,7 +261,7 @@ return [
     'online' => 'اونلاين',
     'payment_type' => 'نوع الدفع',
     'online_token' => 'توكن الدفع الاونلاين',
-    'histories' => 'سجل العمليات',
+    'histories' => 'سجل الاشتراكات',
     'month' => 'الشهر',
     'year' => 'السنه',
     'month_total_taxes' => 'أجمالي ضرايب الشهر',
