@@ -199,9 +199,12 @@
                         <div class="timeline-item">
                             <h3 class="timeline-header border-0">
                                 @lang('messages.paid_commission_value') :
-                                <a href="#">
+                                <a href="{{route('RestaurantAzCommissionsHistory' , $user->id)}}">
                                     {{$user->az_commissions->sum('commission_value')}}
                                     {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                </a>
+                                <a class="btn btn-primary" href="{{route('RestaurantAzCommissionsHistory' , $user->id)}}">
+                                    @lang('messages.show')
                                 </a>
                             </h3>
                         </div>
