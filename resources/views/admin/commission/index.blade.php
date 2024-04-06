@@ -82,7 +82,7 @@
                         <div class="inner">
                             <p>
                                 @lang('messages.restaurant_az_commissions_count') :
-                                {{$restaurant->az_commissions->count()}}
+                                {{$restaurant->az_commissions()->wherePayment('true')->count()}}
                             </p>
                             <p>
                                 @lang('messages.paid_commission_value') :

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AzmakSetting;
 use App\Models\AzHistory;
 use App\Models\AzSubscription;
+use App\Models\AzCommissionHistory;
 
 class SettingController extends Controller
 {
@@ -64,6 +65,26 @@ class SettingController extends Controller
     public function delete_histories($id)
     {
         $AzHistory = AzHistory::findOrFail($id);
+        $AzHistory->delete();
+        flash(trans('messages.deleted'))->success();
+        return redirect()->back();
+    }
+    public function commission_histories(Request $request)
+    {
+        $year = $request->year == null ? Carbon::now()->format('Y') : $request->year;
+        $month = $request->month == null ? Carbon::now()->format('m') : $request->month;
+        $histories = AzCommissionHistory::orderBy('id' , 'desc')
+            ->whereyear('created_at','=',$year)
+            ->whereMonth('created_at','=',$month)
+            ->paginate(500);
+        $month_total_amount = AzCommissionHistory::whereyear('created_at','=',$year)
+            ->whereMonth('created_at','=',$month)
+            ->sum('paid_amount');
+        return view('admin.settings.commission_histories' , compact('histories','month_total_amount' , 'year' , 'month'));
+    }
+    public function delete_commission_history($id)
+    {
+        $AzHistory = AzCommissionHistory::findOrFail($id);
         $AzHistory->delete();
         flash(trans('messages.deleted'))->success();
         return redirect()->back();

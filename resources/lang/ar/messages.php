@@ -349,4 +349,8 @@ return [
     'pay_commission' => 'دفع العمولة',
     'restaurant_closed_now' => 'عفوأ المطعم مغلق حاليا',
     'commissions_limit' => 'متخطي  حد العمولة',
+    'CommissionAddedSuccessfully' => 'تمت أضافه العمولة بنجاح ستتم مراجعتها من قبل  ألأدراه',
+    'subscription_bank_transfers' => 'تحويلات ألاشتراكات',
+    'commission_bank_transfers' => 'تحويلات العمولات',
+    'commission_histories' => 'سجل العمولات',
 ];

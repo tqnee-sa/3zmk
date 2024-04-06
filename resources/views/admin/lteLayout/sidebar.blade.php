@@ -215,7 +215,19 @@
                             {{\App\Models\AzSubscription::whereNotNull('transfer_photo')->wherePayment('false')->count() }}
                         </span>
                         <p>
-                            @lang('messages.bank_transfers')
+                            @lang('messages.subscription_bank_transfers')
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('commission_bank_transfers') }}"
+                       class="nav-link {{ strpos(URL::current(), '/admin/commission_bank_transfers') !== false ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-money-bill"></i>
+                        <span class="badge badge-info right">
+                            {{\App\Models\AzRestaurantCommission::whereNotNull('transfer_photo')->whereNull('admin_id')->wherePaymentType('bank')->wherePayment('false')->count() }}
+                        </span>
+                        <p>
+                            @lang('messages.commission_bank_transfers')
                         </p>
                     </a>
                 </li>
@@ -225,6 +237,15 @@
                         <i class="nav-icon fa fa-file"></i>
                         <p>
                             @lang('messages.histories')
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.commission_histories') }}"
+                       class="nav-link {{ strpos(URL::current(), '/admin/commission_histories') !== false ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-file"></i>
+                        <p>
+                            @lang('messages.commission_histories')
                         </p>
                     </a>
                 </li>

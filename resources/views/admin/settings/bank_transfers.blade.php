@@ -15,8 +15,8 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>@lang('messages.az_bank_transfers')</h1>
+                <div class="col-sm-9">
+                    <h1>@lang('messages.az_bank_transfers') (@lang('messages.subscription_bank_transfers'))</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->

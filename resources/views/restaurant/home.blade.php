@@ -200,7 +200,7 @@
                             <h3 class="timeline-header border-0">
                                 @lang('messages.paid_commission_value') :
                                 <a href="{{route('RestaurantAzCommissionsHistory' , $user->id)}}">
-                                    {{$user->az_commissions->sum('commission_value')}}
+                                    {{$user->az_commissions()->wherePayment('true')->sum('commission_value')}}
                                     {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
                                 </a>
                                 <a class="btn btn-primary" href="{{route('RestaurantAzCommissionsHistory' , $user->id)}}">
@@ -215,7 +215,7 @@
                             <h3 class="timeline-header border-0">
                                 @lang('messages.commissions_payable') :
                                 <a href="#">
-                                    {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission') - $user->az_commissions->sum('commission_value')}}
+                                    {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission') - $user->az_commissions()->wherePayment('true')->sum('commission_value')}}
                                     {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
                                 </a>
                             </h3>
@@ -270,7 +270,7 @@
                             <h3 class="timeline-header border-0">
                                 @lang('messages.paid_commission_value') :
                                 <a href="#">
-                                    {{$user->az_commissions->sum('commission_value')}}
+                                    {{$user->az_commissions()->wherePayment('true')->sum('commission_value')}}
                                     {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
                                 </a>
                             </h3>
@@ -282,7 +282,7 @@
                             <h3 class="timeline-header border-0">
                                 @lang('messages.commissions_payable') :
                                 <a href="#">
-                                    {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission') - $user->az_commissions->sum('commission_value')}}
+                                    {{$user->az_orders->where('status' , '!=' , 'new')->sum('commission') - $user->az_commissions()->wherePayment('true')->sum('commission_value')}}
                                     {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
                                 </a>
                             </h3>

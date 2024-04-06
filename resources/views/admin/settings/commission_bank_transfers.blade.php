@@ -1,7 +1,7 @@
 @extends('admin.lteLayout.master')
 
 @section('title')
-    @lang('messages.histories')
+    @lang('messages.commission_bank_transfers')
 @endsection
 
 @section('style')
@@ -15,10 +15,8 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>
-                        @lang('messages.restaurant_az_commissions_count')
-                    </h1>
+                <div class="col-sm-9">
+                    <h2>@lang('messages.az_bank_transfers') (@lang('messages.commission_bank_transfers'))</h2>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -28,16 +26,11 @@
     <section class="content">
         <div class="row">
             <div class="col-12">
-                <h3>
-                    <a href="{{route('addAzRestaurantCommission' , $restaurant->id)}}" class="btn btn-info">
-                        <i class="fa fa-plus"></i>
-                        @lang('messages.add_new')
-                    </a>
-                </h3>
                 <div class="card">
+
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-striped">
                             <thead>
                             <tr>
                                 <th>
@@ -49,17 +42,14 @@
                                 </th>
                                 <th></th>
                                 <th> @lang('messages.restaurant') </th>
-                                <th> @lang('messages.commission_value') </th>
-                                <th> @lang('messages.payment_type') </th>
-                                <th> @lang('messages.invoice_id') </th>
-                                <th> @lang('messages.date') </th>
-                                <th> @lang('messages.added_by') </th>
+                                <th> @lang('messages.price') </th>
+                                <th> @lang('messages.transfer_photo') </th>
                                 <th> @lang('messages.operations') </th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php $i = 0 ?>
-                            @foreach($histories as $history)
+                            @foreach($transfers as $transfer)
                                 <tr class="odd gradeX">
                                     <td>
                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -68,26 +58,17 @@
                                         </label>
                                     </td>
                                     <td><?php echo ++$i ?></td>
-                                    <td> {{app()->getLocale() == 'ar' ? $history->restaurant->name_ar : $history->restaurant->name_en}} </td>
-                                    <td>
-                                        {{number_format((float)($history->commission_value), 0, '.', '')}}
-                                        {{ app()->getLocale() == 'ar' ? $restaurant->country->currency_ar : $restaurant->country->currency_en }}
-                                    </td>
-                                    <td>
-                                        @if($history->payment_type == 'bank')
-                                            @lang('messages.bank')
-                                        @else
-                                            @lang('messages.online')
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($history->transfer_photo)
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                                data-target="#modal-info-{{$history->id}}">
-                                            <i class="fa fa-eye"></i>
+                                    <td> {{app()->getLocale() == 'ar' ? $transfer->restaurant->name_ar : $transfer->restaurant->name_en}}   </td>
 
+                                    <td>
+                                        {{number_format((float)$transfer->commission_value, 2, '.', '')}}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modal-info-{{$transfer->id}}">
+                                            <i class="fa fa-eye"></i>
                                         </button>
-                                        <div class="modal fade" id="modal-info-{{$history->id}}">
+                                        <div class="modal fade" id="modal-info-{{$transfer->id}}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content bg-info">
                                                     <div class="modal-header">
@@ -100,7 +81,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <img
-                                                            src="{{asset('/uploads/commissions_transfers/' . $history->transfer_photo)}}"
+                                                            src="{{asset('/uploads/commissions_transfers/' . $transfer->transfer_photo)}}"
                                                             width="475" height="400">
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
@@ -114,23 +95,15 @@
                                             </div>
                                             <!-- /.modal-dialog -->
                                         </div>
-                                        @else
-                                            {{$history->invoice_id}}
-                                        @endif
                                     </td>
                                     <td>
-                                        {{$history->created_at->format('Y-m-d')}}
-                                    </td>
-                                    <td>
-                                        @if($history->admin)
-                                            {{$history->admin->name}}
-                                        @else
-                                            @lang('messages.restaurant')
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a class="delete_data btn btn-danger" data="{{ $history->id }}"
-                                           data_name="{{$history->commission_value}}">
+
+                                        <a class="btn btn-info"
+                                           href="{{route('commissions.confirm_status' ,[$transfer->id,'confirm'] )}}">
+                                            <i class="fa fa-calculator"></i> @lang('messages.confirm')
+                                        </a>
+                                        <a class="btn btn-danger"
+                                           href="{{route('commissions.confirm_status' , [$transfer->id,'cancel'])}}">
                                             <i class="fa fa-trash"></i>
                                         </a>
 
@@ -145,8 +118,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$histories->links()}}
-    <!-- /.row -->
+        <!-- /.row -->
     </section>
 
 @endsection
@@ -193,7 +165,7 @@
                     cancelButtonText: "{{trans('messages.close')}}"
                 }, function () {
 
-                    window.location.href = "{{ url('/') }}" + "/admin/restaurant_az_commissions/delete/" + id;
+                    window.location.href = "{{ url('/') }}" + "/admin/confirm_subscriptions/delete/" + id;
 
                 });
 

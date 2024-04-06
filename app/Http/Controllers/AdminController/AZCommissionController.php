@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use App\Models\AzCommissionHistory;
 use App\Models\AzRestaurantCommission;
 use App\Models\Restaurant\Azmak\AZOrder;
 
@@ -14,7 +15,7 @@ class AZCommissionController extends Controller
     {
         $restaurant = Restaurant::findOrFail($id);
         $orders_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission');
-        $restaurant_commissions = $restaurant->az_commissions->sum('commission_value');
+        $restaurant_commissions = $restaurant->az_commissions()->wherePayment('true')->sum('commission_value');
         return view('admin.commission.index' , compact('restaurant' , 'orders_commissions' , 'restaurant_commissions'));
     }
 
@@ -34,7 +35,7 @@ class AZCommissionController extends Controller
     public function commissions_history($id)
     {
         $restaurant = Restaurant::findOrFail($id);
-        $histories = $restaurant->az_commissions()->paginate(100);
+        $histories = $restaurant->az_commissions()->wherePayment('true')->paginate(100);
         return view('admin.commission.commission_history' , compact('restaurant' , 'histories'));
     }
     public function add_commissions_history($id){
@@ -51,13 +52,23 @@ class AZCommissionController extends Controller
         ]);
 
         // add new commission
-        AzRestaurantCommission::create([
+        $commission = AzRestaurantCommission::create([
             'restaurant_id'     => $restaurant->id,
             'admin_id'          => auth('admin')->user()->id,
+            'payment'           => 'true',
             'commission_value'  => $request->commission_value,
             'transfer_photo'    => UploadImage($request->file('transfer_photo'), 'photo', '/uploads/commissions_transfers'),
         ]);
-        $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->sum('commission_value');
+        // store operation at history
+        AzCommissionHistory::create([
+            'restaurant_id' => $commission->restaurant_id,
+            'bank_id' => $commission->bank_id,
+            'paid_amount' => $commission->commission_value,
+            'transfer_photo' => $commission->transfer_photo,
+            'payment_type' => 'bank',
+            'admin_id' => auth('admin')->user()->id,
+        ]);
+        $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions()->wherePayment('true')->sum('commission_value');
         if ($required_commissions < $restaurant->maximum_az_commission_limit)
         {
             $restaurant->az_subscription->update([
@@ -73,7 +84,7 @@ class AZCommissionController extends Controller
         $restaurant = $history->restaurant;
         @unlink(public_path('/uploads/commissions_transfers/' . $history->transfer_photo));
         $history->delete();
-        $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->sum('commission_value');
+        $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions()->wherePayment('true')->sum('commission_value');
         if ($required_commissions > $restaurant->maximum_az_commission_limit)
         {
             $restaurant->az_subscription->update([

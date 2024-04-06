@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AzRestaurantCommission extends Model
+class AzCommissionHistory extends Model
 {
     use HasFactory;
-    protected $table = 'az_restaurant_commissions';
+    protected $table = 'az_commission_histories';
     protected $fillable = [
         'restaurant_id',
         'admin_id',
-        'commission_value',
-        'transfer_photo',
-        'payment_type',       // bank , online,
         'bank_id',
-        'payment',
+        'paid_amount',
+        'payment_type',
         'invoice_id',
+        'transfer_photo',
     ];
 
     public function restaurant()
@@ -28,7 +27,8 @@ class AzRestaurantCommission extends Model
     {
         return $this->belongsTo(Admin::class , 'admin_id');
     }
-    public function bank(){
-        return $this->belongsTo(Bank::class , 'bank_id');
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class , 'Bank_id');
     }
 }

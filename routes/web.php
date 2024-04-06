@@ -373,6 +373,7 @@ Route::prefix('restaurant')->group(function () {
                 Route::get('/restaurant_az_commissions/{id}/add_history', 'add_commissions_history')->name('RestaurantAddAzCommission');
                 Route::post('/restaurant_az_commissions/{id}/store_history', 'store_commissions_history')->name('RestaurantStoreAzCommission');
                 Route::get('/restaurant_az_commissions/delete/{id}', 'delete_commissions_history')->name('RestaurantDeleteAzCommission');
+                Route::get('/AZOnlineCommissionStatus/{id1?}/{id2?}', 'online_commission_status')->name('AZOnlineCommissionStatus');
             });
 
             Route::get('/history/{id}', [SettingController::class, 'show_restaurant_history'])->name('show_restaurant_history');
@@ -444,10 +445,15 @@ Route::prefix('admin')->group(function () {
             Route::get('/histories', 'histories')->name('admin.histories');
             Route::get('/month_histories', 'report_histories')->name('admin.month_histories');
             Route::get('/histories/delete/{id}', 'delete_histories')->name('admin.delete_histories');
+            //commission_histories
+            Route::get('/commission_histories', 'commission_histories')->name('admin.commission_histories');
+            Route::get('/commission_histories/delete/{id}', 'delete_commission_history')->name('admin.delete_commission_history');
         });
         Route::controller(BankTransferController::class)->group(function () {
             Route::get('/az_bank_transfers', 'transfers')->name('AZBankTransfer');
+            Route::get('/commission_bank_transfers', 'commission_bank_transfers')->name('commission_bank_transfers');
             Route::get('/az_bank_transfer/{id}/{status}', 'transfer_status')->name('subscription.confirm_status');
+            Route::get('/commission_bank_transfers/{id}/{status}', 'commission_transfer_status')->name('commissions.confirm_status');
         });
         Route::controller(AZCommissionController::class)->group(function () {
             Route::get('/restaurant_commissions/{id}', 'restaurant_commissions')->name('AzRestaurantCommissions');
@@ -464,7 +470,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/seller_codes/delete/{id}', [SellerCodeController::class, 'destroy'])->name('deleteSellerCode');
         Route::get('/seller_codes/{id}/active/{status}', [SellerCodeController::class, 'activate'])->name('activateSellerCode');
         // restaurants
-
     });
 });
 /**

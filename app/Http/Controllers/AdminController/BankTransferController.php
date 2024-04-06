@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\AzSubscription;
 use App\Models\AzHistory;
+use App\Models\AzRestaurantCommission;
+use App\Models\AzCommissionHistory;
+
 
 class BankTransferController extends Controller
 {
@@ -52,4 +55,47 @@ class BankTransferController extends Controller
         endif;
         return redirect()->back();
     }
+
+    public function commission_bank_transfers()
+    {
+        $transfers = AzRestaurantCommission::whereNotNull('transfer_photo')
+            ->whereNull('admin_id')
+            ->wherePaymentType('bank')
+            ->get();
+        return view('admin.settings.commission_bank_transfers', compact('transfers'));
+    }
+    public function commission_transfer_status($id, $status)
+    {
+        $commission = AzRestaurantCommission::findOrFail($id);
+        $restaurant = $commission->restaurant;
+        if ($status == 'confirm'):
+            $commission->update([
+                'admin_id'     => auth('admin')->user()->id,
+                'payment'      => 'true',
+            ]);
+            // store operation at history
+            AzCommissionHistory::create([
+                'restaurant_id' => $commission->restaurant_id,
+                'bank_id' => $commission->bank_id,
+                'paid_amount' => $commission->commission_value,
+                'transfer_photo' => $commission->transfer_photo,
+                'payment_type' => 'bank',
+                'admin_id' => auth('admin')->user()->id,
+            ]);
+            $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions()->wherePayment('true')->sum('commission_value');
+            if ($required_commissions < $restaurant->maximum_az_commission_limit)
+            {
+                $restaurant->az_subscription->update([
+                    'status' => 'active',
+                ]);
+            }
+            flash(trans('messages.operationConfirmedSuccessfully'))->success();
+        elseif ($status == 'cancel'):
+            @unlink(public_path('/uploads/commissions_transfers/' . $commission->transfer_photo));
+            $commission->delete();
+            flash(trans('messages.operationCanceledSuccessfully'))->success();
+        endif;
+        return redirect()->back();
+    }
+
 }

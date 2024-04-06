@@ -1,7 +1,7 @@
-@extends('restaurant.lteLayout.master')
+@extends('admin.lteLayout.master')
 
 @section('title')
-    @lang('messages.histories')
+    @lang('messages.commission_histories')
 @endsection
 
 @section('style')
@@ -16,9 +16,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>
-                        @lang('messages.restaurant_az_commissions_count')
-                    </h1>
+                    <h1>@lang('messages.commission_histories')</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -27,13 +25,71 @@
 
     <section class="content">
         <div class="row">
+            <form role="form" action="{{route('admin.commission_histories')}}" method="get" enctype="multipart/form-data">
+                <input type='hidden' name='_token' value='{{Session::token()}}'>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label"> @lang('messages.month') </label>
+                                <select name="month" class="form-control" required>
+                                    @for($i = 1; $i <= 12 ; $i++)
+                                        <option value="{{$i}}" {{$i == $month ? 'selected' : ''}}> {{$i}} </option>
+                                    @endfor
+                                </select>
+                                @if ($errors->has('month'))
+                                    <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('month') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label"> @lang('messages.year') </label>
+                                <select name="year" class="form-control" required>
+                                    @for($i = 2022; $i <= \Carbon\Carbon::now()->format('Y') ; $i++)
+                                        <option value="{{$i}}" {{$i == $year ? 'selected' : ''}}> {{$i}} </option>
+                                    @endfor
+                                </select>
+                                @if ($errors->has('year'))
+                                    <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('year') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <br>
+                            <button type="submit" class="btn btn-primary">@lang('messages.show')</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6 col-6">
+                <!-- small box -->
+                <div class="small-box bg-silver">
+                    <div class="inner">
+                        <h5>
+                            {{number_format((float)($month_total_amount), 0, '.', '')}}
+                        </h5>
+
+                        <p>{{app()->getLocale() == 'ar' ? 'أجمالي عمولات الشهر' : 'Month Total Amount'}}</p>
+                    </div>
+                    <div class="icon" style="color: black">
+                        <i class="fa fa-calculator"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+        <div class="row">
             <div class="col-12">
-                <h3>
-                    <a href="{{route('RestaurantAddAzCommission' , $restaurant->id)}}" class="btn btn-info">
-                        <i class="fa fa-plus"></i>
-                        @lang('messages.add_new')
-                    </a>
-                </h3>
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -49,11 +105,10 @@
                                 </th>
                                 <th></th>
                                 <th> @lang('messages.restaurant') </th>
-                                <th> @lang('messages.commission_value') </th>
-                                <th> @lang('messages.payment_type') </th>
+                                <th> @lang('messages.price') </th>
                                 <th> @lang('messages.invoice_id') </th>
                                 <th> @lang('messages.date') </th>
-                                {{--                                <th> @lang('messages.added_by') </th>--}}
+                                <th> @lang('messages.accepted_by') </th>
                                 <th> @lang('messages.operations') </th>
                             </tr>
                             </thead>
@@ -70,18 +125,10 @@
                                     <td><?php echo ++$i ?></td>
                                     <td> {{app()->getLocale() == 'ar' ? $history->restaurant->name_ar : $history->restaurant->name_en}} </td>
                                     <td>
-                                        {{number_format((float)($history->commission_value), 0, '.', '')}}
-                                        {{ app()->getLocale() == 'ar' ? $restaurant->country->currency_ar : $restaurant->country->currency_en }}
+                                        {{$history->paid_amount}}
                                     </td>
                                     <td>
                                         @if($history->payment_type == 'bank')
-                                            @lang('messages.bank')
-                                        @elseif($history->payment_type == 'online')
-                                            @lang('messages.online')
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($history->transfer_photo)
                                             <button type="button" class="btn btn-info" data-toggle="modal"
                                                     data-target="#modal-info-{{$history->id}}">
                                                 <i class="fa fa-eye"></i>
@@ -121,17 +168,16 @@
                                     <td>
                                         {{$history->created_at->format('Y-m-d')}}
                                     </td>
-                                    {{--                                    <td>--}}
-                                    {{--                                        @if($history->admin)--}}
-                                    {{--                                            {{$history->admin->name}}--}}
-                                    {{--                                        @else--}}
-                                    {{--                                            @lang('messages.restaurant')--}}
-                                    {{--                                        @endif--}}
-                                    {{--                                    </td>--}}
+                                    <td>
+                                        @if($history->admin)
+                                            {{$history->admin->name}}
+                                        @endif
+                                    </td>
                                     <td>
                                         <a class="delete_data btn btn-danger" data="{{ $history->id }}"
-                                           data_name="{{$history->commission_value}}">
+                                           data_name="{{app()->getLocale() == 'ar' ? $history->restaurant->name_ar : $history->restaurant->name_en}}">
                                             <i class="fa fa-trash"></i>
+
                                         </a>
 
                                     </td>
@@ -143,10 +189,8 @@
                     <!-- /.card-body -->
                 </div>
             </div>
-            <!-- /.col -->
         </div>
-    {{$histories->links()}}
-    <!-- /.row -->
+        {{$histories->links()}}
     </section>
 
 @endsection
@@ -193,7 +237,7 @@
                     cancelButtonText: "{{trans('messages.close')}}"
                 }, function () {
 
-                    window.location.href = "{{ url('/') }}" + "/restaurant/restaurant_az_commissions/delete/" + id;
+                    window.location.href = "{{ url('/') }}" + "/admin/commission_histories/delete/" + id;
 
                 });
 

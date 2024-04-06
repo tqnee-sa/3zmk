@@ -346,4 +346,8 @@ return [
     'commissions_limit_exceed' => 'Commission Limit Exceed',
     'pay_commission' => 'Pay Commission',
     'restaurant_closed_now' => 'Sorry Restaurant Is Closed',
+    'CommissionAddedSuccessfully' => 'Commission Added Successfully It Will Review By Administration',
+    'subscription_bank_transfers' => 'Subscription Transfers',
+    'commission_bank_transfers' => 'Commission Transfers',
+    'commission_histories' => 'Commissions Histories',
 ];
