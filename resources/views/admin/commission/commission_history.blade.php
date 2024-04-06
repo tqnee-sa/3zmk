@@ -110,7 +110,11 @@
                                         {{$history->created_at->format('Y-m-d')}}
                                     </td>
                                     <td>
-                                        {{$history->admin->name}}
+                                        @if($history->admin)
+                                            {{$history->admin->name}}
+                                        @else
+                                            @lang('messages.restaurant')
+                                        @endif
                                     </td>
                                     <td>
                                         <a class="delete_data btn btn-danger" data="{{ $history->id }}"

@@ -52,7 +52,7 @@
                                 <th> @lang('messages.commission_value') </th>
                                 <th> @lang('messages.transfer_photo') </th>
                                 <th> @lang('messages.date') </th>
-                                <th> @lang('messages.added_by') </th>
+{{--                                <th> @lang('messages.added_by') </th>--}}
                                 <th> @lang('messages.operations') </th>
                             </tr>
                             </thead>
@@ -109,13 +109,13 @@
                                     <td>
                                         {{$history->created_at->format('Y-m-d')}}
                                     </td>
-                                    <td>
-                                        @if($history->admin)
-                                            {{$history->admin->name}}
-                                        @else
-                                            @lang('messages.restaurant')
-                                        @endif
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        @if($history->admin)--}}
+{{--                                            {{$history->admin->name}}--}}
+{{--                                        @else--}}
+{{--                                            @lang('messages.restaurant')--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td>
                                         <a class="delete_data btn btn-danger" data="{{ $history->id }}"
                                            data_name="{{$history->commission_value}}">
