@@ -1,45 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\AdminController;
+namespace App\Http\Controllers\RestaurantController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\Restaurant;
 use App\Models\AzRestaurantCommission;
 use App\Models\Restaurant\Azmak\AZOrder;
 
-class AZCommissionController extends Controller
+class RestaurantAZCommissionController extends Controller
 {
-    public function restaurant_commissions($id)
-    {
-        $restaurant = Restaurant::findOrFail($id);
-        $orders_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission');
-        $restaurant_commissions = $restaurant->az_commissions->sum('commission_value');
-        return view('admin.commission.index' , compact('restaurant' , 'orders_commissions' , 'restaurant_commissions'));
-    }
-
-    public function restaurant_az_orders($id)
-    {
-        $restaurant = Restaurant::findOrFail($id);
-        $orders = $restaurant->az_orders()->where('status' , '!=' , 'new')->paginate(500);
-        return view('admin.commission.orders' , compact('restaurant' , 'orders'));
-    }
-
-    public function show_order($id)
-    {
-        $order = AZOrder::findOrFail($id);
-        return view('admin.commission.show_order'  , compact('order'));
-    }
-
     public function commissions_history($id)
     {
         $restaurant = Restaurant::findOrFail($id);
         $histories = $restaurant->az_commissions()->paginate(100);
-        return view('admin.commission.commission_history' , compact('restaurant' , 'histories'));
+        return view('restaurant.commission.commission_history' , compact('restaurant' , 'histories'));
     }
     public function add_commissions_history($id){
         $restaurant = Restaurant::findOrFail($id);
-        return view('admin.commission.create_commission_history' , compact('restaurant'));
+        return view('restaurant.commission.create_commission_history' , compact('restaurant'));
     }
 
     public function store_commissions_history(Request $request , $id)
@@ -53,7 +33,6 @@ class AZCommissionController extends Controller
         // add new commission
         AzRestaurantCommission::create([
             'restaurant_id'     => $restaurant->id,
-            'admin_id'          => auth('admin')->user()->id,
             'commission_value'  => $request->commission_value,
             'transfer_photo'    => UploadImage($request->file('transfer_photo'), 'photo', '/uploads/commissions_transfers'),
         ]);
@@ -65,7 +44,7 @@ class AZCommissionController extends Controller
             ]);
         }
         flash(trans('messages.created'))->success();
-        return redirect()->route('AzRestaurantCommissionsHistory' , $restaurant->id);
+        return redirect()->route('RestaurantAzCommissionsHistory' , $restaurant->id);
     }
     public function delete_commissions_history($id)
     {

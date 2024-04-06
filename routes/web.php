@@ -52,6 +52,7 @@ use App\Http\Controllers\RestaurantController\ServiceStoreController;
 use App\Http\Controllers\RestaurantController\SmsController;
 use App\Http\Controllers\RestaurantController\TermsConditionController;
 use App\Http\Controllers\RestaurantController\AzmakSubscriptionController;
+use App\Http\Controllers\RestaurantController\RestaurantAZCommissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
@@ -365,6 +366,13 @@ Route::prefix('restaurant')->group(function () {
                 Route::post('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
                 Route::post('/complete/azmak_order/{order_id}', 'complete_order')->name('completeAzmakOrder');
 
+            });
+
+            Route::controller(RestaurantAZCommissionController::class)->group(function () {
+                Route::get('/restaurant_az_commissions/{id}/history', 'commissions_history')->name('RestaurantAzCommissionsHistory');
+                Route::get('/restaurant_az_commissions/{id}/add_history', 'add_commissions_history')->name('RestaurantAddAzCommission');
+                Route::post('/restaurant_az_commissions/{id}/store_history', 'store_commissions_history')->name('RestaurantStoreAzCommission');
+                Route::get('/restaurant_az_commissions/delete/{id}', 'delete_commissions_history')->name('RestaurantDeleteAzCommission');
             });
 
             Route::get('/history/{id}', [SettingController::class, 'show_restaurant_history'])->name('show_restaurant_history');

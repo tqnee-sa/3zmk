@@ -160,7 +160,8 @@
                                                class="btn btn-success">
                                                 {{trans('messages.activeAzmak')}}
                                             </a>
-                                        @elseif($subscription and $subscription->status == 'finished')                                            <div>
+                                        @elseif($subscription and $subscription->status == 'finished')
+                                            <div>
                                                 <i class="fas fa-money-bill bg-info"></i>
                                                 <div class="timeline-item">
                                                     <h3 style="color: red" class="timeline-header border-0">
@@ -316,11 +317,40 @@
                                                     </h3>
                                                 </div>
                                             </div>
+                                            @if($user->maximum_az_commission_limit)
+                                                <div>
+                                                    <i class="fas fa-money-bill bg-info"></i>
+                                                    <div class="timeline-item">
+                                                        <h3 class="timeline-header border-0">
+                                                            @lang('messages.maximum_az_commission_limit') :
+                                                            <a href="#">
+                                                                {{$user->maximum_az_commission_limit}}
+                                                                {{ app()->getLocale() == 'ar' ? $user->country->currency_ar : $user->country->currency_en }}
+                                                            </a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @elseif($subscription and $subscription->status == 'free' )
                                             <h4>
                                                 @lang('messages.subscription_type') :
                                                 <span style="color: red">@lang('messages.free_subscription')</span>
                                             </h4>
+                                        @elseif($subscription and $subscription->status == 'commission_hold')
+                                            <div>
+                                                <i class="fas fa-money-bill bg-info"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header border-0">
+                                                        <span
+                                                            style="color: red">@lang('messages.commissions_limit_exceed')</span>
+                                                        :
+                                                        <a href="#" class="btn btn-info">
+                                                            @lang('messages.pay_commission')
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+
                                         @endif
                                         <div>
                                             <i class="far fa-clock bg-gray"></i>

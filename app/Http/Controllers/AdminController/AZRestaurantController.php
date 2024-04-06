@@ -34,21 +34,23 @@ class AZRestaurantController extends Controller
     {
         $restaurant = Restaurant::findOrFail($id);
         $this->validate($request, [
-            'a_z_orders_payment_type'   => 'required|in:myFatoourah,tap,edfa',
-            'a_z_tap_token'             => 'required_if:a_z_orders_payment_type,tap',
-            'a_z_myFatoourah_token'     => 'required_if:a_z_orders_payment_type,myFatoourah',
-            'a_z_edfa_merchant'         => 'required_if:a_z_orders_payment_type,edfa',
-            'a_z_edfa_password'         => 'required_if:a_z_orders_payment_type,edfa',
-            'az_commission'             => 'required',
+            'a_z_orders_payment_type'     => 'required|in:myFatoourah,tap,edfa',
+            'a_z_tap_token'               => 'required_if:a_z_orders_payment_type,tap',
+            'a_z_myFatoourah_token'       => 'required_if:a_z_orders_payment_type,myFatoourah',
+            'a_z_edfa_merchant'           => 'required_if:a_z_orders_payment_type,edfa',
+            'a_z_edfa_password'           => 'required_if:a_z_orders_payment_type,edfa',
+            'az_commission'               => 'required',
+            'maximum_az_commission_limit' => 'required',
 //            'az_online_payment_type'    => 'required|in:test,online'
         ]);
         $restaurant->update([
-            'a_z_orders_payment_type'   => $request->a_z_orders_payment_type,
-            'a_z_tap_token'             => $request->a_z_tap_token == null ? $restaurant->a_z_tap_token : $request->a_z_tap_token,
-            'a_z_myFatoourah_token'     => $request->a_z_myFatoourah_token == null ? $restaurant->a_z_myFatoourah_token : $request->a_z_myFatoourah_token,
-            'a_z_edfa_merchant'         => $request->a_z_edfa_merchant == null ? $restaurant->a_z_edfa_merchant : $request->a_z_edfa_merchant,
-            'a_z_edfa_password'         => $request->a_z_edfa_password == null ? $restaurant->a_z_edfa_password : $request->a_z_edfa_password,
-            'az_commission'             => $request->az_commission,
+            'a_z_orders_payment_type'     => $request->a_z_orders_payment_type,
+            'a_z_tap_token'               => $request->a_z_tap_token == null ? $restaurant->a_z_tap_token : $request->a_z_tap_token,
+            'a_z_myFatoourah_token'       => $request->a_z_myFatoourah_token == null ? $restaurant->a_z_myFatoourah_token : $request->a_z_myFatoourah_token,
+            'a_z_edfa_merchant'           => $request->a_z_edfa_merchant == null ? $restaurant->a_z_edfa_merchant : $request->a_z_edfa_merchant,
+            'a_z_edfa_password'           => $request->a_z_edfa_password == null ? $restaurant->a_z_edfa_password : $request->a_z_edfa_password,
+            'az_commission'               => $request->az_commission,
+            'maximum_az_commission_limit' => $request->maximum_az_commission_limit,
 //            'az_online_payment_type'    => $request->az_online_payment_type,
         ]);
         flash(trans('messages.updated'))->success();

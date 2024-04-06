@@ -342,4 +342,8 @@ return [
     'noOrdersYet' => 'No Orders Found ! ',
     'no_calories' => '(without calories)' ,
     'calories_des' => '(:num calories)' ,
+    'maximum_az_commission_limit' => 'Maximum Commission Limit',
+    'commissions_limit_exceed' => 'Commission Limit Exceed',
+    'pay_commission' => 'Pay Commission',
+    'restaurant_closed_now' => 'Sorry Restaurant Is Closed',
 ];

@@ -344,4 +344,9 @@ return [
     'noOrdersYet' => 'لا توجد طلبات !',
     'no_calories' => '(بدون سعرات حرارية)' ,
     'calories_des' => '(:num سعرة حرارية)' ,
+    'maximum_az_commission_limit' => 'الحد الاقصي لتجاوز قيمه العمولات المستحقة للمطعم',
+    'commissions_limit_exceed' => 'لقد تم تجاوز الحد الأقصي لعمولة المطعم',
+    'pay_commission' => 'دفع العمولة',
+    'restaurant_closed_now' => 'عفوأ المطعم مغلق حاليا',
+    'commissions_limit' => 'متخطي  حد العمولة',
 ];

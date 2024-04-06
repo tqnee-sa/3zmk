@@ -103,7 +103,7 @@
                 <li class="nav-item main_page">
                     <a href="{{ url('/admin/home') }}" class="nav-link">
                         <i class="fas fa-home"></i>
-                        <p> الرئيسية</p>
+                        <p> @lang('messages.home')</p>
                     </a>
                 </li>
 
@@ -177,6 +177,18 @@
                                 </span>
                                 <p>
                                     @lang('messages.finished_restaurants')
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/restaurants/commission_hold') }}"
+                               class="nav-link {{ strpos(URL::current(), '/admin/restaurants/commission_hold') !== false ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <span class="badge badge-info right">
+                                    {{\App\Models\AzSubscription::where('status', 'commission_hold')->count() }}
+                                </span>
+                                <p>
+                                    @lang('messages.commissions_limit')
                                 </p>
                             </a>
                         </li>

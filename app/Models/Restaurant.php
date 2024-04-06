@@ -96,6 +96,7 @@ class Restaurant extends Authenticatable
         'az_logo',
         'az_commission',
         'az_online_payment_type',
+        'maximum_az_commission_limit',
     ];
     protected $hidden = [
         'password', 'remember_token',

@@ -133,6 +133,22 @@
                                         <div class="col-sm-3">%</div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label"> @lang('messages.maximum_az_commission_limit') </label>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <input name="maximum_az_commission_limit" value="{{$restaurant->maximum_az_commission_limit}}" type="number" class="form-control" placeholder="@lang('messages.maximum_az_commission_limit')">
+                                            @if ($errors->has('maximum_az_commission_limit'))
+                                                <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('maximum_az_commission_limit') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{app()->getLocale() == 'ar' ? $restaurant->country->currency_ar : $restaurant->country->currency_en}}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 

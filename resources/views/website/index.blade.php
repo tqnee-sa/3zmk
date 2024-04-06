@@ -163,6 +163,9 @@
             @elseif($checkRestaurantSubscription and $checkRestaurantSubscription->status == 'finished')
                 <p style="color: red"> @lang('messages.finished_subscription') </p>
                 <p style="font-size:50px">&#128546;</p>
+            @elseif($checkRestaurantSubscription and $checkRestaurantSubscription->status == 'commission_hold')
+                <p style="color: red"> @lang('messages.restaurant_closed_now') </p>
+                <p style="font-size:50px">&#128546;</p>
             @elseif($checkRestaurantSubscription == null)
                 <p style="color: red"> @lang('messages.notSubscribedYet') </p>
                 <p style="font-size:50px">&#128522;</p>
