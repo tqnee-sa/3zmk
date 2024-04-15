@@ -150,6 +150,7 @@
                                 <th>@lang('messages.restaurant')</th>
                                 <th>@lang('messages.products')</th>
                                 <th> @lang('messages.branches') </th>
+                                <th> @lang('messages.clients') </th>
                                 <th> @lang('messages.payment_type') </th>
                                 <th>@lang('messages.operations')</th>
                             </tr>
@@ -214,6 +215,11 @@
                                     </td>
                                     <td>
                                         {{$restaurant->branches->count()}}
+                                    </td>
+                                    <td>
+                                        <a href="{{route('AzRestaurantUsers' , $restaurant->id)}}" class="btn btn-success">
+                                            {{$restaurant->users->count()}}
+                                        </a>
                                     </td>
                                     <td>
                                         @if($restaurant->a_z_orders_payment_type == 'myFatoourah')

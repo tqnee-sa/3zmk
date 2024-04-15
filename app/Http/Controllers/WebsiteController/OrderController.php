@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Models\Restaurant\Azmak\AZOrder;
+use App\Models\AzRestaurantUser;
 
 class OrderController extends Controller
 {
@@ -14,50 +15,45 @@ class OrderController extends Controller
         $order = AZOrder::findOrFail($id);
         $restaurant = $order->restaurant;
         $branch = $order->branch;
-        return view('website.orders.info' , compact('order' , 'restaurant' , 'branch'));
+        return view('website.orders.info', compact('order', 'restaurant', 'branch'));
     }
-    public function submit_order_info(Request $request , $id)
+
+    public function submit_order_info(Request $request, $id)
     {
         $order = AZOrder::findOrFail($id);
-        if ($order->user->name == null)
-        {
-            $this->validate($request , [
+        if ($order->user->name == null) {
+            $this->validate($request, [
                 'name' => 'required|string|max:191',
                 'email' => 'required|email|max:191',
             ]);
             $order->user->update([
-                'name'   =>  $request->name,
-                'email'  => $request->email
+                'name' => $request->name,
+                'email' => $request->email
             ]);
         }
-        $this->validate($request , [
+        $this->validate($request, [
             'person_name' => 'required|string|max:191',
             'person_phone' => 'required|min:10',
             'occasion' => 'required|string|max:191',
             'message' => 'nullable|string',
         ]);
         $order->update([
-            'person_name'        => $request->person_name,
-            'person_phone'       => $request->person_phone,
-            'occasion'           => $request->occasion,
-            'occasion_message'   => $request->message,
+            'person_name' => $request->person_name,
+            'person_phone' => $request->person_phone,
+            'occasion' => $request->occasion,
+            'occasion_message' => $request->message,
         ]);
         // move to payment
         // check restaurant payment company
-        if ($order->restaurant->a_z_orders_payment_type == 'tap')
-        {
+        if ($order->restaurant->a_z_orders_payment_type == 'tap') {
             // tap payment
-            return redirect()->to(tap_payment($order->restaurant->a_z_tap_token, $order->total_price, $order->user->name, $order->user->email, $order->restaurant->country->code, $order->user->phone_number, route('AZOrderPaymentTapStatus' , $order->id), $order->order_id));
-        }
-        elseif ($order->restaurant->a_z_orders_payment_type == 'edfa')
-        {
+            return redirect()->to(tap_payment($order->restaurant->a_z_tap_token, $order->total_price, $order->user->name, $order->user->email, $order->restaurant->country->code, $order->user->phone_number, route('AZOrderPaymentTapStatus', $order->id), $order->order_id));
+        } elseif ($order->restaurant->a_z_orders_payment_type == 'edfa') {
             // edfa payment
-            $payment_url = edfa_payment($order->restaurant->a_z_edfa_merchant, $order->restaurant->a_z_edfa_password, $order->total_price,route('AZOrderPaymentEdfa_status' , $order->id), $order->order_id, $order->user->name, $order->user->email);
+            $payment_url = edfa_payment($order->restaurant->a_z_edfa_merchant, $order->restaurant->a_z_edfa_password, $order->total_price, route('AZOrderPaymentEdfa_status', $order->id), $order->order_id, $order->user->name, $order->user->email);
             return redirect()->to($payment_url);
-        }
-        elseif ($order->restaurant->a_z_orders_payment_type == 'myFatoourah')
-        {
-            $this->validate($request , [
+        } elseif ($order->restaurant->a_z_orders_payment_type == 'myFatoourah') {
+            $this->validate($request, [
                 'online_type' => 'required|in:2,6,11',
             ]);
             $name = $order->user->name;
@@ -71,8 +67,8 @@ class OrderController extends Controller
                 'CustomerMobile' => $order->user->phone_number,
                 'CustomerEmail' => $order->user->email,
                 'InvoiceValue' => $amount,
-                'CallBackUrl' => route('AZOrderPaymentFatoourahStatus' , $order->id),
-                'ErrorUrl' => route('AZUserCart' , $order->branch->id),
+                'CallBackUrl' => route('AZOrderPaymentFatoourahStatus', $order->id),
+                'ErrorUrl' => route('AZUserCart', $order->branch->id),
                 'Language' => app()->getLocale(),
                 'CustomerReference' => 'ref 1',
                 'CustomerCivilId' => '12345678',
@@ -106,7 +102,7 @@ class OrderController extends Controller
         }
     }
 
-    public function check_order_fatoourah_status(Request $request , $id)
+    public function check_order_fatoourah_status(Request $request, $id)
     {
         $order = AZOrder::find($id);
         $token = $order->restaurant->a_z_myFatoourah_token;
@@ -117,7 +113,7 @@ class OrderController extends Controller
             // calculate order commission as restaurant az orders commission
             $commission_value = ($order->restaurant->az_commission * $order->total_price) / 100;
             $order->update([
-                'status'  => 'active',
+                'status' => 'active',
                 'commission' => $commission_value,
             ]);
             return redirect()->to($this->whats_redirect($order));
@@ -126,41 +122,49 @@ class OrderController extends Controller
             return back();
         }
     }
-    public function edfa_status(Request $request , $id)
+
+    public function edfa_status(Request $request, $id)
     {
         $order = AZOrder::find($id);
         // calculate order commission as restaurant az orders commission
         $commission_value = ($order->restaurant->az_commission * $order->total_price) / 100;
         $order->update([
-            'status'  => 'active',
+            'status' => 'active',
             'commission' => $commission_value,
         ]);
         // send order details to user whatsapp
         return redirect()->to($this->whats_redirect($order));
     }
-    public function check_order_tap_status(Request $request , $id)
+
+    public function check_order_tap_status(Request $request, $id)
     {
         $order = AZOrder::find($id);
         // calculate order commission as restaurant az orders commission
         $commission_value = ($order->restaurant->az_commission * $order->total_price) / 100;
         $order->update([
-            'status'  => 'active',
+            'status' => 'active',
             'commission' => $commission_value,
         ]);
         return redirect()->to($this->whats_redirect($order));
     }
+
     public function whats_redirect($order)
     {
+        // store user at restaurant
+        AzRestaurantUser::updateOrCreate([
+            'restaurant_id' => $order->restaurant_id,
+            'user_id'       => $order->user_id,
+        ]);
         // send order details to user whatsapp
         $location = 'https://www.google.com/maps?q=' . $order->branch->latitude . ',' . $order->branch->longitude;
         $content = trans('messages.welcome') . $order->person_name . '%0a %0a';
-        $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
-        $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
-        $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
-        $content.= trans('messages.order_details'). '%0a %0a';
-        $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
-        $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
-        $content.= trans('messages.location') . ' ' . $location. '%0a %0a';
+        $content .= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders') . '%0a %0a';
+        $content .= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
+        $content .= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
+        $content .= trans('messages.order_details') . '%0a %0a';
+        $content .= route('AZOrderBarcode', $order->id) . '%0a %0a';
+        $content .= trans('messages.order_code') . ' ' . $order->order_code . '%0a %0a';
+        $content .= trans('messages.location') . ' ' . $location . '%0a %0a';
 
         $check = substr($order->person_phone, 0, 2) === '05';
         if ($check == true) {
@@ -168,7 +172,7 @@ class OrderController extends Controller
         } else {
             $phone = '+2' . $order->person_phone;
         }
-        return 'https://api.whatsapp.com/send?phone=' . $phone . '&text='.$content;
+        return 'https://api.whatsapp.com/send?phone=' . $phone . '&text=' . $content;
     }
 }
 //gM2ir(XJsO9z

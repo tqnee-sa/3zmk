@@ -16,7 +16,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('messages.clients')</h1>
+                    <h1>
+                        @lang('messages.clients')
+                        ({{app()->getLocale() == 'ar' ? $restaurant->name_ar : $restaurant->name_en}})
+                    </h1>
                 </div>
 
             </div>
@@ -53,6 +56,7 @@
                             <tbody>
                             <?php $i = 0 ?>
                             @foreach($users as $user)
+                                <?php $user = $user->user; ?>
                                 <tr class="odd gradeX">
                                     <td>
                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">

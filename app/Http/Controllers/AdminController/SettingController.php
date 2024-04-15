@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AzmakSetting;
 use App\Models\AzHistory;
 use App\Models\AzSubscription;
+use App\Models\Restaurant;
 use App\Models\AzCommissionHistory;
 use App\Models\AzRestaurantCommission;
 use App\Models\Restaurant\Azmak\AZUser;
@@ -99,5 +100,11 @@ class SettingController extends Controller
     {
         $users = AZUser::paginate(500);
         return view('admin.users.index' , compact('users'));
+    }
+    public function restaurant_users($id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $users = $restaurant->users()->paginate(500);
+        return view('admin.users.restaurant_users' , compact('users' , 'restaurant'));
     }
 }

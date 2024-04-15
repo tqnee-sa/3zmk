@@ -191,5 +191,8 @@ class Restaurant extends Authenticatable
     {
         return $this->hasOne(AZRestaurantColor::class , 'restaurant_id');
     }
-
+    public function users()
+    {
+        return $this->hasMany(AzRestaurantUser::class , 'restaurant_id');
+    }
 }
