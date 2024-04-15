@@ -79,6 +79,7 @@ use \App\Http\Controllers\AdminController\HomeController;
 use \App\Http\Controllers\AdminController\AZRestaurantController;
 use \App\Http\Controllers\AdminController\AZCommissionController;
 use \App\Http\Controllers\AdminController\BankTransferController;
+use \App\Http\Controllers\AdminController\ReportController;
 
 // Employees EmployeeHome
 use \App\Http\Controllers\EmployeeController\Employee\LoginController as EmployeeLogin;
@@ -451,6 +452,14 @@ Route::prefix('admin')->group(function () {
             Route::get('/commission_histories', 'commission_histories')->name('admin.commission_histories');
             Route::get('/commission_histories/delete/{id}', 'delete_commission_history')->name('admin.delete_commission_history');
         });
+        // reports controller
+        Route::controller(ReportController::class)->group(function () {
+            Route::get('/reports', 'index')->name('reports.index');
+            Route::get('/reports/restaurants/{year}/{month}/{type}', 'restaurants')->name('reports.restaurants');
+            Route::get('/month_reports', 'month_reports')->name('admin.month_reports');
+            Route::get('/month_histories', 'report_histories')->name('admin.month_histories');
+        });
+
         Route::controller(BankTransferController::class)->group(function () {
             Route::get('/az_bank_transfers', 'transfers')->name('AZBankTransfer');
             Route::get('/commission_bank_transfers', 'commission_bank_transfers')->name('commission_bank_transfers');

@@ -1,17 +1,23 @@
 @extends('admin.lteLayout.master')
 @section('title')
     @lang('messages.restaurants')
+    @if ($status == 'active')
+        @lang('messages.active_restaurants')
+    @elseif($status == 'finished')
+        @lang('messages.finished_restaurants')
+    @elseif($status == 'new')
+        @lang('messages.new_restaurants')
+    @elseif($status == 'free')
+        @lang('messages.free_restaurants')
+    @endif
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/css/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/css/sweetalert.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">--}}
-    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>--}}
-    {{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>--}}
-    <!-- Theme style -->
+
     <style>
         .dropbtn {
             background-color: #04AA6D;
@@ -31,7 +37,7 @@
             position: absolute;
             background-color: #f1f1f1;
             min-width: 100px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
@@ -43,11 +49,60 @@
             display: block;
         }
 
-        .dropdown-content a:hover {background-color: #ddd;}
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
 
-        .dropdown:hover .dropdown-content {display: block;}
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
 
-        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        #example1_wrapper {
+            overflow: auto;
+        }
+
+        .archive.btn {
+            margin-bottom: 10px;
+        }
+
+        .archive.btn.archiveActive {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .control_progress {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .login_res {
+            transition: all 0.3s linear;
+            position: relative;
+        }
+
+        .login_res i {
+            color: white !important;
+        }
+
+        .show_text {
+            display: none;
+            position: absolute;
+            right: 0;
+            z-index: 9999;
+            background-color: #eeeeee;
+            padding: 2px;
+
+        }
+
+        .login_res:hover .show_text {
+            display: block;
+        }
     </style>
 @endsection
 
@@ -56,26 +111,20 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>
-                        @lang('messages.restaurants') ({{app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en}})
+                    <h1>@lang('messages.restaurants')
+                        @if ($status == 'active')
+                            @lang('messages.active_restaurants')
+                        @elseif($status == 'finished')
+                            @lang('messages.finished_restaurants')
+                        @elseif($status == 'new')
+                            @lang('messages.new_restaurants')
+                        @elseif($status == 'free')
+                            @lang('messages.free_restaurants')
+                        @endif
                     </h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">
-                            <a href="{{url('/admin/home')}}">
-                                @lang('messages.control_panel')
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <a href="{{route('CityRestaurants' , [$city->id , $status])}}">
-                                @lang('messages.restaurants')
-                            </a>
-                        </li>
-                    </ol>
-                </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
     @include('flash::message')
     <section class="content">
@@ -84,7 +133,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-striped" style="overflow: auto;">
                             <thead>
                             <tr>
                                 <th>
@@ -97,19 +146,22 @@
                                 <th></th>
                                 <th>@lang('messages.name')</th>
                                 <th>@lang('messages.phone_number')</th>
-                                <th>{{app()->getLocale() == 'ar' ? 'الحالة':'Status'}}</th>
+                                <th>@lang('messages.country')</th>
                                 <th>@lang('messages.restaurant')</th>
                                 <th>@lang('messages.products')</th>
-                                <th>@lang('messages.views')</th>
-                                <th>{{app()->getLocale() == 'ar' ? 'المشاهدات اليومية' : 'Daily Views'}}</th>
-                                <th>{{app()->getLocale() == 'ar' ? 'ملاحظات' : 'Notes'}}</th>
-                                <th> @lang('messages.created_at') </th>
+                                <th> @lang('messages.branches') </th>
+                                <th> @lang('messages.clients') </th>
+                                <th> @lang('messages.payment_type') </th>
                                 <th>@lang('messages.operations')</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $i = 0 ?>
-                            @foreach($restaurants as $restaurant)
+                            <?php $i = 0; ?>
+                            @php
+                                $now = Carbon\Carbon::parse(date('Y-m-d'));
+                            @endphp
+                            @foreach ($restaurants as $restaurant)
+                                <?php $restaurant = $restaurant->restaurant; ?>
                                 <tr class="odd gradeX">
                                     <td>
                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -117,12 +169,12 @@
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td><?php echo ++$i ?></td>
+                                    <td><?php echo ++$i; ?></td>
                                     <td>
-                                        @if(app()->getLocale() == 'ar')
-                                            {{$restaurant->name_ar}}
+                                        @if (app()->getLocale() == 'ar')
+                                            {{ $restaurant->name_ar }}
                                         @else
-                                            {{$restaurant->name_en}}
+                                            {{ $restaurant->name_en }}
                                         @endif
                                     </td>
                                     <td>
@@ -135,30 +187,27 @@
                                                 $phone = $country . $restaurant->phone_number;
                                             }
                                         @endphp
-                                        @if($restaurant->phone_number != null)
-                                            <a target="_blank" href="https://api.whatsapp.com/send?phone={{ $phone }}">
+                                        @if ($restaurant->phone_number != null)
+                                            <a target="_blank"
+                                               href="https://api.whatsapp.com/send?phone={{ $phone }}">
                                                 <i style="font-size:24px" class="fa">&#xf232;</i>
                                             </a>
-                                            <a href="tel:{{$phone}}">
+                                            <a href="tel:{{ $phone }}">
                                                 <i class="fa fa-phone"></i>
                                             </a>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($restaurant->subscription != null)
-                                            @if($restaurant->subscription->status == 'tentative')
-                                                <a class="btn btn-info">@lang('messages.tentative')</a>
-                                            @elseif($restaurant->subscription->status == 'tentative_finished')
-                                                <a class="btn btn-danger">@lang('messages.tentative_finished')</a>
-                                            @elseif($restaurant->subscription->status == 'active')
-                                                <a class="btn btn-success"> @lang('messages.active') </a>
-                                            @elseif($restaurant->subscription->status == 'finished')
-                                                <a class="btn btn-danger"> @lang('messages.finished') </a>
+                                        @if ($restaurant->country != null)
+                                            @if (app()->getLocale() == 'ar')
+                                                {{ $restaurant->country->name_ar }}
+                                            @else
+                                                {{ $restaurant->country->name_en }}
                                             @endif
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{url('/restaurants/' . $restaurant->name_barcode)}}" target="_blank">
+                                        <a target="_blank" href="{{url('/restaurants/' . $restaurant->name_barcode)}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
@@ -166,124 +215,70 @@
                                         {{$restaurant->products->count()}}
                                     </td>
                                     <td>
-                                        {{$restaurant->views}}
+                                        {{$restaurant->branches->count()}}
                                     </td>
                                     <td>
-                                        <?php $daily_views = \App\Models\RestaurantView::whereRestaurantId($restaurant->id)->orderBy('id', 'desc')->first(); ?>
-                                        @if($daily_views != null)
-                                            {{$daily_views->views}}
-                                        @else
-                                            0
-                                        @endif
-                                    </td>
-                                    {{--                                    <td>--}}
-                                    {{--                                        @if($restaurant->subscription != null and isset($restaurant->subscription->package->id))--}}
-                                    {{--                                            {{app()->getLocale() == 'ar' ? $restaurant->subscription->package->name_ar : $restaurant->subscription->package->name_en}}--}}
-                                    {{--                                        @endif--}}
-                                    {{--                                    </td>--}}
-                                    <td>
-                                        <a href="{{route('adminNote.index' , $restaurant->id)}}"
-                                           class="btn btn-secondary">
-                                            {{$restaurant->notes->count()}}
+                                        <a href="{{route('AzRestaurantUsers' , $restaurant->id)}}" class="btn btn-success">
+                                            {{$restaurant->users->count()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info-{{$restaurant->id}}">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                        <div class="modal fade" id="modal-info-{{$restaurant->id}}">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content bg-info">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">
-                                                            @lang('messages.created_at')
-                                                        </h4>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>
-                                                            @lang('messages.date') :
-                                                            {{$restaurant->created_at->format('Y-m-d')}}
-                                                        </p>
-                                                        <p>
-                                                            {{app()->getLocale() == 'ar' ? 'الوقت': 'time'}} :
-                                                            {{$restaurant->created_at->format('H:i:s')}}
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-between">
-                                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">
-                                                            @lang('messages.close')
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal-content -->
-                                            </div>
-                                            <!-- /.modal-dialog -->
-                                        </div>
+                                        @if($restaurant->a_z_orders_payment_type == 'myFatoourah')
+                                            @lang('messages.myFatoourah')
+                                        @elseif($restaurant->a_z_orders_payment_type == 'tap')
+                                            @lang('messages.tap')
+                                        @elseif($restaurant->a_z_orders_payment_type == 'edfa')
+                                            @lang('messages.edfa')
+                                        @endif
                                     </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-primary dropbtn" data-toggle="dropdown">
-                                                @lang('messages.operations')
-                                                <span class="caret"></span></button>
-                                            <div class="dropdown-content" >
-                                                @if($restaurant->archive == 'true')
-                                                    <li>
-                                                        <a class="btn btn-info"
-                                                           href="{{route('ArchiveRestaurant' , [$restaurant->id , 'false'])}}"> @lang('messages.remove_archive')</a>
-                                                    </li>
-                                                @else
-                                                    <li>
-                                                        <a class="btn btn-secondary"
-                                                           href="{{route('ArchiveRestaurant' , [$restaurant->id , 'true'])}}"> @lang('messages.archive')</a>
-                                                    </li>
-                                                @endif
-                                                @if($restaurant->status != 'inComplete')
-                                                    <li>
-                                                        <a class="btn btn-success"
-                                                           href="{{route('showRestaurant' , $restaurant->id)}}">
-                                                            <i class="fa fa-eye"></i> @lang('messages.show')
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                                @if($restaurant->status == 'inComplete')
-                                                    <li>
-                                                        <a class="btn btn-info"
-                                                           href="{{route('inCompleteRestaurant' , $restaurant->id)}}">
-                                                            <i class="fa fa-edit"></i>
-                                                            {{app()->getLocale() == 'ar' ? 'أكمال التسجيل' : 'Complete Register'}}
-                                                        </a>
-                                                    </li>
-                                                @else
-                                                    <li>
-                                                        <a class="btn btn-info"
-                                                           href="{{route('editRestaurant' , $restaurant->id)}}">
-                                                            <i class="fa fa-edit"></i> @lang('messages.edit')
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                                <li>
-                                                    <a class="btn btn-primary"
-                                                       href="{{route('admin.restaurant_history' , $restaurant->id)}}">
-                                                        <i class="fa fa-eye"></i>
-                                                        @lang('messages.histories')
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="delete_city btn btn-danger" data="{{ $restaurant->id }}"
-                                                       data_name="{{ $restaurant->name_ar }}">
-                                                        <i class="fa fa-key"></i> @lang('messages.delete')
-                                                    </a>
-                                                </li>
-                                            </div>
-                                        </div>
+                                    <td class="control_progress">
+                                        <!--<div class="dropdown">-->
+                                        <!--    <button type="button" class="btn btn-primary dropbtn"-->
+                                        <!--        data-toggle="dropdown">-->
+                                    <!--        @lang('messages.operations')-->
+                                        <!--        <span class="caret"></span></button>-->
+                                        <!--<div class="dropdown-content">-->
+
+
+                                        <!--start login_res-->
+
+                                        <li class="login_res">
+                                            <a class="btn btn-warning" target="__blank"
+                                               href="{{ route('admin.restaurant.login', [$restaurant->id, 'false']) }}">
+                                                <i class="fa fa-user"></i>
+
+                                            </a>
+                                            <span class="show_text">
+                                                @lang('messages.login_to_restaurant')
+                                            </span>
+                                        </li>
+                                        <li class="login_res">
+                                            <a class="btn btn-primary"
+                                               href="{{ route('editRestaurant', $restaurant->id) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <span class="show_text">
+                                                @lang('messages.restaurant_settings')
+                                            </span>
+                                        </li>
+                                        <li class="login_res">
+                                            <a class="btn btn-info"
+                                               href="{{ route('AzRestaurantCommissions', $restaurant->id) }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <span class="show_text">
+                                                @lang('messages.commission_system')
+                                            </span>
+                                        </li>
+                                        <!--</div>-->
+                                        <!--</div>-->
 
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $restaurants->links() }}
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -292,17 +287,24 @@
         </div>
         <!-- /.row -->
     </section>
+    <!-- Modal -->
 @endsection
 
 @section('scripts')
-    {{--    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>--}}
-    <script src="{{asset('plugins/datatables/jquery.dataTables.js')}}"></script>
-    <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+    {{--    <script src="{{asset('dist/js/adminlte.min.js')}}"></script> --}}
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ URL::asset('admin/js/sweetalert.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/ui-sweetalert.min.js') }}"></script>
     <script>
         $(function () {
-            $("#example1").DataTable();
+
+            $("#example1").DataTable({
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, 'All'],
+                ],
+            });
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
@@ -334,14 +336,40 @@
                     closeOnConfirm: false
                 }, function () {
 
-                    {{--var url = '{{ route("imageProductRemove", ":id") }}';--}}
+                    {{-- var url = '{{ route("imageProductRemove", ":id") }}'; --}}
 
-                        {{--url = url.replace(':id', id);--}}
+                        {{-- url = url.replace(':id', id); --}}
 
-                        window.location.href = "{{ url('/') }}" + "/admin/restaurants/delete/" + id;
+                        window.location.href = "{{ url('/') }}" + "/admin/restaurants/delete/" +
+                        id;
                 });
+            });
+            $('#formArchive').on('change', 'select', function () {
+                var tag = $(this);
+                if (tag.val() == -1) {
+                    $('.archive_reason').fadeIn(300);
+                } else {
+                    $('.archive_reason').fadeOut(50);
+                }
+            });
+            $('table').on('click', '.btn-archive', function () {
+                var tag = $(this);
+                console.log(tag.data('href'));
+                $('#formArchive form').attr('action', tag.data('href'));
+                $('#formArchive select').val('');
+                $('#formArchive select').trigger('change');
             });
         });
     </script>
-
 @endsection
+<style>
+
+    .content .btn_archive {
+        color: white !important;
+        background-color: #64748b !important;
+        width: max-content;
+        border-radius: 5px;
+        font-family: 'cairo';
+
+    }
+</style>

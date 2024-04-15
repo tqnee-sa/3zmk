@@ -352,4 +352,11 @@ return [
     'commission_histories' => 'Commissions Histories',
     'clients' => 'Clients',
     'created_at' => 'Created At',
+    'show_restaurants_reports' => 'Show Restaurants Reports And Statistics At',
+    'reports' => 'Reports',
+    'renewed_restaurants' => 'Renewed Restaurants',
+    'subscribed_restaurants' => 'Subscribed Restaurants',
+    'subscribed_restaurants_amount' => 'Subscribed Amount',
+    'renewed_amount' => 'Renewed Amount',
+    'commissions' => 'Commissions',
 ];

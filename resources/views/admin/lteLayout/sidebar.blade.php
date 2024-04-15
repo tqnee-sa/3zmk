@@ -262,6 +262,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('reports.index') }}"
+                       class="nav-link {{ strpos(URL::current(), '/admin/reports') !== false ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            @lang('messages.reports')
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('AzmakSetting') }}"
                        class="nav-link {{ strpos(URL::current(), '/admin/azmak_setting') !== false ? 'active' : '' }}">
                         <i class="nav-icon fa fa-cogs"></i>

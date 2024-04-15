@@ -1,7 +1,7 @@
 @extends('admin.lteLayout.master')
 
 @section('title')
-    @lang('messages.control_panel')
+    @lang('messages.reports')
 @endsection
 
 @section('content')
@@ -10,15 +10,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">@lang('messages.control_panel')</h1>
+                    <h1 class="m-0 text-dark">@lang('messages.reports')</h1>
                 </div><!-- /.col -->
-                <!--<div class="col-sm-6">-->
-                <!--    <ol class="breadcrumb float-sm-right">-->
-            <!--        <li class="breadcrumb-item"><a href="#">@lang('messages.control_panel')</a></li>-->
-            <!--        {{--                        <li class="breadcrumb-item active">Dashboard v1</li>--}}-->
-                <!--    </ol>-->
-                <!--</div>-->
-                <!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
@@ -124,15 +117,15 @@
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'registered'])}}"
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'new'])}}"
                     >
                         <div class="small-box">
                             <div class="inner">
                                 <p>
-                                    @lang('messages.registered_restaurant')
+                                    @lang('messages.not_paid')
                                 </p>
                                 <h3 class="text-center">
-                                    {{$registered_restaurants}}
+                                    {{$new_not_paid}}
                                 </h3>
 
                             </div>
@@ -142,256 +135,41 @@
 
                 </div>
                 <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'subscribed'])}}"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-
-                                <p>
-                                    @lang('messages.subscribed_restaurant')
-                                </p>
-                                <h3 class="text-center">
-                                    {{$month_subscription + $pre_month_subscription}}
-                                </h3>
-                            </div>
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'subscribed'])}}"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>
-                                    {{app()->getLocale() == 'ar' ? 'المطاعم المشتركة الشهر الحالي' : 'Current Subscribed Restaurants'}}
-                                </p>
-                                <h3 class="text-center">
-                                    {{$month_subscription}}
-                                </h3>
-                            </div>
-
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'pre_month_subscribed'])}}"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>
-                                    {{app()->getLocale() == 'ar' ? 'مطاعم مشتركه مسجلة سابقا' : 'Restaurants Subscribed From Previous Month'}}
-                                </p>
-                                <h3 class="text-center">
-                                    {{$pre_month_subscription}}
-                                </h3>
-                            </div>
-
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'notSubscribed'])}}"
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'active'])}}"
                     >
                         <!-- small box -->
                         <div class="small-box">
                             <div class="inner">
 
                                 <p>
-                                    {{app()->getLocale() == 'ar' ? 'المطاعم الغير مشتركة':'Restaurants Not Subscribed'}}
+                                    @lang('messages.subscribed_restaurants')
                                 </p>
                                 <h3 class="text-center">
-                                    {{$restaurants_not_subscribed}}
+                                    {{$subscribed_restaurants}}
                                 </h3>
                             </div>
 
-                        </div>
-
-                    </a>
-
-                </div>
-                @if(auth()->guard('admin')->user()->role != 'customer_services')
-                    <div class="col-lg-6 col-6">
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.subscription_amount')</p>
-
-                                <h3 class="text-center">
-                                    {{number_format((float)$subscription, 0, '.', '')}} @lang('messages.SR')
-                                </h3>
-                            </div>
-
-                            <form role="form" action="{{route('admin.month_histories')}}" method="get"
-                                  enctype="multipart/form-data">
-                                <input type='hidden' name='_token' value='{{Session::token()}}'>
-                                <input type="hidden" name="year" value="{{$year}}">
-                                <input type="hidden" name="month" value="{{$month}}">
-                                <input type="hidden" name="type" value="restaurant">
-                                <input type="hidden" name="status" value="subscribed">
-                                <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
-                                    @lang('messages.details')
-                                    <i class="fas fa-arrow-circle-right"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @endif
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <a href="#" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>{{app()->getLocale() == 'ar' ? 'مطاعم مطلوب تجديدها الشهر الحالي':'Restaurants Renewed At Current Month'}}</p>
-                                <h3 class="text-center">
-                                    {{$total_renewed_restaurants}}
-                                </h3>
-
-
-                            </div>
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'renewed'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.renewed_restaurants')</p>
-
-                                <h3 class="text-center">
-                                    {{$renewed_restaurants}}
-                                </h3>
-
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'end'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-
-                                <p>{{app()->getLocale() == 'ar' ? 'مطاعم لم تجدد':'Restaurants not Renewed'}}</p>
-                                <h3 class="text-center">
-                                    {{$need_renew_restaurants}}
-                                </h3>
-
-                            </div>
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'finished'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>
-                                    {{app()->getLocale() == 'ar' ? 'المطاعم المنتهية' : 'Finished Restaurants'}}
-                                </p>
-                                <h3 class="text-center">
-                                    {{$restaurants_not_renewed}}
-                                </h3>
-
-
-                            </div>
-
-                        </div>
-                    </a>
-
-                </div>
-                @if(auth()->guard('admin')->user()->role != 'customer_services')
-                    <div class="col-lg-6 col-6">
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.renew_amount')</p>
-
-                                <h3 class="text-center">
-                                    {{number_format((float)$renew, 0, '.', '')}} @lang('messages.SR')
-                                </h3>
-
-                            </div>
-                            <form role="form" action="{{route('admin.month_histories')}}" method="get"
-                                  enctype="multipart/form-data">
-                                <input type='hidden' name='_token' value='{{Session::token()}}'>
-                                <input type="hidden" name="year" value="{{$year}}">
-                                <input type="hidden" name="month" value="{{$month}}">
-                                <input type="hidden" name="type" value="restaurant">
-                                <input type="hidden" name="status" value="renewed">
-                                <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
-                                    @lang('messages.details')
-                                    <i class="fas fa-arrow-circle-right"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @endif
-            </div>
-            <!--end row of restaurants-->
-
-            <hr>
-            <h4 class="text-center" style="color: red">
-                @lang('messages.branches')
-            </h4>
-            <br>
-            <div class="row">
-                <div class="col-lg-6 col-6">
-                    <a href="{{route('reports.branches' , [$year , $month , 'subscribed'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.subscribed_branches')</p>
-
-                                <h3 class="text-center">
-                                    {{$subscribed_branches}}
-                                </h3>
-
-                            </div>
                         </div>
                     </a>
 
                 </div>
                 <div class="col-lg-6 col-6">
                     <!-- small box -->
-                    <div class="small-box ">
+                    <div class="small-box">
                         <div class="inner">
-                            <p>@lang('messages.subscribed_branches_amount')</p>
+                            <p>@lang('messages.subscribed_restaurants_amount')</p>
 
                             <h3 class="text-center">
-                                {{number_format((float)$subscribed_branches_amount, 0, '.', '')}} @lang('messages.SR')
+                                {{number_format((float)$subscribed_restaurants_amount, 0, '.', '')}} @lang('messages.SR')
                             </h3>
-
                         </div>
+
                         <form role="form" action="{{route('admin.month_histories')}}" method="get"
                               enctype="multipart/form-data">
                             <input type='hidden' name='_token' value='{{Session::token()}}'>
                             <input type="hidden" name="year" value="{{$year}}">
                             <input type="hidden" name="month" value="{{$month}}">
-                            <input type="hidden" name="type" value="branch">
+                            <input type="hidden" name="type" value="restaurant">
                             <input type="hidden" name="status" value="subscribed">
                             <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
                                 @lang('messages.details')
@@ -400,110 +178,38 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row">
+                <hr>
                 <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.branches' , [$year , $month , 'required_renew'])}}"
-                       style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.branches_renew_subscription')</p>
-
-                                <h3 class="text-center">
-                                    {{$branches_renew_subscription}}
-                                </h3>
-
-                            </div>
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.branches' , [$year , $month , 'renewed'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.renewed_branches')</p>
-
-                                <h3 class="text-center">
-                                    {{$renewed_branches}}
-                                </h3>
-
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.branches' , [$year , $month , 'not_renew'])}}" style="color: black"
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'free'])}}"
                     >
                         <!-- small box -->
                         <div class="small-box">
                             <div class="inner">
                                 <p>
-                                    {{app()->getLocale() == 'ar' ? 'الفروع التي لم تجدد' : 'Branches Not Renewed'}}
+                                    @lang('messages.free_restaurants')
                                 </p>
                                 <h3 class="text-center">
-                                    {{$branches_not_renewed}}
+                                    {{$free}}
                                 </h3>
-
-
                             </div>
+
+
                         </div>
                     </a>
 
                 </div>
-                @if(auth()->guard('admin')->user()->role != 'customer_services')
-                    <div class="col-lg-3 col-6">
+                <div class="col-lg-3 col-6">
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'renew'])}}"
+                    >
                         <!-- small box -->
                         <div class="small-box">
                             <div class="inner">
+                                <p>
+                                    @lang('messages.renewed_restaurants')
+                                </p>
                                 <h3 class="text-center">
-                                    {{number_format((float)$renewed_branches_amount, 0, '.', '')}} @lang('messages.SR')
+                                    {{$renewed_restaurants}}
                                 </h3>
-
-                                <p>@lang('messages.renewed_branches_amount')</p>
-                            </div>
-                            <form role="form" action="{{route('admin.month_histories')}}" method="get"
-                                  enctype="multipart/form-data">
-                                <input type='hidden' name='_token' value='{{Session::token()}}'>
-                                <input type="hidden" name="year" value="{{$year}}">
-                                <input type="hidden" name="month" value="{{$month}}">
-                                <input type="hidden" name="type" value="branch">
-                                <input type="hidden" name="status" value="renewed">
-                                <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
-                                    @lang('messages.details')
-                                    <i class="fas fa-arrow-circle-right"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @endif
-            </div>
-            <!--end branch-->
-            <hr>
-            <h4 class="text-center" style="color: red">
-                @lang('messages.services')
-            </h4>
-            <br>
-            <div class="row">
-                <div class="col-lg-6 col-6">
-                    <a href="{{route('reports.services' , [$year , $month , 'sold'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box ">
-                            <div class="inner">
-                                <p>@lang('messages.registered_services')</p>
-
-                                <h3 class="text-center">
-                                    {{$registered_services}}
-                                </h3>
-
                             </div>
                         </div>
                     </a>
@@ -513,12 +219,11 @@
                     <!-- small box -->
                     <div class="small-box">
                         <div class="inner">
-                            <p>@lang('messages.services_amount')</p>
+                            <p>@lang('messages.renewed_amount')</p>
 
                             <h3 class="text-center">
-                                {{number_format((float)$services_amount, 0, '.', '')}} @lang('messages.SR')
+                                {{number_format((float)$renewed_restaurants_amount, 0, '.', '')}} @lang('messages.SR')
                             </h3>
-
                         </div>
 
                         <form role="form" action="{{route('admin.month_histories')}}" method="get"
@@ -526,7 +231,80 @@
                             <input type='hidden' name='_token' value='{{Session::token()}}'>
                             <input type="hidden" name="year" value="{{$year}}">
                             <input type="hidden" name="month" value="{{$month}}">
-                            <input type="hidden" name="type" value="service">
+                            <input type="hidden" name="type" value="restaurant">
+                            <input type="hidden" name="status" value="subscribed">
+                            <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
+                                @lang('messages.details')
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!--end row of restaurants-->
+            <hr>
+            <h4 class="text-center" style="color: red">
+                @lang('messages.commissions')
+            </h4>
+            <br>
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'new'])}}"
+                    >
+                        <div class="small-box">
+                            <div class="inner">
+                                <p>
+                                    @lang('messages.commissions_payable')
+                                </p>
+                                <h4 class="text-center">
+                                    {{$orders_commissions - $restaurant_commissions}}
+                                    @lang('messages.SR')
+                                </h4>
+
+                            </div>
+
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-lg-3 col-6">
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'active'])}}"
+                    >
+                        <!-- small box -->
+                        <div class="small-box">
+                            <div class="inner">
+
+                                <p>
+                                    @lang('messages.restaurant_az_orders_count')
+                                </p>
+                                <h3 class="text-center">
+                                    {{App\Models\Restaurant\Azmak\AZOrder::where('status' , '!=' , 'new')->count()}}
+                                </h3>
+                            </div>
+
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-lg-6 col-6">
+                    <!-- small box -->
+                    <div class="small-box">
+                        <div class="inner">
+                            <p>@lang('messages.orders_commissions')</p>
+
+                            <h3 class="text-center">
+                                {{number_format((float)$orders_commissions, 0, '.', '')}} @lang('messages.SR')
+                            </h3>
+                        </div>
+
+                        <form role="form" action="{{route('admin.month_histories')}}" method="get"
+                              enctype="multipart/form-data">
+                            <input type='hidden' name='_token' value='{{Session::token()}}'>
+                            <input type="hidden" name="year" value="{{$year}}">
+                            <input type="hidden" name="month" value="{{$month}}">
+                            <input type="hidden" name="type" value="restaurant">
                             <input type="hidden" name="status" value="subscribed">
                             <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
                                 @lang('messages.details')
@@ -536,95 +314,53 @@
                     </div>
                 </div>
             </div>
-            <hr>
+
             <div class="row">
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.services' , [$year , $month , 'end'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box ">
-                            <div class="inner">
-                                <p>@lang('messages.required_renew_services')</p>
-
-                                <h3 class="text-center">
-                                    {{$required_renew_services}}
-                                </h3>
-
-                            </div>
-
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.services' , [$year , $month , 'renew'])}}" style="color: black"
-                    >
-                        <!-- small box -->
-                        <div class="small-box ">
-                            <div class="inner">
-                                <p>@lang('messages.renew_services')</p>
-
-                                <h3 class="text-center">
-                                    {{$renew_services}}
-                                </h3>
-
-                            </div>
-
-
-                        </div>
-                    </a>
-
-                </div>
-                <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.services' , [$year , $month , 'finished'])}}" style="color: black"
-                    >
+                <div class="col-lg-6 col-6">
+                    <a href="{{route('reports.restaurants' , [$year , $month , 'active'])}}">
                         <!-- small box -->
                         <div class="small-box">
                             <div class="inner">
+
                                 <p>
-                                    {{app()->getLocale() == 'ar' ? 'الخدمات التي لم تجدد' : 'Services Not Renewed' }}
+                                    @lang('messages.restaurant_az_commissions_count')
                                 </p>
                                 <h3 class="text-center">
-                                    {{$services_not_renewed}}
+                                    {{App\Models\AzRestaurantCommission::wherePayment('true')->count()}}
                                 </h3>
-
-
                             </div>
 
                         </div>
                     </a>
 
                 </div>
-                @if(auth()->guard('admin')->user()->role != 'customer_services')
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box">
-                            <div class="inner">
-                                <p>@lang('messages.services_renew')</p>
+                <div class="col-lg-6 col-6">
+                    <!-- small box -->
+                    <div class="small-box">
+                        <div class="inner">
+                            <p>@lang('messages.paid_commission_value')</p>
 
-                                <h3 class="text-center">
-                                    {{number_format((float)$services_renew_amount, 0, '.', '')}} @lang('messages.SR')
-                                </h3>
-
-                            </div>
-                            <form role="form" action="{{route('admin.month_histories')}}" method="get"
-                                  enctype="multipart/form-data">
-                                <input type='hidden' name='_token' value='{{Session::token()}}'>
-                                <input type="hidden" name="year" value="{{$year}}">
-                                <input type="hidden" name="month" value="{{$month}}">
-                                <input type="hidden" name="type" value="service">
-                                <input type="hidden" name="status" value="renewed">
-                                <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
-                                    @lang('messages.details')
-                                    <i class="fas fa-arrow-circle-right"></i>
-                                </button>
-                            </form>
+                            <h3 class="text-center">
+                                {{number_format((float)$restaurant_commissions, 0, '.', '')}} @lang('messages.SR')
+                            </h3>
                         </div>
+
+                        <form role="form" action="{{route('admin.month_histories')}}" method="get"
+                              enctype="multipart/form-data">
+                            <input type='hidden' name='_token' value='{{Session::token()}}'>
+                            <input type="hidden" name="year" value="{{$year}}">
+                            <input type="hidden" name="month" value="{{$month}}">
+                            <input type="hidden" name="type" value="restaurant">
+                            <input type="hidden" name="status" value="subscribed">
+                            <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
+                                @lang('messages.details')
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </button>
+                        </form>
                     </div>
-                @endif
+                </div>
             </div>
-        </div>
+
         </div>
     </section>
     <!-- /.content -->
