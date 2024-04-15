@@ -152,7 +152,7 @@ class OrderController extends Controller
     public function whats_redirect($order)
     {
         // send order details to user whatsapp
-        $content = trans('messages.welcome') . $order->person_name . '&#128522;'. '%0a %0a';
+        $content = trans('messages.welcome') . $order->person_name . '%0a %0a';
         $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
         $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
         $content.= trans('messages.message') . ' : ' . $order->occasion_message . '%0a %0a';
