@@ -40,6 +40,7 @@
                                     </label>
                                 </th>
                                 <th></th>
+                                <th>@lang('messages.name')</th>
                                 <th>@lang('messages.phone_number')</th>
                                 <th>@lang('messages.country')</th>
                                 <th>@lang('messages.email')</th>
@@ -60,6 +61,7 @@
                                         </label>
                                     </td>
                                     <td><?php echo ++$i ?></td>
+                                    <td> {{$user->name}} </td>
                                     <td> {{$user->phone_number}} </td>
                                     <td> {{app()->getLocale() == 'ar' ? $user->country->name_ar : $user->country->name_en}} </td>
                                     <td>
