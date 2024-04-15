@@ -511,4 +511,3 @@ Route::prefix('casher')->group(function () {
  * End @Employees Routes
  */
 //Nour@1000#1000
-// لما امسح عموله تتمسح من سجل العمولات والعكس هتتعمل بعد العيد
