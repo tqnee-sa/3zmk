@@ -75,7 +75,10 @@
 {{--                                            <a href="{{route('showRestaurant' , $user->registerRestaurant->id)}}">{{$user->registerRestaurant->name}}</a>--}}
 {{--                                        @endif--}}
 {{--                                    </td>--}}
-                                    <td>{{date('Y-m-d h:i A' , strtotime($user->created_at))}}</td>
+                                    <td>
+                                        {{$user->created_at->format('Y-m-d')}} ,
+                                        {{\Carbon\Carbon::parse($user->created_at)->isoFormat('h:mm a')}}
+                                    </td>
 {{--                                    <td>--}}
 {{--                                        <a class="btn btn-primary" href="{{route('clients.edit' , $user->id)}}">--}}
 {{--                                            <i class="fa fa-user-edit"></i>--}}
