@@ -440,6 +440,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/branches/subscription/{id}/control', 'controlBranchChanges')->name('controlBranchChanges');
         });
         Route::controller(SettingController::class)->group(function () {
+            Route::get('/az_users', 'az_users')->name('az_users');
             Route::get('/azmak_setting', 'setting')->name('AzmakSetting');
             Route::post('/azmak_setting', 'setting_update')->name('AzmakSettingUpdate');
             Route::get('/histories', 'histories')->name('admin.histories');

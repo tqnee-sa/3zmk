@@ -353,4 +353,6 @@ return [
     'subscription_bank_transfers' => 'تحويلات ألاشتراكات',
     'commission_bank_transfers' => 'تحويلات العمولات',
     'commission_histories' => 'سجل العمولات',
+    'clients' => 'عملاء عازمك',
+    'created_at' => 'تاريخ التسجيل',
 ];

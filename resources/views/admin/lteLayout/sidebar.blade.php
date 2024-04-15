@@ -196,6 +196,18 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('az_users') }}"
+                       class="nav-link {{ strpos(URL::current(), '/admin/az_users') !== false ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-users"></i>
+                        <span class="badge badge-info right">
+                            {{App\Models\Restaurant\Azmak\AZUser::count() }}
+                        </span>
+                        <p>
+                            @lang('messages.clients')
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('seller_codes.index') }}"
                        class="nav-link {{ strpos(URL::current(), '/admin/seller_codes') !== false ? 'active' : '' }}">
                         <i class="nav-icon fa fa-code"></i>

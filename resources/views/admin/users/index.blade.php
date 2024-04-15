@@ -18,19 +18,7 @@
                 <div class="col-sm-6">
                     <h1>@lang('messages.clients')</h1>
                 </div>
-                <!--<div class="col-sm-6">-->
-                <!--    <ol class="breadcrumb float-sm-right">-->
-                <!--        <li class="breadcrumb-item">-->
-                <!--            <a href="{{url('/admin/home')}}">-->
-                <!--                @lang('messages.control_panel')-->
-                <!--            </a>-->
-                <!--        </li>-->
-                <!--        <li class="breadcrumb-item active">-->
-                <!--            <a href="{{route('clients.index')}}"></a>-->
-                <!--            @lang('messages.clients')-->
-                <!--        </li>-->
-                <!--    </ol>-->
-                <!--</div>-->
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,12 +26,6 @@
     <section class="content">
         <div class="row">
             <div class="col-12">
-                <h3>
-                    <a href="{{route('clients.create')}}" class="btn">
-                        <i class="fa fa-plus"></i>
-                        @lang('messages.add_new')
-                    </a>
-                </h3>
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -60,11 +42,11 @@
                                 <th></th>
                                 <th>@lang('messages.phone_number')</th>
                                 <th>@lang('messages.country')</th>
-                                <th>@lang('messages.activity')</th>
-                                <th>@lang('messages.city')</th>
-                                <th>@lang('messages.restaurant')</th>
-                                <th>@lang('dashboard.entry.created_at')</th>
-                                <th>@lang('messages.operations')</th>
+                                <th>@lang('messages.email')</th>
+{{--                                <th>@lang('messages.city')</th>--}}
+{{--                                <th>@lang('messages.restaurant')</th>--}}
+                                <th>@lang('messages.created_at')</th>
+{{--                                <th>@lang('messages.operations')</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -81,36 +63,30 @@
                                     <td> {{$user->phone_number}} </td>
                                     <td> {{app()->getLocale() == 'ar' ? $user->country->name_ar : $user->country->name_en}} </td>
                                     <td>
-                                        <span class="custom-switch {{$user->active == 'true' ? 'on' : 'off'}}"
-                                              data-url_on="{{route('clientActivation' , [$user->id , 'false'])}}"
-                                              data-url_off="{{route('clientActivation' , [$user->id , 'true'])}}">
-                                            <span class="text">On</span>
-                                            <span class="move"></span>
-                                        </span>
-
+                                        <a href="mailTo:{{$user->email}}">{{$user->email}}</a>
                                     </td>
-                                    <td>
-                                        @if($user->city != null)
-                                            {{app()->getLocale() == 'ar' ? $user->city->name_ar : $user->city->name_en}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(isset($user->registerRestaurant->id))
-                                            <a href="{{route('showRestaurant' , $user->registerRestaurant->id)}}">{{$user->registerRestaurant->name}}</a>
-                                        @endif
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        @if($user->city != null)--}}
+{{--                                            {{app()->getLocale() == 'ar' ? $user->city->name_ar : $user->city->name_en}}--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        @if(isset($user->registerRestaurant->id))--}}
+{{--                                            <a href="{{route('showRestaurant' , $user->registerRestaurant->id)}}">{{$user->registerRestaurant->name}}</a>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td>{{date('Y-m-d h:i A' , strtotime($user->created_at))}}</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="{{route('clients.edit' , $user->id)}}">
-                                            <i class="fa fa-user-edit"></i>
-                                        </a>
-                                        @if(auth()->guard('admin')->user()->role == 'admin')
-                                            <a class="delete_city btn btn-danger" data="{{ $user->id }}"
-                                               data_name="{{ $user->name }}">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        @endif
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        <a class="btn btn-primary" href="{{route('clients.edit' , $user->id)}}">--}}
+{{--                                            <i class="fa fa-user-edit"></i>--}}
+{{--                                        </a>--}}
+{{--                                        @if(auth()->guard('admin')->user()->role == 'admin')--}}
+{{--                                            <a class="delete_city btn btn-danger" data="{{ $user->id }}"--}}
+{{--                                               data_name="{{ $user->name }}">--}}
+{{--                                                <i class="fa fa-trash"></i>--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                 </tr>
                             @endforeach
                             </tbody>

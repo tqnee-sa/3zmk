@@ -10,6 +10,7 @@ use App\Models\AzHistory;
 use App\Models\AzSubscription;
 use App\Models\AzCommissionHistory;
 use App\Models\AzRestaurantCommission;
+use App\Models\Restaurant\Azmak\AZUser;
 
 class SettingController extends Controller
 {
@@ -93,5 +94,10 @@ class SettingController extends Controller
         $AzHistory->delete();
         flash(trans('messages.deleted'))->success();
         return redirect()->back();
+    }
+    public function az_users()
+    {
+        $users = AZUser::paginate(500);
+        return view('admin.users.index' , compact('users'));
     }
 }

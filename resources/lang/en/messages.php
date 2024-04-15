@@ -350,4 +350,6 @@ return [
     'subscription_bank_transfers' => 'Subscription Transfers',
     'commission_bank_transfers' => 'Commission Transfers',
     'commission_histories' => 'Commissions Histories',
+    'clients' => 'Clients',
+    'created_at' => 'Created At',
 ];
