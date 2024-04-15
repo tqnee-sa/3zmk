@@ -201,7 +201,7 @@ return [
     'wrongOrderCode' => 'كود الطلب غير صحيح',
     'enterOrderCode' => 'أدخل كود الطلب لإكماله',
     'side_4' => 'معلومات اختيارية',
-    'invitedYouToAZOrders' => 'قام بعزيمتك في طلبات عازمك من ايزي مينو ',
+    'invitedYouToAZOrders' => 'عازمك في ايزي مينو ',
     'order_code' => 'الكود السري لاستلام الطلب هو : ',
     'at' => 'في',
     'AzmakFreeSubscriptionDoneSuccessfully' => 'تم الاشتراك المجاني بنجاح في لوحة عازمك',
