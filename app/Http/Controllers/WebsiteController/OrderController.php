@@ -152,6 +152,7 @@ class OrderController extends Controller
     public function whats_redirect($order)
     {
         // send order details to user whatsapp
+        $location = 'https://www.google.com/maps?q=' . $order->branch->latitude . ',' . $order->branch->longitude;
         $content = trans('messages.welcome') . $order->person_name . '%0a %0a';
         $content.= $order->user->name . ' : ' . trans('messages.invitedYouToAZOrders'). '%0a %0a';
         $content.= trans('messages.personOccasion') . ' : ' . $order->occasion . '%0a %0a';
@@ -159,6 +160,7 @@ class OrderController extends Controller
         $content.= trans('messages.order_details'). '%0a %0a';
         $content.= route('AZOrderBarcode' , $order->id). '%0a %0a';
         $content.= trans('messages.order_code') . ' ' . $order->order_code. '%0a %0a';
+        $content.= trans('messages.location') . ' ' . $location. '%0a %0a';
 
         $check = substr($order->person_phone, 0, 2) === '05';
         if ($check == true) {

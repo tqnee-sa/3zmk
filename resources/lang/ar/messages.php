@@ -168,7 +168,7 @@ return [
     'order_details' => 'تفاصيل الطلب',
     'printPage' => 'طباعه الصفحة',
     'restaurant' => 'المطعم',
-    'location' => 'الموقع',
+    'location' => 'اللوكيشن',
     'order_date' => 'تاريخ الطلب',
     'order_status' => 'حالة الطلب',
     'active' => 'نشط',

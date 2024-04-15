@@ -9,6 +9,7 @@ use App\Models\AzmakSetting;
 use App\Models\AzHistory;
 use App\Models\AzSubscription;
 use App\Models\AzCommissionHistory;
+use App\Models\AzRestaurantCommission;
 
 class SettingController extends Controller
 {
@@ -85,6 +86,10 @@ class SettingController extends Controller
     public function delete_commission_history($id)
     {
         $AzHistory = AzCommissionHistory::findOrFail($id);
+        // delete commission from restaurant
+        AzRestaurantCommission::whereInvoiceId($AzHistory->invoice_id)
+            ->orWhere('transfer_photo', $AzHistory->transfer_photo)
+            ->delete();
         $AzHistory->delete();
         flash(trans('messages.deleted'))->success();
         return redirect()->back();
