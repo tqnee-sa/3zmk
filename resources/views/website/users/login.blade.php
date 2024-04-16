@@ -90,7 +90,7 @@
                                 style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : ''}} !important;" required>
                             <option disabled  selected> @lang('messages.choose_one') </option>
                             @foreach($countries as $country)
-                                <option value="{{$country->id}}">
+                                <option value="{{$country->id}}" {{$country->id == 2 ? 'selected' : ''}}>
                                     {{$country->name_ar}}
                                 </option>
                             @endforeach
