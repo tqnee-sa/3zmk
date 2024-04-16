@@ -362,4 +362,8 @@ return [
     'subscribed_restaurants_amount' => 'قيمة مبالغ ألاشتراكات',
     'renewed_amount' => 'قيمة مبالغ التجديدات',
     'commissions' => 'العمولات',
+    'other' => 'أخري',
+    'choose_occasion' => 'أختر مناسبة العزيمة',
+    'personOccasionText' => 'ادخل مناسبة العزيمة',
+    'occasions' => 'مناسبات العزيمة',
 ];

@@ -1,4 +1,7 @@
 @extends('website.orders.cart_layout.master')
+@section('title')
+    @lang('messages.cart')
+@endsection
 @section('content')
     <main>
         <div class="teeeeest my-1 mx-2">
@@ -26,13 +29,15 @@
                     <form method="post" action="{{route('AZOrderInfoSubmit' , $order->id)}}">
                         @csrf
                         @if($order->user->name == null)
-                            <h5 class="text-center" style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
+                            <h5 class="text-center"
+                                style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
                                 @lang('messages.your_data')
                             </h5>
                             <div class="inner_form">
                                 <div class="name">
                                     <div class="container_input">
-                                        <i class="fa fa-user" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                        <i class="fa fa-user"
+                                           style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                         <input
                                             type="text"
                                             id="name"
@@ -50,7 +55,8 @@
                                 </div>
                                 <div class="phone_number">
                                     <div class="container_input">
-                                        <i class="fa fa-envelope" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                        <i class="fa fa-envelope"
+                                           style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                         <input
                                             type="email"
                                             name="email"
@@ -75,7 +81,8 @@
                         <div class="inner_form">
                             <div class="name">
                                 <div class="container_input">
-                                    <i class="fa fa-user" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                    <i class="fa fa-user"
+                                       style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     <input
                                         type="text"
                                         id="name"
@@ -93,9 +100,11 @@
                             </div>
                             <div class="phone_number">
                                 <div class="container_input">
-                                    <i class="fa fa-phone" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                    <i class="fa fa-phone"
+                                       style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     <input
-                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"                                        type="tel"
+                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"
+                                        type="tel"
                                         name="person_phone"
                                         id="phone_number"
                                         value="{{old('person_phone')}}"
@@ -110,13 +119,81 @@
                             </div>
                             <div class="suitable">
                                 <div class="container_input">
-                                    <i class="fa-solid fa-heart" style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                    <button
+                                        class="btn btn_custom"
+                                        type="button"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasBottom"
+                                        aria-controls="offcanvasBottom"
+                                    >
+                                        <div>
+                                            <i class="fa-solid fa-heart"
+                                               style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                            <span> @lang('messages.personOccasion') </span>
+                                        </div>
+                                        <i class="fa-solid fa-angle-left"
+                                           style="color: {{$restaurant->az_color?->icons}} !important;"></i>
+                                    </button>
+
+                                    <div
+                                        class="offcanvas offcanvas-bottom"
+                                        tabindex="-1"
+                                        id="offcanvasBottom"
+                                        aria-labelledby="offcanvasBottomLabel"
+                                    >
+                                        <div class="offcanvas-header">
+                                            <h5
+                                                class="offcanvas-title"
+                                                id="offcanvasBottomLabel"
+                                            >
+                                                @lang('messages.choose_occasion')
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                class="btn-close text-reset"
+                                                data-bs-dismiss="offcanvas"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div class="offcanvas-body small">
+                                            <div class="row">
+                                                @foreach($occasions as $occasion)
+                                                    <div class="col-sm-2 choose_input text-center">
+                                                        <img src="{{asset('/uploads/occasions/' . $occasion->icon)}}" height="25" width="35"
+                                                             class="choose_img">
+                                                        <span style="display: block" class="text-center">
+                                                            {{app()->getLocale() == 'ar' ? $occasion->name_ar : $occasion->name_en}}
+                                                        </span>
+                                                        <input type="radio" name="occasion" value="{{app()->getLocale() == 'ar' ? $occasion->name_ar : $occasion->name_en}}">
+                                                    </div>
+                                                @endforeach
+
+                                                <div class="col-sm-2 choose_input text-center">
+                                                    <img src="{{asset('/3azmkheader.jpg')}}" height="25" width="35"
+                                                         class="choose_img">
+                                                    <span style="display: block" class="text-center">
+                                                        @lang('messages.other')
+                                                    </span>
+                                                    <input type="radio" name="occasion" id="occasion" value="other">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <select></select> -->
+                                </div>
+                            </div>
+                            <div class="suitable" id="occasion_other" style="display: none">
+                                <div class="container_input">
+                                    <i class="fa-solid fa-heart"
+                                       style="color: {{$restaurant->az_color?->icons}} !important;"></i>
                                     <input
-                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"                                        type="text"
+                                        style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"
+                                        type="text"
                                         id="occasion"
-                                        name="occasion"
+                                        name="occasion_text"
                                         value="{{old('occasion')}}"
-                                        placeholder="@lang('messages.personOccasion')"
+                                        placeholder="@lang('messages.personOccasionText')"
                                     />
                                 </div>
                                 @if ($errors->has('occasion'))
@@ -125,6 +202,7 @@
                                     </span>
                                 @endif
                             </div>
+
                             <div class="message">
                                 <div class="container_input">
                                     <!-- <i class="fa fa-phone"></i> -->
@@ -147,9 +225,10 @@
                             <hr>
                             <div class="container_input">
                                 <!-- <i class="fa fa-phone"></i> -->
-                                <label style="color: {{$restaurant->az_color ?->main_heads}} !important;"> @lang('messages.payment_by') </label>
+                                <label
+                                    style="color: {{$restaurant->az_color ?->main_heads}} !important;"> @lang('messages.payment_by') </label>
                                 <select style="background-color: {{$restaurant->az_color ?->background}} !important;"
-                                    name="online_type" class="form-control" required>
+                                        name="online_type" class="form-control" required>
                                     <option disabled selected> @lang('messages.choose_one') </option>
                                     <option value="2"> @lang('messages.visa') </option>
                                     <option value="6"> @lang('messages.mada') </option>
@@ -164,7 +243,8 @@
                         @endif
 
 
-                        <button style="background-color: {{$restaurant->az_color ?->icons}} !important;" class="global_btn d-block m-auto" type="submit">
+                        <button style="background-color: {{$restaurant->az_color ?->icons}} !important;"
+                                class="global_btn d-block m-auto" type="submit">
                             @lang('messages.next')
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
@@ -173,5 +253,33 @@
             </div>
         </div>
     </main>
+    <style>
+        .choose_input {
+            background: #f4f4f4;
+            border: none;
+            border-radius: 8px;
+            width: 90px;
+            height: 90px;
+            margin: 15px;
+        }
+
+        .choose_img {
+            vertical-align: middle;
+            margin-bottom: 2px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("input[name=occasion]").change(function () {
+
+                if ($("#occasion").is(':checked')) {
+                    $("#occasion_other").show();
+                } else {
+                    $("#occasion_other").hide();
+                }
+            });
+        });
+    </script>
 @endsection
 

@@ -359,4 +359,8 @@ return [
     'subscribed_restaurants_amount' => 'Subscribed Amount',
     'renewed_amount' => 'Renewed Amount',
     'commissions' => 'Commissions',
+    'other' => 'Other',
+    'choose_occasion' => 'Choose Occasion',
+    'personOccasionText' => 'Enter Occasion',
+    'occasions' => 'Occasions',
 ];

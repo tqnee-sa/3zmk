@@ -80,6 +80,7 @@ use \App\Http\Controllers\AdminController\AZRestaurantController;
 use \App\Http\Controllers\AdminController\AZCommissionController;
 use \App\Http\Controllers\AdminController\BankTransferController;
 use \App\Http\Controllers\AdminController\ReportController;
+use \App\Http\Controllers\AdminController\OccasionController;
 
 // Employees EmployeeHome
 use \App\Http\Controllers\EmployeeController\Employee\LoginController as EmployeeLogin;
@@ -462,6 +463,9 @@ Route::prefix('admin')->group(function () {
             Route::get('/report_orders/{year}/{month}', 'report_orders')->name('reports.orders');
             Route::get('/report_commissions/{year}/{month}', 'report_commissions')->name('reports.commissions');
         });
+
+        Route::resource('/occasions',OccasionController::class);
+        Route::get('/occasions/delete/{id}', [OccasionController::class, 'destroy'])->name('deleteOccasion');
 
         Route::controller(BankTransferController::class)->group(function () {
             Route::get('/az_bank_transfers', 'transfers')->name('AZBankTransfer');

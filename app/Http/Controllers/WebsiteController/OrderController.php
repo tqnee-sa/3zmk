@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Models\Restaurant\Azmak\AZOrder;
+use App\Models\AzOccasion;
 use App\Models\AzRestaurantUser;
 
 class OrderController extends Controller
@@ -15,7 +16,8 @@ class OrderController extends Controller
         $order = AZOrder::findOrFail($id);
         $restaurant = $order->restaurant;
         $branch = $order->branch;
-        return view('website.orders.info', compact('order', 'restaurant', 'branch'));
+        $occasions = AzOccasion::all();
+        return view('website.orders.info', compact('order', 'restaurant', 'branch' , 'occasions'));
     }
 
     public function submit_order_info(Request $request, $id)
@@ -36,11 +38,12 @@ class OrderController extends Controller
             'person_phone' => 'required|min:10',
             'occasion' => 'required|string|max:191',
             'message' => 'nullable|string',
+            'occasion_text' => 'required_if:occasion,other'
         ]);
         $order->update([
             'person_name' => $request->person_name,
             'person_phone' => $request->person_phone,
-            'occasion' => $request->occasion,
+            'occasion' => $request->occasion == 'other' ? $request->occasion_text : $request->occasion,
             'occasion_message' => $request->message,
         ]);
         // move to payment

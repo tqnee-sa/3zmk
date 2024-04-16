@@ -271,6 +271,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('occasions.index') }}"
+                       class="nav-link {{ strpos(URL::current(), '/admin/occasions') !== false ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-image"></i>
+                        <span class="badge badge-info right">
+                            {{\App\Models\AzOccasion::count() }}
+                        </span>
+                        <p>
+                            @lang('messages.occasions')
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('AzmakSetting') }}"
                        class="nav-link {{ strpos(URL::current(), '/admin/azmak_setting') !== false ? 'active' : '' }}">
                         <i class="nav-icon fa fa-cogs"></i>
