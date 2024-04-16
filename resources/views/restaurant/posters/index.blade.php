@@ -135,7 +135,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$posters->links()}}
+    {!! $posters->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 @endsection

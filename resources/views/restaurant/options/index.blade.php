@@ -126,7 +126,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$options->links()}}
+    {!! $options->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 @endsection

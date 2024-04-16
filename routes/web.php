@@ -458,6 +458,9 @@ Route::prefix('admin')->group(function () {
             Route::get('/reports/restaurants/{year}/{month}/{type}', 'restaurants')->name('reports.restaurants');
             Route::get('/month_reports', 'month_reports')->name('admin.month_reports');
             Route::get('/month_histories', 'report_histories')->name('admin.month_histories');
+            Route::get('/payable_commissions_restaurants/{year}/{month}', 'payable_commissions_restaurants')->name('commission_report.restaurants');
+            Route::get('/report_orders/{year}/{month}', 'report_orders')->name('reports.orders');
+            Route::get('/report_commissions/{year}/{month}', 'report_commissions')->name('reports.commissions');
         });
 
         Route::controller(BankTransferController::class)->group(function () {

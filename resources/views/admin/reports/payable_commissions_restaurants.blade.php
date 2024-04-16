@@ -1,15 +1,6 @@
 @extends('admin.lteLayout.master')
 @section('title')
     @lang('messages.restaurants')
-    @if ($status == 'active')
-        @lang('messages.active_restaurants')
-    @elseif($status == 'finished')
-        @lang('messages.finished_restaurants')
-    @elseif($status == 'new')
-        @lang('messages.new_restaurants')
-    @elseif($status == 'free')
-        @lang('messages.free_restaurants')
-    @endif
 @endsection
 
 @section('style')
@@ -111,17 +102,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('messages.restaurants')
-                        @if ($status == 'active')
-                            @lang('messages.active_restaurants')
-                        @elseif($status == 'finished')
-                            @lang('messages.finished_restaurants')
-                        @elseif($status == 'new')
-                            @lang('messages.new_restaurants')
-                        @elseif($status == 'free')
-                            @lang('messages.free_restaurants')
-                        @endif
-                    </h1>
+                    <h5>
+                        @lang('messages.restaurants')
+                        (@lang('messages.commissions_payable') @lang('messages.at') : {{$year}}/{{$month}})
+                    </h5>
                 </div>
             </div>
         </div>
@@ -151,7 +135,7 @@
                                 <th>@lang('messages.products')</th>
                                 <th> @lang('messages.branches') </th>
                                 <th> @lang('messages.clients') </th>
-                                <th> @lang('messages.payment_type') </th>
+                                <th> @lang('messages.commissions_payable') </th>
                                 <th>@lang('messages.operations')</th>
                             </tr>
                             </thead>
@@ -161,6 +145,7 @@
                                 $now = Carbon\Carbon::parse(date('Y-m-d'));
                             @endphp
                             @foreach ($restaurants as $restaurant)
+                                <?php $restaurant = $restaurant->restaurant; ?>
                                 <tr class="odd gradeX">
                                     <td>
                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -222,13 +207,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        @if($restaurant->a_z_orders_payment_type == 'myFatoourah')
-                                            @lang('messages.myFatoourah')
-                                        @elseif($restaurant->a_z_orders_payment_type == 'tap')
-                                            @lang('messages.tap')
-                                        @elseif($restaurant->a_z_orders_payment_type == 'edfa')
-                                            @lang('messages.edfa')
-                                        @endif
+                                       {{$restaurant->az_orders()->where('status', '!=', 'new')->whereyear('created_at','=',$year)->whereMonth('created_at','=',$month)->sum('commission') - $restaurant->az_commissions()->wherePayment('true')->whereyear('created_at','=',$year)->whereMonth('created_at','=',$month)->sum('commission_value')}}
                                     </td>
                                     <td class="control_progress">
                                         <!--<div class="dropdown">-->

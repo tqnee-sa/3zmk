@@ -122,7 +122,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$modifiers->links()}}
+    {!! $modifiers->withQueryString()->links('pagination::bootstrap-5') !!}
 
     <!-- /.row -->
     </section>

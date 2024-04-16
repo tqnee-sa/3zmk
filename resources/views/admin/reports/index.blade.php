@@ -251,7 +251,7 @@
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'new'])}}"
+                    <a href="{{route('commission_report.restaurants' , [$year , $month])}}"
                     >
                         <div class="small-box">
                             <div class="inner">
@@ -270,54 +270,41 @@
 
                 </div>
                 <div class="col-lg-3 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'active'])}}"
+                    <a href="{{route('reports.orders' , [$year , $month])}}"
                     >
                         <!-- small box -->
                         <div class="small-box">
                             <div class="inner">
-
                                 <p>
                                     @lang('messages.restaurant_az_orders_count')
                                 </p>
                                 <h3 class="text-center">
-                                    {{App\Models\Restaurant\Azmak\AZOrder::where('status' , '!=' , 'new')->count()}}
+                                    {{App\Models\Restaurant\Azmak\AZOrder::where('status' , '!=' , 'new')->whereyear('created_at','=',$year)->whereMonth('created_at','=',$month)->count()}}
                                 </h3>
                             </div>
-
                         </div>
                     </a>
 
                 </div>
                 <div class="col-lg-6 col-6">
                     <!-- small box -->
-                    <div class="small-box">
-                        <div class="inner">
-                            <p>@lang('messages.orders_commissions')</p>
+                    <a href="{{route('reports.orders' , [$year , $month])}}">
+                        <div class="small-box">
+                            <div class="inner">
+                                <p>@lang('messages.orders_commissions')</p>
 
-                            <h3 class="text-center">
-                                {{number_format((float)$orders_commissions, 0, '.', '')}} @lang('messages.SR')
-                            </h3>
+                                <h3 class="text-center">
+                                    {{number_format((float)$orders_commissions, 0, '.', '')}} @lang('messages.SR')
+                                </h3>
+                            </div>
                         </div>
-
-                        <form role="form" action="{{route('admin.month_histories')}}" method="get"
-                              enctype="multipart/form-data">
-                            <input type='hidden' name='_token' value='{{Session::token()}}'>
-                            <input type="hidden" name="year" value="{{$year}}">
-                            <input type="hidden" name="month" value="{{$month}}">
-                            <input type="hidden" name="type" value="restaurant">
-                            <input type="hidden" name="status" value="subscribed">
-                            <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
-                                @lang('messages.details')
-                                <i class="fas fa-arrow-circle-right"></i>
-                            </button>
-                        </form>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-6 col-6">
-                    <a href="{{route('reports.restaurants' , [$year , $month , 'active'])}}">
+                    <a href="{{route('reports.commissions' , [$year , $month])}}">
                         <!-- small box -->
                         <div class="small-box">
                             <div class="inner">
@@ -326,38 +313,26 @@
                                     @lang('messages.restaurant_az_commissions_count')
                                 </p>
                                 <h3 class="text-center">
-                                    {{App\Models\AzRestaurantCommission::wherePayment('true')->count()}}
+                                    {{App\Models\AzRestaurantCommission::wherePayment('true')->whereyear('created_at','=',$year)->whereMonth('created_at','=',$month)->count()}}
                                 </h3>
                             </div>
-
                         </div>
                     </a>
 
                 </div>
                 <div class="col-lg-6 col-6">
-                    <!-- small box -->
-                    <div class="small-box">
-                        <div class="inner">
-                            <p>@lang('messages.paid_commission_value')</p>
+                    <a href="{{route('reports.commissions' , [$year , $month])}}">
+                        <!-- small box -->
+                        <div class="small-box">
+                            <div class="inner">
+                                <p>@lang('messages.paid_commission_value')</p>
 
-                            <h3 class="text-center">
-                                {{number_format((float)$restaurant_commissions, 0, '.', '')}} @lang('messages.SR')
-                            </h3>
+                                <h3 class="text-center">
+                                    {{number_format((float)$restaurant_commissions, 0, '.', '')}} @lang('messages.SR')
+                                </h3>
+                            </div>
                         </div>
-
-                        <form role="form" action="{{route('admin.month_histories')}}" method="get"
-                              enctype="multipart/form-data">
-                            <input type='hidden' name='_token' value='{{Session::token()}}'>
-                            <input type="hidden" name="year" value="{{$year}}">
-                            <input type="hidden" name="month" value="{{$month}}">
-                            <input type="hidden" name="type" value="restaurant">
-                            <input type="hidden" name="status" value="subscribed">
-                            <button type="submit" style="width: 100% ; background: rgba(0,0,0,.1); border: none">
-                                @lang('messages.details')
-                                <i class="fas fa-arrow-circle-right"></i>
-                            </button>
-                        </form>
-                    </div>
+                    </a>
                 </div>
             </div>
 

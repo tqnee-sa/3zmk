@@ -212,7 +212,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$products->links()}}
+    {!! $products->withQueryString()->links('pagination::bootstrap-5') !!}
 
     <!-- /.row -->
     </section>

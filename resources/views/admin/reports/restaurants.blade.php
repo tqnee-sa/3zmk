@@ -278,7 +278,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $restaurants->links() }}
+                        {!! $restaurants->withQueryString()->links('pagination::bootstrap-5') !!}
                     </div>
                     <!-- /.card-body -->
                 </div>

@@ -179,7 +179,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{ $sliders->links() }}
+    {!! $sliders->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 @endsection

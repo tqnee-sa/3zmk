@@ -101,7 +101,7 @@
                             </tbody>
                         </table>
                     </div>
-                {{$users->links()}}
+                {!! $users->withQueryString()->links('pagination::bootstrap-5') !!}
                 <!-- /.card-body -->
                 </div>
             </div>

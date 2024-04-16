@@ -102,7 +102,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$branches->links()}}
+    {!! $branches->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 @endsection

@@ -145,7 +145,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$histories->links()}}
+    {!! $histories->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 

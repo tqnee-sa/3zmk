@@ -1,4 +1,4 @@
-@extends('restaurant.lteLayout.master')
+@extends('admin.lteLayout.master')
 
 @section('title')
     @lang('messages.orders')
@@ -18,24 +18,7 @@
                 <div class="col-sm-6">
                     <h1>
                         @lang('messages.az_orders')
-                        (
-                        @switch($status)
-                            @case('active')
-                            @lang('messages.active')
-                            @break
-                            @case('completed')
-                            @lang('messages.completed')
-                            @break
-                            @case('finished')
-                            @lang('messages.finished')
-                            @break
-                            @case('canceled')
-                            @lang('messages.canceled')
-                            @break
-                            @default
-                            @lang('messages.new_not_paid')
-                        @endswitch
-                        )
+                        (@lang('messages.at') : {{$year}}/{{$month}})
                     </h1>
                 </div>
             </div>
@@ -61,11 +44,13 @@
                                     </label>
                                 </th>
                                 <th></th>
+                                <th> @lang('messages.restaurant') </th>
                                 <th> @lang('messages.order_no') </th>
                                 <th> @lang('messages.branch') </th>
                                 <th> @lang('messages.city') </th>
                                 <th> @lang('messages.user') </th>
-                                <th> @lang('messages.client') </th>
+                                <th> @lang('messages.status') </th>
+                                <th> @lang('messages.commission') </th>
                                 <th> @lang('messages.operations') </th>
                             </tr>
                             </thead>
@@ -81,6 +66,9 @@
                                     </td>
                                     <td><?php echo ++$i ?></td>
                                     <td>
+                                        {{app()->getLocale() == 'ar' ? $order->restaurant->name_ar : $order->restaurant->name_en}}
+                                    </td>
+                                    <td>
                                         {{$order->order_id}}
                                     </td>
                                     <td>
@@ -93,15 +81,34 @@
                                         {{$order->user->name}}
                                     </td>
                                     <td>
-                                        {{$order->person_name}}
+                                        @switch($order->status)
+                                            @case('active')
+                                            @lang('messages.active')
+                                            @break
+                                            @case('completed')
+                                            @lang('messages.completed')
+                                            @break
+                                            @case('finished')
+                                            @lang('messages.finished')
+                                            @break
+                                            @case('canceled')
+                                            @lang('messages.canceled')
+                                            @break
+                                            @default
+                                            @lang('messages.new_not_paid')
+                                        @endswitch
                                     </td>
                                     <td>
-                                        <a class="btn btn-success" href="{{route('AzmakOrderShow' , $order->id)}}">
+                                        {{$order->commission}}
+                                        {{ app()->getLocale() == 'ar' ? $order->restaurant->country->currency_ar : $order->restaurant->country->currency_en }}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success" href="{{route('AdminOrderShow' , $order->id)}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="delete_data btn btn-danger" data="{{ $order->id }}" data_name="{{ $order->order_id }}" >
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        {{--                                        <a class="delete_data btn btn-danger" data="{{ $order->id }}" data_name="{{ $order->order_id }}" >--}}
+                                        {{--                                            <i class="fa fa-trash"></i>--}}
+                                        {{--                                        </a>--}}
                                     </td>
                                 </tr>
                             @endforeach

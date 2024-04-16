@@ -139,7 +139,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$sensitivities->links()}}
+    {!! $sensitivities->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 @endsection

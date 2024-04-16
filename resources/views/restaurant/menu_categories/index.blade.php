@@ -210,8 +210,7 @@
             </div>
             <!-- /.col -->
         </div>
-    {{$categories->links()}}
-
+    {!! $categories->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- /.row -->
     </section>
 @endsection
