@@ -62,9 +62,9 @@
                 <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
                      style="margin-top: -20px"/>
             </a>
-            <div class=""
+            <h6 class=""
                   style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px;margin-top: -55px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}
-            </div>
+            </h6>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
