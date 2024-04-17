@@ -83,7 +83,7 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div
-                            class="d-flex align-items-center justify-content-between bg-white p-3 header"
+                            class="d-flex align-items-center justify-content-between  p-3 header"
                         >
                             @if(app()->getLocale() == 'ar')
                                 <a href="{{route('language' , 'en')}}" >

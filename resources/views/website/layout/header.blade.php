@@ -113,7 +113,7 @@
         {{$branch->name_ar}}
     </button>
     @if($restaurant->az_info and $restaurant->az_info->lang == 'both')
-        <div class="icons lang">
+        <div class="d-flex align-items-center justify-content-between  p-3 lang">
             @if(app()->getLocale() == 'ar')
                 <a href="{{route('language' , 'en')}}">
                     En
@@ -142,7 +142,7 @@
     .lang {
         position: absolute;
         top: 19px;
-        right: 390px;
+        right: 370px;
         padding: 5px;
         height: 25px;
         font-size: 12px;
@@ -152,7 +152,7 @@
     .branch_class{
         position: absolute;
         top: 19px;
-        right: 190px;
+        right: 170px;
         padding: 5px;
         width: 96px;
         height: 35px;
