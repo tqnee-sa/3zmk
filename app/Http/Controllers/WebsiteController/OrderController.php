@@ -43,7 +43,7 @@ class OrderController extends Controller
         $order->update([
             'person_name' => $request->person_name,
             'person_phone' => $request->person_phone,
-            'occasion' => $request->occasion == 'other' ? $request->occasion_text : $request->occasion,
+            'occasion' => ($request->occasion == 'other' or $request->occasion == 'أخري') ? $request->occasion_text : $request->occasion,
             'occasion_message' => $request->message,
         ]);
         // move to payment

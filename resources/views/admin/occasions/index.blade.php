@@ -101,12 +101,11 @@
                                         </div>
                                     </td>
                                     <td>
-
-                                        <a class="btn btn-primary"
-                                           href="{{ route('occasions.edit', $occasion->id)}}">
-                                            <i class="fa fa-user-edit"></i>
-                                        </a>
                                         @if($occasion->id != 7)
+                                            <a class="btn btn-primary"
+                                               href="{{ route('occasions.edit', $occasion->id)}}">
+                                                <i class="fa fa-user-edit"></i>
+                                            </a>
                                             <a class="delete_data btn btn-danger" data="{{ $occasion->id }}"
                                                data_name="{{ app()->getLocale() == 'ar' ? ($occasion->name_ar == null ? $occasion->name_en : $occasion->name_ar) : ($occasion->name_en == null ? $occasion->name_ar : $occasion->name_en) }}">
                                                 <i class="fa fa-trash"></i>
