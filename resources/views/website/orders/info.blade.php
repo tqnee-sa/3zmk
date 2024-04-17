@@ -127,9 +127,10 @@
                                         aria-controls="offcanvasBottom"
                                     >
                                         <div>
-                                            <i class="fa-solid fa-heart"
-                                               style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                                            <span> @lang('messages.personOccasion') </span>
+                                            <input
+                                                style="background-color: {{$restaurant->az_color ?->background}} !important; direction: rtl"
+                                                id="occasion_value"
+                                                name="occasion" placeholder="@lang('messages.personOccasion')">
                                         </div>
                                         <i class="fa-solid fa-angle-left"
                                            style="color: {{$restaurant->az_color?->icons}} !important;"></i>
@@ -158,24 +159,14 @@
                                         <div class="offcanvas-body small">
                                             <div class="row">
                                                 @foreach($occasions as $occasion)
-                                                    <div class="col-sm-2 choose_input text-center">
-                                                        <img src="{{asset('/uploads/occasions/' . $occasion->icon)}}" height="25" width="35"
+                                                    <div class="col-sm-2 choose_input xxxxx text-center" onclick="clickHandler(this);"
+                                                         id="{{$occasion->id}}">
+                                                        <img src="{{asset('/uploads/occasions/' . $occasion->icon)}}"
+                                                             height="25" width="35"
                                                              class="choose_img">
-                                                        <span style="display: block" class="text-center">
-                                                            {{app()->getLocale() == 'ar' ? $occasion->name_ar : $occasion->name_en}}
-                                                        </span>
-                                                        <input type="radio" name="occasion" value="{{app()->getLocale() == 'ar' ? $occasion->name_ar : $occasion->name_en}}">
+                                                        <span style="display: block" class="text-center" id="span-{{$occasion->id}}">{{app()->getLocale() == 'ar' ? $occasion->name_ar : $occasion->name_en}}</span>
                                                     </div>
                                                 @endforeach
-
-                                                <div class="col-sm-2 choose_input text-center">
-                                                    <img src="{{asset('/3azmkheader.jpg')}}" height="25" width="35"
-                                                         class="choose_img">
-                                                    <span style="display: block" class="text-center">
-                                                        @lang('messages.other')
-                                                    </span>
-                                                    <input type="radio" name="occasion" id="occasion" value="other">
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -280,6 +271,19 @@
                 }
             });
         });
+    </script>
+    <script type="text/javascript">
+        function clickHandler(object) {
+            $(".xxxxx").css('border', '');
+            document.getElementById(object.id).style.border = "1px solid #0000FF";
+            var spantext = $("#span-"+object.id).text();
+            document.getElementById("occasion_value").value = spantext;
+            if (spantext === 'other' || spantext === 'أخري') {
+                $("#occasion_other").show();
+            } else {
+                $("#occasion_other").hide();
+            }
+        }
     </script>
 @endsection
 
