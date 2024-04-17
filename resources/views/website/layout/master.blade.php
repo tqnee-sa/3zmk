@@ -68,24 +68,24 @@
         </div>
         <!-- end location branch -->
         @if($restaurant->az_info)
-            <h6 class="description p-2" style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px">
+            <h6 class="description p-2" style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px;font-size: 11px">
                 {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
             </h6>
         @endif
         <div class="row">
-            <div class="col-sm-3 btn text-center" style="background-color: {{$restaurant->az_color?->icons}} !important; margin: 15px">
+            <div class="col-sm-3 btn text-center" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin: 15px;">
                 <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
                    href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
                     @lang('messages.terms_conditions')
                 </a>
             </div>
-            <div class="col-sm-3 btn" style="background-color: {{$restaurant->az_color?->icons}} !important; margin: 15px">
+            <div class="col-sm-3 btn" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin: 15px;">
                 <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
                    href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
                     @lang('messages.contact_us')
                 </a>
             </div>
-            <div class="col-sm-3 btn" style="background-color: {{$restaurant->az_color?->icons}} !important; margin: 15px">
+            <div class="col-sm-3 btn" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin: 15px;">
                 <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
                    href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
                     @lang('messages.about_app')
