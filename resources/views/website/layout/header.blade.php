@@ -142,7 +142,7 @@
     .lang {
         position: absolute;
         top: 19px;
-        right: 447px;
+        right: 390px;
         padding: 5px;
         height: 25px;
         font-size: 12px;
@@ -152,7 +152,7 @@
     .branch_class{
         position: absolute;
         top: 19px;
-        right: 206px;
+        right: 190px;
         padding: 5px;
         width: 96px;
         height: 35px;
