@@ -46,14 +46,15 @@
         }
 
         #country-select {
-            width: 60px;
+            width: 85px;
             height: 30px;
+            margin-right: 20px;
         }
 
         #country-select + .select2-container .select2-selection__rendered img, .img-flag {
             width: 35px;
             height: 35px;
-            margin-right: 5px;
+            margin-right: 50px;
             vertical-align: middle;
         }
 
@@ -63,20 +64,29 @@
 
         .select2-container--default .select2-selection--single {
             background-color: #ECF2FF;
-            border: 1px solid #aaa;
+            /*border: 1px solid #aaa;*/
+            width:110px;
+            height: 40px;
         }
 
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #444;
-            line-height: 85px;
+            line-height: 30px;
         }
 
-        .select2-container--default .select2-selection--single {
-            background-color: #ECF2FF;
-            border: 1px solid #aaa;
-            max-width: 60px;
-            height: 40px;
+        .select2-container--default .select2-results>.select2-results__options {
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100px;
         }
+        select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 26px;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            width: 0px;
+        }
+
     </style>
 
 
@@ -129,18 +139,7 @@
                         <br>
                         <br>
                         <div class="row">
-                            <div class="col-sm-2">
-                                <select name="country_id" class="form-control" id="country-select" required>
-
-                                </select>
-
-                                @if ($errors->has('country_id'))
-                                    <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <input
                                     style="direction: rtl"
                                     type="tel"
@@ -151,6 +150,17 @@
                                     placeholder="@lang('messages.phone_number')"
                                     required
                                 />
+                            </div>
+                            <div class="col-sm-3">
+                                <select name="country_id" class="form-control" id="country-select" required>
+
+                                </select>
+
+                                @if ($errors->has('country_id'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
@@ -182,7 +192,7 @@
             }
 
             var optionWithImage = $(
-                '<span value="' + option.id + '"><img src="' + option.value + '" class="img-flag" /> </span>'
+                '<span value="' + option.id + '">' + option.value + '</span>'
             );
             return optionWithImage;
         }
@@ -191,7 +201,7 @@
         var options = [
                 @foreach($countries as $country)
             {
-                value: '{{asset('/uploads/flags/' . $country->flag)}}',
+                value: '{{app()->getLocale() == 'ar' ? $country->name_ar : $country->name_en}}',
                 id: '{{$country->id}}',
                 {{--text: '{{$country->name_ar}}',--}}
             },

@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         $restaurant = Restaurant::whereNameBarcode($res)->firstOrFail();
         $branch = AZBranch::whereNameEn($branch)->first();
-        $countries = Country::all();
+        $countries = Country::orderBy('created_at' , 'asc')->get();
         return view('website.users.login', compact('restaurant', 'branch' , 'countries'));
     }
 
