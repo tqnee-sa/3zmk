@@ -278,7 +278,7 @@
             document.getElementById(object.id).style.border = "1px solid #0000FF";
             var spantext = $("#span-"+object.id).text();
             document.getElementById("occasion_value").value = spantext;
-            if (spantext === 'other' || spantext === 'أخري') {
+            if (object.id === 7) {
                 $("#occasion_other").show();
             } else {
                 $("#occasion_other").hide();
