@@ -148,3 +148,11 @@
         </div>
     @endif
 </header>
+<style>
+    .mobile_screen .container_ifno .image img {
+        width: 100px;
+        height: 90px;
+        margin-right: 30px;
+        margin-top: 50px;
+    }
+</style>
