@@ -60,11 +60,10 @@
             {{--            </span>--}}
             <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}">
                 <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
-                     style="margin-top: -20px"/>
+                     style="margin-top: -50px;position: absolute"/>
             </a>
             <h6 class=""
-                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px;margin-top: -55px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}
-            </h6>
+                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 200px;margin-top: -30px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h6>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
@@ -72,7 +71,7 @@
         <!-- end location branch -->
         @if($restaurant->az_info)
             <h6 class="description p-2"
-                style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -60px;font-size: 11px">
+                style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px;font-size: 11px">
                 {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
             </h6>
         @endif
