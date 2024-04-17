@@ -73,19 +73,19 @@
             </h6>
         @endif
         <div class="row">
-            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin: 10px;">
+            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin-bottom: 5px;">
                 <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
                    href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
                     @lang('messages.terms_conditions')
                 </a>
             </div>
-            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin: 10px;">
+            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin-bottom: 5px;">
                 <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
                    href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
                     @lang('messages.contact_us')
                 </a>
             </div>
-            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin: 10px;">
+            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin-bottom: 5px;">
                 <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
                    href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
                     @lang('messages.about_app')
