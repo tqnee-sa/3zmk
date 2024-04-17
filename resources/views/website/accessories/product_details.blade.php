@@ -70,11 +70,22 @@
             </div>
         </div>
         <!-- end slider -->
+
         <div class="meals_deatails my-2 p-3"
              style="background-color: {{$restaurant->az_color?->background}} !important;">
             <h4 class="name_meal" style="color: {{$restaurant->az_color?->main_heads}}">
                 {{app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en}}
             </h4>
+            <div class="share_icon d-flex justify-content-end mx-3" style="padding-bottom: 10px;">
+                <button style="background-color: {{$restaurant->az_color?->icons}}"
+                        class="border-0 text-center" id="share">
+                    <i class="fa-solid fa-share-nodes mx-2"></i>
+                    @lang('messages.invite_me')
+                </button>
+            </div>
+            <div style="display: none" id="shareDiv" class="shareBtn">
+                {!! $shareComponent !!}
+            </div>
             @if ($product->calories === 0.0 or $product->calories > 0 )
                 <span class="pl-1 calories" style="margin:0 6px;">
                                     <span style="color: {{$restaurant->az_color?->options_description}} !important;">
@@ -102,6 +113,7 @@
             <p class="description_meal" style="color: {{$restaurant->az_color?->options_description}}">
                 {{app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en))}}
             </p>
+
             <div class="choose_details pt-4 mb-2"
                  style="background-color: {{$restaurant->az_color ? $restaurant->az_color->product_background : ''}} !important;">
                 <div class="d-flex justify-content-between px-4">
@@ -265,16 +277,6 @@
             <!-- end choose_details -->
         </div>
         <!-- end meals_deatails -->
-        <div class="share_icon d-flex justify-content-end mx-3" style="padding-bottom: 10px;">
-            <button style="background-color: {{$restaurant->az_color?->icons}}"
-                    class="border-0 text-center" id="share">
-                <i class="fa-solid fa-share-nodes mx-2"></i>
-                @lang('messages.invite_me')
-            </button>
-        </div>
-        <div style="display: none" id="shareDiv" class="shareBtn">
-            {!! $shareComponent !!}
-        </div>
     </main>
     @include('website.layout.footer')
 </div>

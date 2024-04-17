@@ -31,7 +31,10 @@
             <div class="offcanvas-body">
                 <div class="container_ifno">
                     <div class="image">
-                        <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="3azmak_title"/>
+                        <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}">
+                            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"
+                                 alt="3azmak_title"/>
+                        </a>
                     </div>
                     @if(auth()->guard('web')->check())
                         <h2 class="name" style="color: {{$restaurant->az_color?->main_heads}} !important;">
@@ -46,14 +49,6 @@
                         </button>
                     @endif
                     <ul class="p-0">
-                        <li class="my-2">
-                            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}"
-                               style="color: {{$restaurant->az_color?->main_heads}} !important;">
-                                <i class="fa fa-home mx-1"
-                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                                @lang('messages.home')
-                            </a>
-                        </li>
                         <hr/>
                         @if(auth()->guard('web')->check())
                             <li class="my-2">
@@ -114,7 +109,7 @@
         data-bs-target="#offcanvasBottom"
         aria-controls="offcanvasBottom"
     >
-        <i class="fa fa-cog fa-spin"></i>
+{{--        <i class="fa fa-cog fa-spin"></i>--}}
         {{$branch->name_ar}}
     </button>
     @if($restaurant->az_info and $restaurant->az_info->lang == 'both')

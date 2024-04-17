@@ -60,10 +60,12 @@
             {{--                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,--}}
             {{--                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}--}}
             {{--            </span>--}}
-            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
-                 style="margin-top: -20px"/>
-            <span class="showBranch px-2"
-                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</span>
+            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}">
+                <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
+                     style="margin-top: -20px"/>
+            </a>
+            <div class="showBranch px-2"
+                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</div>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
@@ -75,21 +77,23 @@
                 {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
             </h6>
         @endif
-        <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px"
-           class="btn"
-           href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
-            @lang('messages.terms_conditions')
-        </a>
-        <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px"
-           class="btn"
-           href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
-            @lang('messages.contact_us')
-        </a>
-        <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px"
-           class="btn"
-           href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
-            @lang('messages.about_app')
-        </a>
+        <div class="text-center">
+            <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px; margin: 10px"
+               class="btn"
+               href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
+                @lang('messages.terms_conditions')
+            </a>
+            <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px; margin: 10px"
+               class="btn"
+               href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
+                @lang('messages.contact_us')
+            </a>
+            <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px; margin: 10px"
+               class="btn"
+               href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
+                @lang('messages.about_app')
+            </a>
+        </div>
         @include('website.accessories.categories')
     </div>
 
