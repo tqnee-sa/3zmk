@@ -5,6 +5,7 @@
         data-bs-ride="carousel"
     >
         <div class="carousel-inner">
+            @include('website.layout.header')
 
             @if($sliders->count() > 0)
                 @php
@@ -20,7 +21,7 @@
                                 allowfullscreen></iframe>
                     @else
                         <div class="carousel-item {{$FS->id == $slider->id ? 'active' : ''}}">
-                            <img src="{{asset('/uploads/sliders/' . $slider->photo)}}" height="200" class="d-block w-100" alt="..."/>
+                            <img src="{{asset('/uploads/sliders/' . $slider->photo)}}" height="270" class="d-block w-100" alt="..."/>
                         </div>
                     @endif
                 @endforeach

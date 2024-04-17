@@ -45,8 +45,6 @@
 </head>
 <body style="background-color: #ebebeb">
 <div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
-@include('website.layout.header')
-
 <!-- <main class="py-1"> -->
     <div class="show_main_info px-1 py-3"
          style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">

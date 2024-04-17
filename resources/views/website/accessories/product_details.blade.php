@@ -30,30 +30,48 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="{{asset('site/css/product_details.css')}}">
+    <style>
+        .header {
+            position: absolute;
+            top: 1px;
+            left: 5px;
+            padding: 5px;
+            height: 2px;
+            border-radius: 7px;
+            background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#ebebeb'}} !important;
+        }
+        .back {
+            position: absolute;
+            width: 15px;
+            margin-right: 7px;
+            border-radius: 7px;
+            background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#ebebeb'}} !important;
+        }
+    </style>
 </head>
 <body>
 <div class="mycontainer bg-white">
-    <header
-        style="background-color: {{$restaurant->az_color?->background}} !important;"
-        class="d-flex align-items-center justify-content-between bg-white p-3"
-    >
-        <a href="{{route('homeBranchIndex' , [$product->restaurant->name_barcode , $product->branch->name_en , $product->menu_category->id])}}"
-           style='color: black'>
-            <i class="fa-solid fa-angle-right"></i>
-        </a>
-        <h6 style="color: {{$restaurant->az_color?->main_heads}}">
-            @lang('messages.product_details')
-        </h6>
-        @if(app()->getLocale() == 'ar')
-            <a href="{{route('language' , 'en')}}">
-                En
-            </a>
-        @else
-            <a href="{{route('language' , 'ar')}}">
-                ع
-            </a>
-        @endif
-    </header>
+{{--    <header--}}
+{{--        style="background-color: {{$restaurant->az_color?->background}} !important;"--}}
+{{--        class="d-flex align-items-center justify-content-between bg-white p-3"--}}
+{{--    >--}}
+{{--        <a href="{{route('homeBranchIndex' , [$product->restaurant->name_barcode , $product->branch->name_en , $product->menu_category->id])}}"--}}
+{{--           style='color: black'>--}}
+{{--            <i class="fa-solid fa-angle-right"></i>--}}
+{{--        </a>--}}
+{{--        <h6 style="color: {{$restaurant->az_color?->main_heads}}">--}}
+{{--            @lang('messages.product_details')--}}
+{{--        </h6>--}}
+{{--        @if(app()->getLocale() == 'ar')--}}
+{{--            <a href="{{route('language' , 'en')}}">--}}
+{{--                En--}}
+{{--            </a>--}}
+{{--        @else--}}
+{{--            <a href="{{route('language' , 'ar')}}">--}}
+{{--                ع--}}
+{{--            </a>--}}
+{{--        @endif--}}
+{{--    </header>--}}
     <!-- end header -->
     <main style="background-color: {{$restaurant->az_color?->background}}">
         <div class="slider mb-3">
@@ -64,6 +82,27 @@
             >
                 <div class="carousel-inner">
                     <div class="carousel-item active">
+                        <div
+                            class="d-flex align-items-center justify-content-between bg-white p-3 header"
+                        >
+                            @if(app()->getLocale() == 'ar')
+                                <a href="{{route('language' , 'en')}}" >
+                                    En
+                                </a>
+                            @else
+                                <a href="{{route('language' , 'ar')}}">
+                                    ع
+                                </a>
+                            @endif
+                        </div>
+                        <div class="text-right" style="float: right;">
+                            <a href="{{route('homeBranchIndex' , [$product->restaurant->name_barcode , $product->branch->name_en , $product->menu_category->id])}}"
+                               style='color: black'
+                               class="back"
+                            >
+                                <i class="fa-solid fa-angle-right"></i>
+                            </a>
+                        </div>
                         <img src="{{asset('/uploads/products/' . $product->photo)}}" class="d-block w-100" alt="..."/>
                     </div>
                 </div>
@@ -94,11 +133,11 @@
                                 </span>
                 <br>
             @endif
-{{--            @if ($product->poster != null)--}}
-{{--                <img style="text-align: right"--}}
-{{--                     src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"--}}
-{{--                     height="30" width="30" class="poster-image">--}}
-{{--            @endif--}}
+            {{--            @if ($product->poster != null)--}}
+            {{--                <img style="text-align: right"--}}
+            {{--                     src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"--}}
+            {{--                     height="30" width="30" class="poster-image">--}}
+            {{--            @endif--}}
             <div style="text-align: left !important;">
                 @if ($product->sensitivities and $product->sensitivities->count() > 0)
                     @foreach ($product->sensitivities as $product_sensitivity)
@@ -254,7 +293,8 @@
                                     class="border-0 p-1" id="totalDecrease">-
                             </button>
                         </div>
-                        <div id="totalPrice" style="padding-right: 100px;color: {{$restaurant->az_color?->options_description}}">
+                        <div id="totalPrice"
+                             style="padding-right: 100px;color: {{$restaurant->az_color?->options_description}}">
                             @if($product->restaurant->az_info and $product->restaurant->az_info->commission_payment == 'user')
                                 {{--                                                    add the commission to product--}}
                                 {{(($product->restaurant->az_commission * $product->price) / 100) + $product->price}}
@@ -267,8 +307,9 @@
                         </span>
                     </div>
                     <div style="padding-bottom: 3px;">
-                        <input style="background-color: {{$restaurant->az_color?->icons}}; color: {{$restaurant->az_color?->options_description}}"
-                               type="submit" class="btn btn-success" value="@lang('messages.add_to_cart')">
+                        <input
+                            style="background-color: {{$restaurant->az_color?->icons}}; color: {{$restaurant->az_color?->options_description}}"
+                            type="submit" class="btn btn-success" value="@lang('messages.add_to_cart')">
                     </div>
 
                 </form>
