@@ -48,27 +48,50 @@
 @include('website.layout.header')
 
 <!-- <main class="py-1"> -->
-    <div class="show_main_info px-1 py-3" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
+    <div class="show_main_info px-1 py-3"
+         style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @include('website.accessories.slider')
     <!-- end  main slider  -->
         <div
             class="location_branch my-4 d-flex align-items-center justify-content-between"
         >
-            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">
-                <i class="fa fa-map-marker-alt" style="color: #e74343"></i>
-                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,
-                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}
-            </span>
+{{--            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">--}}
+{{--                <i class="fa fa-map-marker-alt" style="color: #e74343"></i>--}}
+{{--                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,--}}
+{{--                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}--}}
+{{--            </span>--}}
+            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60" style="margin-top: -20px"/>
+            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</span>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
         </div>
         <!-- end location branch -->
         @if($restaurant->az_info)
-            <h6 class="description my-3 p-2" style="color: {{$restaurant->az_color?->options_description}} !important;">
+            <h6 class="description p-2" style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px">
                 {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
             </h6>
         @endif
+        <div class="row">
+            <div class="col-sm-3 btn text-center" style="background-color: {{$restaurant->az_color?->icons}} !important; margin: 15px">
+                <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
+                   href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
+                    @lang('messages.terms_conditions')
+                </a>
+            </div>
+            <div class="col-sm-3 btn" style="background-color: {{$restaurant->az_color?->icons}} !important; margin: 15px">
+                <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
+                   href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
+                    @lang('messages.contact_us')
+                </a>
+            </div>
+            <div class="col-sm-3 btn" style="background-color: {{$restaurant->az_color?->icons}} !important; margin: 15px">
+                <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
+                   href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
+                    @lang('messages.about_app')
+                </a>
+            </div>
+        </div>
         @include('website.accessories.categories')
     </div>
 

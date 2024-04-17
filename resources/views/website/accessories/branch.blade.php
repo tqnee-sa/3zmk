@@ -31,17 +31,7 @@
     }
 </style>
 <div>
-    <button
-        style="background-color: {{$restaurant->az_color?->icons}} !important;"
-        class="btn btn_custom"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasBottom"
-        aria-controls="offcanvasBottom"
-    >
-        <i class="fa fa-cog fa-spin"></i>
-        @lang('messages.change_branch')
-    </button>
+
 
     <div style="background-color: {{$restaurant->az_color?->background}} !important;"
         class="offcanvas offcanvas-bottom"

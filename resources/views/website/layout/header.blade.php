@@ -78,33 +78,6 @@
                             </li>
                             <hr/>
                         @endif
-                        <li class="my-2">
-                            <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                               href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-solid fa-file-contract mx-2"
-                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                                @lang('messages.terms_conditions')
-                            </a>
-                        </li>
-                        <hr/>
-                        <li class="my-2">
-                            <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                               href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-solid fa-envelope mx-2"
-                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                                @lang('messages.contact_us')
-                            </a>
-                        </li>
-                        <hr/>
-                        <li class="my-2">
-                            <a style="color: {{$restaurant->az_color?->main_heads}} !important;"
-                               href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
-                                <i class="fa-solid fa-circle-exclamation mx-2"
-                                   style="color: {{$restaurant->az_color?->icons}} !important;"></i>
-                                @lang('messages.about_app')
-                            </a>
-                        </li>
-                        <hr/>
                     </ul>
                     @if(auth()->guard('web')->check())
                         {{--                        <a href="#" class="joinUs_btn">--}}
@@ -133,7 +106,17 @@
             </div>
         </div>
     </div>
-    <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt=""/>
+    <button
+        style="background-color: {{$restaurant->az_color?->icons}} !important;"
+        class="btn btn_custom"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasBottom"
+        aria-controls="offcanvasBottom"
+    >
+        <i class="fa fa-cog fa-spin"></i>
+        {{$branch->name_ar}}
+    </button>
     @if($restaurant->az_info and $restaurant->az_info->lang == 'both')
         <div class="icons">
             @if(app()->getLocale() == 'ar')
