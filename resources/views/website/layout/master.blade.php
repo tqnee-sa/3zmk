@@ -52,7 +52,7 @@
          style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @include('website.accessories.slider')
     <!-- end  main slider  -->
-        <div
+        <h3
             class="location_branch my-4 d-flex align-items-center justify-content-between"
         >
             {{--            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">--}}
@@ -64,8 +64,9 @@
                 <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
                      style="margin-top: -20px"/>
             </a>
-            <div class="showBranch px-2"
-                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</div>
+            <span style="color: {{$restaurant->az_color?->main_heads}} !important; font-size: 18px; margin-bottom: 0.25rem !important; font-weight: 600;margin-left: 215px;margin-top: -40px">
+                {{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}
+            </span>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
@@ -73,7 +74,7 @@
         <!-- end location branch -->
         @if($restaurant->az_info)
             <h6 class="description p-2"
-                style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px;font-size: 11px">
+                style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 76px; margin-top: -68px;font-size: 11px">
                 {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
             </h6>
         @endif
