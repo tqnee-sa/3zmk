@@ -140,9 +140,9 @@
         margin-top: -15px;
     }
     .lang {
-        position: relative;
-        top: 10px;
-        right: 405px;
+        position: absolute;
+        top: 19px;
+        right: 370px;
         padding: 5px;
         height: 25px;
         font-size: 12px;
