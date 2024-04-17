@@ -147,7 +147,7 @@
                                     id="phone_number"
                                     name="phone_number"
                                     value="{{old('phone_number')}}"
-                                    placeholder="@lang('messages.phone_number')"
+                                    placeholder="05xxxxxxxx"
                                     required
                                 />
                             </div>
@@ -213,6 +213,25 @@
             templateSelection: formatOption,
             data: options,
             minimumResultsForSearch: Infinity
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#country-select").change(function(){
+            var selectedVal = $(this).find(":selected").val();
+            if(selectedVal == 2)
+            {
+                $("#phone_number").attr("placeholder", "05xxxxxxxx");
+            }else if(selectedVal == 1)
+            {
+                $("#phone_number").attr("placeholder", "01xxxxxxxxx");
+            }else if(selectedVal == 8)
+            {
+                $("#phone_number").attr("placeholder", "3xxxxxxx");
+            }else{
+                $("#phone_number").attr("placeholder", "05xxxxxxxx");
+            }
         });
     });
 </script>
