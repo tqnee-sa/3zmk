@@ -55,43 +55,41 @@
         <div
             class="location_branch my-4 d-flex align-items-center justify-content-between"
         >
-{{--            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">--}}
-{{--                <i class="fa fa-map-marker-alt" style="color: #e74343"></i>--}}
-{{--                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,--}}
-{{--                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}--}}
-{{--            </span>--}}
-            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60" style="margin-top: -20px"/>
-            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</span>
+            {{--            <span class="showBranch px-2" style="color: {{$restaurant->az_color?->main_heads}} !important;">--}}
+            {{--                <i class="fa fa-map-marker-alt" style="color: #e74343"></i>--}}
+            {{--                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,--}}
+            {{--                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}--}}
+            {{--            </span>--}}
+            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
+                 style="margin-top: -20px"/>
+            <span class="showBranch px-2"
+                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 250px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</span>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
         </div>
         <!-- end location branch -->
         @if($restaurant->az_info)
-            <h6 class="description p-2" style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px;font-size: 11px">
+            <h6 class="description p-2"
+                style="color: {{$restaurant->az_color?->options_description}} !important; margin-right: 65px; margin-top: -30px;font-size: 11px">
                 {!! app()->getLocale() == 'ar' ? $restaurant->az_info->description_ar : $restaurant->az_info->description_en !!}
             </h6>
         @endif
-        <div class="row">
-            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin-bottom: 5px;">
-                <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
-                   href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
-                    @lang('messages.terms_conditions')
-                </a>
-            </div>
-            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin-bottom: 5px;">
-                <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
-                   href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
-                    @lang('messages.contact_us')
-                </a>
-            </div>
-            <div class="col-sm-3 btn text-center px-2" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#dbd6db'}} !important; margin-bottom: 5px;">
-                <a style="color: {{$restaurant->az_color?->options_description}} !important; font-size: 13px"
-                   href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
-                    @lang('messages.about_app')
-                </a>
-            </div>
-        </div>
+        <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px"
+           class="btn"
+           href="{{route('restaurantTerms' , [$restaurant->name_barcode , $branch->name_en])}}">
+            @lang('messages.terms_conditions')
+        </a>
+        <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px"
+           class="btn"
+           href="{{route('restaurantVisitorContactUs' , [$restaurant->name_barcode , $branch->name_en])}}">
+            @lang('messages.contact_us')
+        </a>
+        <a style="color: {{$restaurant->az_color?->options_description}} !important; background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#e1e0e0'}}; font-size: 13px"
+           class="btn"
+           href="{{route('restaurantAboutAzmak' , [$restaurant->name_barcode , $branch->name_en])}}">
+            @lang('messages.about_app')
+        </a>
         @include('website.accessories.categories')
     </div>
 
