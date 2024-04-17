@@ -63,7 +63,7 @@
                      style="margin-top: -50px;position: absolute"/>
             </a>
             <h6 class=""
-                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 200px;margin-top: -30px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h6>
+                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 150px;margin-top: -30px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h6>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
