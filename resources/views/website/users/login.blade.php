@@ -93,90 +93,92 @@
 </head>
 <body>
 
-<div class="mycontainer">
-    <header
-        class="d-flex align-items-center justify-content-between bg-white p-3"
-    >
-        <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
-            <i class="fa-solid fa-angle-right"></i>
-        </a>
-        <h5>@lang('messages.login')</h5>
-        @if(app()->getLocale() == 'ar')
-            <a href="{{route('language' , 'en')}}">
-                En
-            </a>
-        @else
-            <a href="{{route('language' , 'ar')}}">
-                ع
-            </a>
-        @endif
-    </header>
-    <main>
-        @if (session('An_error_occurred'))
-            <div class="alert alert-success">
-                {{ session('An_error_occurred') }}
-            </div>
-        @endif
-        @if (session('warning_login'))
-            <div class="alert alert-danger">
-                {{ session('warning_login') }}
-            </div>
-        @endif
-        <div
-            class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center bg-white"
+<div class="container">
+    <div class="mycontainer">
+        <header
+            class="d-flex align-items-center justify-content-between bg-white p-3"
         >
-            <br><br><br>
-            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="75" height="75"
-                 alt="logo"/>
-            <br><br><br>
-            <form method="post"
-                  action="{{route('AZUserLoginSubmit' , [$restaurant->name_barcode , $branch->name_en])}}">
-                <input type='hidden' name='_token' value='{{Session::token()}}'>
+            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
+                <i class="fa-solid fa-angle-right"></i>
+            </a>
+            <h5>@lang('messages.login')</h5>
+            @if(app()->getLocale() == 'ar')
+                <a href="{{route('language' , 'en')}}">
+                    En
+                </a>
+            @else
+                <a href="{{route('language' , 'ar')}}">
+                    ع
+                </a>
+            @endif
+        </header>
+        <main>
+            @if (session('An_error_occurred'))
+                <div class="alert alert-success">
+                    {{ session('An_error_occurred') }}
+                </div>
+            @endif
+            @if (session('warning_login'))
+                <div class="alert alert-danger">
+                    {{ session('warning_login') }}
+                </div>
+            @endif
+            <div
+                class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center bg-white"
+            >
+                <br><br><br>
+                <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="75" height="75"
+                     alt="logo"/>
+                <br><br><br>
+                <form method="post"
+                      action="{{route('AZUserLoginSubmit' , [$restaurant->name_barcode , $branch->name_en])}}">
+                    <input type='hidden' name='_token' value='{{Session::token()}}'>
 
-                <div class="m-2 px-1 container_form">
-                    <div class="phone_number">
-                        <label for="type_company"> @lang('messages.phone_number') :</label>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <input
-                                    style="direction: rtl"
-                                    type="tel"
-                                    class="form-control"
-                                    id="phone_number"
-                                    name="phone_number"
-                                    value="{{old('phone_number')}}"
-                                    placeholder="05xxxxxxxx"
-                                    required
-                                />
-                            </div>
-                            <div class="col-sm-3">
-                                <select name="country_id" class="form-control" id="country-select" required>
+                    <div class="m-2 px-1 container_form">
+                        <div class="phone_number">
+                            <label for="type_company"> @lang('messages.phone_number') :</label>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <input
+                                        style="direction: rtl"
+                                        type="tel"
+                                        class="form-control"
+                                        id="phone_number"
+                                        name="phone_number"
+                                        value="{{old('phone_number')}}"
+                                        placeholder="05xxxxxxxx"
+                                        required
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="country_id" class="form-control" id="country-select" required>
 
-                                </select>
+                                    </select>
 
-                                @if ($errors->has('country_id'))
-                                    <span class="help-block">
+                                    @if ($errors->has('country_id'))
+                                        <span class="help-block">
                                         <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
 
-                        @if ($errors->has('phone_number'))
-                            <span class="help-block">
+                            @if ($errors->has('phone_number'))
+                                <span class="help-block">
                                 <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
                             </span>
-                        @endif
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <input type="submit" value="@lang('messages.login')" class="my-5"/>
-            </form>
-        </div>
-    </main>
+                    <input type="submit" value="@lang('messages.login')" class="my-5"/>
+                </form>
+            </div>
+        </main>
 
-    @include('website.layout.footer')
+        @include('website.layout.footer')
+    </div>
 </div>
 
 <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>

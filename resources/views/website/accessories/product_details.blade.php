@@ -38,6 +38,7 @@
             padding: 5px;
             height: 2px;
             border-radius: 7px;
+            box-shadow: 1px 1px 1px 1px lightblue;
             background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#ebebeb'}} !important;
         }
         .back {
@@ -45,6 +46,7 @@
             width: 15px;
             margin-right: 7px;
             border-radius: 7px;
+            box-shadow: 1px 1px 1px 1px lightblue;
             background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#ebebeb'}} !important;
         }
     </style>
