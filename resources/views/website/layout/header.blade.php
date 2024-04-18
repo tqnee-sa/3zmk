@@ -110,7 +110,7 @@
             aria-controls="offcanvasBottom"
         >
             <i class="fa fa-map-marker-alt"></i>
-            {{$branch->name_ar}}
+            {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}
         </button>
     @if($restaurant->az_info and $restaurant->az_info->lang == 'both')
         <div class="d-flex align-items-center justify-content-between  p-3 lang">

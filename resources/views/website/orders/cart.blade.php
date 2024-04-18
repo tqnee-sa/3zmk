@@ -9,8 +9,6 @@
     .cart-item .image img {
         width: 130px !important;
         height: 100px !important;
-        object-fit: cover;
-        border-radius: 8px;
     }
 </style>
 @section('content')
