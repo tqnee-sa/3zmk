@@ -117,7 +117,7 @@
                                                                 {{$option->option_count}} x
                                                                 <div
                                                                     class="action d-flex align-items-center justify-content-between"
-                                                                    style="padding-right: 350px;">
+                                                                    style="padding-right: 300px;">
                                                                     <div>
                                                                         @php
                                                                             if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
