@@ -39,15 +39,17 @@
             height: 2px;
             border-radius: 7px;
             box-shadow: 1px 1px 1px 1px lightblue;
-            background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#ebebeb'}} !important;
+            background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#E6E9ED'}} !important;
         }
         .back {
             position: absolute;
-            width: 15px;
-            margin-right: 7px;
-            border-radius: 7px;
+            width: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            margin-right: 8px;
+            border-radius: 17px;
             box-shadow: 1px 1px 1px 1px lightblue;
-            background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#ebebeb'}} !important;
+            background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#E6E9ED'}} !important;
         }
     </style>
 </head>
@@ -102,7 +104,7 @@
                                style='color: black'
                                class="back"
                             >
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right" style="padding: 8px;"></i>
                             </a>
                         </div>
                         <img src="{{asset('/uploads/products/' . $product->photo)}}" class="d-block w-100" alt="..."/>

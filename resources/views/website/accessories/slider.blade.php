@@ -59,6 +59,7 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+
 </div>
 <style>
     .show_main_info .slider {

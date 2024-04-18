@@ -2,6 +2,9 @@
 @section('title')
     @lang('messages.cart')
 @endsection
+@section('header_title')
+    @lang('messages.cart')
+@endsection
 @section('content')
     <main>
         <div class="teeeeest my-1 mx-2">

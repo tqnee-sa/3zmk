@@ -101,17 +101,17 @@
             </div>
         </div>
     </div>
-    <button
-        style="background-color: {{$restaurant->az_color?->icons}} !important;"
-        class="btn btn_custom branch_class"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasBottom"
-        aria-controls="offcanvasBottom"
-    >
-        <i class="fa fa-map-marker-alt"></i>
-        {{$branch->name_ar}}
-    </button>
+        <button
+            style="background-color: {{$restaurant->az_color?->icons}} !important;"
+            class="btn btn_custom branch_class"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasBottom"
+            aria-controls="offcanvasBottom"
+        >
+            <i class="fa fa-map-marker-alt"></i>
+            {{$branch->name_ar}}
+        </button>
     @if($restaurant->az_info and $restaurant->az_info->lang == 'both')
         <div class="d-flex align-items-center justify-content-between  p-3 lang">
             @if(app()->getLocale() == 'ar')
@@ -133,12 +133,14 @@
         margin-right: 30px;
         margin-top: 50px;
     }
-    #header{
+
+    #header {
         position: absolute;
         z-index: 100;
         box-shadow: none;
         margin-top: -15px;
     }
+
     .lang {
         position: absolute;
         top: 19px;
@@ -148,9 +150,10 @@
         font-size: 12px;
         border-radius: 7px;
         box-shadow: 1px 1px 1px 1px lightblue;
-        background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
+        background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}}  !important;
     }
-    .branch_class{
+
+    .branch_class {
         position: absolute;
         top: 19px;
         right: 195px;
@@ -159,22 +162,25 @@
         height: 35px;
         border-radius: 7px;
         box-shadow: 1px 1px 1px 1px lightblue;
-        background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
+        background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}}  !important;
     }
-    .bars_class{
+
+    .bars_class {
         position: absolute;
         top: 15px;
         right: 4px;
         font-size: 15px;
         border-radius: 7px;
         box-shadow: 1px 1px 1px 1px lightblue;
-        background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
+        background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}}  !important;
     }
+
     @media only screen and (max-width: 768px) {
         /* For mobile phones: */
-        .branch_class{
+        .branch_class {
             right: 150px;
         }
+
         .lang {
             right: 350px;
         }

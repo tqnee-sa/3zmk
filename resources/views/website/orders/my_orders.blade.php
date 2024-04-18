@@ -7,6 +7,9 @@
         margin-left:5px;
     }
 </style>
+@section('header_title')
+    @lang('messages.my_orders')
+@endsection
 @section('content')
     <main>
         <div class="teeeeest my-1 mx-2">
