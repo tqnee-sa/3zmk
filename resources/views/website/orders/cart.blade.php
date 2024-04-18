@@ -119,7 +119,7 @@
                                                             </h6>
                                                             <div
                                                                 class="action d-flex align-items-center justify-content-between"
-                                                                style="padding-right: 400px;">
+                                                                style="padding-right: 350px;">
                                                                 <div>
                                                                     @php
                                                                         if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
