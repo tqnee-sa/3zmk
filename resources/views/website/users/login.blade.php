@@ -139,7 +139,7 @@
                         <br>
                         <br>
                         <div class="row">
-                            <div class="col-lg-9 col-sm-7">
+                            <div class="col-lg-9 col-sm-5">
                                 <input
                                     style="direction: rtl"
                                     type="tel"
