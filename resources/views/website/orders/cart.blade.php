@@ -108,15 +108,15 @@
                                         </div>
                                         @if($item->options->count() > 0)
                                             {{--item options--}}
-                                            <div>
+                                            <div class="container">
                                                 <h6>@lang('messages.options')</h6>
                                                 <div class="details">
                                                     @foreach($item->options as $option)
                                                         <div class="row">
-                                                            <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                                                            <div  style="color: {{$restaurant->az_color?->main_heads}} !important;">
                                                                 {{app()->getLocale() == 'ar' ? $option->option->name_ar : $option->option->name_en }}
                                                                 {{$option->option_count}} x
-                                                            </h6>
+                                                            </div>
                                                             <div
                                                                 class="action d-flex align-items-center justify-content-between"
                                                                 style="padding-right: 350px;">
