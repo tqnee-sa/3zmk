@@ -40,6 +40,12 @@
             border: 3px solid var(--main_color);
             border-radius: 8px;
         }
+        .res_name{
+            color: {{$restaurant->az_color?->main_heads}} !important;
+            margin-left: 175px;
+            font-size: 17px;
+            margin-top: -20px;
+        }
     </style>
 </head>
 <body style="background-color: #ebebeb">
@@ -61,8 +67,7 @@
                 <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
                      style="margin-top: -50px;position: absolute"/>
             </a>
-            <h6 class=""
-                style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 150px;margin-top: -25px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h6>
+            <h5 class="res_name">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h5>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif

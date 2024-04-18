@@ -127,8 +127,8 @@
                                                                             endif;
                                                                         @endphp
                                                                         <span style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                                                        {{$option_price * $option->option_count}}
-                                                                    </span>
+                                                                            {{$option_price * $option->option_count}}
+                                                                        </span>
                                                                         <small style="color: {{$restaurant->az_color?->options_description}} !important;">
                                                                             {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
                                                                         </small>
