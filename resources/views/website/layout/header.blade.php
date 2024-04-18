@@ -142,7 +142,7 @@
     .lang {
         position: absolute;
         top: 19px;
-        right: 370px;
+        right: 430px;
         padding: 5px;
         height: 25px;
         font-size: 12px;
@@ -152,7 +152,7 @@
     .branch_class{
         position: absolute;
         top: 19px;
-        right: 170px;
+        right: 195px;
         padding: 5px;
         width: 96px;
         height: 35px;
@@ -166,5 +166,14 @@
         font-size: 15px;
         border-radius: 7px;
         background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
+    }
+    @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        .branch_class{
+            right: 150px;
+        }
+        .lang {
+            right: 320px;
+        }
     }
 </style>

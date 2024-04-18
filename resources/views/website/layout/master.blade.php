@@ -45,7 +45,7 @@
 </head>
 <body style="background-color: #ebebeb">
 <div class="mycontainer" style="background-color: {{$restaurant->az_color?->background}} !important;">
-<!-- <main class="py-1"> -->
+    <!-- <main class="py-1"> -->
     <div class="show_main_info px-1 py-3"
          style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @include('website.accessories.slider')
@@ -63,7 +63,7 @@
                      style="margin-top: -50px;position: absolute"/>
             </a>
             <h6 class=""
-                  style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 150px;margin-top: -25px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h6>
+                style="color: {{$restaurant->az_color?->main_heads}} !important; margin-left: 150px;margin-top: -25px">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h6>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
