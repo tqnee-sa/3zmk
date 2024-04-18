@@ -147,6 +147,7 @@
         height: 25px;
         font-size: 12px;
         border-radius: 7px;
+        box-shadow: 1px 1px 1px 1px lightblue;
         background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
     }
     .branch_class{
@@ -157,6 +158,7 @@
         width: 96px;
         height: 35px;
         border-radius: 7px;
+        box-shadow: 1px 1px 1px 1px lightblue;
         background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
     }
     .bars_class{
@@ -165,6 +167,7 @@
         right: 4px;
         font-size: 15px;
         border-radius: 7px;
+        box-shadow: 1px 1px 1px 1px lightblue;
         background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : '#ebebeb'}} !important;
     }
     @media only screen and (max-width: 768px) {
