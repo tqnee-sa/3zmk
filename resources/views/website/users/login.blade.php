@@ -90,10 +90,10 @@
             width: 0px;
         }
         .phone{
-            width:310px
+            width:300px
         }
         .country{
-            width: 155px;
+            width: 150px;
             margin-top: 22px;
         }
         @media only screen and (max-width: 768px) {
