@@ -42,7 +42,7 @@
         }
         .res_name{
             color: {{$restaurant->az_color?->main_heads}} !important;
-            margin-left: 175px;
+            margin-right: 75px;
             font-size: 17px;
             margin-top: -20px;
         }
@@ -63,11 +63,17 @@
             {{--                {{app()->getLocale() == 'ar' ? $branch->city->name_ar : $branch->city->name_en}} ,--}}
             {{--                {{app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en}}--}}
             {{--            </span>--}}
-            <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}">
-                <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
-                     style="margin-top: -50px;position: absolute"/>
-            </a>
-            <h5 class="res_name">{{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}</h5>
+            <div class="row">
+                <div class="col-sm-4">
+                    <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}">
+                        <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" alt="" width="70" height="60"
+                             style="margin-top: -50px;position: absolute"/>
+                    </a>
+                </div>
+                <div class="col-sm-8 res_name">
+                    {{app()->getLocale() == 'ar' ? $branch->restaurant->name_ar : $branch->restaurant->name_en}}
+                </div>
+            </div>
             @if($branches->count() > 1)
                 @include('website.accessories.branch')
             @endif
