@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@lang('messages.login')</title>
+    <link rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"
+          type="image/x-icon">
     <!-- //font -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -87,6 +89,13 @@
             right: 1px;
             width: 0px;
         }
+        .phone{
+            width:300px
+        }
+        .country{
+            width: 150px;
+            margin-top: 22px;
+        }
 
     </style>
 
@@ -135,39 +144,35 @@
                 <input type='hidden' name='_token' value='{{Session::token()}}'>
 
                 <div class="m-2 px-1 container_form">
-                    <div class="phone_number">
-                        <label for="type_company"> @lang('messages.phone_number') :</label>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-lg-9 col-sm-3">
-                                <input
-                                    style="direction: rtl"
-                                    type="tel"
-                                    class="form-control"
-                                    id="phone_number"
-                                    name="phone_number"
-                                    value="{{old('phone_number')}}"
-                                    placeholder="05xxxxxxxx"
-                                    required
-                                />
-                                @if ($errors->has('phone_number'))
-                                    <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="col-lg-3 col-sm-3">
-                                <select name="country_id" class="form-control" id="country-select" required>
+                    <div class="row">
+                        <div class="phone">
+                            <label for="type_company"> @lang('messages.phone_number') :</label>
+                            <input
+                                style="direction: rtl"
+                                type="tel"
+                                class="form-control"
+                                id="phone_number"
+                                name="phone_number"
+                                value="{{old('phone_number')}}"
+                                placeholder="05xxxxxxxx"
+                                required
+                            />
+                            @if ($errors->has('phone_number'))
+                                <span class="help-block">
+                                <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="country">
+                            <select name="country_id" class="form-control" id="country-select" required>
 
-                                </select>
+                            </select>
 
-                                @if ($errors->has('country_id'))
-                                    <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                            @if ($errors->has('country_id'))
+                                <span class="help-block">
+                                <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
                 </div>

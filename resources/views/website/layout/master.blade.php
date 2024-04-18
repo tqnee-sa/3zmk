@@ -9,7 +9,7 @@
     </title>
     <!-- //font -->
 
-    <link type="text/css" rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"
+    <link rel="icon" href="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}"
           type="image/x-icon">
 
     <!--=============== SWIPER CSS ===============-->
