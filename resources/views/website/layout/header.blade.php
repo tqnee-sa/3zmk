@@ -173,7 +173,7 @@
             right: 150px;
         }
         .lang {
-            right: 320px;
+            right: 330px;
         }
     }
 </style>
