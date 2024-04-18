@@ -99,10 +99,10 @@
         @media only screen and (max-width: 768px) {
             /* For mobile phones: */
             .phone{
-                width:235px
+                width:230px
             }
             .country{
-                width: 115px;
+                width: 110px;
                 margin-top: 22px;
             }
         }
