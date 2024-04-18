@@ -65,7 +65,7 @@
         .select2-container--default .select2-selection--single {
             background-color: #ECF2FF;
             /*border: 1px solid #aaa;*/
-            width:110px;
+            width: 110px;
             height: 40px;
         }
 
@@ -74,11 +74,12 @@
             line-height: 30px;
         }
 
-        .select2-container--default .select2-results>.select2-results__options {
+        .select2-container--default .select2-results > .select2-results__options {
             max-height: 200px;
             overflow-y: auto;
             width: 100px;
         }
+
         select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 26px;
             position: absolute;
@@ -139,7 +140,7 @@
                         <br>
                         <br>
                         <div class="row">
-                            <div class="col-lg-9 col-sm-5">
+                            <div class="col-lg-9 col-sm-3">
                                 <input
                                     style="direction: rtl"
                                     type="tel"
@@ -150,6 +151,11 @@
                                     placeholder="05xxxxxxxx"
                                     required
                                 />
+                                @if ($errors->has('phone_number'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-lg-3 col-sm-3">
                                 <select name="country_id" class="form-control" id="country-select" required>
@@ -163,12 +169,6 @@
                                 @endif
                             </div>
                         </div>
-
-                        @if ($errors->has('phone_number'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
-                            </span>
-                        @endif
                     </div>
                 </div>
                 <input type="submit" value="@lang('messages.login')" class="my-5"/>
@@ -217,19 +217,16 @@
     });
 </script>
 <script type="text/javascript">
-    $(function(){
-        $("#country-select").change(function(){
+    $(function () {
+        $("#country-select").change(function () {
             var selectedVal = $(this).find(":selected").val();
-            if(selectedVal == 2)
-            {
+            if (selectedVal == 2) {
                 $("#phone_number").attr("placeholder", "05xxxxxxxx");
-            }else if(selectedVal == 1)
-            {
+            } else if (selectedVal == 1) {
                 $("#phone_number").attr("placeholder", "01xxxxxxxxx");
-            }else if(selectedVal == 8)
-            {
+            } else if (selectedVal == 8) {
                 $("#phone_number").attr("placeholder", "3xxxxxxx");
-            }else{
+            } else {
                 $("#phone_number").attr("placeholder", "05xxxxxxxx");
             }
         });
