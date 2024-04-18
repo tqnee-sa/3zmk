@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="{{asset('site/css/all.min.css')}}"/>
     <!-- style sheet -->
     <link rel="stylesheet" href="{{asset('site/css/global.css')}}"/>
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <style>
         .join_us {
             border-radius: 10px;
@@ -99,10 +99,10 @@
         @media only screen and (max-width: 768px) {
             /* For mobile phones: */
             .phone{
-                width:230px
+                width:235px
             }
             .country{
-                width: 110px;
+                width: 115px;
                 margin-top: 22px;
             }
         }
@@ -194,8 +194,43 @@
     @include('website.layout.footer')
 </div>
 
-<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    @if(Session::has('message'))
+        toastr.options =
+        {
+            "closeButton": true,
+            "progressBar": true
+        }
+    toastr.success("{{ session('message') }}");
+    @endif
+
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton": true,
+            "progressBar": true
+        }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+        @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton": true,
+            "progressBar": true
+        }
+    toastr.info("{{ session('info') }}");
+    @endif
+
+        @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton": true,
+            "progressBar": true
+        }
+    toastr.warning("{{ session('warning') }}");
+    @endif
+</script>
 {!! Toastr::message() !!}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
