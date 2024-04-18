@@ -112,31 +112,29 @@
                                                 <h6>@lang('messages.options')</h6>
                                                 <div class="details">
                                                     @foreach($item->options as $option)
-                                                        <div class="row">
                                                             <div  style="color: {{$restaurant->az_color?->main_heads}} !important;">
                                                                 {{app()->getLocale() == 'ar' ? $option->option->name_ar : $option->option->name_en }}
                                                                 {{$option->option_count}} x
-                                                            </div>
-                                                            <div
-                                                                class="action d-flex align-items-center justify-content-between"
-                                                                style="padding-right: 350px;">
-                                                                <div>
-                                                                    @php
-                                                                        if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
-                                                                              $option_price = (($item->product->restaurant->az_commission * $option->option->price) / 100) + $option->option->price;
-                                                                        else:
-                                                                              $option_price = $option->option->price;
-                                                                        endif;
-                                                                    @endphp
-                                                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                                <div
+                                                                    class="action d-flex align-items-center justify-content-between"
+                                                                    style="padding-right: 350px;">
+                                                                    <div>
+                                                                        @php
+                                                                            if($item->product->restaurant->az_info and $item->product->restaurant->az_info->commission_payment == 'user'):
+                                                                                  $option_price = (($item->product->restaurant->az_commission * $option->option->price) / 100) + $option->option->price;
+                                                                            else:
+                                                                                  $option_price = $option->option->price;
+                                                                            endif;
+                                                                        @endphp
+                                                                        <span style="color: {{$restaurant->az_color?->options_description}} !important;">
                                                                         {{$option_price * $option->option_count}}
                                                                     </span>
-                                                                    <small style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                                                        {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
-                                                                    </small>
+                                                                        <small style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                                            {{app()->getLocale() == 'ar' ? $item->product->restaurant->country->currency_ar : $item->product->restaurant->country->currency_en}}
+                                                                        </small>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                     @endforeach
                                                 </div>
                                             </div>
