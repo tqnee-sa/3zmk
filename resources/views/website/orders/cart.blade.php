@@ -5,6 +5,14 @@
 @section('header_title')
     @lang('messages.cart')
 @endsection
+<style>
+    .cart-item .image img {
+        width: 130px !important;
+        height: 100px !important;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+</style>
 @section('content')
     <main>
         <div class="teeeeest my-1 mx-2">
