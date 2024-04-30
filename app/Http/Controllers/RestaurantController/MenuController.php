@@ -38,7 +38,6 @@ class MenuController extends Controller
                     $contents = file_get_contents('https://easymenu.site/uploads/sliders/' . $slider->photo);
                     $file = '/tmp/' . $info['basename'];
                     file_put_contents($file, $contents);
-
                     $image = $info['basename'];
                     $destinationPath = public_path('/' . 'uploads/sliders');
                     $img = Image::make($file);
@@ -48,12 +47,12 @@ class MenuController extends Controller
                 }
                 AzRestaurantSlider::create([
                     'restaurant_id' => $restaurant->id,
-                    'photo'         => $image,
-                    'type'          => $slider->type,
-                    'youtube'       => $slider->youtube,
+                    'photo' => $image,
+                    'type' => $slider->type,
+                    'youtube' => $slider->youtube,
                     'description_en' => $slider->description_en,
                     'description_ar' => $slider->description_ar,
-                    'stop'           => $slider->stop,
+                    'stop' => $slider->stop,
                 ]);
             }
         }
@@ -126,19 +125,16 @@ class MenuController extends Controller
         $modifiers = DB::table('modifiers')->whereRestaurantId($restaurant->id)->get();
         if ($modifiers->count() > 0) {
             foreach ($modifiers as $modifier) {
-                $check_modifier = AZModifier::whereRestaurantId($restaurant->id)->whereNameAr($modifier->name_ar)->first();
-                if (!isset($check_modifier)) {
-                    AZModifier::create([
-                        'restaurant_id' => $restaurant->id,
-                        'name_ar' => $modifier->name_ar,
-                        'name_en' => $modifier->name_en,
-                        'is_ready' => $modifier->is_ready,
-                        'choose' => $modifier->choose,
-                        'sort' => $modifier->sort,
-                        'custom' => $modifier->custom,
-                        'easy_id' => $modifier->id,
-                    ]);
-                }
+                AZModifier::create([
+                    'restaurant_id' => $restaurant->id,
+                    'name_ar' => $modifier->name_ar,
+                    'name_en' => $modifier->name_en,
+                    'is_ready' => $modifier->is_ready,
+                    'choose' => $modifier->choose,
+                    'sort' => $modifier->sort,
+                    'custom' => $modifier->custom,
+                    'easy_id' => $modifier->id,
+                ]);
             }
         }
 
@@ -146,24 +142,22 @@ class MenuController extends Controller
         $options = DB::table('options')->whereRestaurantId($restaurant->id)->get();
         if ($options->count() > 0) {
             foreach ($options as $option) {
-                $check_option = AZOption::whereRestaurantId($restaurant->id)->whereNameAr($option->name_ar)->first();
-                if (!isset($check_option)) {
-                    $modifier = AZModifier::whereEasyId($option->modifier_id)->first();
-                    if (isset($modifier)) {
-                        AZOption::create([
-                            'restaurant_id' => $restaurant->id,
-                            'modifier_id' => $modifier?->id,
-                            'name_ar' => $option->name_ar,
-                            'name_en' => $option->name_en,
-                            'is_active' => $option->is_active,
-                            'price' => $option->price,
-                            'calories' => $option->calories,
-                            'easy_id' => $option->id,
-                        ]);
-                    }
+                $modifier = AZModifier::whereEasyId($option->modifier_id)->first();
+                if (isset($modifier)) {
+                    AZOption::create([
+                        'restaurant_id' => $restaurant->id,
+                        'modifier_id' => $modifier?->id,
+                        'name_ar' => $option->name_ar,
+                        'name_en' => $option->name_en,
+                        'is_active' => $option->is_active,
+                        'price' => $option->price,
+                        'calories' => $option->calories,
+                        'easy_id' => $option->id,
+                    ]);
                 }
             }
         }
+
 
         // copy branches
         $branches = DB::table('branches')->whereRestaurantId($restaurant->id)->get();
@@ -308,8 +302,7 @@ class MenuController extends Controller
                             if ($product_sensitivities->count() > 0) {
                                 foreach ($product_sensitivities as $product_sensitivity) {
                                     $pSensitivity = AZRestaurantSensitivity::whereEasyId($product_sensitivity->sensitivity_id)->first();
-                                    if ($pSensitivity)
-                                    {
+                                    if ($pSensitivity) {
                                         AZProductSensitivity::create([
                                             'product_id' => $az_product->id,
                                             'sensitivity_id' => $pSensitivity->id,
