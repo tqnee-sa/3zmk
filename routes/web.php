@@ -53,6 +53,7 @@ use App\Http\Controllers\RestaurantController\SmsController;
 use App\Http\Controllers\RestaurantController\TermsConditionController;
 use App\Http\Controllers\RestaurantController\AzmakSubscriptionController;
 use App\Http\Controllers\RestaurantController\RestaurantAZCommissionController;
+use App\Http\Controllers\RestaurantController\MenuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
@@ -98,7 +99,6 @@ use App\Http\Controllers\EmployeeController\Order\OrderController as OrderOrderC
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Route::get('locale/{locale}', function (Request $request, $locale) {
     session()->put('locale', $locale);
@@ -392,6 +392,10 @@ Route::prefix('restaurant')->group(function () {
             Route::get('/az_contacts', [TermsConditionController::class, 'az_contacts'])->name('restaurant.az_contacts.index');
             Route::get('/az_contacts/delete/{id}', [TermsConditionController::class, 'delete_az_contact'])->name('restaurant.delete_az_contact');
 
+            // copy menu from easymenu to azmak menu
+            Route::controller(MenuController::class)->group(function () {
+                Route::get('/copy_menu_from_easymenu_to_azmak/{id}', 'copy_menu')->name('copyMenu');
+            });
         });
     });
 });

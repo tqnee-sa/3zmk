@@ -89,7 +89,8 @@
                                             </a>
                                             @if ($product->calories === 0.0 or $product->calories > 0 )
                                                 <span class="pl-1 calories" style="margin:0 6px;">
-                                                    <span style="color: {{$restaurant->az_color?->options_description}} !important;">
+                                                    <span
+                                                        style="color: {{$restaurant->az_color?->options_description}} !important;">
                                                         {{ $product->calories == 0 ? trans('messages.no_calories' ): trans('messages.calories_des', ['num' => $product->calories]) }}
                                                     </span>
                                                 </span>
@@ -111,13 +112,14 @@
                                         </h6>
 
                                         <div class="more_details d-flex align-items-center justify-content-between">
-                                        <span style="text-align: right !important;">
+
                                             @if ($product->poster != null)
-                                                <img style="text-align: right"
+                                                <span style="text-align: right !important;">
+                                                    <img style="text-align: right"
                                                      src="{{ asset('/uploads/posters/' . $product->poster->poster) }}"
                                                      height="30" width="30" class="poster-image">
+                                                </span>
                                             @endif
-                                        </span>
                                             <div class="price">
                                                 <span
                                                     style="font-size: 9px; text-align: left !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : 'black'}}">

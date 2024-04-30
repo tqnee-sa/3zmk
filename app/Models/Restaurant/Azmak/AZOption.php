@@ -16,7 +16,8 @@ class AZOption extends Model
         'name_en',
         'is_active',
         'price',
-        'calories'
+        'calories',
+        'easy_id',
     ];
 
     public function restaurant()

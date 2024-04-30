@@ -16,6 +16,7 @@ class AZRestaurantSensitivity extends Model
         'photo',
         'details_ar',
         'details_en',
+        'easy_id',
     ];
 
     public function restaurant()

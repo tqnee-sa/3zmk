@@ -13,7 +13,6 @@ class AZProductSize extends Model
         'product_id',
         'name_ar',
         'name_en',
-        'name_en',
         'price',
         'calories',
         'status',

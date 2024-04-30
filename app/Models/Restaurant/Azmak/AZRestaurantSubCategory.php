@@ -13,7 +13,8 @@ class AZRestaurantSubCategory extends Model
         'menu_category_id',
         'name_ar',
         'name_en' ,
-        'image'
+        'image',
+        'easy_id'
     ];
     public function getNameAttribute(){
         return app()->getLocale() == 'ar' ? $this->name_ar : $this->name_en;

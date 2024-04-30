@@ -14,6 +14,7 @@ class AZRestaurantPoster extends Model
         'name_ar',
         'name_en',
         'poster',
+        'easy_id',
     ];
 
     public function restaurant()

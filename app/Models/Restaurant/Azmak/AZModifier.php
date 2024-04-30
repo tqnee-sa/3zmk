@@ -17,6 +17,7 @@ class AZModifier extends Model
         'choose',
         'sort',
         'custom',
+        'easy_id',
     ];
 
     public function restaurant()
