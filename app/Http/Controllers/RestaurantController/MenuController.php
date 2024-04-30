@@ -265,6 +265,7 @@ class MenuController extends Controller
                                     })->save($destinationPath . '/' . $PImage);
                                 }
                             }
+                            dd($product->video_type);
                             $az_product = AZProduct::create([
                                 'restaurant_id' => $restaurant->id,
                                 'branch_id' => $az_branch->id,
