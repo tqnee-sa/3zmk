@@ -286,8 +286,8 @@ class MenuController extends Controller
                                 'price_before_discount' => $product->price_before_discount,
                                 'calories' => $product->calories,
                                 'arrange' => $product->arrange,
-                                'video_type' => $product->video_type,
-                                'video_id' => $product->video_id,
+//                                'video_type' => $product->video_type,
+//                                'video_id' => $product->video_id,
                             ]);
 
                             // create product days
