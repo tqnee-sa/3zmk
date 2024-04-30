@@ -5,6 +5,7 @@ namespace App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use App\Models\AzRestaurantSlider;
 use App\Models\AZRestaurantPoster;
 use App\Models\AZRestaurantSensitivity;
 use \Illuminate\Support\Facades\DB;
@@ -27,6 +28,36 @@ class MenuController extends Controller
     public function copy_menu($id)
     {
         $restaurant = Restaurant::findOrFail($id);
+        // copy restaurant sliders
+        $sliders = DB::table('restaurant_sliders')->whereRestaurantId($restaurant->id)->get();
+        if ($sliders->count() > 0) {
+            foreach ($sliders as $slider) {
+                $image = null;
+                if (isset($slider->photo) and ($slider->type == 'image' or $slider->type == 'gif')) {
+                    $info = pathinfo('https://easymenu.site/uploads/sliders/' . $slider->photo);
+                    $contents = file_get_contents('https://easymenu.site/uploads/sliders/' . $slider->photo);
+                    $file = '/tmp/' . $info['basename'];
+                    file_put_contents($file, $contents);
+
+                    $image = $info['basename'];
+                    $destinationPath = public_path('/' . 'uploads/sliders');
+                    $img = Image::make($file);
+                    $img->resize(500, 500, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' . $image);
+                }
+                AzRestaurantSlider::create([
+                    'restaurant_id' => $restaurant->id,
+                    'photo'         => $image,
+                    'type'          => $slider->type,
+                    'youtube'       => $slider->youtube,
+                    'description_en' => $slider->description_en,
+                    'description_ar' => $slider->description_ar,
+                    'stop'           => $slider->stop,
+                ]);
+            }
+        }
+
         // copy restaurant posters
         $posters = DB::table('restaurant_posters')->whereRestaurantId($restaurant->id)->get();
         if ($posters->count() > 0) {
@@ -48,14 +79,6 @@ class MenuController extends Controller
                 }
                 if (!isset($check_poster)) {
                     AZRestaurantPoster::create([
-                        'restaurant_id' => $restaurant->id,
-                        'name_ar' => $poster->name_ar,
-                        'name_en' => $poster->name_en,
-                        'poster' => $image,
-                        'easy_id' => $poster->id,
-                    ]);
-                } else {
-                    $check_poster->update([
                         'restaurant_id' => $restaurant->id,
                         'name_ar' => $poster->name_ar,
                         'name_en' => $poster->name_en,
@@ -87,16 +110,6 @@ class MenuController extends Controller
                 }
                 if (!isset($check_sensitivity)) {
                     AZRestaurantSensitivity::create([
-                        'restaurant_id' => $restaurant->id,
-                        'name_ar' => $sensitivity->name_ar,
-                        'name_en' => $sensitivity->name_en,
-                        'photo' => $image,
-                        'details_ar' => $sensitivity->details_ar,
-                        'details_en' => $sensitivity->details_en,
-                        'easy_id' => $sensitivity->id,
-                    ]);
-                } else {
-                    $check_sensitivity->update([
                         'restaurant_id' => $restaurant->id,
                         'name_ar' => $sensitivity->name_ar,
                         'name_en' => $sensitivity->name_en,
