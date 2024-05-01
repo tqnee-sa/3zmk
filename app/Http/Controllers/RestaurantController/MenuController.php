@@ -158,7 +158,6 @@ class MenuController extends Controller
             }
         }
 
-
         // copy branches
         $branches = DB::table('branches')->whereRestaurantId($restaurant->id)->get();
         if ($branches->count() > 0) {
@@ -177,7 +176,7 @@ class MenuController extends Controller
                     ->whereBranchId($branch->id)
                     ->get();
                 foreach ($menu_categories as $menu_category) {
-                    $image = null;
+                    $image = 'default.jpg';
                     if (isset($menu_category->photo)) {
                         $info = pathinfo('https://easymenu.site/uploads/menu_categories/' . $menu_category->photo);
                         $contents = file_get_contents('https://easymenu.site/uploads/menu_categories/' . $menu_category->photo);
@@ -246,7 +245,7 @@ class MenuController extends Controller
                             $poster_id = AZRestaurantPoster::whereRestaurantId($restaurant->id)
                                 ->where('easy_id', $product->poster_id)
                                 ->first();
-                            $PImage = null;
+                            $PImage = 'default.jpg';;
                             if (isset($product->photo)) {
                                 // product photo
                                 $info = pathinfo('https://easymenu.site/uploads/products/' . $product->photo);
