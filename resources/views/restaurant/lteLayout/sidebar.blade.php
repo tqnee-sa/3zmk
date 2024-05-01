@@ -91,6 +91,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('integrations') }}"
+                           class="nav-link {{ strpos(URL::current(), '/restaurant/integrations') !== false ? 'active' : '' }}">
+                            <i class="nav-icon far fa-download"></i>
+                            <p>
+                                @lang('messages.pullMenu')
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url('/restaurant/barcode') }}"
                            class="nav-link {{ strpos(URL::current(), '/restaurant/barcode') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-barcode"></i>

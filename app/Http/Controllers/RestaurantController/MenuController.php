@@ -25,6 +25,11 @@ use Image;
 
 class MenuController extends Controller
 {
+    public function integrations()
+    {
+        $restaurant = auth('restaurant')->user();
+        return view('restaurant.integrations.index' , compact('restaurant'));
+    }
     public function copy_menu($id)
     {
         $restaurant = Restaurant::findOrFail($id);
@@ -361,6 +366,7 @@ class MenuController extends Controller
                 }
             }
         }
-        echo "DONE";
+        flash(trans('messages.menuCopiedSuccessfully'))->success();
+        return redirect()->back();
     }
 }

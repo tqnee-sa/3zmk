@@ -366,4 +366,9 @@ return [
     'choose_occasion' => 'أختر مناسبة العزيمة',
     'personOccasionText' => 'ادخل مناسبة العزيمة',
     'occasions' => 'مناسبات العزيمة',
+    'menuCopiedSuccessfully' => 'تم نقل المنيو الخاصة بمطعمك في ايزي منيو بنجاح',
+    'pullEasymenuMenu' => 'سحب المنيو من ايزي منيو',
+    'pullMenu' => 'سحب المنيو',
+    'doYouHaveMenu' => 'هل لديك منيو في ايزي منيو .؟',
+    'pullMenuAlert' => 'عند الضغط علي سحب المنيو سيتم نقل المنيو من ايزي منيو الي هنا !',
 ];

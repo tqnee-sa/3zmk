@@ -363,4 +363,9 @@ return [
     'choose_occasion' => 'Choose Occasion',
     'personOccasionText' => 'Enter Occasion',
     'occasions' => 'Occasions',
+    'menuCopiedSuccessfully' => 'Your Menu At EasyMenu Moved Successfully',
+    'pullEasymenuMenu' => 'Pull Menu From EasyMenu',
+    'pullMenu' => 'Pull Menu',
+    'doYouHaveMenu' => 'Do You Have Menu At EasyMenu',
+    'pullMenuAlert' => 'When Click Pull Menu It Will Download Here !',
 ];

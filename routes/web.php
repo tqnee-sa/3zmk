@@ -394,6 +394,7 @@ Route::prefix('restaurant')->group(function () {
 
             // copy menu from easymenu to azmak menu
             Route::controller(MenuController::class)->group(function () {
+                Route::get('/integrations', 'integrations')->name('integrations');
                 Route::get('/copy_menu_from_easymenu_to_azmak/{id}', 'copy_menu')->name('copyMenu');
             });
         });
