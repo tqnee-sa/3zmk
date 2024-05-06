@@ -50,7 +50,7 @@
                 @php
                     $subscription = $user->az_subscription;
                 @endphp
-                @if($subscription == null)
+                @if($subscription == null or ($subscription and $subscription->status == 'new' and $subscription->payment == 'false'))
                     <div>
                         <i class="fas fa-money-bill bg-info"></i>
                         <div class="timeline-item">

@@ -41,7 +41,8 @@
                                     <select name="payment_method" class="form-control" onchange="showDiv(this)" required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
                                         <option value="bank"> @lang('messages.bank_transfer') </option>
-                                        <option value="online"> @lang('messages.online') </option>
+                                        <option value="online"> @lang('messages.myFatoourah') </option>
+                                        <option value="payKink"> @lang('messages.payLink') </option>
                                     </select>
                                     @if ($errors->has('payment_method'))
                                         <span class="help-block">
@@ -104,6 +105,8 @@
             if (element.value == 'online') {
                 document.getElementById('online').style.display = 'block';
             } else if (element.value == 'bank') {
+                document.getElementById('online').style.display = 'none';
+            }else{
                 document.getElementById('online').style.display = 'none';
             }
         }

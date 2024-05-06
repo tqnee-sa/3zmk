@@ -48,7 +48,7 @@ class AzmakSubscriptionController extends Controller
     public function show_payment_methods(Request $request, $id)
     {
         $this->validate($request, [
-            'payment_method' => 'required|in:bank,online',
+            'payment_method' => 'required|in:bank,online,payKink',
             'payment_type' => 'required_if:payment_method,online|in:2,6,11,14',
             'seller_code' => 'nullable|exists:az_seller_codes,seller_name',
         ]);
@@ -88,6 +88,7 @@ class AzmakSubscriptionController extends Controller
             $tax_value = $amount * $tax / 100;
             $amount += $tax_value;
         }
+
         if ($request->payment_method == 'bank') {
             if ($restaurant->az_subscription) {
                 $restaurant->az_subscription->update([
@@ -149,9 +150,8 @@ class AzmakSubscriptionController extends Controller
             $fatooraRes = MyFatoorah($token, $data);
             $result = json_decode($fatooraRes);
             if ($result != null and $result->IsSuccess === true) {
-                AzSubscription::updateOrCreate(
-                    ['restaurant_id' => $restaurant->id],
-                    [
+                if ($restaurant->az_subscription) {
+                    $restaurant->az_subscription->update([
                         'invoice_id' => $result->Data->InvoiceId,
                         'payment_type' => 'online',
                         'payment' => 'false',
@@ -160,6 +160,20 @@ class AzmakSubscriptionController extends Controller
                         'tax_value' => $tax_value,
                         'discount_value' => $discount,
                     ]);
+                } else {
+                    AzSubscription::create([
+                        'restaurant_id' => $restaurant->id,
+                        'payment_type' => 'online',
+                        'payment' => 'false',
+                        'status' => 'new',
+                        'subscription_type' => 'new',
+                        'price' => $amount,
+                        'seller_code_id' => $seller_code?->id,
+                        'tax_value' => $tax_value,
+                        'discount_value' => $discount,
+                        'invoice_id' => $result->Data->InvoiceId,
+                    ]);
+                }
                 AZRestaurantInfo::updateOrCreate(
                     ['restaurant_id' => $restaurant->id],
                 );
@@ -168,6 +182,34 @@ class AzmakSubscriptionController extends Controller
                 flash(trans('messages.paymentError'))->error();
                 return back();
             }
+        }elseif ($request->payment_method == 'payKink')
+        {
+            if ($restaurant->az_subscription) {
+                $restaurant->az_subscription->update([
+                    'payment_type' => 'online',
+                    'payment' => 'false',
+                    'price' => $amount,
+                    'seller_code_id' => $seller_code?->id,
+                    'tax_value' => $tax_value,
+                    'discount_value' => $discount,
+                ]);
+            } else {
+                AzSubscription::create([
+                    'restaurant_id' => $restaurant->id,
+                    'payment_type' => 'online',
+                    'payment' => 'false',
+                    'status' => 'new',
+                    'subscription_type' => 'new',
+                    'price' => $amount,
+                    'seller_code_id' => $seller_code?->id,
+                    'tax_value' => $tax_value,
+                    'discount_value' => $discount,
+                ]);
+            }
+            AZRestaurantInfo::updateOrCreate(
+                ['restaurant_id' => $restaurant->id],
+            );
+            return redirect()->to(payLinkAddInvoice($amount , $restaurant->email,$restaurant->phone_number,$restaurant->name_en,$restaurant->az_subscription->id , route('AZSubscriptionPayLinkStatus' , $restaurant->id)));
         }
     }
 
@@ -223,6 +265,33 @@ class AzmakSubscriptionController extends Controller
             flash(trans('messages.paymentError'))->error();
             return back();
         }
+    }
+
+    public function payLink_status($id)
+    {
+        $restaurant  = Restaurant::find($id);
+        $subscription = $restaurant->az_subscription;
+        // store operation at history
+        AzHistory::create([
+            'restaurant_id' => $subscription->restaurant_id,
+            'seller_code_id' => $subscription->seller_code_id,
+            'paid_amount' => $subscription->price,
+            'discount' => $subscription->discount_value,
+            'tax' => $subscription->tax_value,
+            'invoice_id' => $subscription->id,
+            'payment_type' => 'online',
+            'subscription_type' => $subscription->status == 'finished' ? 'renew' : 'new',
+            'details' => $subscription->status == 'finished' ? trans('messages.renew_subscription') : trans('messages.new_subscription'),
+        ]);
+        $subscription->update([
+            'status' => 'active',
+            'payment' => 'true',
+            'end_at' => Carbon::now()->addYear(),
+            'subscription_type' => $subscription->status == 'finished' ? 'renew' : 'new',
+        ]);
+        $this->create_default_data($subscription->restaurant_id);
+        flash(trans('messages.paymentDoneSuccessfully'))->success();
+        return redirect()->route('restaurant.home');
     }
 
     public function create_default_data($restaurant_id)

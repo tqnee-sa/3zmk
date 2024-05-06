@@ -48,6 +48,7 @@
                             <input type='hidden' name='_token' value='{{Session::token()}}'>
 
                             <div class="card-body">
+                                <h4 class="text-center"> @lang('messages.azmak_subscription_info') </h4>
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.az_subscription_type') </label>
                                     <select name="type" class="form-control">
@@ -87,6 +88,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
+                                <h4 class="text-center"> @lang('messages.azmak_payment_info') </h4>
+                                <p> 1- (@lang('messages.myFatoourah')) </p>
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.token_payment_type') </label>
                                     <select name="online_payment_type" class="form-control">
@@ -109,7 +113,40 @@
                                         </span>
                                     @endif
                                 </div>
+                                <p> 2- (@lang('messages.payLink') </p>
+                                <div class="form-group">
+                                    <label class="control-label"> @lang('messages.token_payment_type') </label>
+                                    <select name="pay_link_payment_type" class="form-control">
+                                        <option disabled selected> @lang('messages.choose_one') </option>
+                                        <option value="test" {{$settings->pay_link_payment_type == 'test' ? 'selected' : ''}}> @lang('messages.test') </option>
+                                        <option value="online" {{$settings->pay_link_payment_type == 'online' ? 'selected' : ''}}> @lang('messages.online') </option>
+                                    </select>
+                                    @if ($errors->has('pay_link_payment_type'))
+                                        <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('pay_link_payment_type') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label"> @lang('messages.pay_link_app_id') </label>
+                                    <input name="pay_link_app_id" value="{{$settings->pay_link_app_id}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_app_id')">
+                                    @if ($errors->has('pay_link_app_id'))
+                                        <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('pay_link_app_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label"> @lang('messages.pay_link_secret_key') </label>
+                                    <input name="pay_link_secret_key" value="{{$settings->pay_link_secret_key}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_secret_key')">
+                                    @if ($errors->has('pay_link_secret_key'))
+                                        <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('pay_link_secret_key') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <hr>
+                                <h4 class="text-center"> @lang('messages.az_orders') </h4>
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.order_finished_days') </label>
                                     <div class="row">

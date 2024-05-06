@@ -279,7 +279,7 @@ function UploadVideoEdit($file, $old)
 //}
 function UploadImageEdit($inputRequest, $prefix, $folderNam, $oldImage, $height = null, $width = 1500)
 {
-    $fixed_images = array('default_logo.jpg', 'default1.png' , 'default2.png', 'fish.png', 'egg.png', 'seeds.png', 'jamp.png', 'milk.png', 'ghrdl.png', 'rghoyat.png', 'foul.png', 'kbret.png', 'krfs.png', 'mksrat.png', 'soya.png', 'trms.png' , 'best.png' , 'new.png', 'Best_selling.png', 'New1.png', 'Chef.png', 'Offer.png', 'Coming_soon.png', 'Coming_soon1.png', 'Ice.png', 'Winter.png', 'Ice_man.png', 'Spicy.png', 'gdeed.png' , 'default.jpg');
+    $fixed_images = array('default_logo.jpg', 'default1.png', 'default2.png', 'fish.png', 'egg.png', 'seeds.png', 'jamp.png', 'milk.png', 'ghrdl.png', 'rghoyat.png', 'foul.png', 'kbret.png', 'krfs.png', 'mksrat.png', 'soya.png', 'trms.png', 'best.png', 'new.png', 'Best_selling.png', 'New1.png', 'Chef.png', 'Offer.png', 'Coming_soon.png', 'Coming_soon1.png', 'Ice.png', 'Winter.png', 'Ice_man.png', 'Spicy.png', 'gdeed.png', 'default.jpg');
     if (!in_array($oldImage, $fixed_images)) {
         @unlink(public_path('/' . $folderNam . '/' . $oldImage));
     }
@@ -4121,4 +4121,148 @@ function edfa_payment($merchant_key, $password, $amount, $success_url, $order_id
     $httpcode = curl_getinfo($getter, CURLINFO_HTTP_CODE);
     $result = json_decode($result);
     return $result->redirect_url;
+}
+
+function payLinkToken($type,$appId , $secretKey)
+{
+    $basURL = ($type == 'test' ? "https://restpilot.paylink.sa" : " https://restapi.paylink.sa") . "/api/auth";
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+    );
+
+    $data = array(
+        "apiId" => $appId,
+        "secretKey" => $secretKey,
+        "persistToken" => "false"
+    );
+    $order = json_encode($data);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $order,
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        return $response->id_token;
+    }
+}
+
+function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
+{
+    $setting = AzmakSetting::first();
+    $basURL = ($setting->pay_link_payment_type == 'test' ? "https://restpilot.paylink.sa" : " https://restapi.paylink.sa") . "/api/addInvoice";
+    $token = payLinkToken($setting->pay_link_payment_type , $setting->pay_link_app_id , $setting->pay_link_secret_key);
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+        'Authorization: Bearer ' . $token,
+    );
+
+    $data = array(
+        "amount" => $amount,
+        "callBackUrl" => $url,
+        "clientEmail" => $email,
+        "clientMobile" => $phone,
+        "clientName" => $name,
+        "note" => "This invoice is for VIP client.",
+        "orderNumber" => $orderNo,
+        "products" => array(
+            array(
+                "description" => "Brown Hand bag leather for ladies",
+                "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
+                "isDigital" => true,
+                "price" => $amount,
+                "qty" => 1,
+                "title" => "Hand bag"
+            )
+        ),
+    );
+
+    $order = json_encode($data);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $order,
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        return $response->url;
+    }
+}
+
+function payLinkPayment($token)
+{
+    $basURL = "https://restpilot.paylink.sa/api/payInvoice";
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+        'Authorization: Bearer ' . $token,
+    );
+
+    $data = array(
+        "amount" => 5,
+        "callBackUrl" => url('/payLinkSuccess'),
+        "clientEmail" => "nourmuhammed20121994@gmail.com",
+        "clientMobile" => "0509200900",
+        "clientName" => "Zaid Matooq",
+        "note" => "This invoice is for VIP client.",
+        "orderNumber" => "MERCHANT-ANY-UNIQUE-ORDER-NUMBER-123123123",
+        "card" => array(
+            "expiry" => array(
+                "month" => "04",
+                "year" => "28"
+            ),
+            "number" => "4111111111111111",
+            "securityCode" => "446"
+        ),
+        "products" => array(
+            array(
+                "description" => "Brown Hand bag leather for ladies",
+                "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
+                "isDigital" => true,
+                "price" => 150,
+                "qty" => 1,
+                "title" => "Hand bag"
+            )
+        ),
+    );
+    $order = json_encode($data);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $order,
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        dd($response);
+        return $response->transaction->url;
+    }
 }

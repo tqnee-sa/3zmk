@@ -16,5 +16,8 @@ class AzmakSetting extends Model
         'online_payment_type',
         'online_token',
         'order_finished_days',
+        'pay_link_payment_type',
+        'pay_link_app_id',
+        'pay_link_secret_key',
     ];
 }

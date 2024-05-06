@@ -368,4 +368,9 @@ return [
     'pullMenu' => 'Pull Menu',
     'doYouHaveMenu' => 'Do You Have Menu At EasyMenu',
     'pullMenuAlert' => 'When Click Pull Menu It Will Download Here !',
+    'azmak_subscription_info' => 'Azmak Subscription Info',
+    'azmak_payment_info' => 'Azmak Online Payment Info',
+    'payLink' => 'Pay link Company',
+    'pay_link_app_id' => 'app id',
+    'pay_link_secret_key' => 'secret key',
 ];

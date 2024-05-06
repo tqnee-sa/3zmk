@@ -99,6 +99,12 @@ use App\Http\Controllers\EmployeeController\Order\OrderController as OrderOrderC
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/payLinkSuccess' , function (){
+    echo "success payLink Payment";
+});
+Route::get('/payLinkError' , function (){
+    echo "error payLink Payment";
+});
 
 Route::get('locale/{locale}', function (Request $request, $locale) {
     session()->put('locale', $locale);
@@ -209,6 +215,7 @@ Route::prefix('restaurant')->group(function () {
             Route::get('/Azmak/payment_menthod/{id}','show_payment_methods')->name('AzmakPaymentMethod');
             Route::post('/Azmak/bank_transfer/{id}','bank_transfer')->name('AzmakBankTransfer');
             Route::get('/AZSubscriptionStatusF/{id1?}/{id2?}', 'subscription_status')->name('AZSubscriptionStatusF');
+            Route::get('/AZSubscriptionPayLinkStatus/{res_id}', 'payLink_status')->name('AZSubscriptionPayLinkStatus');
         });
     });
 

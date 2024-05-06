@@ -29,14 +29,20 @@ class SettingController extends Controller
             'online_payment_type'  => 'required',
             'online_token'  => 'required',
             'order_finished_days' => 'required',
+            'pay_link_payment_type' => 'nullable|in:test,online',
+            'pay_link_app_id'       => 'nullable',
+            'pay_link_secret_key'   => 'nullable',
         ]);
         $settings->update([
             'subscription_type'  => $request->type,
             'subscription_amount'  => $request->subscription_amount,
-            'tax'  => $request->tax,
+            'tax'        => $request->tax,
             'online_payment_type' => $request->online_payment_type,
             'online_token'  => $request->online_token,
             'order_finished_days'  => $request->order_finished_days,
+            'pay_link_payment_type' => $request->pay_link_payment_type,
+            'pay_link_app_id'       => $request->pay_link_app_id,
+            'pay_link_secret_key'   => $request->pay_link_secret_key,
         ]);
         flash(trans('messages.updated'))->success();
         return redirect()->back();

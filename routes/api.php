@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => ['cors', 'localization']], function () {
-
+    Route::get('/getApiToken' , function (){
+        return redirect()->to(payLinkAddInvoice(9 , 'test@email.com' , '050000000' , 'nour' , 105));
+    });
 });
