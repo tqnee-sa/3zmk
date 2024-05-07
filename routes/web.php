@@ -165,6 +165,7 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::get('user/orders/{order_id}/status/{id1?}/{id2?}', 'check_order_fatoourah_status')->name('AZOrderPaymentFatoourahStatus');
         Route::get('user/orders/{order_id}/tap_status', 'check_order_tap_status')->name('AZOrderPaymentTapStatus');
         Route::get('user/orders/{order_id}/edfa_status', 'edfa_status')->name('AZOrderPaymentEdfa_status');
+        Route::get('user/orders/{order_id}/paylink_status', 'check_order_payLink_status')->name('check_order_payLink_status');
     });
 });
 

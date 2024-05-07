@@ -51,6 +51,9 @@ class OrderController extends Controller
         if ($order->restaurant->a_z_orders_payment_type == 'tap') {
             // tap payment
             return redirect()->to(tap_payment($order->restaurant->a_z_tap_token, $order->total_price, $order->user->name, $order->user->email, $order->restaurant->country->code, $order->user->phone_number, route('AZOrderPaymentTapStatus', $order->id), $order->order_id));
+        } elseif ($order->restaurant->a_z_orders_payment_type == 'payLink') {
+            // paylink payment
+            return redirect()->to(payLinkAddInvoiceOrders($order->restaurant, $order->total_price , $order->user->email , $order->user->phone_number ,$order->user->name , $order->id , route('check_order_payLink_status' , $order->id)));
         } elseif ($order->restaurant->a_z_orders_payment_type == 'edfa') {
             // edfa payment
             $payment_url = edfa_payment($order->restaurant->a_z_edfa_merchant, $order->restaurant->a_z_edfa_password, $order->total_price, route('AZOrderPaymentEdfa_status', $order->id), $order->order_id, $order->user->name, $order->user->email);
@@ -140,6 +143,17 @@ class OrderController extends Controller
     }
 
     public function check_order_tap_status(Request $request, $id)
+    {
+        $order = AZOrder::find($id);
+        // calculate order commission as restaurant az orders commission
+        $commission_value = ($order->restaurant->az_commission * $order->total_price) / 100;
+        $order->update([
+            'status' => 'active',
+            'commission' => $commission_value,
+        ]);
+        return redirect()->to($this->whats_redirect($order));
+    }
+    public function check_order_payLink_status(Request $request, $id)
     {
         $order = AZOrder::find($id);
         // calculate order commission as restaurant az orders commission

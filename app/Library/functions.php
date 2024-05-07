@@ -4208,6 +4208,56 @@ function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
         return $response->url;
     }
 }
+function payLinkAddInvoiceOrders($restaurant , $amount , $email,$phone,$name,$orderNo,$url)
+{
+    $basURL = ($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? "https://restpilot.paylink.sa" : " https://restapi.paylink.sa") . "/api/addInvoice";
+    $token = payLinkToken('test' , $restaurant->pay_link_app_id , $restaurant->pay_link_secret_key);
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+        'Authorization: Bearer ' . $token,
+    );
+
+    $data = array(
+        "amount" => $amount,
+        "callBackUrl" => $url,
+        "clientEmail" => $email,
+        "clientMobile" => $phone,
+        "clientName" => $name,
+        "note" => "This invoice is for VIP client.",
+        "orderNumber" => $orderNo,
+        "products" => array(
+            array(
+                "description" => "Brown Hand bag leather for ladies",
+                "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
+                "isDigital" => true,
+                "price" => $amount,
+                "qty" => 1,
+                "title" => "Hand bag"
+            )
+        ),
+    );
+
+    $order = json_encode($data);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $order,
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        return $response->url;
+    }
+}
 
 function payLinkPayment($token)
 {

@@ -64,6 +64,7 @@
                                         <option value="myFatoourah" {{$restaurant->a_z_orders_payment_type == 'myFatoourah' ? 'selected' : ''}}> @lang('messages.myFatoourah') </option>
                                         <option value="tap" {{$restaurant->a_z_orders_payment_type == 'tap' ? 'selected' : ''}}> @lang('messages.tap') </option>
                                         <option value="edfa" {{$restaurant->a_z_orders_payment_type == 'edfa' ? 'selected' : ''}}> @lang('messages.edfa') </option>
+                                        <option value="payLink" {{$restaurant->a_z_orders_payment_type == 'payLink' ? 'selected' : ''}}> @lang('messages.payLink') </option>
                                     </select>
                                     @if ($errors->has('a_z_orders_payment_type'))
                                         <span class="help-block">
@@ -113,6 +114,26 @@
                                         @if ($errors->has('a_z_edfa_password'))
                                             <span class="help-block">
                                             <strong style="color: red;">{{ $errors->first('a_z_edfa_password') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div id="payLink" style="display: {{$restaurant->a_z_orders_payment_type == 'payLink' ? 'block' : 'none'}}">
+                                    <div class="form-group">
+                                        <label class="control-label"> @lang('messages.pay_link_app_id') </label>
+                                        <input name="pay_link_app_id" value="{{$restaurant->pay_link_app_id}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_app_id')">
+                                        @if ($errors->has('pay_link_app_id'))
+                                            <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('pay_link_app_id') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"> @lang('messages.pay_link_secret_key') </label>
+                                        <input name="pay_link_secret_key" value="{{$restaurant->pay_link_secret_key}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_secret_key')">
+                                        @if ($errors->has('pay_link_secret_key'))
+                                            <span class="help-block">
+                                            <strong style="color: red;">{{ $errors->first('pay_link_secret_key') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -174,16 +195,27 @@
                     document.getElementById('myFatoourah').style.display = 'block';
                     document.getElementById('edfa').style.display = 'none';
                     document.getElementById('tap').style.display = 'none';
+                    document.getElementById('payLink').style.display = 'none';
                 }else if ($(this).val() == 'tap'){
                     document.getElementById('tap').style.display = 'block';
                     document.getElementById('myFatoourah').style.display = 'none';
                     document.getElementById('edfa').style.display = 'none';
+                    document.getElementById('payLink').style.display = 'none';
                 }else if($(this).val() == 'edfa')
                 {
                     document.getElementById('edfa').style.display = 'block';
                     document.getElementById('tap').style.display = 'none';
                     document.getElementById('myFatoourah').style.display = 'none';
+                    document.getElementById('payLink').style.display = 'none';
                 }
+                else if($(this).val() == 'payLink')
+                {
+                    document.getElementById('edfa').style.display = 'none';
+                    document.getElementById('tap').style.display = 'none';
+                    document.getElementById('myFatoourah').style.display = 'none';
+                    document.getElementById('payLink').style.display = 'block';
+                }
+
             });
         });
     </script>
