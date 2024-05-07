@@ -228,6 +228,8 @@
                                             @lang('messages.tap')
                                         @elseif($restaurant->a_z_orders_payment_type == 'edfa')
                                             @lang('messages.edfa')
+                                        @elseif($restaurant->a_z_orders_payment_type == 'payLink')
+                                            @lang('messages.payLink')
                                         @endif
                                     </td>
                                     <td class="control_progress">
