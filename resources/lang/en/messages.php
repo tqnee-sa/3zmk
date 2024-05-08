@@ -379,4 +379,5 @@ return [
     'add_product' => 'Add product',
     'add_sens' => 'Add Sensetivity',
     'add_poster' => 'Add Sensetivity',
+    'add_category' => 'Add Category',
 ];

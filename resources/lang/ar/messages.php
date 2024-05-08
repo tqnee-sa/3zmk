@@ -379,7 +379,8 @@ return [
     'activate' => 'تفعيل',
     'stop' => 'إيقاف',
     'noOnlinePayment' => 'لا يوجد دفع الكتروني',
-    'add_product' => 'أنشاء منتج',
-    'add_sens' => 'أنشاء حساسية',
-    'add_poster' => 'أنشاء ملصق',
+    'add_product' => 'إنشاء منتج',
+    'add_sens' => 'إنشاء حساسية',
+    'add_poster' => 'إنشاء ملصق',
+    'add_category' => 'إنشاء تصنيف',
 ];
