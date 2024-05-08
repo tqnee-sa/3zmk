@@ -41,15 +41,16 @@ class AzmakSubscriptionController extends Controller
             return redirect()->back();
         } elseif ($settings->subscription_type == 'paid') {
             // 2 - paid Payment
-            return view('restaurant.payments.payment_method', compact('restaurant'));
+            $setting = AzmakSetting::first();
+            return view('restaurant.payments.payment_method', compact('restaurant' , 'setting'));
         }
     }
 
     public function show_payment_methods(Request $request, $id)
     {
         $this->validate($request, [
-            'payment_method' => 'required|in:bank,online,payKink',
-            'payment_type' => 'required_if:payment_method,online|in:2,6,11,14',
+            'payment_method' => 'required|in:bank,online',
+//            'payment_type' => 'required_if:payment_method,online|in:2,6,11,14',
             'seller_code' => 'nullable|exists:az_seller_codes,seller_name',
         ]);
         $restaurant = Restaurant::findOrFail($id);
@@ -117,7 +118,8 @@ class AzmakSubscriptionController extends Controller
             );
             $banks = Bank::whereNull('restaurant_id')->where('country_id', $restaurant->country_id)->get();
             return view('restaurant.payments.bank_transfer', compact('restaurant', 'banks', 'amount', 'discount', 'tax', 'tax_value'));
-        } elseif ($request->payment_method == 'online') {
+        }
+        elseif ($request->payment_method == 'online' and $setting->online_payment == 'myFatoourah') {
             $data = array(
                 'PaymentMethodId' => $request->payment_type,
                 'CustomerName' => $name,
@@ -182,7 +184,7 @@ class AzmakSubscriptionController extends Controller
                 flash(trans('messages.paymentError'))->error();
                 return back();
             }
-        }elseif ($request->payment_method == 'payKink')
+        }elseif ($request->payment_method == 'online' and $setting->online_payment == 'paylink')
         {
             if ($restaurant->az_subscription) {
                 $restaurant->az_subscription->update([

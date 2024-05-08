@@ -372,8 +372,11 @@ return [
     'doYouHaveMenu' => 'هل لديك منيو في ايزي منيو .؟',
     'pullMenuAlert' => 'عند الضغط علي سحب المنيو سيتم نقل المنيو من ايزي منيو الي هنا !',
     'azmak_subscription_info' => 'بيانات اشتراك عازمك',
-    'azmak_payment_info' => 'بيانات الدفع الاونلاين في عازمك',
+    'azmak_payment_info' => 'بيانات الدفع في عازمك',
     'payLink' => 'شركة باي لينك  (pay link)',
     'pay_link_app_id' => 'app id',
     'pay_link_secret_key' => 'secret key',
+    'activate' => 'تفعيل',
+    'stop' => 'إيقاف',
+    'noOnlinePayment' => 'لا يوجد دفع الكتروني',
 ];

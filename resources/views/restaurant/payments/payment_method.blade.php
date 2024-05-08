@@ -1,7 +1,7 @@
 @extends('restaurant.lteLayout.master')
 
 @section('title')
-     @lang('messages.azSubscription')
+    @lang('messages.azSubscription')
 @endsection
 
 @section('styles')
@@ -38,11 +38,16 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.payment_method') </label>
-                                    <select name="payment_method" class="form-control" onchange="showDiv(this)" required>
+                                    <select name="payment_method" class="form-control" onchange="showDiv(this)"
+                                            required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
-                                        <option value="bank"> @lang('messages.bank_transfer') </option>
-                                        <option value="online"> @lang('messages.myFatoourah') </option>
-                                        <option value="payKink"> @lang('messages.payLink') </option>
+                                        @if($setting->bank_transfer == 'true')
+                                            <option value="bank"> @lang('messages.bank_transfer') </option>
+                                        @endif
+                                        @if($setting->online_payment != 'none')
+                                            <option value="online"> @lang('messages.online') </option>
+                                        @endif
+                                        {{--                                        <option value="payKink"> @lang('messages.payLink') </option>--}}
                                     </select>
                                     @if ($errors->has('payment_method'))
                                         <span class="help-block">
@@ -102,11 +107,11 @@
 @section('scripts')
     <script>
         function showDiv(element) {
-            if (element.value == 'online') {
+            if (element.value == 'online' && {{$setting->online_payment == 'myFatoourah'}}) {
                 document.getElementById('online').style.display = 'block';
             } else if (element.value == 'bank') {
                 document.getElementById('online').style.display = 'none';
-            }else{
+            } else {
                 document.getElementById('online').style.display = 'none';
             }
         }

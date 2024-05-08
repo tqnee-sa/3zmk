@@ -19,5 +19,7 @@ class AzmakSetting extends Model
         'pay_link_payment_type',
         'pay_link_app_id',
         'pay_link_secret_key',
+        'bank_transfer',
+        'online_payment',
     ];
 }

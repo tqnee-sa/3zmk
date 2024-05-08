@@ -26,6 +26,8 @@ class SettingController extends Controller
         $this->validate($request , [
             'type'  => 'required',
             'subscription_amount'  => 'required',
+            'bank_transfer'       => 'nullable',
+            'online_payment'      => 'nullable',
             'online_payment_type'  => 'required',
             'online_token'  => 'required',
             'order_finished_days' => 'required',
@@ -37,6 +39,8 @@ class SettingController extends Controller
             'subscription_type'  => $request->type,
             'subscription_amount'  => $request->subscription_amount,
             'tax'        => $request->tax,
+            'bank_transfer'      => $request->bank_transfer,
+            'online_payment'     => $request->online_payment,
             'online_payment_type' => $request->online_payment_type,
             'online_token'  => $request->online_token,
             'order_finished_days'  => $request->order_finished_days,
