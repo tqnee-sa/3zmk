@@ -116,7 +116,7 @@ return [
     'about_app' => 'About App',
     'account_settings' => 'account setting',
     'profile' => 'Profile',
-    'side_3' => 'Menu Options',
+    'side_3' => 'Product List',
     'SR' => 'SR',
     'no_products' => 'No Products Found !',
     'product_details' => 'Product Details',
@@ -376,4 +376,7 @@ return [
     'activate' => 'Activate',
     'stop' => 'Stop',
     'noOnlinePayment' => 'No Online Payment',
+    'add_product' => 'Add product',
+    'add_sens' => 'Add Sensetivity',
+    'add_poster' => 'Add Sensetivity',
 ];

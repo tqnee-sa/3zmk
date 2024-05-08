@@ -42,7 +42,7 @@
                 <h3>
                     <a href="{{route('posters.create')}}" class="btn">
                         <i class="fa fa-plus"></i>
-                        @lang('messages.add_new')
+                        @lang('messages.add_poster')
                     </a>
                 </h3>
                 <div class="card">
