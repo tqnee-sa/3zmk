@@ -38,17 +38,21 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="{{route('RestaurantStoreAzCommission' , $restaurant->id)}}" method="post" enctype="multipart/form-data">
-                            <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+                        <form role="form" action="{{route('RestaurantStoreAzCommission' , $restaurant->id)}}"
+                              method="post" enctype="multipart/form-data">
+                            <input type='hidden' name='_token' value='{{Session::token()}}'>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.commission_value') </label>
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <input name="commission_value" type="text" class="form-control" value="{{old('commission_value')}}" placeholder="@lang('messages.commission_value')">
+                                            <input name="commission_value" type="text" class="form-control"
+                                                   value="{{old('commission_value')}}"
+                                                   placeholder="@lang('messages.commission_value')">
                                             @if ($errors->has('commission_value'))
                                                 <span class="help-block">
-                                                    <strong style="color: red;">{{ $errors->first('commission_value') }}</strong>
+                                                    <strong
+                                                        style="color: red;">{{ $errors->first('commission_value') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -59,7 +63,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"> @lang('messages.payment_method') </label>
-                                    <select name="payment_method" class="form-control" onchange="showDiv(this)" required>
+                                    <select name="payment_method" class="form-control" onchange="showDiv(this)"
+                                            required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
                                         @if($setting->bank_transfer == 'true')
                                             <option value="bank"> @lang('messages.bank_transfer') </option>
@@ -128,25 +133,27 @@
                                     </div>
                                 </div>
                                 <div id="online" style="display: none">
-                                    <div class="form-group">
-                                        <label class="control-label"> @lang('messages.online_payment_type') </label>
-                                        <select name="payment_type" class="form-control" required>
-                                            <option disabled selected> @lang('messages.choose_one') </option>
-                                            {{--                                        <option value="1"> @lang('messages.kent') </option>--}}
-                                            <option value="2"> @lang('messages.visa') </option>
-                                            {{--                                        <option value="3"> @lang('messages.amex') </option>--}}
-                                            {{--                                        <option value="5"> @lang('messages.benefit') </option>--}}
-                                            <option value="6"> @lang('messages.mada') </option>
-                                            <option value="11"> @lang('messages.apple_pay') </option>
-                                            <option value="14"> @lang('messages.stc_pay') </option>
-                                        </select>
-                                        @if ($errors->has('payment_type'))
-                                            <span class="help-block">
+                                    @if($setting->online_payment == 'myFatoourah')
+                                        <div class="form-group">
+                                            <label class="control-label"> @lang('messages.online_payment_type') </label>
+                                            <select name="payment_type" class="form-control" required>
+                                                <option disabled selected> @lang('messages.choose_one') </option>
+                                                {{--                                        <option value="1"> @lang('messages.kent') </option>--}}
+                                                <option value="2"> @lang('messages.visa') </option>
+                                                {{--                                        <option value="3"> @lang('messages.amex') </option>--}}
+                                                {{--                                        <option value="5"> @lang('messages.benefit') </option>--}}
+                                                <option value="6"> @lang('messages.mada') </option>
+                                                <option value="11"> @lang('messages.apple_pay') </option>
+                                                <option value="14"> @lang('messages.stc_pay') </option>
+                                            </select>
+                                            @if ($errors->has('payment_type'))
+                                                <span class="help-block">
                                                 <strong
                                                     style="color: red;">{{ $errors->first('payment_type') }}</strong>
                                             </span>
-                                        @endif
-                                    </div>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -171,15 +178,15 @@
 
 
     <script>
-        $(document).ready(function() {
-            $(document).on('submit', 'form', function() {
+        $(document).ready(function () {
+            $(document).on('submit', 'form', function () {
                 $('button').attr('disabled', 'disabled');
             });
         });
     </script>
     <script>
         function showDiv(element) {
-            if (element.value == 'online' && {{$setting->online_payment == 'myFatoourah'}}) {
+            if (element.value == 'online') {
                 document.getElementById('online').style.display = 'block';
                 document.getElementById('bank').style.display = 'none';
             } else if (element.value == 'bank') {
