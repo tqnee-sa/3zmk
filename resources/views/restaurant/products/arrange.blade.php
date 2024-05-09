@@ -55,7 +55,7 @@
                                     <select name="arrange" class="form-control" required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
                                         @for($i=1; $i <= 50 ; $i++)
-                                            <?php $check = \App\Models\Product::whereArrange($i)
+                                            <?php $check = \App\Models\Restaurant\Azmak\AZProduct::whereArrange($i)
                                                 ->where('branch_id' , $product->branch_id)
                                                 ->where('restaurant_id' , $product->restaurant_id)
                                                 ->where('menu_category_id' , $product->menu_category_id)
