@@ -111,6 +111,7 @@ Route::get('/maximum_az_commission_limit' , function (){
     foreach ($restaurants as $restaurant)
     {
         $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->sum('commission_value');
+        dd($required_commissions);
         if ($required_commissions > $restaurant->maximum_az_commission_limit)
         {
             $restaurant->az_subscription->update([
