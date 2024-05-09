@@ -31,7 +31,7 @@ class AZCommissionLimit extends Command
         $restaurants = Restaurant::whereNotNull('maximum_az_commission_limit')->get();
         foreach ($restaurants as $restaurant)
         {
-            $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->wherePayment('true')->sum('commission_value');
+            $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions()->wherePayment('true')->sum('commission_value');
             if ($required_commissions > $restaurant->maximum_az_commission_limit)
             {
                 $restaurant->az_subscription->update([
