@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Restaurant;
-use App\Models\AzRestaurantCommission;
 
 class AZCommissionLimit extends Command
 {
@@ -27,14 +26,15 @@ class AZCommissionLimit extends Command
      */
     public function handle()
     {
-        \Log::info('check restaurant limit commissions');
+        \Log::info('check restaurant commission limit ');
         // get restaurant that have maximum_az_commission_limit
         $restaurants = Restaurant::whereNotNull('maximum_az_commission_limit')->get();
         foreach ($restaurants as $restaurant)
         {
-            $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - AzRestaurantCommission::whereRestaurantId($restaurant->id)->sum('commission_value');
+            $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->sum('commission_value');
             if ($required_commissions > $restaurant->maximum_az_commission_limit)
             {
+                \Log::info('restaurant should be updated');
                 $restaurant->az_subscription->update([
                     'status' => 'commission_hold',
                 ]);
