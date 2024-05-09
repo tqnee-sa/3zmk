@@ -108,9 +108,13 @@ class SettingController extends Controller
     {
         $AzHistory = AzCommissionHistory::findOrFail($id);
         // delete commission from restaurant
-        AzRestaurantCommission::whereInvoiceId($AzHistory->invoice_id)
+        $commission = AzRestaurantCommission::whereInvoiceId($AzHistory->invoice_id)
             ->orWhere('transfer_photo', $AzHistory->transfer_photo)
-            ->first()->delete();
+            ->first();
+        if ($commission)
+        {
+            $commission->delete();
+        }
         $AzHistory->delete();
         flash(trans('messages.deleted'))->success();
         return redirect()->back();
