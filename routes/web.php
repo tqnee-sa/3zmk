@@ -106,6 +106,22 @@ Route::get('/payLinkError' , function (){
     echo "error payLink Payment";
 });
 
+Route::get('/maximum_az_commission_limit' , function (){
+    $restaurants = \App\Models\Restaurant::whereNotNull('maximum_az_commission_limit')->get();
+    foreach ($restaurants as $restaurant)
+    {
+        $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->sum('commission_value');
+        if ($required_commissions > $restaurant->maximum_az_commission_limit)
+        {
+            \Log::info('restaurant should be updated');
+            $restaurant->az_subscription->update([
+                'status' => 'commission_hold',
+            ]);
+        }
+    }
+
+});
+
 Route::get('locale/{locale}', function (Request $request, $locale) {
     session()->put('locale', $locale);
     App::setLocale($locale);
