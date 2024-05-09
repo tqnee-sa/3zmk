@@ -26,6 +26,7 @@ class AZCommissionLimit extends Command
      */
     public function handle()
     {
+        \Log::info('check restaurant limit commissions');
         // get restaurant that have maximum_az_commission_limit
         $restaurants = Restaurant::whereNotNull('maximum_az_commission_limit')->get();
         foreach ($restaurants as $restaurant)
