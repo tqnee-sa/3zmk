@@ -18,13 +18,14 @@ class RestaurantAZCommissionController extends Controller
     public function commissions_history($id)
     {
         $restaurant = Restaurant::findOrFail($id);
-        $histories = $restaurant->az_commissions()->wherePayment('true')->paginate(100);
+        $histories = $restaurant->az_commissions()->paginate(100);
         return view('restaurant.commission.commission_history' , compact('restaurant' , 'histories'));
     }
     public function add_commissions_history($id){
         $restaurant = Restaurant::findOrFail($id);
         $banks = Bank::whereNull('restaurant_id')->where('country_id', $restaurant->country_id)->get();
-        return view('restaurant.commission.create_commission_history' , compact('restaurant' , 'banks'));
+        $setting = AzmakSetting::first();
+        return view('restaurant.commission.create_commission_history' , compact('restaurant' , 'banks' , 'setting'));
     }
 
     public function store_commissions_history(Request $request , $id)
@@ -35,8 +36,16 @@ class RestaurantAZCommissionController extends Controller
             'payment_method'   => 'required|in:bank,online',
             'bank_id'          => 'required_if:payment_method,bank',
             'transfer_photo'   => 'required_if:payment_method,bank|mimes:jpg,jpeg,png,gif,tif,psd,webp,bmp|max:5000',
-            'payment_type'     => 'required_if:payment_method,online'
+//            'payment_type'     => 'required_if:payment_method,online'
         ]);
+
+        $setting = AzmakSetting::first();
+
+        if ($request->commission_value < 5)
+        {
+            flash(trans('messages.limitCommission'))->error();
+            return  redirect()->back();
+        }
 
         if ($request->payment_method == 'bank')
         {
@@ -49,7 +58,7 @@ class RestaurantAZCommissionController extends Controller
                 'commission_value'  => $request->commission_value,
                 'transfer_photo'    => UploadImage($request->file('transfer_photo'), 'photo', '/uploads/commissions_transfers'),
             ]);
-        }elseif ($request->payment_method == 'online')
+        }elseif ($request->payment_method == 'online' and $setting->online_payment == 'myFatoourah')
         {
             $setting = AzmakSetting::first();
             $name = $restaurant->name_en;
@@ -98,6 +107,16 @@ class RestaurantAZCommissionController extends Controller
                 flash(trans('messages.paymentError'))->error();
                 return back();
             }
+        }  elseif ($request->payment_method == 'online' and $setting->online_payment == 'paylink')
+        {
+            $commission = AzRestaurantCommission::create([
+                'restaurant_id'      => $restaurant->id,
+                'payment_type'       => 'online',
+                'commission_value'   => $request->commission_value,
+                'invoice_id'         => $restaurant->id,
+                'payment'            => 'false',
+            ]);
+            return redirect()->to(payLinkAddInvoice($request->commission_value , $restaurant->email,$restaurant->phone_number,$restaurant->name_en,$restaurant->az_subscription->id , route('AZPayLinkCommissionStatus' , $commission->id)));
         }
         flash(trans('messages.CommissionAddedSuccessfully'))->success();
         return redirect()->route('RestaurantAzCommissionsHistory' , $restaurant->id);
@@ -120,6 +139,36 @@ class RestaurantAZCommissionController extends Controller
                 'paid_amount' => $commission->commission_value,
                 'payment_type' => 'online',
                 'invoice_id' => $InvoiceId,
+            ]);
+            $commission->update([
+                'payment' => 'true',
+            ]);
+            $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions()->wherePayment('true')->sum('commission_value');
+            if ($required_commissions < $restaurant->maximum_az_commission_limit)
+            {
+                $restaurant->az_subscription->update([
+                    'status' => 'active',
+                ]);
+            }
+            flash(trans('messages.paymentDoneSuccessfully'))->success();
+            return redirect()->route('restaurant.home');
+        } else {
+            flash(trans('messages.paymentError'))->error();
+            return back();
+        }
+    }
+    public function payLink_commission_status(Request $request , $id)
+    {
+        $commission = AzRestaurantCommission::find($id);
+        if ($commission) {
+            $restaurant = $commission->restaurant;
+            // store operation at history
+            // store operation at history
+            AzCommissionHistory::create([
+                'restaurant_id' => $commission->restaurant_id,
+                'paid_amount' => $commission->commission_value,
+                'payment_type' => 'online',
+                'invoice_id' => $request->transactionNo,
             ]);
             $commission->update([
                 'payment' => 'true',

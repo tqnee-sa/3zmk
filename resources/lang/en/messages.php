@@ -380,4 +380,8 @@ return [
     'add_sens' => 'Add Sensetivity',
     'add_poster' => 'Add Sensetivity',
     'add_category' => 'Add Category',
+    'confirmed' => 'Confirmed',
+    'waiting_confirmation' => 'Waiting Confirmation',
+    'all'  => 'All',
+    'limitCommission' => 'Dear, the minimum bill allowed is 5.0 riyals',
 ];

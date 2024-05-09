@@ -127,6 +127,23 @@
                 </div>
                 <div class="col-lg-4 col-6">
                     <!-- small box -->
+                    <a href="{{ url('/admin/az_bank_transfers') }}">
+
+                        <div class="small-box ">
+                            <!--bg-blue-->
+                            <div class="inner">
+                                <p>
+                                    @lang('messages.subscription_bank_transfers')
+                                </p>
+                                <h3>
+                                    {{\App\Models\AzSubscription::whereNotNull('transfer_photo')->wherePayment('false')->count() }}
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <!-- small box -->
                     <a href="{{ url('/admin/histories') }}">
 
                         <div class="small-box ">
@@ -137,6 +154,41 @@
                                 </p>
                                 <h3>
                                     {{\App\Models\AzHistory::count() }}
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4 col-6">
+                    <!-- small box -->
+                    <a href="{{ url('/admin/commission_bank_transfers') }}">
+
+                        <div class="small-box ">
+                            <!--bg-blue-->
+                            <div class="inner">
+                                <p>
+                                    @lang('messages.commission_bank_transfers')
+                                </p>
+                                <h3>
+                                    {{\App\Models\AzRestaurantCommission::whereNotNull('transfer_photo')->whereNull('admin_id')->wherePaymentType('bank')->wherePayment('false')->count() }}
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <!-- small box -->
+                    <a href="{{ url('/admin/commission_histories') }}">
+
+                        <div class="small-box ">
+                            <!--bg-blue-->
+                            <div class="inner">
+                                <p>
+                                    @lang('messages.commission_histories')
+                                </p>
+                                <h3>
+                                    {{\App\Models\AzCommissionHistory::orderBy('id' , 'desc')->count()}}
                                 </h3>
                             </div>
                         </div>

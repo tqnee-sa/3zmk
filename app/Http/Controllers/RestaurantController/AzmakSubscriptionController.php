@@ -184,7 +184,8 @@ class AzmakSubscriptionController extends Controller
                 flash(trans('messages.paymentError'))->error();
                 return back();
             }
-        }elseif ($request->payment_method == 'online' and $setting->online_payment == 'paylink')
+        }
+        elseif ($request->payment_method == 'online' and $setting->online_payment == 'paylink')
         {
             if ($restaurant->az_subscription) {
                 $restaurant->az_subscription->update([

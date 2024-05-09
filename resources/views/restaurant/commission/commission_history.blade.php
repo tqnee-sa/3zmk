@@ -52,9 +52,10 @@
                                 <th> @lang('messages.commission_value') </th>
                                 <th> @lang('messages.payment_type') </th>
                                 <th> @lang('messages.invoice_id') </th>
+                                <th> @lang('messages.status') </th>
                                 <th> @lang('messages.date') </th>
                                 {{--                                <th> @lang('messages.added_by') </th>--}}
-                                <th> @lang('messages.operations') </th>
+{{--                                <th> @lang('messages.operations') </th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -75,7 +76,7 @@
                                     </td>
                                     <td>
                                         @if($history->payment_type == 'bank')
-                                            @lang('messages.bank')
+                                            @lang('messages.bank_transfer')
                                         @elseif($history->payment_type == 'online')
                                             @lang('messages.online')
                                         @endif
@@ -119,6 +120,13 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if($history->payment == 'true')
+                                            <a class="btn btn-success">@lang('messages.confirmed')</a>
+                                        @else
+                                            <a class="btn btn-warning"> @lang('messages.waiting_confirmation') </a>
+                                        @endif
+                                    </td>
+                                    <td>
                                         {{$history->created_at->format('Y-m-d')}}
                                     </td>
                                     {{--                                    <td>--}}
@@ -128,13 +136,13 @@
                                     {{--                                            @lang('messages.restaurant')--}}
                                     {{--                                        @endif--}}
                                     {{--                                    </td>--}}
-                                    <td>
-                                        <a class="delete_data btn btn-danger" data="{{ $history->id }}"
-                                           data_name="{{$history->commission_value}}">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+{{--                                    <td>--}}
+{{--                                        <a class="delete_data btn btn-danger" data="{{ $history->id }}"--}}
+{{--                                           data_name="{{$history->commission_value}}">--}}
+{{--                                            <i class="fa fa-trash"></i>--}}
+{{--                                        </a>--}}
 
-                                    </td>
+{{--                                    </td>--}}
                                 </tr>
                             @endforeach
                             </tbody>

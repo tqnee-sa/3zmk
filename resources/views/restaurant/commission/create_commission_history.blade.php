@@ -25,6 +25,7 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
+    @include('flash::message')
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -60,8 +61,12 @@
                                     <label class="control-label"> @lang('messages.payment_method') </label>
                                     <select name="payment_method" class="form-control" onchange="showDiv(this)" required>
                                         <option disabled selected> @lang('messages.choose_one') </option>
-                                        <option value="bank"> @lang('messages.bank_transfer') </option>
-                                        <option value="online"> @lang('messages.online') </option>
+                                        @if($setting->bank_transfer == 'true')
+                                            <option value="bank"> @lang('messages.bank_transfer') </option>
+                                        @endif
+                                        @if($setting->online_payment != 'none')
+                                            <option value="online"> @lang('messages.online') </option>
+                                        @endif
                                     </select>
                                     @if ($errors->has('payment_method'))
                                         <span class="help-block">
@@ -174,7 +179,7 @@
     </script>
     <script>
         function showDiv(element) {
-            if (element.value == 'online') {
+            if (element.value == 'online' && {{$setting->online_payment == 'myFatoourah'}}) {
                 document.getElementById('online').style.display = 'block';
                 document.getElementById('bank').style.display = 'none';
             } else if (element.value == 'bank') {

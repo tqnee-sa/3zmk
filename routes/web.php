@@ -384,6 +384,7 @@ Route::prefix('restaurant')->group(function () {
                 Route::post('/restaurant_az_commissions/{id}/store_history', 'store_commissions_history')->name('RestaurantStoreAzCommission');
                 Route::get('/restaurant_az_commissions/delete/{id}', 'delete_commissions_history')->name('RestaurantDeleteAzCommission');
                 Route::get('/AZOnlineCommissionStatus/{id1?}/{id2?}', 'online_commission_status')->name('AZOnlineCommissionStatus');
+                Route::get('/AZPayLinkCommissionStatus/{id}', 'payLink_commission_status')->name('AZPayLinkCommissionStatus');
             });
 
             Route::get('/history/{id}', [SettingController::class, 'show_restaurant_history'])->name('show_restaurant_history');
@@ -529,7 +530,7 @@ Route::prefix('casher')->group(function () {
             Route::post('/cancel/azmak_order/{order_id}', 'cancel')->name('cancelAzmakOrder');
             Route::post('/complete/azmak_order/{order_id}', 'complete_order')->name('completeAzmakOrder');
 
-            Route::get('order/{id}/print', 'printOrder')->name('casher.orders.print');
+            Route::get('order/{bbid}/print', 'printOrder')->name('casher.orders.print');
             Route::get('/show_audios', 'show_audios')->name('show_audios');
             Route::post('/store_audios', 'store_audios')->name('store_audios');
         });

@@ -37,6 +37,7 @@
                                     @for($i = 1; $i <= 12 ; $i++)
                                         <option value="{{$i}}" {{$i == $month ? 'selected' : ''}}> {{$i}} </option>
                                     @endfor
+                                    <option value="all" {{$month == 'all' ? 'selected' : ''}}> @lang('messages.all') </option>
                                 </select>
                                 @if ($errors->has('month'))
                                     <span class="help-block">

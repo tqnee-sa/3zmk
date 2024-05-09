@@ -86,13 +86,22 @@ class SettingController extends Controller
     {
         $year = $request->year == null ? Carbon::now()->format('Y') : $request->year;
         $month = $request->month == null ? Carbon::now()->format('m') : $request->month;
-        $histories = AzCommissionHistory::orderBy('id' , 'desc')
-            ->whereyear('created_at','=',$year)
-            ->whereMonth('created_at','=',$month)
-            ->paginate(500);
-        $month_total_amount = AzCommissionHistory::whereyear('created_at','=',$year)
-            ->whereMonth('created_at','=',$month)
-            ->sum('paid_amount');
+        if ($request->month == 'all')
+        {
+            $histories = AzCommissionHistory::orderBy('id' , 'desc')
+                ->whereyear('created_at','=',$year)
+                ->paginate(500);
+            $month_total_amount = AzCommissionHistory::whereyear('created_at','=',$year)
+                ->sum('paid_amount');
+        }else{
+            $histories = AzCommissionHistory::orderBy('id' , 'desc')
+                ->whereyear('created_at','=',$year)
+                ->whereMonth('created_at','=',$month)
+                ->paginate(500);
+            $month_total_amount = AzCommissionHistory::whereyear('created_at','=',$year)
+                ->whereMonth('created_at','=',$month)
+                ->sum('paid_amount');
+        }
         return view('admin.settings.commission_histories' , compact('histories','month_total_amount' , 'year' , 'month'));
     }
     public function delete_commission_history($id)

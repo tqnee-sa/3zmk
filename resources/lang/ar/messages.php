@@ -64,7 +64,7 @@ return [
     'sub_categories' => 'الأقسام الفرعية',
     'arrange' => 'الترتيب',
     'products' => 'المنتجات',
-    'menu_category' => 'قسم المنيو',
+    'menu_category' => 'التصنيف',
     'price' => 'السعر',
     'price_before_discount' => 'السعر قبل الخصم',
     'calories' => 'السعرات الحرارية',
@@ -383,4 +383,8 @@ return [
     'add_sens' => 'إنشاء حساسية',
     'add_poster' => 'إنشاء ملصق',
     'add_category' => 'إنشاء تصنيف',
+    'confirmed' => 'مؤكد',
+    'waiting_confirmation' => 'بانتظار التأكيد',
+    'all'  => 'الكل',
+    'limitCommission' => 'عزيزي الحد الأدنى المسموح به للفاتورة هو 5.0 ريال',
 ];
