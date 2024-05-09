@@ -113,10 +113,10 @@ Route::get('/maximum_az_commission_limit' , function (){
         $required_commissions = $restaurant->az_orders->where('status' , '!=' , 'new')->sum('commission') - $restaurant->az_commissions->sum('commission_value');
         if ($required_commissions > $restaurant->maximum_az_commission_limit)
         {
-            \Log::info('restaurant should be updated');
             $restaurant->az_subscription->update([
                 'status' => 'commission_hold',
             ]);
+            dd('restaurant should be updated');
         }
     }
 
