@@ -49,7 +49,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{url('restaurant/locale/' . (app()->getLocale() == 'ar' ? 'en' : 'ar'))}}" class="change-lang"
+            <a href="{{url('console/locale/' . (app()->getLocale() == 'ar' ? 'en' : 'ar'))}}" class="change-lang"
                style="{{app()->getLocale() == 'en' ? 'left:unset;right:17px !important;top:24px !important;' : ''}}">{{app()->getLocale() == 'ar' ?  'English' : 'عربي'}}</a>
             <a href="{{route('restaurant.login')}}" class="login_text"><b>@lang('messages.restaurant_login')</b></a>
         </div>
