@@ -4210,7 +4210,7 @@ function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
 }
 function payLinkAddInvoiceOrders($restaurant , $amount , $email,$phone,$name,$orderNo,$url)
 {
-    $basURL = ($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? "https://restpilot.paylink.sa" : " https://restapi.paylink.sa") . "/api/addInvoice";
+    $basURL = ($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? "https://restpilot.paylink.sa" : "https://restapi.paylink.sa") . "/api/addInvoice";
     $token = payLinkToken(($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? 'test' : 'online') , $restaurant->pay_link_app_id , $restaurant->pay_link_secret_key);
     $headers = array(
         'Content-type: application/json',
