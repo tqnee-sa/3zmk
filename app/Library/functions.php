@@ -4125,7 +4125,7 @@ function edfa_payment($merchant_key, $password, $amount, $success_url, $order_id
 
 function payLinkToken($type,$appId , $secretKey)
 {
-    $basURL = ($type == 'test' ? "https://restpilot.paylink.sa" : " https://restapi.paylink.sa") . "/api/auth";
+    $basURL = ($type == 'test' ? "https://restpilot.paylink.sa" : "https://restapi.paylink.sa") . "/api/auth";
     $headers = array(
         'Content-type: application/json',
         'Accept: application/json',
@@ -4160,7 +4160,7 @@ function payLinkToken($type,$appId , $secretKey)
 function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
 {
     $setting = AzmakSetting::first();
-    $basURL = ($setting->pay_link_payment_type == 'test' ? "https://restpilot.paylink.sa" : " https://restapi.paylink.sa") . "/api/addInvoice";
+    $basURL = ($setting->pay_link_payment_type == 'test' ? "https://restpilot.paylink.sa" : "https://restapi.paylink.sa") . "/api/addInvoice";
     $token = payLinkToken($setting->pay_link_payment_type , $setting->pay_link_app_id , $setting->pay_link_secret_key);
     $headers = array(
         'Content-type: application/json',
