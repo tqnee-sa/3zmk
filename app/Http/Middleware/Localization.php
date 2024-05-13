@@ -18,7 +18,7 @@ class Localization
      */
     public function handle($request, Closure $next)
     {
-        if(in_array($request->segment(1) , ['restaurant'])):
+        if(in_array($request->segment(1) , ['console'])):
             $lang = session()->has('lang_restaurant') ? session('lang_restaurant') : app()->getLocale();
             if(!session()->has('lang_restaurant')):
                 session()->put('lang_restaurant' ,$lang );

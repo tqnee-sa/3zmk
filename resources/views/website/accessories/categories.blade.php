@@ -81,7 +81,7 @@
     $(document).ready(function () {
         $('.category_item').on('click', function () {
             var id = $(this).attr('id');
-            var url = '/qr/'+ '{{$restaurant->name_barcode}}' + '/' + '{{$branch->name_en}}' + '/' + id;
+            var url = '/shop/'+ '{{$restaurant->name_barcode}}' + '/' + '{{$branch->name_en}}' + '/' + id;
             $.ajax({
                 url: url,
                 type: "GET",

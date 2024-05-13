@@ -45,7 +45,7 @@
             endif;
             $name = $restaurant->name_barcode == null ? $restaurant->name_en : $restaurant->name_barcode
             ?>
-            <a class="nav-link" target="_blank" href="{{url('/qr/' .  $name)}}">
+            <a class="nav-link" target="_blank" href="{{url('/shop/' .  $name)}}">
                 <i class="fa fa-home"></i>
                 <span class="hidemob">
                     @lang('messages.show_menu')
@@ -93,7 +93,7 @@
             {{--            <a href="#" class="nav-link">Lang</a>--}}
             @if(\Illuminate\Support\Facades\Auth::guard('restaurant')->user()->ar == 'true' && \Illuminate\Support\Facades\Auth::guard('restaurant')->user()->en == 'true')
                 @if(app()->getLocale() == 'en')
-                    <a href="{{ url('restaurant/locale/ar')  }}" class="nav-link">
+                    <a href="{{ url('console/locale/ar')  }}" class="nav-link">
                     <span class="username username-hide-on-mobile">
                         <i class="fa fa-language"></i>
                         عربى
@@ -101,7 +101,7 @@
                     </a>
 
                 @else
-                    <a href="{{  url('restaurant/locale/en') }}" class="nav-link">
+                    <a href="{{  url('console/locale/en') }}" class="nav-link">
                     <span class="username username-hide-on-mobile">
                         <i class="fa fa-language"></i>
                         English

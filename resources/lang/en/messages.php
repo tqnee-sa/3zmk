@@ -178,7 +178,7 @@ return [
     'finished' => 'Finished',
     'new' => 'New Not Paid',
     'order_items' => 'Order Items',
-    'restaurant_login' => 'Restaurants Login',
+    'restaurant_login' => 'Shop Login',
     'welcome_login_message' => 'Welcome To Azmak Dashboard',
     'az_orders' => 'AZmak Orders',
     'new_not_paid' => 'New Not Paid',

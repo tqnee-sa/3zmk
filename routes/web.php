@@ -112,7 +112,7 @@ Route::get('locale/{locale}', function (Request $request, $locale) {
     App::setLocale($locale);
     return redirect()->back();
 })->name('language');
-Route::get('restaurant/locale/{locale}', function (Request $request, $locale) {
+Route::get('console/locale/{locale}', function (Request $request, $locale) {
     session()->put('lang_restaurant', $locale);
     App::setLocale($locale);
     return redirect()->back();
@@ -122,27 +122,27 @@ Route::get('restaurant/locale/{locale}', function (Request $request, $locale) {
  *  Start @user routes
  */
 
-Route::get('/qr/{res_name}', [AZHome::class, 'index']);
+Route::get('/shop/{res_name}', [AZHome::class, 'index']);
 Route::match(['get', 'post'], '/restaurants/branch/{branch_name?}', [AZHome::class, 'home'])->name('homeBranch');
-Route::get('/qr/{res}/{branch_name}/{cat?}', [AZHome::class, 'homeBranch'])->name('homeBranchIndex');
-Route::get('/qr_az/{res_name}/terms&conditions/{branch?}', [AZHome::class, 'terms'])->name('restaurantTerms');
-Route::get('/qr_az/{res_name}/about_us/{branch?}', [AZHome::class, 'about'])->name('restaurantAboutAzmak');
-Route::get('/qr_contact_us/{res_name}/{branch?}', [ContactUsController::class, 'index'])->name('restaurantVisitorContactUs');
-Route::post('/qr_contact_us/{res_name}/send', [ContactUsController::class, 'contact_us'])->name('restaurantVisitorContactUsSend');
-Route::get('/qr_az/products/{id}', [AZHome::class, 'product_details'])->name('product_details');
-Route::get('/share/qr_az/products/{id}', [AZHome::class, 'share_product'])->name('product_details_share');
+Route::get('/shop/{res}/{branch_name}/{cat?}', [AZHome::class, 'homeBranch'])->name('homeBranchIndex');
+Route::get('/shop_az/{res_name}/terms&conditions/{branch?}', [AZHome::class, 'terms'])->name('restaurantTerms');
+Route::get('/shop_az/{res_name}/about_us/{branch?}', [AZHome::class, 'about'])->name('restaurantAboutAzmak');
+Route::get('/shop_contact_us/{res_name}/{branch?}', [ContactUsController::class, 'index'])->name('restaurantVisitorContactUs');
+Route::post('/shop_contact_us/{res_name}/send', [ContactUsController::class, 'contact_us'])->name('restaurantVisitorContactUsSend');
+Route::get('/shop_az/products/{id}', [AZHome::class, 'product_details'])->name('product_details');
+Route::get('/share/shop_az/products/{id}', [AZHome::class, 'share_product'])->name('product_details_share');
 
 // user routes
 Route::controller(UserController::class)->group(function () {
-    Route::get('user/qr/{res}/join_us/{branch?}', 'join_us')->name('AZUserRegister');
-    Route::post('user/qr/{res}/join_us/{branch?}', 'register')->name('AZUserRegisterSubmit');
+    Route::get('user/shop/{res}/join_us/{branch?}', 'join_us')->name('AZUserRegister');
+    Route::post('user/shop/{res}/join_us/{branch?}', 'register')->name('AZUserRegisterSubmit');
     Route::get('user/login/{res?}/{branch?}', 'show_login')->name('AZUserLogin');
-    Route::post('user/qr/{res}/login/{branch?}', 'login')->name('AZUserLoginSubmit');
+    Route::post('user/shop/{res}/login/{branch?}', 'login')->name('AZUserLoginSubmit');
 
 });
 
 Route::controller(CartController::class)->group(function () {
-    Route::post('user/qr/add_to_cart', 'add_to_cart')->name('addToAZCart');
+    Route::post('user/shop/add_to_cart', 'add_to_cart')->name('addToAZCart');
     Route::get('user_orders/azmak/orders/{order_id}', 'order_details')->name('AZOrderDetails');
     Route::get('user/orders/{order_id}/barcode', 'barcode')->name('AZOrderBarcode');
     Route::get('user/my_orders/{branch_id}/{status?}', 'my_orders')->name('AZUserOrders');
@@ -155,7 +155,7 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('user/restaurants/{res}/profile/{branch?}', 'edit_profile')->name('AZUserProfileUpdate');
     });
     Route::controller(CartController::class)->group(function () {
-        Route::get('user/qr/cart/{branch?}', 'cart_details')->name('AZUserCart');
+        Route::get('user/shop/cart/{branch?}', 'cart_details')->name('AZUserCart');
         Route::get('user/delete/cart/{order_id}', 'emptyCart')->name('emptyCart');
         Route::get('user/delete/cart/items/{item_id}', 'deleteCartItem')->name('deleteCartItem');
     });

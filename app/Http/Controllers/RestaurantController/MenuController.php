@@ -251,7 +251,7 @@ class MenuController extends Controller
                                 ->where('easy_id', $product->poster_id)
                                 ->first();
                             $PImage = 'default.jpg';;
-                            if (isset($product->photo)) {
+                            if (isset($product->photo) and $product->photo != 'default.png') {
                                 // product photo
                                 $info = pathinfo('https://easymenu.site/uploads/products/' . $product->photo);
                                 $contents = file_get_contents('https://easymenu.site/uploads/products/' . $product->photo);

@@ -177,7 +177,7 @@ return [
     'finished' => 'منتهي',
     'new' => 'جديد غير مدفوع',
     'order_items' => 'عناصر الطلب',
-    'restaurant_login' => 'تسجيل دخول المطاعم',
+    'restaurant_login' => 'تسجيل الدخول لحسابك',
     'welcome_login_message' => 'مرحبا بكم في لوحه تحكم عازمك',
     'az_orders' => 'طلبات عازمك',
     'new_not_paid' => 'جديد غير مدفوع',

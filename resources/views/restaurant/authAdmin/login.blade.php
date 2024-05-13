@@ -1,7 +1,7 @@
 @extends('restaurant.authAdmin.master')
 @section('style')
-<style>
-        .login-logo .change-lang{
+    <style>
+        .login-logo .change-lang {
             position: absolute;
             top: 24px;
             left: 17px;
@@ -9,44 +9,48 @@
             font-weight: bold;
         }
 
-        .btn{
-                        background-color:#5d4c72 !important;
-                        color:white !important ;
-                        font-family: 'Cairo';
+        .btn {
+            background-color: #5d4c72 !important;
+            color: white !important;
+            font-family: 'Cairo';
 
         }
-        a{
-           font-family: 'Cairo';
+
+        a {
+            font-family: 'Cairo';
         }
 
-        .forget-password ,
+        .forget-password,
         .text-center {
-            color :#5d4c72 !important ;
+            color: #5d4c72 !important;
             font-family: 'Cairo;
         }
+
         /*.card {*/
         /*    margin-top :10px ;*/
         /*}*/
-        .login_text{
-            display:block;
-                margin-top :20px ;
-                font-family: 'Cairo';
-
-        }
-        .login-box-msg{
-                                    /*background-color:#5d4c72 !important;*/
-                                    font-family: 'Cairo' !important;
-                                    font-weight:400 !important;;
+        .login_text {
+            display: block;
+            margin-top: 20px;
+            font-family: 'Cairo';
 
         }
 
+        .login-box-msg {
+            /*background-color:#5d4c72 !important;*/
+            font-family: 'Cairo' !important;
+            font-weight: 400 !important;;
 
-</style>
+        }
+
+
+    </style>
 @endsection
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{url('restaurant/locale/' . (app()->getLocale() == 'ar' ? 'en' : 'ar'))}}" class="change-lang" style="{{app()->getLocale() == 'en' ? 'left:unset;right:17px !important;top:24px !important;' : ''}}">{{app()->getLocale() == 'ar' ?  'English' : 'عربي'}}</a>
+            <a href="{{url('restaurant/locale/' . (app()->getLocale() == 'ar' ? 'en' : 'ar'))}}" class="change-lang"
+               style="{{app()->getLocale() == 'en' ? 'left:unset;right:17px !important;top:24px !important;' : ''}}">{{app()->getLocale() == 'ar' ?  'English' : 'عربي'}}</a>
             <a href="{{route('restaurant.login')}}" class="login_text"><b>@lang('messages.restaurant_login')</b></a>
         </div>
         <div class="card">
@@ -60,7 +64,7 @@
                     {{ session('warning_login') }}
                 </div>
             @endif
-{{--            @include('flash::message')--}}
+            {{--            @include('flash::message')--}}
             <div class="card-body login-card-body">
                 <p class="login-box-msg">{{ trans('messages.welcome_login_message') }}</p>
                 <form action="{{route('restaurant.login.submit')}}" method="post">
@@ -85,7 +89,8 @@
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <input type="password" name="password" class="form-control" placeholder="@lang('messages.password')">
+                        <input type="password" name="password" class="form-control"
+                               placeholder="@lang('messages.password')">
                         @if ($errors->has('password'))
                             <div class="alert alert-danger">
                                 <button class="close" data-close="alert"></button>
@@ -131,29 +136,29 @@
             </div>
         </div>
         <!--<p class="footer-copyright pb-3 mb-1 pt-0 mt-0 font-13 font-600" style="    text-align: center;">-->
-        <!--   {{ trans('messages.made_love') }}-->
+    <!--   {{ trans('messages.made_love') }}-->
         <!--    <i class="fa fa-heart font-14 color-red1-dark" style="color:red;"></i>-->
-        <!--    <a style="color: blue" href="{{url('/')}}">-->
+    <!--    <a style="color: blue" href="{{url('/')}}">-->
 
-        <!--        {{ trans('messages.at_easy_menu') }}-->
+    <!--        {{ trans('messages.at_easy_menu') }}-->
         <!--    </a>-->
         <!--</p>-->
 
         <!--<div class="row">-->
         <!--    <p>-->
-        <!--        <a href="https://web.easymenu.site/" class="btn btn-success"> @lang('messages.home_page')</a>-->
+    <!--        <a href="https://web.easymenu.site/" class="btn btn-success"> @lang('messages.home_page')</a>-->
         <!--    </p>-->
         <!--    <p>-->
         <!--        <a href="https://easymenu.site/restaurants/easyMenuu">-->
         <!--            <img src="https://web.easymenu.site/wp-content/themes/tqnee/img/qr.png" data-src="https://web.easymenu.site/wp-content/themes/tqnee/img/qr.png" class="download lazy loaded" data-was-processed="true">-->
         <!--        </a>-->
         <!--        <span>-->
-        <!--            {{ trans('messages.qr_code_try') }}-->
+    <!--            {{ trans('messages.qr_code_try') }}-->
         <!--        </span>-->
         <!--    </p>-->
 
         <!--    <p class="footer-copyright pb-3 mb-1 pt-0 mt-0 font-13 font-600" style="    text-align: center;">-->
-        <!--        {{ trans('messages.qr_code_try2') }}-->
+    <!--        {{ trans('messages.qr_code_try2') }}-->
         <!--    </p>-->
 
         <!--</div>-->
