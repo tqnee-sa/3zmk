@@ -83,7 +83,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('RestaurantProfile') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/profile') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/profile') !== false ? 'active' : '' }}">
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 @lang('messages.profile')
@@ -92,7 +92,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('integrations') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/integrations') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/integrations') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-download"></i>
                             <p>
                                 @lang('messages.pullMenu')
@@ -100,8 +100,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/restaurant/barcode') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/barcode') !== false ? 'active' : '' }}">
+                        <a href="{{ url('/console/barcode') }}"
+                           class="nav-link {{ strpos(URL::current(), '/console/barcode') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-barcode"></i>
                             <p>
                                 @lang('messages.barcode')
@@ -110,7 +110,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('branches.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/branches') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/branches') !== false ? 'active' : '' }}">
                             <i class="nav-icon far fa-flag"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\Restaurant\Azmak\AZBranch::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -126,7 +126,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('menu_categories.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/menu_categories') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/menu_categories') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-bars"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\Restaurant\Azmak\AZMenuCategory::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -138,7 +138,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('modifiers.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/modifiers') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/modifiers') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-plus"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\Restaurant\Azmak\AZModifier::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -150,7 +150,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('additions.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/additions') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/additions') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-plus"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\Restaurant\Azmak\AZOption::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -162,7 +162,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('posters.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/posters') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/posters') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-image"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\AZRestaurantPoster::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -173,8 +173,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/restaurant/sensitivities') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/sensitivities') !== false ? 'active' : '' }}">
+                        <a href="{{ url('/console/sensitivities') }}"
+                           class="nav-link {{ strpos(URL::current(), '/console/sensitivities') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-image"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\AZRestaurantSensitivity::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -186,7 +186,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('products.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/products') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/products') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-list"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\Restaurant\Azmak\AZProduct::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -198,7 +198,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('employees.index') }}"
-                           class="nav-link {{ strpos(URL::current(), '/restaurant/employees') !== false ? 'active' : '' }}">
+                           class="nav-link {{ strpos(URL::current(), '/console/employees') !== false ? 'active' : '' }}">
                             <i class="nav-icon fa fa-users"></i>
                             <span class="badge badge-info right">
                                 {{ \App\Models\AZRestaurantEmployee::whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -209,13 +209,13 @@
                         </a>
                     </li>
                     <li
-                        class="nav-item has-treeview {{ strpos(URL::current(), '/restaurant/azmak_orders') !== false ? 'menu-open' : '' }}">
+                        class="nav-item has-treeview {{ strpos(URL::current(), '/console/azmak_orders') !== false ? 'menu-open' : '' }}">
                         <a href="#"
                            class="nav-link {{ (isUrlActive('restaurant/azmak_orders/new') or
-                            isUrlActive('restaurant/azmak_orders/active') or
-                            isUrlActive('restaurant/azmak_orders/completed') or
-                            isUrlActive('restaurant/azmak_orders/canceled') or
-                            isUrlActive('restaurant/azmak_orders/finished'))
+                            isUrlActive('console/azmak_orders/active') or
+                            isUrlActive('console/azmak_orders/completed') or
+                            isUrlActive('console/azmak_orders/canceled') or
+                            isUrlActive('console/azmak_orders/finished'))
                                 ? 'active'
                                 : '' }}">
                             <i class="fas fa-shopping-cart"></i>
@@ -226,8 +226,8 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ url('restaurant/azmak_orders/new') }}"
-                                   class="nav-link {{ Request::is('restaurant/azmak_orders/new') !== false ? 'active' : '' }}">
+                                <a href="{{ url('console/azmak_orders/new') }}"
+                                   class="nav-link {{ Request::is('console/azmak_orders/new') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <span class="badge badge-info right">
                                         {{ \App\Models\Restaurant\Azmak\AZOrder::whereStatus('new')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -238,8 +238,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('restaurant/azmak_orders/active') }}"
-                                   class="nav-link {{ strpos(URL::current(), '/restaurant/azmak_orders/active') !== false ? 'active' : '' }}">
+                                <a href="{{ url('console/azmak_orders/active') }}"
+                                   class="nav-link {{ strpos(URL::current(), '/console/azmak_orders/active') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <span class="badge badge-info right">
                                         {{ \App\Models\Restaurant\Azmak\AZOrder::whereStatus('active')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -250,8 +250,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('restaurant/azmak_orders/completed') }}"
-                                   class="nav-link {{ Request::is('restaurant/azmak_orders/completed') !== false ? 'active' : '' }}">
+                                <a href="{{ url('console/azmak_orders/completed') }}"
+                                   class="nav-link {{ Request::is('console/azmak_orders/completed') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <span class="badge badge-info right">
                                         {{ \App\Models\Restaurant\Azmak\AZOrder::whereStatus('completed')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -262,8 +262,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('restaurant/azmak_orders/canceled') }}"
-                                   class="nav-link {{ Request::is('restaurant/azmak_orders/canceled') !== false ? 'active' : '' }}">
+                                <a href="{{ url('console/azmak_orders/canceled') }}"
+                                   class="nav-link {{ Request::is('console/azmak_orders/canceled') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <span class="badge badge-info right">
                                         {{ \App\Models\Restaurant\Azmak\AZOrder::whereStatus('canceled')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -274,8 +274,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('restaurant/azmak_orders/finished') }}"
-                                   class="nav-link {{ Request::is('restaurant/azmak_orders/finished') !== false ? 'active' : '' }}">
+                                <a href="{{ url('console/azmak_orders/finished') }}"
+                                   class="nav-link {{ Request::is('console/azmak_orders/finished') !== false ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <span class="badge badge-info right">
                                         {{ \App\Models\Restaurant\Azmak\AZorder::whereStatus('finished')->whereRestaurantId($user->type == 'employee' ? $user->restaurant_id : $user->id)->count() }}
@@ -292,9 +292,9 @@
                         <p class="">{{ trans('messages.side_4') }}</p>
                     </li>
                     <li
-                        class="nav-item {{ strpos(URL::current(), '/restaurant/sliders') !== false ? 'active' : '' }}">
-                        <a href="{{ url('/restaurant/sliders') }}"
-                           class="nav-link {{ (strpos(URL::current(), '/restaurant/sliders') ) !== false ? 'active' : '' }}">
+                        class="nav-item {{ strpos(URL::current(), '/console/sliders') !== false ? 'active' : '' }}">
+                        <a href="{{ url('/console/sliders') }}"
+                           class="nav-link {{ (strpos(URL::current(), '/console/sliders') ) !== false ? 'active' : '' }}">
                             <i class="fas fa-sliders-h"></i>
                             <p>
                                 @lang('messages.sliders')
@@ -302,9 +302,9 @@
                         </a>
                     </li>
                     <li
-                        class="nav-item {{ strpos(URL::current(), '/restaurant/az_contacts') !== false ? 'active' : '' }}">
-                        <a href="{{ url('/restaurant/az_contacts') }}"
-                           class="nav-link {{ (strpos(URL::current(), '/restaurant/az_contacts')) !== false ? 'active' : '' }}">
+                        class="nav-item {{ strpos(URL::current(), '/console/az_contacts') !== false ? 'active' : '' }}">
+                        <a href="{{ url('/console/az_contacts') }}"
+                           class="nav-link {{ (strpos(URL::current(), '/console/az_contacts')) !== false ? 'active' : '' }}">
                             <i class="fas fa-file"></i>
                             <p>
                                 @lang('messages.contact_us')
@@ -312,9 +312,9 @@
                         </a>
                     </li>
                     <li
-                        class="nav-item {{ strpos(URL::current(), '/restaurant/terms/conditions') !== false ? 'active' : '' }}">
-                        <a href="{{ url('/restaurant/terms/conditions') }}"
-                           class="nav-link {{ (strpos(URL::current(), '/restaurant/terms/conditions')) !== false ? 'active' : '' }}">
+                        class="nav-item {{ strpos(URL::current(), '/console/terms/conditions') !== false ? 'active' : '' }}">
+                        <a href="{{ url('/console/terms/conditions') }}"
+                           class="nav-link {{ (strpos(URL::current(), '/console/terms/conditions')) !== false ? 'active' : '' }}">
                             <i class="fas fa-file"></i>
                             <p>
                                 @lang('messages.terms_conditions')
@@ -322,9 +322,9 @@
                         </a>
                     </li>
                     <li
-                        class="nav-item {{ strpos(URL::current(), '/restaurant/azmak_about') !== false ? 'active' : '' }}">
-                        <a href="{{ url('/restaurant/azmak_about') }}"
-                           class="nav-link {{ (strpos(URL::current(), '/restaurant/azmak_about')) !== false ? 'active' : '' }}">
+                        class="nav-item {{ strpos(URL::current(), '/console/azmak_about') !== false ? 'active' : '' }}">
+                        <a href="{{ url('/console/azmak_about') }}"
+                           class="nav-link {{ (strpos(URL::current(), '/console/azmak_about')) !== false ? 'active' : '' }}">
                             <i class="fas fa-file"></i>
                             <p>
                                 @lang('messages.about_app')

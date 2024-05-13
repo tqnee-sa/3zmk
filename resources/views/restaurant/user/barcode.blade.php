@@ -42,8 +42,8 @@
                             <div class="form-group">
                                 <h3 class="text-center">
                                     <a href="#" id="printPage" class="printPage btn">@lang('messages.downloadQr')</a>
-                                    <a href="{{url('/restaurants/' . $name)}}" id="" class=" btn"
-                                       target="__blank">@lang('messages.view_barcode')</a>
+                                    <a href="{{url('/qr/' . $name)}}" id="" class=" btn"
+                                       target="_blank">@lang('messages.view_barcode')</a>
                                     {{--                            <a class="btn btn-primary" href="{{ URL::to('/hotel/create_pdf') }}"> @lang('messages.saveAsPdf')</a>--}}
                                 </h3>
                                 <div class="card">
@@ -53,10 +53,10 @@
                                     <div class="card-body" id="barcode-svg">
 
 
-                                        {!! QrCode::size(200)->generate(url('/restaurants/' . $name)) !!}
+                                        {!! QrCode::size(200)->generate(url('/qr/' . $name)) !!}
                                         <div class="description" style="margin-top:10px;">
                                             <img width="20px" height="20px"
-                                                 src="{{asset('/uploads/restaurants/logo/' . $model->az_logo)}}">
+                                                 src="{{asset('/uploads/qr/logo/' . $model->az_logo)}}">
 
                                             <p class="footer-copyright pb-3 mb-1 pt-0 mt-0 font-13 font-600"
                                                style="    text-align: center;font-size:12px;display:inline; margin-right:5px;">

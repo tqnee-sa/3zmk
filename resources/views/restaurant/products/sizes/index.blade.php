@@ -91,7 +91,7 @@
                                         </a>
                                         <a class="delete_data btn btn-danger" data="{{ $size->id }}"
                                            data_name="{{ app()->getLocale() == 'ar' ? ($size->name_ar == null ? $size->name_en  : $size->name_ar) : ($size->name_en == null ? $size->name_ar : $size->name_en) }}">
-                                            <i class="fa fa-key"></i>
+                                            <i class="fa fa-trash"></i>
                                         </a>
 
                                     </td>
@@ -151,7 +151,7 @@
                     cancelButtonText: "{{trans('messages.close')}}"
                 }, function () {
 
-                    window.location.href = "{{ url('/') }}" + "/restaurant/product_sizes/delete/" + id;
+                    window.location.href = "{{ url('/') }}" + "/console/product_sizes/delete/" + id;
 
                 });
 

@@ -757,7 +757,7 @@ $itemId
             $('select[name="menu_category_id"]').on('change', function () {
                 var id = $(this).val();
                 $.ajax({
-                    url: '/restaurant/get_menu_sub_categories/' + id,
+                    url: '/console/get_menu_sub_categories/' + id,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
@@ -777,7 +777,7 @@ $itemId
             $('select[name="branch_id"]').on('change', function () {
                 var id = $(this).val();
                 $.ajax({
-                    url: '/restaurant/get/branch_menu_categories/' + id,
+                    url: '/console/get/branch_menu_categories/' + id,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {

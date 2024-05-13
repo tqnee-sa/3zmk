@@ -222,7 +222,7 @@
                             </div>
                             <div class="col-sm-4">
                                 @if($order->status == 'active' or $order->status == 'new')
-                                    <form method="post" action="{{route('cancelAzmakOrder' , $order->id)}}">
+                                    <form method="post" action="{{route('cancelAzmakOrderR' , $order->id)}}">
                                         @csrf
                                         <input type="text" name="cancel_reason" required class="form-control"
                                                placeholder="@lang('messages.cancel_reason')">
@@ -241,7 +241,7 @@
                             </div>
                             @if($order->status == 'active')
                                 <div class="col-sm-4">
-                                    <form method="post" action="{{route('completeAzmakOrder' , $order->id)}}">
+                                    <form method="post" action="{{route('completeAzmakOrderR' , $order->id)}}">
                                         @csrf
                                         <input type="text" name="order_code" required class="form-control"
                                                placeholder="@lang('messages.enterOrderCode')">

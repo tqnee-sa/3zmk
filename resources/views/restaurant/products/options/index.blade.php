@@ -236,7 +236,7 @@
                 }, function () {
 
                     window.location.href = "{{ url('/') }}" +
-                        "/restaurant/product_options/delete/" + id;
+                        "/console/product_options/delete/" + id;
 
                 });
 

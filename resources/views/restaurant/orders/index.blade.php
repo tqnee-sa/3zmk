@@ -96,7 +96,7 @@
                                         {{$order->person_name}}
                                     </td>
                                     <td>
-                                        <a class="btn btn-success" href="{{route('AzmakOrderShow' , $order->id)}}">
+                                        <a class="btn btn-success" href="{{route('AzmakOrderShowR' , $order->id)}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="delete_data btn btn-danger" data="{{ $order->id }}" data_name="{{ $order->order_id }}" >
@@ -161,7 +161,7 @@
                     cancelButtonText: "{{trans('messages.close')}}"
                 }, function () {
 
-                    window.location.href = "{{ url('/') }}" + "/restaurant/azmak_orders/delete/" + id;
+                    window.location.href = "{{ url('/') }}" + "/console/azmak_orders/delete/" + id;
 
                 });
 

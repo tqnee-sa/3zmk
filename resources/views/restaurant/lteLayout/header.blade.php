@@ -45,7 +45,7 @@
             endif;
             $name = $restaurant->name_barcode == null ? $restaurant->name_en : $restaurant->name_barcode
             ?>
-            <a class="nav-link" target="_blank" href="{{url('/restaurants/' .  $name)}}">
+            <a class="nav-link" target="_blank" href="{{url('/qr/' .  $name)}}">
                 <i class="fa fa-home"></i>
                 <span class="hidemob">
                     @lang('messages.show_menu')

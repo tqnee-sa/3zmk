@@ -229,7 +229,7 @@ class AzmakSubscriptionController extends Controller
         ]);
         $this->create_default_data($restaurant->id);
         flash(trans('messages.waitAdminAccept'))->success();
-        return redirect()->to('/restaurant/home');
+        return redirect()->to('/console/home');
     }
 
     public function subscription_status(Request $request)

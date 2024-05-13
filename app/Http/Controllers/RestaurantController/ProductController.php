@@ -450,10 +450,6 @@ class ProductController extends Controller
         $product->update([
             'active'   => $active,
         ]);
-        if ($active == 'false') {
-            // remove it from cart
-            SilverOrder::whereProductId($id)->delete();
-        }
         flash(trans('messages.updated'))->success();
         return redirect()->route('products.index');
     }

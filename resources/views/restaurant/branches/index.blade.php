@@ -148,7 +148,7 @@
                     cancelButtonText: "{{trans('messages.close')}}"
                 }, function () {
 
-                    window.location.href = "{{ url('/') }}" + "/restaurant/branches/delete/" + id;
+                    window.location.href = "{{ url('/') }}" + "/console/branches/delete/" + id;
 
                 });
 

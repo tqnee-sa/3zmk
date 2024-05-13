@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <h3 class="text-center">
                                     <a href="#" id="printPage" class="printPage btn btn-info">@lang('messages.downloadQr')</a>
-                                    <a href="{{route('homeBranchIndex' , [$model->restaurant->name_barcode , $model->name_en])}}" id="" class=" btn btn-primary" target="__blank">@lang('messages.view_barcode')</a>
+                                    <a href="{{route('homeBranchIndex' , [$model->restaurant->name_barcode , $model->name_en])}}" id="" class=" btn btn-primary" target="_blank">@lang('messages.view_barcode')</a>
                                     {{--                            <a class="btn btn-primary" href="{{ URL::to('/hotel/create_pdf') }}"> @lang('messages.saveAsPdf')</a>--}}
                                 </h3>
                                 <div class="card">
