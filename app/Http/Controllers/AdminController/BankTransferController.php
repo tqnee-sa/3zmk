@@ -86,7 +86,7 @@ class BankTransferController extends Controller
             if ($required_commissions < $restaurant->maximum_az_commission_limit)
             {
                 $restaurant->az_subscription->update([
-                    'status' => 'active',
+                    'status' => $restaurant->az_subscription->price == 0 ? 'free' : 'active',
                 ]);
             }
             flash(trans('messages.operationConfirmedSuccessfully'))->success();
