@@ -206,7 +206,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a target="_blank" href="{{url('/restaurants/' . $restaurant->name_barcode)}}">
+                                        <a target="_blank" href="{{url('/shop/' . $restaurant->name_barcode)}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>

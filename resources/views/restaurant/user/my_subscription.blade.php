@@ -930,8 +930,7 @@
         $(function () {
             $('input.lang').on('change', function () {
                 console.log($(this));
-                if ($('input[name=ar]:checked').val() == 'true' && $('input[name=en]:checked').val() ==
-                    'true') {
+                if ($('input[name=ar]:checked').val() === 'true' && $('input[name=en]:checked').val() === 'true') {
                     $('.form-group.default_lang').fadeIn(300);
                 } else {
                     $('.form-group.default_lang').fadeOut(300);
