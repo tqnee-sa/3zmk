@@ -11,7 +11,7 @@
         @lang('messages.free_restaurants')
     @endif
 @endsection
-
+composer create-project laravel/laravel version11Test
 @section('style')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('admin/css/sweetalert.css') }}">
@@ -364,13 +364,11 @@
     </script>
 @endsection
 <style>
-
     .content .btn_archive {
         color: white !important;
         background-color: #64748b !important;
         width: max-content;
         border-radius: 5px;
         font-family: 'cairo';
-
     }
 </style>

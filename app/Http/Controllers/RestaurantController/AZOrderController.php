@@ -12,6 +12,7 @@ class AZOrderController extends Controller
     {
         $orders = AZorder::whereStatus($status)
             ->whereRestaurantId(auth('restaurant')->user()->id)
+            ->orderBy('id' , 'desc')
             ->paginate(100);
         return view('restaurant.orders.index' , compact('orders' , 'status'));
     }
