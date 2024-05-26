@@ -387,4 +387,10 @@ return [
     'waiting_confirmation' => 'بانتظار التأكيد',
     'all'  => 'الكل',
     'limitCommission' => 'عزيزي الحد الأدنى المسموح به للفاتورة هو 5.0 ريال',
+    "change_lang_ar" => 'تغيير الغة الي العربية',
+    "change_lang_en" => 'تغيير الغة الي الانجليزية',
+    'description' => 'الوصف',
+    // start
+
+    // end
 ];

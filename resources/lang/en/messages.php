@@ -384,4 +384,7 @@ return [
     'waiting_confirmation' => 'Waiting Confirmation',
     'all'  => 'All',
     'limitCommission' => 'Dear, the minimum bill allowed is 5.0 riyals',
+    "change_lang_ar" => 'Change language to AR',
+    "change_lang_en" => 'Change language to EN',
+    'description' => 'Description' ,
 ];

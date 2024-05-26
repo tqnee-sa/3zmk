@@ -33,59 +33,48 @@
 <div>
 
 
-    <div style="background-color: {{$restaurant->az_color?->background}} !important;"
-        class="offcanvas offcanvas-bottom"
-        tabindex="-1"
-        id="offcanvasBottom"
-        aria-labelledby="offcanvasBottomLabel"
-    >
+    <div style="background-color: {{ $restaurant->az_color?->background }} !important;" class="offcanvas offcanvas-bottom"
+        tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasBottomLabel"
-                style="color: {{$restaurant->az_color?->main_heads}} !important;">
+                style="color: {{ $restaurant->az_color?->main_heads }} !important;">
                 @lang('messages.choose_branch')
             </h5>
-            <button
-                type="button"
-                class="btn-close text-reset"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         @php
             $cities = App\Models\City::with('branches')
                 ->whereHas('branches', function ($q) use ($restaurant) {
                     $q->whereRestaurantId($restaurant->id);
-                })->get();
+                })
+                ->get();
         @endphp
         <div class="offcanvas-body small">
-            <form method="get" action="{{route('homeBranch' , $restaurant->name_barcode)}}">
+            <form method="get" action="{{ route('homeBranch', $restaurant->name_barcode) }}">
                 @csrf
-                @foreach($cities as $city)
+                @foreach ($cities as $city)
                     <div>
-                        <a class="collapsible"
-                           style="color: {{$restaurant->az_color?->main_heads}} !important;">
-                            {{app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en}}
+                        <a class="collapsible" style="color: {{ $restaurant->az_color?->main_heads }} !important;">
+                            {{ app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en }}
                         </a>
-                        <div class="content" style="background-color: {{$restaurant->az_color?->background}} !important;">
-                            @foreach($city->branches()->whereRestaurantId($restaurant->id)->get() as $zbranch)
-                                <input
-                                    type="radio"
-                                    id="city{{$zbranch->id}}"
-                                    name="branch"
-                                    value="{{$zbranch->id}}"
-                                    required
-                                    {{$zbranch->id == $branch->id ? 'checked' : ''}}
-                                />
-                                <label for="city{{$zbranch->id}}" style="color: {{$restaurant->az_color?->options_description}} !important;">
-                                    {{app()->getLocale() == 'ar' ? $zbranch->name_ar : $zbranch->name_en}}
+                        <div class="content"
+                            style="background-color: {{ $restaurant->az_color?->background }} !important;">
+                            @foreach ($city->branches()->whereRestaurantId($restaurant->id)->get() as $zbranch)
+                                <input type="radio" id="city{{ $zbranch->id }}" name="branch"
+                                    value="{{ $zbranch->id }}" required
+                                    {{ $zbranch->id == $branch->id ? 'checked' : '' }} />
+                                <label for="city{{ $zbranch->id }}"
+                                    style="color: {{ $restaurant->az_color?->options_description }} !important;">
+                                    {{ app()->getLocale() == 'ar' ? $zbranch->name_ar : $zbranch->name_en }}
                                 </label>
                                 <br>
                             @endforeach
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                 @endforeach
-                <input type="submit" value="@lang('messages.change')" style="background-color: {{$restaurant->az_color?->icons}} !important;"/>
+                <input type="submit" value="@lang('messages.change')"
+                    style="background-color: {{ $restaurant->az_color?->icons }} !important;" />
             </form>
         </div>
     </div>
@@ -98,7 +87,7 @@
         coll[i].addEventListener("click", function() {
             this.classList.toggle("branch_cl_active");
             var content = this.nextElementSibling;
-            if (content.style.maxHeight){
+            if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {
                 content.style.maxHeight = content.scrollHeight + "px";

@@ -9,6 +9,7 @@ use App\Models\Restaurant\Azmak\AZRestaurantInfo;
 use App\Models\Restaurant\Azmak\AZRestaurantColor;
 use App\Models\Restaurant\Azmak\AZMenuCategory;
 use App\Models\AzRestaurantCommission;
+use App\Traits\ModelHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Restaurant extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable , ModelHelper;
 
     protected $guard = 'restaurant';
     protected $table = 'restaurants';

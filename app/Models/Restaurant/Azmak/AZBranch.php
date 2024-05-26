@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Restaurant;
 use App\Models\City;
+use App\Traits\ModelHelper;
 
 class AZBranch extends Model
 {
-    use HasFactory;
+    use HasFactory ,ModelHelper;
     protected  $table = 'a_z_branches';
     protected $fillable = [
         'restaurant_id',

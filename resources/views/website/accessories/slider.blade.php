@@ -1,3 +1,4 @@
+
 <div class="slider">
     <div
         id="carouselExampleControls"
@@ -5,7 +6,7 @@
         data-bs-ride="carousel"
     >
         <div class="carousel-inner">
-            @include('website.layout.header')
+
 
             @if($sliders->count() > 0)
                 @php

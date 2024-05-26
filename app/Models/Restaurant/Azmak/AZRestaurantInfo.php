@@ -5,10 +5,11 @@ namespace App\Models\Restaurant\Azmak;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Restaurant;
+use App\Traits\ModelHelper;
 
 class AZRestaurantInfo extends Model
 {
-    use HasFactory;
+    use HasFactory,ModelHelper;
     protected $table = 'a_z_restaurant_infos';
     protected $fillable = [
         'restaurant_id',

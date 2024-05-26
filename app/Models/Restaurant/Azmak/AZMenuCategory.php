@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \App\Models\Restaurant;
 use \App\Models\AZRestaurantPoster;
-
+use App\Traits\ModelHelper;
 
 class AZMenuCategory extends Model
 {
-    use HasFactory;
+    use HasFactory , ModelHelper;
     protected $table = 'a_z_menu_categories';
     protected $fillable = [
         'restaurant_id',

@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use \App\Models\Restaurant;
 use \App\Models\AZRestaurantPoster;
 use \App\Models\AZRestaurantSensitivity;
+use App\Traits\ModelHelper;
 
 class AZProduct extends Model
 {
-    use HasFactory;
+    use HasFactory , ModelHelper;
     protected $table = 'a_z_products';
     protected $fillable = [
         'restaurant_id',
