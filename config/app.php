@@ -172,6 +172,9 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Jorenvh\Share\Providers\ShareServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
+
+        // packages
+        Barryvdh\Debugbar\ServiceProvider::class,
     ])->toArray(),
 
     /*
