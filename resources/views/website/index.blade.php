@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('site/css/main.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/home.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/global.css') }}" />
+    <link rel="stylesheet" href="{{ asset('site/css/global2.css') }}" />
     <style>
         .collapsible {
             background-color: white;

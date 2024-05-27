@@ -35,7 +35,10 @@
     <link rel="stylesheet" href="{{ asset('site/css/all.min.css') }}" />
     <!-- style sheet -->
     <link rel="stylesheet" href="{{ asset('site/splide/dist/css/splide.min.css') }}" />
+
     <link rel="stylesheet" href="{{ asset('site/css/home.css') }}" />
+    <link rel="stylesheet" href="{{ asset('site/css/global2.css') }}" />
+
     <script src="{{ asset('site/splide/dist/js/splide.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
