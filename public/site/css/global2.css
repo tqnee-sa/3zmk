@@ -3,6 +3,7 @@
 /* start update */
 body{
     max-width: 600px !important;
+    margin: auto;
 }
 .mycontainer{
     position: relative;
