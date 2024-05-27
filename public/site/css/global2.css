@@ -7,6 +7,7 @@ body{
 .mycontainer{
     position: relative;
     width: 100% !important;
+    max-width: 600px !important;
 }
 #header {
 
