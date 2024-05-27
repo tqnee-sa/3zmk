@@ -53,7 +53,7 @@
                             @lang('messages.change_lang_' . ($currentLang == 'ar' ? 'en' : 'en'))
                         </a>
                         <button class="{{ $restaurant->az_color == null ? 'joinUs_btn' : 'btn' }}"
-                            style="background-color: {{ $restaurant->az_color?->icons }} !important; width: 135px;margin-top: 10px;">
+                            style="background-color: {{ $restaurant->az_color?->icons }} !important; width: 135px;display:block;margin:auto;margin-top: 20px;">
                             <a href="{{ route('AZUserLogin', [$restaurant->name_barcode, $branch->name_en]) }}">
                                 @lang('messages.login')
                             </a>
