@@ -7,92 +7,94 @@
         left: 5px;
     }
 </style>
-<div class="card__container swiper" style="background-color: {{$restaurant->az_color ? $restaurant->az_color->category_background : '#FFF'}} !important;">
-    <div class="card__content">
-        <div class="swiper-wrapper">
-            @if($categories->count() > 0)
-                @foreach($categories as $category)
-                    @if($category->time == 'false')
-                        <article class="card__article swiper-slide">
-                            <div class="card__image {{$category->id == $category_id ? 'active_category' : ''}}">
-                                <a href="javascript:;" id="{{$category->id}}" class="category_item">
-                                    <img src="{{asset('/uploads/menu_categories/' . $category->photo)}}" alt="image"
-                                         width="200" height="200" class="card__img"/>
-                                    @if ($category->poster != null)
-                                        <img style="text-align: right"
-                                             src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
-                                             height="10" width="10" class="poster_image">
-                                    @endif
-                                </a>
-                            </div>
+@php
+    $selectedCategory = null;
+@endphp
+<div id="main-categories">
+    <div class="splide">
+        <div class="splide__slider">
+            <div class="splide__track">
+                <div class="splide__list">
+                    @if ($categories->count() > 0)
+                        @foreach ($categories as $category)
+                            @php
+                                if ($category_id == $category->id) {
+                                    $selectedCategory = $category;
+                                }
+                            @endphp
+                            @if ($category->time == 'false')
+                                <div class="splide__slide">
+                                    <div class="main-category">
+                                        <div
+                                            class="card__image {{ $category->id == $category_id ? 'active_category' : '' }}">
+                                            <a href="javascript:;" id="{{ $category->id }}" class="category_item" data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
+                                                <img src="{{ asset('/uploads/menu_categories/' . $category->photo) }}"
+                                                    alt="image" width="200" height="200" class="card__img" />
+                                                @if ($category->poster != null)
+                                                    <img style="text-align: right"
+                                                        src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
+                                                        height="10" width="10" class="poster_image">
+                                                @endif
+                                            </a>
+                                        </div>
 
-                            <div class="card__data">
-                                <h5 class="card__name">
-                                    <a href="javascript:;" id="{{$category->id}}" class="category_item"
-                                       style="color: {{$restaurant->az_color ? $restaurant->az_color->main_heads : ''}} !important;">
-                                        {{app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en}}
-                                    </a>
-                                </h5>
-                            </div>
-                        </article>
-                    @elseif($category->time == 'true' and check_time_between($category->start_at , $category->end_at))
-                        <article class="card__article swiper-slide">
-                            <div class="card__image {{$category->id == $category_id ? 'active_category' : ''}}">
-                                <a href="javascript:;" id="{{$category->id}}" class="category_item">
-                                    <img src="{{asset('/uploads/menu_categories/' . $category->photo)}}" alt="image"
-                                         class="card__img"/>
-                                    @if ($category->poster != null)
-                                        <img style="text-align: right"
-                                             src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
-                                             height="10" width="10" class="poster_image">
-                                    @endif
-                                </a>
-                            </div>
+                                        <div class="card__data">
+                                            <h5 class="card__name">
+                                                <a href="javascript:;" id="{{ $category->id }}" class="category_item"
+                                                    data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}"
+                                                    style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;">
+                                                    {{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}
+                                                </a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif($category->time == 'true' and check_time_between($category->start_at, $category->end_at))
+                                <div class="splide__slide">
+                                    <div class="main-category ">
+                                        <div
+                                            class="card__image {{ $category->id == $category_id ? 'active_category' : '' }}">
+                                            <a href="javascript:;" id="{{ $category->id }}" class="category_item" data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
+                                                <img src="{{ asset('/uploads/menu_categories/' . $category->photo) }}"
+                                                    alt="image" class="card__img" />
+                                                @if ($category->poster != null)
+                                                    <img style="text-align: right"
+                                                        src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
+                                                        height="10" width="10" class="poster_image">
+                                                @endif
+                                            </a>
+                                        </div>
 
-                            <div class="card__data">
-                                <h5 class="card__name">
-                                    <a href="javascript:;" id="{{$category->id}}" class="category_item">
-                                        {{app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en}}
-                                    </a>
-                                </h5>
-                            </div>
-                        </article>
+                                        <div class="card__data">
+                                            <h5 class="card__name">
+                                                <a href="javascript:;" id="{{ $category->id }}" class="category_item" data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
+                                                    {{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}
+                                                </a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     @endif
-                @endforeach
-            @endif
+
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Navigation buttons -->
-    <div class="swiper-button-next">
-        <i class="ri-arrow-right-s-line"></i>
-    </div>
+    <div id="subcategories-content">
 
-    <div class="swiper-button-prev">
-        <i class="ri-arrow-left-s-line"></i>
-    </div>
+        @include('website.accessories.sub_categories', ['menu_category' => $category, 'subCat' => 0])
 
-    <!-- Pagination -->
-    <div class="swiper-pagination"></div>
+    </div>
 </div>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.category_item').on('click', function () {
-            var id = $(this).attr('id');
-            var url = '/shop/'+ '{{$restaurant->name_barcode}}' + '/' + '{{$branch->name_en}}' + '/' + id;
-            $.ajax({
-                url: url,
-                type: "GET",
-                dataType: "json",
-                data: {
-                    is_category: true,
-                },
-                success: function (json) {
-                    $('#restaurant-products').html(json.data.products);
-                }
-            });
-        });
+    $(document).ready(function() {
+
     });
 </script>

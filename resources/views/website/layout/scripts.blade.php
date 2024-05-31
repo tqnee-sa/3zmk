@@ -726,6 +726,7 @@
             autoWidth: true,
         });
         splide.mount();
+        
 
 
         // splide.resolve('right');

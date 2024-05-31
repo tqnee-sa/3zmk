@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{asset('site/css/products.css')}}">
+
 <div class=" p-3"
      style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @if($products->count() > 0)

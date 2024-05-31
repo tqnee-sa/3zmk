@@ -51,6 +51,9 @@
             box-shadow: 1px 1px 1px 1px lightblue;
             background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#E6E9ED'}} !important;
         }
+        body{
+
+        }
     </style>
 </head>
 <body>

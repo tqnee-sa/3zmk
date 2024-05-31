@@ -390,6 +390,7 @@ return [
     "change_lang_ar" => 'تغيير الغة الي العربية',
     "change_lang_en" => 'تغيير الغة الي الانجليزية',
     'description' => 'الوصف',
+    'more' => 'المذيد',
     // start
 
     // end

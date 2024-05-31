@@ -106,6 +106,10 @@ Route::get('/payLinkError' , function (){
     echo "error payLink Payment";
 });
 
+Route::get('/test' , function (){
+    return route('homeBranchIndex', ['home', 'test', 2]);
+});
+
 
 Route::get('locale/{locale}', function (Request $request, $locale) {
     session()->put('locale', $locale);
@@ -124,7 +128,7 @@ Route::get('console/locale/{locale}', function (Request $request, $locale) {
 
 Route::get('/shop/{res_name}', [AZHome::class, 'index']);
 Route::match(['get', 'post'], '/restaurants/branch/{branch_name?}', [AZHome::class, 'home'])->name('homeBranch');
-Route::get('/shop/{res}/{branch_name}/{cat?}', [AZHome::class, 'homeBranch'])->name('homeBranchIndex');
+Route::get('/shop/{res}/{branch_name}/{cat?}/{subCategoryId?}', [AZHome::class, 'homeBranch'])->name('homeBranchIndex');
 Route::get('/shop_az/{res_name}/terms&conditions/{branch?}', [AZHome::class, 'terms'])->name('restaurantTerms');
 Route::get('/shop_az/{res_name}/about_us/{branch?}', [AZHome::class, 'about'])->name('restaurantAboutAzmak');
 Route::get('/shop_contact_us/{res_name}/{branch?}', [ContactUsController::class, 'index'])->name('restaurantVisitorContactUs');

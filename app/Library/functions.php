@@ -3876,14 +3876,13 @@ function updateCurrency()
 
 function checkWordsCount($string, $count, $isTag = false)
 {
-    $words = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
+    $words  = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
     if (count($words) > $count) return true;
     return false;
 }
-
-function getShortDescription($string, $start, $last = 0, $isTag = false)
+function getShortDescription($string, $start, $last =  0, $isTag = false)
 {
-    $words = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
+    $words  = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
     $results = '';
     foreach ($words as $index => $temp) :
         if ($index >= $start and ($last == 0 or $index <= $last)) $results .= $temp . ' ';
@@ -3891,6 +3890,7 @@ function getShortDescription($string, $start, $last = 0, $isTag = false)
 
     return $results;
 }
+
 
 function tap_payment($token = 'sk_test_XKokBfNWv6FIYuTMg5sLPjhJ', $amount, $user_name, $email, $country_code, $phone, $callBackUrl, $order_id)
 {

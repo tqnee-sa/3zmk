@@ -1,6 +1,30 @@
 
 
 /* start update */
+/* @font-face {
+    font-family: "Tajawal";
+    src: url('../fonts/Tajawal/Tajawal-Medium.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: "Tajawal";
+    src: url('../fonts/Tajawal/Tajawal-Bold.ttf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Tajawal";
+    src: url('../fonts/Tajawal/Tajawal-ExtraBold.ttf');
+    font-weight: bolder;
+}
+@font-face {
+    font-family: "Tajawal";
+    src: url('../fonts/Tajawal/Tajawal-Light.ttf');
+    font-weight: lighter;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+*{
+    font-family: "Tajawal" ;
+}
 body{
     max-width: 600px !important;
     margin: auto;
@@ -67,9 +91,10 @@ body{
 .restaurant-info{
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-bottom: 20px;
     color: inherit;
+    padding: 1rem !important;
 }
 .restaurant-info .logo{
     display: inline-block;
@@ -100,3 +125,89 @@ body{
     margin-top: 10px;
 }
 
+.slider .carousel-control-prev,
+.slider .carousel-control-next{
+    display: none;
+}
+
+.card__image{
+    width: 120px;
+    height: 120px;
+}
+.card__article{
+    width: 130px !important;
+}
+.category_item{
+    font-size: 15px;
+}
+
+#main-categories .splide__pagination{
+    /* display: none !important; */
+    bottom: -12px;;
+}
+
+#main-categories .splide__list{
+    justify-content: unset !important;
+}
+#main-categories .main-category{
+    padding: 10px;
+}
+#subcategories-content{
+    margin-top: 20px;
+}
+.main-category-title{
+    font-size: 15px;
+}
+
+
+.scroll-box{
+    display: block;
+    width : 100%;
+    overflow-y: hidden;
+    overflow-x : auto;
+    white-space: nowrap;
+}
+
+.scroll-box .item{
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    width: 120px;
+}
+.sub-category-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin:auto;
+}
+.sub-category-image img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+#main-subcategories .item a{
+    text-align: center;
+    padding: 10px 0;
+}
+#main-subcategories .item .subcat-card{
+    border-color: transparent;
+    border-width: 2px;
+}
+#main-subcategories .item .subcat-card.active{
+    border-color: #f7b538;
+    transition: 0.3s;
+}
+.offcanvas-body{
+    text-align: right;
+}
+
+[dir=ltr].offcanvas-body{
+    text-align: left;
+}
+.splide__pagination__page{
+    width: 5px;
+    height: 5px;;
+}
+.splide__pagination__page.is-active{
+    background-color: #777;
+}

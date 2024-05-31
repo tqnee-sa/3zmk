@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8" />
@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="{{ asset('site/splide/dist/css/splide.min.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('site/css/home.css') }}" />
+    <link rel="stylesheet" href="{{asset('site/css/products.css')}}">
     <link rel="stylesheet" href="{{ asset('site/css/global2.css') }}" />
 
     <script src="{{ asset('site/splide/dist/js/splide.min.js') }}"></script>
@@ -63,7 +64,7 @@
     <div class="mycontainer" style="background-color: {{ $restaurant->az_color?->background }} !important;">
         @include('website.layout.header')
         <!-- <main class="py-1"> -->
-        <div class="show_main_info px-1 py-3"
+        <div class="show_main_info  py-3"
             style="background-color: {{ $restaurant->az_color ? $restaurant->az_color->background : '#FFF' }} !important;">
             @include('website.accessories.slider')
             <!-- end  main slider  -->
@@ -80,8 +81,8 @@
                     </div>
                     @if ($restaurant->az_info)
                         <div class="description">
-                            <span  data-bs-toggle="offcanvas"
-                            data-bs-target="#restaurantDescriptionPop" aria-controls="restaurantDescriptionPop" class="color-theme font-400 font-14"
+                            <span data-bs-toggle="offcanvas" data-bs-target="#restaurantDescriptionPop"
+                                aria-controls="restaurantDescriptionPop" class="color-theme font-400 font-14"
                                 style="color: {{ $restaurant->color == null ? '' : $restaurant->color->options_description }} !important;">
                                 @if (isset($branch->id) and !empty($restaurant->az_info->description))
                                     {!! str_replace(
@@ -150,6 +151,7 @@
     </script>
 
     <script>
+        var langDirection = '{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}';
         @if (Session::has('message'))
             toastr.options = {
                 "closeButton": true,

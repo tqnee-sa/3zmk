@@ -387,4 +387,5 @@ return [
     "change_lang_ar" => 'Change language to AR',
     "change_lang_en" => 'Change language to EN',
     'description' => 'Description' ,
+    'more' => 'More',
 ];
