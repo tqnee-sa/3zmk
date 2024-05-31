@@ -55,6 +55,7 @@ body{
     border-bottom-right-radius: 10px;
     box-shadow: 1px 1px 10px #CCC;
     opacity: 0.75;
+    font-weight: bold !important;
 }
 #header .item .user-name{
     display: block;
@@ -86,6 +87,7 @@ body{
     margin-top: 5px;;
     padding-left: 10px;
     padding-right: 10px;
+    font-weight: bold !important;
 }
 #header .item i{
     color : #000 !important;
