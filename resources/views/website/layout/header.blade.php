@@ -14,7 +14,7 @@
             </button>
         @endif
     </div>
-    <div class="item">
+    <div class="item branch">
         <button style="background-color: {{ $restaurant->az_color?->icons }} !important;"
             class="btn btn_custom btn-branch" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">

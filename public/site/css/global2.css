@@ -47,12 +47,14 @@ body{
 #header .item {
     background-color: #ebebeb !important;
     color: #000;
-    padding-top:1px;
+    padding-top: 1px;
     text-align: center;
-    min-width: 40px;
+    min-width: 30px;
     max-width: 30%;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    box-shadow: 1px 1px 10px #CCC;
+    opacity: 0.75;
 }
 #header .item .user-name{
     display: block;
@@ -73,9 +75,24 @@ body{
     border-radius: 10px;
     margin-bottom: 30px;
 }
-#header .item button i{
-    color : #000 !important;
+#header .item button{
+    padding : 10px 4px 4px 3px;
 }
+#header .item.branch{
+    max-width: 60% !important;
+}
+#header .item .btn-branch{
+    margin-bottom: 4px;;
+    margin-top: 5px;;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#header .item i{
+    color : #000 !important;
+    font-size: 11px !important;
+    font-weight: bold;
+}
+
 #header  .item > .joinUs_btn{
     background:  transparent !important;
 }
