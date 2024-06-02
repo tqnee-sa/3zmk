@@ -1,5 +1,3 @@
-
-
 /* start update */
 /* @font-face {
     font-family: "Tajawal";
@@ -22,17 +20,21 @@
     font-weight: lighter;
 } */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
-*{
-    font-family: "Tajawal" ;
+
+* {
+    font-family: "Tajawal";
 }
-body{
+
+body {
     max-width: 600px !important;
     margin: auto;
 }
-.mycontainer{
+
+.mycontainer {
     position: relative;
     width: 100% !important;
 }
+
 #header {
 
     display: flex !important;
@@ -56,58 +58,71 @@ body{
     box-shadow: 1px 1px 10px #CCC;
     opacity: 0.75;
     font-weight: bold !important;
+    height: 36px;
 }
-#header .item .user-name{
+
+#header .item .user-name {
     display: block;
     font-size: 14px;
     font-weight: normal;
     padding: 0 10px;
-    padding-top:10px;
+    padding-top: 10px;
 }
-#header .btn-branch{
+
+#header .btn-branch {
     padding-top: 10px;
     display: block !important;
     position: relative !important;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-#header .offcanvas-body .image a img{
+
+#header .offcanvas-body .image a img {
     width: 150px;
     border-radius: 10px;
     margin-bottom: 30px;
 }
-#header .item button{
-    padding : 10px 4px 4px 3px;
+
+#header .item button {
+    padding: 5px 4px 4px 3px;
 }
-#header .item.branch{
+
+#header .item.branch {
     max-width: 60% !important;
 }
-#header .item .btn-branch{
-    margin-bottom: 4px;;
-    margin-top: 5px;;
+
+#header .item .btn-branch {
+    margin-bottom: 4px;
+    ;
+    margin-top: 5px;
+    ;
     padding-left: 10px;
     padding-right: 10px;
     font-weight: bold !important;
 }
-#header .item i{
-    color : #000 !important;
+
+#header .item i {
+    color: #000 !important;
     font-size: 11px !important;
     font-weight: bold;
 }
 
-#header  .item > .joinUs_btn{
-    background:  transparent !important;
+#header .item>.joinUs_btn {
+    background: transparent !important;
 }
+
 @media(max-width:768px) {
-    .offcanvas.offcanvas_mobile{
-        width:70% !important;
+    .offcanvas.offcanvas_mobile {
+        width: 70% !important;
     }
 
 }
-.location_branch .restaurant-logo img{
+
+.location_branch .restaurant-logo img {
     border-radius: 10px;
 }
-.restaurant-info{
+
+.restaurant-info {
     display: flex;
     justify-content: space-between;
     margin-top: 0px;
@@ -115,118 +130,144 @@ body{
     color: inherit;
     padding: 1rem !important;
 }
-.restaurant-info .logo{
+
+.restaurant-info .logo {
     display: inline-block;
-    width: calc( 100px);
+    width: calc(100px);
 }
-.restaurant-info .logo img{
+
+.restaurant-info .logo img {
     margin-top: -3rem !important;
     border-radius: 10px;
     position: relative;
 }
-.restaurant-info .info{
+
+.restaurant-info .info {
     display: inline-block;
     width: calc(100% - 100px);
 }
-.restaurant-info .info .title{
+
+.restaurant-info .info .title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 6px;
 }
-.restaurant-info .info .description{
+
+.restaurant-info .info .description {
     font-size: 14px !important;
 
 }
-.main_open img{
+
+.main_open img {
     border-radius: 10px;
 }
-.offcanvas-body .branch-item{
+
+.offcanvas-body .branch-item {
     margin-top: 10px;
 }
 
 .slider .carousel-control-prev,
-.slider .carousel-control-next{
+.slider .carousel-control-next {
     display: none;
 }
 
-.card__image{
+.card__image {
     width: 120px;
     height: 120px;
 }
-.card__article{
+
+.card__article {
     width: 130px !important;
 }
-.category_item{
+
+.category_item {
     font-size: 15px;
 }
 
-#main-categories .splide__pagination{
+#main-categories .splide__pagination {
     /* display: none !important; */
-    bottom: -12px;;
+    bottom: -12px;
+    ;
 }
 
-#main-categories .splide__list{
+#main-categories .splide__list {
     justify-content: unset !important;
 }
-#main-categories .main-category{
+
+#main-categories .main-category {
     padding: 10px;
 }
-#subcategories-content{
+
+#subcategories-content {
     margin-top: 20px;
 }
-.main-category-title{
+
+.main-category-title {
     font-size: 15px;
 }
 
 
-.scroll-box{
+.scroll-box {
     display: block;
-    width : 100%;
+    width: 100%;
     overflow-y: hidden;
-    overflow-x : auto;
+    overflow-x: auto;
     white-space: nowrap;
 }
 
-.scroll-box .item{
+.scroll-box .item {
     display: inline-block;
     margin: 5px;
     cursor: pointer;
     width: 120px;
 }
-.sub-category-image{
+
+.sub-category-image {
     width: 100px;
     height: 100px;
     border-radius: 100%;
-    margin:auto;
+    margin: auto;
 }
-.sub-category-image img{
+
+.sub-category-image img {
     width: 100%;
     height: 100%;
     border-radius: 100%;
 }
-#main-subcategories .item a{
+
+#main-subcategories .item a {
     text-align: center;
     padding: 10px 0;
 }
-#main-subcategories .item .subcat-card{
+
+#main-subcategories .item .subcat-card {
     border-color: transparent;
     border-width: 2px;
 }
-#main-subcategories .item .subcat-card.active{
+
+#main-subcategories .item .subcat-card.active {
     border-color: #f7b538;
     transition: 0.3s;
 }
-.offcanvas-body{
+
+.offcanvas-body {
     text-align: right;
 }
 
-[dir=ltr].offcanvas-body{
+[dir=ltr].offcanvas-body {
     text-align: left;
 }
-.splide__pagination__page{
+
+.splide__pagination__page {
     width: 5px;
-    height: 5px;;
+    height: 5px;
+    ;
 }
-.splide__pagination__page.is-active{
+
+.splide__pagination__page.is-active {
     background-color: #777;
+}
+
+.btn-product-theme {
+    justify-content: left;
 }

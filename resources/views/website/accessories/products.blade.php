@@ -2,7 +2,7 @@
 <div class=" p-3"
      style="background-color: {{$restaurant->az_color ? $restaurant->az_color->background : '#FFF'}} !important;">
     @if($products->count() > 0)
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs btn-product-theme" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
                     style="background-color: {{$restaurant->az_color?->icons}} !important; color: {{$restaurant->az_color ? $restaurant->az_color->options_description : ''}} !important"
