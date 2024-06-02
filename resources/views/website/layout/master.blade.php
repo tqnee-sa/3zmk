@@ -17,10 +17,15 @@
     <style>
         :root {
             --rest-color-main-head: {{ @$restaurant->color->main_heads ?? 'inherit' }};
-            --rest-color-icon: {{ @$restaurant->color->icons ?? 'inherit' }};
+
+            --rest-color-icon: {{ @$restaurant->color->icons ?? '#f7b538' }};
+
             --rest-color-option-description: {{ @$restaurant->color->options_description ?? 'inherit' }};
+
             --rest-color-background: {{ @$restaurant->color->background ?? 'inherit' }};
+
             --rest-color-product-background: {{ @$restaurant->color->product_background ?? 'inherit' }};
+
             --rest-color-category-background: {{ @$restaurant->color->category_background ?? 'inherit' }};
         }
     </style>

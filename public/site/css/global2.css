@@ -270,4 +270,20 @@ body {
 
 .btn-product-theme {
     justify-content: left;
+    border-bottom: 0;
+    margin-bottom: 20px;
+}
+.btn-product-theme  li button{
+    padding:5px 10px;
+}
+.btn-product-theme  li button.active{
+    border: 0;
+
+}
+.btn-product-theme  li button i{
+    font-size: 20px;
+    font-weight: bold;
+}
+.btn-product-theme  li button.active i{
+    color: var(--rest-color-icon);
 }
