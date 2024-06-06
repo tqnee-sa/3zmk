@@ -5,7 +5,8 @@
     <!-- show mobile -->
     <div class="item">
         @if (auth()->guard('web')->check())
-            <span class="user-name">{{ auth('web')->user()->phone_number }}</span>
+            <span class="user-name" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">{{ auth('web')->user()->phone_number }}</span>
         @else
             <button class="{{ $restaurant->az_color == null ? 'joinUs_btn' : 'btn' }}" style="">
                 <a href="{{ route('AZUserLogin', [$restaurant->name_barcode, $branch->name_en]) }}">
@@ -27,88 +28,108 @@
             aria-controls="offcanvasRight">
             <i class="fa-solid fa-bars"></i>
         </button>
-        <div class="offcanvas offcanvas-end offcanvas_mobile"
-            style="background-color: {{ $restaurant->az_color ? $restaurant->az_color->background : '' }} !important;"
-            tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-            <div class="offcanvas-header">
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div class="container_ifno">
-                    <div class="image">
-                        <a href="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en]) }}">
-                            <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}"
-                                alt="3azmak_title" class="restaurant-logo" />
-                        </a>
-                    </div>
 
-                    @if (auth()->guard('web')->check())
-                        <h2 class="name" style="color: {{ $restaurant->az_color?->main_heads }} !important;">
-                            {{ auth()->guard('web')->user()->phone_number }}
-                        </h2>
-                    @else
-                        <a style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
-                            href="{{ route('language', $currentLang == 'ar' ? 'en' : 'ar') }}">
-                            @lang('messages.change_lang_' . ($currentLang == 'ar' ? 'en' : 'en'))
+    </div>
+    <div class="offcanvas offcanvas-end offcanvas_mobile account-sidebar"
+        style="background-color: {{ $restaurant->az_color ? $restaurant->az_color->background : '' }} !important;"
+        tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container_ifno">
+                <div class="image text-center">
+                    <a href="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en]) }}">
+                        <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}" alt="3azmak_title"
+                            class="restaurant-logo" />
+                    </a>
+                </div>
+
+                @if (auth()->guard('web')->check())
+                    <h2 class="name" style="color: {{ $restaurant->az_color?->main_heads }} !important;">
+                        {{ auth()->guard('web')->user()->phone_number }}
+                    </h2>
+                @else
+                    <a class="item-link"
+                        style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
+                        href="{{ route('language', $currentLang == 'ar' ? 'en' : 'ar') }}">
+                        @lang('messages.change_lang_' . ($currentLang == 'ar' ? 'en' : 'en'))
+                    </a>
+                    <button class="{{ $restaurant->az_color == null ? 'joinUs_btn' : 'btn' }}"
+                        style="background-color: {{ $restaurant->az_color?->icons }} !important; width: 135px;display:block;margin:auto;margin-top: 40px;">
+                        <a href="{{ route('AZUserLogin', [$restaurant->name_barcode, $branch->name_en]) }}">
+                            @lang('messages.login')
                         </a>
-                        <button class="{{ $restaurant->az_color == null ? 'joinUs_btn' : 'btn' }}"
-                            style="background-color: {{ $restaurant->az_color?->icons }} !important; width: 135px;display:block;margin:auto;margin-top: 20px;">
-                            <a href="{{ route('AZUserLogin', [$restaurant->name_barcode, $branch->name_en]) }}">
-                                @lang('messages.login')
+                    </button>
+                @endif
+                <ul class="p-0">
+
+                    <hr />
+                    @if (auth()->guard('web')->check())
+
+                        <li class="my-2">
+                            <a class="item-link"
+                                style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
+                                href="{{ route('language', $currentLang == 'ar' ? 'en' : 'ar') }}">
+                                <i class="fas fa-language"     style="color: {{ $restaurant->az_color?->icons }} !important;"></i>
+                                @lang('messages.change_lang_' . ($currentLang == 'ar' ? 'en' : 'en'))
                             </a>
-                        </button>
-                    @endif
-                    <ul class="p-0">
+                        </li>
+                        <hr>
+                        <li class="my-2">
+                            <a class="item-link"
+                                style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
+                                href="{{ route('AZUserOrders', $branch->id) }}">
+                                <i class="fa fa-shopping-cart mx-1"
+                                    style="color: {{ $restaurant->az_color?->icons }} !important;"></i>
+                                @lang('messages.my_orders')
+                                <span style="color: red">
+                                    ({{ \App\Models\Restaurant\Azmak\AZOrder::whereUserId(auth()->guard('web')->user()->id)->where('status', '!=', 'new')->whereBranchId($branch->id)->count() }})
+                                </span>
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="my-2">
+                            <a class="item-link"
+                                style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
+                                href="{{ route('AZUserProfile', [$restaurant->name_barcode, $branch->name_en]) }}">
+                                <i class="fa-regular fa-user mx-1"
+                                    style="color: {{ $restaurant->az_color?->icons }} !important;"></i>
+                                @lang('messages.my_account')
+                            </a>
+                        </li>
 
                         <hr />
-                        @if (auth()->guard('web')->check())
-                            <li class="my-2">
-                                <a style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
-                                    href="{{ route('AZUserOrders', $branch->id) }}">
-                                    <i class="fa fa-shopping-cart mx-1"
-                                        style="color: {{ $restaurant->az_color?->icons }} !important;"></i>
-                                    @lang('messages.my_orders')
-                                    <span style="color: red">
-                                        ({{ \App\Models\Restaurant\Azmak\AZOrder::whereUserId(auth()->guard('web')->user()->id)->where('status', '!=', 'new')->whereBranchId($branch->id)->count() }})
-                                    </span>
-                                </a>
-                            </li>
-                            <hr>
-                            <li class="my-2">
-                                <a style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;"
-                                    href="{{ route('AZUserProfile', [$restaurant->name_barcode, $branch->name_en]) }}">
-                                    <i class="fa-regular fa-user mx-1"
-                                        style="color: {{ $restaurant->az_color?->icons }} !important;"></i>
-                                    @lang('messages.my_account')
-                                </a>
-                            </li>
-                            <hr />
-                        @endif
-                    </ul>
-                    @if (auth()->guard('web')->check())
-                        {{--                        <a href="#" class="joinUs_btn"> --}}
-                        {{--                            @lang('messages.logout') --}}
-                        {{--                        </a> --}}
+                    @endif
+                </ul>
+                @if (auth()->guard('web')->check())
+                    {{--                        <a href="#" class="joinUs_btn"> --}}
+                    {{--                            @lang('messages.logout') --}}
+                    {{--                        </a> --}}
+
+                    <button class="{{ $restaurant->az_color == null ? 'joinUs_btn' : 'btn' }}"
+                        style="background-color: {{ $restaurant->az_color?->icons }} !important; width: 135px;display:block;margin:auto;margin-top: 40px;">
+
                         <a style="color: {{ $restaurant->az_color?->main_heads }} !important;"
-                            onclick="document.getElementById('logout_form').submit()" class="dropdown-item">
+                            onclick="document.getElementById('logout_form').submit()">
                             <i class="fas fa-key" style="color: {{ $restaurant->az_color?->icons }} !important;"></i>
                             @lang('messages.logout')
                         </a>
-                        <form style="display: none;" id="logout_form"
-                            action="{{ route('azUser.logout', [$restaurant->name_barcode, $branch->name_en]) }}"
-                            method="post">
-                            {!! csrf_field() !!}
-                        </form>
-                    @else
-                        {{--                        <button class="joinUs_btn"> --}}
-                        {{--                            <a href="{{route('AZUserRegister' , [$restaurant->name_barcode , $branch->name_en])}}"> --}}
-                        {{--                                <i class="fa-regular fa-star mx-1"></i> --}}
-                        {{--                                @lang('messages.join_us') --}}
-                        {{--                            </a> --}}
-                        {{--                        </button> --}}
-                    @endif
-                </div>
+                    </button>
+
+                    <form style="display: none;" id="logout_form"
+                        action="{{ route('azUser.logout', [$restaurant->name_barcode, $branch->name_en]) }}"
+                        method="post">
+                        {!! csrf_field() !!}
+                    </form>
+                @else
+                    {{--                        <button class="joinUs_btn"> --}}
+                    {{--                            <a href="{{route('AZUserRegister' , [$restaurant->name_barcode , $branch->name_en])}}"> --}}
+                    {{--                                <i class="fa-regular fa-star mx-1"></i> --}}
+                    {{--                                @lang('messages.join_us') --}}
+                    {{--                            </a> --}}
+                    {{--                        </button> --}}
+                @endif
             </div>
         </div>
     </div>

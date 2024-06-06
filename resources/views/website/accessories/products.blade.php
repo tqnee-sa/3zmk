@@ -75,12 +75,14 @@
                                                     </span>
                                                 </span>
                                             @endif
-                                            <div style="text-align: left !important;" class="sensitivities">
+                                            <div style="text-align: left;" class="sensitivities">
                                                 @if ($product->sensitivities and $product->sensitivities->count() > 0)
                                                     @foreach ($product->sensitivities as $index => $product_sensitivity)
-                                                    @php
-                                                        if($index == 3) break;
-                                                    @endphp
+                                                        @php
+                                                            if ($index == 3) {
+                                                                break;
+                                                            }
+                                                        @endphp
                                                         <i>
                                                             <img src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
                                                                 height="25" width="25" class="sens-image">
@@ -348,6 +350,8 @@
                                         height="30" width="30" class="poster-image">
                                 @endif
                             </div>
+
+                        <div class="more_details d-flex align-items-center justify-content-between">
                             <div class="sensitivities">
                                 @if ($product->sensitivities && $product->sensitivities->count() > 0)
                                     @php $loopCount = 0; @endphp
@@ -359,24 +363,12 @@
                                             </i>
                                             @php $loopCount++; @endphp
                                         @else
-                                        @break
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
-
-                        <div class="more_details d-flex align-items-center justify-content-between">
-                            <div class="action">
-
-                                {{--                                    <a href='{{route('product_details' , $product->id)}}'> --}}
-                                {{--                                        <i style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;" --}}
-                                {{--                                           class="fa-solid fa-cart-plus"></i> --}}
-                                {{--                                    </a> --}}
-                                {{--                                    <button class="share3_btn" id="{{$product->id}}"> --}}
-                                {{--                                        <i style="background-color: {{$restaurant->az_color ? $restaurant->az_color->icons : ''}} !important;" --}}
-                                {{--                                           class="fa-solid fa-share-nodes"></i> --}}
-                                {{--                                    </button> --}}
+                                            @break
+                                        @endif
+                                    @endforeach
+                                @endif
                             </div>
+
                             <div class="price"
                                 style="color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important;">
                                 <span

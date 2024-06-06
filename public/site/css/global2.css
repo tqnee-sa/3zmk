@@ -82,6 +82,21 @@ body {
     border-radius: 10px;
     margin-bottom: 30px;
 }
+#header .account-sidebar .item-link{
+    font-weight: bold;;
+}
+#header .account-sidebar ul{
+    list-style: none;
+}
+[dir=ltr] #header .account-sidebar ul{
+    text-align: left;
+    direction: ltr;
+}
+#header .account-sidebar .name{
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;;
+}
 
 #header .item button {
     padding: 5px 4px 4px 3px;
@@ -312,10 +327,13 @@ body {
     font-weight: bold;
     padding-left: 30px;
 }
-.product-theme-1 > .list .content_list .sensitivities{
+.product-theme-1 > .list .content_list .more_details{
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 8px;
+    right: 0px;
+    width: 100%;;
+    padding: 0;
+    padding-right: 10px;
 }
 .product-theme-1 > .list .content_list .sensitivities img,
 .product-theme-2 .sensitivities img,
@@ -333,6 +351,34 @@ body {
     overflow-y: auto;
     margin-bottom: 5px !important;
     /* text-align: justify; */
+}
+
+[dir=ltr] .product-theme-1 > .list .content_list .title{
+    text-align: left;
+    padding-left: 0;
+    padding-right: 30px;
+}
+[dir=ltr] .product-theme-1 > .list .content_list{
+    text-align: left;
+}
+[dir=ltr] .product-theme-1 > .list .content_list .poster{
+    left: unset;
+    right: 10px;
+}
+[dir=ltr] .product-theme-2 .content_list{
+    text-align: left;
+}
+[dir=ltr] .product-theme-2 .content_list .title{
+    padding-left: 0;
+    padding-right: 30px;
+}
+[dir=ltr] .product-theme-2 .content_list .sensitivities{
+    left: unset;
+    right: 10px;
+}
+[dir=ltr] .product-theme-2 .content_list .des,
+[dir=ltr] .product-theme-2 .content_list .more_details{
+    flex-direction: row-reverse;
 }
 .product-theme-3 .description_meal{
     max-height: 30px !important;
@@ -364,7 +410,26 @@ body {
     padding: 4px;
 
 }
-
+.product-theme-3 .sensitivities{
+    text-align: left !important;
+}
+[dir=ltr] .product-theme-3 .sensitivities{
+    margin-bottom: 10px;
+    text-align: right !important;
+}
+[dir=ltr] .product-theme-3 .content_list{
+    text-align: left;
+}
+.cart-count{
+    padding: 0;
+    margin-bottom: 0px;
+    height: auto !important;
+}
+.cart-count > a{
+    padding: 10px;
+    background-color: #f7b538 !important;
+    font-weight: bold;
+}
 /* product style */
 .product-detail .name_meal{
     font-weight: bold;
