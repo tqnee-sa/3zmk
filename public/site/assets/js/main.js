@@ -99,12 +99,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     $('.show_main_info').on('click', '.category_item' ,function() {
-        console.log('category click')
+
         var tag = $(this);
         var id = tag.attr('id');
-
         var url =tag.data('url');
-        console.log(url);
         $.ajax({
             url: url,
             type: "GET",
@@ -116,6 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(json);
                 $('#restaurant-products').html(json.data.products);
                 $('#subcategories-content').html(json.data.sub_category_content);
+            },
+            error: function(xhr){
+                console.log('error :' ,xhr);
             }
         });
     });

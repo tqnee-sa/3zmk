@@ -4268,6 +4268,13 @@ function payLinkPayment($token)
         'Authorization: Bearer ' . $token,
     );
 
+    $members = [
+        [
+            'id' => 1,
+            'type' => 'type' ,
+            'type_id' =>1
+        ]
+    ];
     $data = array(
         "amount" => 5,
         "callBackUrl" => url('/payLinkSuccess'),

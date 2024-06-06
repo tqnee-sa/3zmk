@@ -83,7 +83,7 @@ class HomeController extends Controller
                     ->firstOrFail();
             }
             if ($subCategoryId != null) {
-                $subCategory = AZRestaurantSubCategory::whereHas('menu_category', function ($query) use ($branch) {
+                $subCategory = AZRestaurantSubCategory::whereHas('restaurant_category', function ($query) use ($branch) {
                     $query->where('branch_id', $branch->id)->where('active', 'true');
                 })->findOrFail($subCategoryId);
             }

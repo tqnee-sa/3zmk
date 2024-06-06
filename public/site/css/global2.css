@@ -287,3 +287,87 @@ body {
 .btn-product-theme  li button.active i{
     color: var(--rest-color-icon);
 }
+
+.product-theme-1 > .list .content_list{
+    width: calc(100% - 130px) !important;
+    position: relative;
+}
+.product-theme-1 > .list .content_list .poster{
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+.product-theme-1 > .list .image{
+    width: 125px !important;
+    height: 125px !important;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;;
+
+
+}
+.product-theme-1 > .list .content_list .title,
+.product-theme-2 .content_list .title{
+    font-size: 15px;;
+    font-weight: bold;
+    padding-left: 30px;
+}
+.product-theme-1 > .list .content_list .sensitivities{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.product-theme-1 > .list .content_list .sensitivities img,
+.product-theme-2 .sensitivities img,
+.product-theme-3 .sensitivities img{
+    border-radius: 100%;
+    border: 1px solid #CCC;
+    box-shadow: 1px 1px 10px #CCC;
+}
+.product-theme-1 > .list .content_list .description_meal,
+.product-theme-2 .description_meal,
+.product-theme-3 .description_meal{
+    font-size: 12px !important;
+    font-weight: 300 !important;
+    max-height: 35px !important;
+    overflow-y: auto;
+    margin-bottom: 5px !important;
+    /* text-align: justify; */
+}
+.product-theme-3 .description_meal{
+    max-height: 30px !important;
+
+}
+.product-theme-2 .description{
+    max-width: calc(100% - 100px);
+}
+
+.product-theme-2 .content_list {
+    position: relative;
+}
+.product-theme-2 .list_Gallery .image img{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.product-theme-2 .content_list {
+    margin-top: 15px
+}
+.product-theme-2 .content_list .sensitivities{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.product-theme-2 .price del{
+    font-size: 11px;
+}
+.product-theme-3 .row > div{
+    padding: 4px;
+
+}
+
+/* product style */
+.product-detail .name_meal{
+    font-weight: bold;
+}
+/* end product style */
+

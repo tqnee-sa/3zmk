@@ -56,8 +56,8 @@
                                                     <div id="subcat-{{ $sub->id }}" data-card-height="150"
                                                         class=" pr-3 card mb-0 bg-theme rounded-s  bord-all2 subcat-card {{ $subCat == $sub->id ? 'active' : '' }}"
                                                         style="background-color: {{ $restaurant->color == null ? '' : $restaurant->color->product_background }} !important; border-color: {{ $restaurant->color == null ? '#f7b538' : $restaurant->color->icons }}  !important;">
-                                                        <a class="{{ $subCat == $sub->id ? 'active' : '' }}"
-                                                            href="javascript:;" data-id="{{ $sub->id }}">
+                                                        <a class="category_item {{ $subCat == $sub->id ? 'active' : '' }}"
+                                                            href="javascript:;" data-id="{{ $sub->id }}"  data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $sub->menu_category_id , $sub->id]) }}">
                                                             <div class="card-center mb-0 ">
                                                                 <div class="sub-category-image">
                                                                     @if (empty($sub->image))
@@ -147,8 +147,8 @@
                                             <div id="subcat-{{ $sub->id }}" data-card-height="150"
                                                 class=" pr-3 card mb-0 bg-theme rounded-s subcat-card    {{ $subCat == $sub->id ? 'active' : '' }}"
                                                 style="background-color: {{ $restaurant->color == null ? '' : $restaurant->color->product_background }} !important; ">
-                                                <a class="{{ $subCat == $sub->id ? 'active' : '' }}"
-                                                    href="javascript:;" data-id="{{ $sub->id }}">
+                                                <a class="category_item {{ $subCat == $sub->id ? 'active' : '' }}"
+                                                    href="javascript:;" data-id="{{ $sub->id }}"  data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $sub->menu_category_id , $sub->id]) }}">
 
                                                     <div class="sub-category-image">
                                                         @if (empty($sub->image))
