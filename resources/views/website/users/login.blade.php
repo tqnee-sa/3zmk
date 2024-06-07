@@ -11,35 +11,24 @@
                 {{ session('warning_login') }}
             </div>
         @endif
-        <div
-            class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center bg-white"
-        >
+        <div class="join_us d-flex flex-column align-items-center px-1 m-3 justify-content-center bg-white">
             <br><br><br>
-            <img src="{{asset('/uploads/restaurants/logo/' . $restaurant->az_logo)}}" width="75" height="75"
-                 alt="logo"/>
+            <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}" width="75" height="75"
+                alt="logo" />
             <br><br><br>
-            <form method="post"
-                  action="{{route('AZUserLoginSubmit' , [$restaurant->name_barcode , $branch->name_en])}}">
-                <input type='hidden' name='_token' value='{{Session::token()}}'>
+            <form method="post" action="{{ route('AZUserLoginSubmit', [$restaurant->name_barcode, $branch->name_en]) }}">
+                <input type='hidden' name='_token' value='{{ Session::token() }}'>
 
                 <div class="m-2 px-1 container_form">
                     <div class="row">
                         <div class="phone">
                             <label for="type_company"> @lang('messages.phone_number') :</label>
-                            <input
-                                style="direction: rtl"
-                                type="tel"
-                                class="form-control"
-                                id="phone_number"
-                                name="phone_number"
-                                value="{{old('phone_number')}}"
-                                placeholder="05xxxxxxxx"
-                                required
-                            />
+                            <input style="direction: rtl" type="tel" class="form-control" id="phone_number"
+                                name="phone_number" value="{{ old('phone_number') }}" placeholder="05xxxxxxxx" required />
                             @if ($errors->has('phone_number'))
                                 <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
-                            </span>
+                                    <strong style="color: red;">{{ $errors->first('phone_number') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="country">
@@ -49,13 +38,13 @@
 
                             @if ($errors->has('country_id'))
                                 <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
-                            </span>
+                                    <strong style="color: red;">{{ $errors->first('country_id') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
                 </div>
-                <input type="submit" value="@lang('messages.login')" class="my-5"/>
+                <input type="submit" value="@lang('messages.login')" class="my-5" />
             </form>
         </div>
     </main>
