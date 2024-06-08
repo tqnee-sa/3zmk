@@ -562,7 +562,7 @@ span.required{
     text-align: center;
     background-color: rgb(227, 145, 0) !important;
     color: #FFF;
-    width: 24%;
+    width: 40px;
     height: 26px;
     border-radius: 8px;
     font-size: 20px;
@@ -570,7 +570,8 @@ span.required{
 }
 .product-detail .product-quantity  input.totalCount{
     width: 40px;
-    height: 29px;
+    height: 27px;
+    margin:0 !important;
     border-radius: 8px !important;
     text-align: center;
     /* padding:10px */
