@@ -356,7 +356,7 @@
                                 @if ($product->sensitivities && $product->sensitivities->count() > 0)
                                     @php $loopCount = 0; @endphp
                                     @foreach ($product->sensitivities as $product_sensitivity)
-                                        @if ($loopCount < 5)
+                                        @if ($loopCount < 4)
                                             <i>
                                                 <img src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
                                                     height="25" width="25" class="sens-image">

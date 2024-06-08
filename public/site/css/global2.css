@@ -304,7 +304,7 @@ body {
 }
 
 .product-theme-1 > .list .content_list{
-    width: calc(100% - 130px) !important;
+    width: calc(100% - 148px) !important;
     position: relative;
 }
 .product-theme-1 > .list .content_list .poster{
@@ -313,13 +313,17 @@ body {
     left: 0;
 }
 .product-theme-1 > .list .image{
-    width: 125px !important;
-    height: 125px !important;
+    width: 130px !important;
+    height: 130px !important;
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;;
 
 
+}
+.product-theme-1 > .list .image img{
+    width: 100%;
+    height: 100%;;
 }
 .product-theme-1 > .list .content_list .title,
 .product-theme-2 .content_list .title{
@@ -364,6 +368,9 @@ body {
 [dir=ltr] .product-theme-1 > .list .content_list .poster{
     left: unset;
     right: 10px;
+}
+.product-theme-1 > .list .price span{
+    font-size: 13px !important;
 }
 [dir=ltr] .product-theme-2 .content_list{
     text-align: left;
@@ -463,7 +470,123 @@ body {
 .product-detail .name_meal{
     font-size: 14px !important;
     font-weight: bold;
-    
+
+}
+.product-detail .choose_details{
+    background-color: transparent !important;
+    padding: 0;
+}
+.product-detail .p-title{
+    font-size: 14px !important;
+    font-weight: bold;
+}
+span.required{
+    color: red;
+    padding: 0 5px;
+    font-size:12px;
+    font-weight: bold;
+}
+.product-detail input[type=radio]{
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f7b538;
+    background-color: #efefef;
+}
+.product-detail input[type=radio]:checked{
+    background-color: #FFF;
+    border-width: 6px;
+    border-color: #f7b538;
+}
+.product-detail .options .item{
+    display: flex;
+    justify-content: space-between;;
+}
+.product-detail .options .item label {
+    font-size: 13px !important;
+
+}
+.product-detail .options .item .price{
+    font-size: 11px;
+    font-weight: bold;
+}
+.product-detail .p-option{
+    padding-top: 20px;
+}
+.product-detail input[type=checkbox]{
+    width: 20px;
+    height: 20px;
+
+}
+.product-detail .option-item label{
+    font-size: 13px !important;
+}
+.product-detail .option-item .quantity-control .btn-c{
+    color: #FFF;
+    width: 23px;
+    height: 23px;
+
+    border-radius: 100%;
+    font-weight: bold;
+    font-size: 16px !important;
+}
+.product-detail .option-item .quantity-control .optionCount{
+    margin: 0 5px !important;
+    text-align: center;
+    width: 14%;;
+}
+.product-detail .option-item .quantity-control .optionDecrease{
+    background-color: #FFF !important;
+    color: #000;
+    border: 1px solid rgb(184, 181, 181) !important;
+}
+.product-detail .option-item .price{
+    font-size: 11px !important;
+    font-weight: bold;
+}
+.product-detail .choose_details .addition{
+    background-color: transparent !important;
+    border-radius: 0 !important;
+}
+.product-detail .pricing, .product-detail .pricing span {
+    color: rgb(227, 145, 0) !important;
+    font-size: 14px;
+    font-weight: bold;
+}
+.product-detail .product-quantity > div {
+    width: 50%;;
+}
+.product-detail .product-quantity .pricing{
+    text-align: left;
+}
+.product-detail .product-quantity button{
+    text-align: center;
+    background-color: rgb(227, 145, 0) !important;
+    color: #FFF;
+    width: 24%;
+    height: 26px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.product-detail .product-quantity  input.totalCount{
+    width: 40px;
+    height: 29px;
+    border-radius: 8px !important;
+    text-align: center;
+    /* padding:10px */
+}
+.product-detail #totalDecrease{
+    background-color: transparent;
+    background-color: #FFF !important;
+    color: #000;
+    border: 1px solid rgb(184, 181, 181) !important;
+}
+.product-detail input[type=submit]{
+    background-color: #000;
+    color: #FFF;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-weight: bold;
 }
 /* end product style */
 
