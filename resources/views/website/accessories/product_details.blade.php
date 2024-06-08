@@ -57,7 +57,7 @@
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div class="d-flex align-items-center justify-content-between  p-3 header">
+                        {{-- <div class="d-flex align-items-center justify-content-between  p-3 header">
                             @if (app()->getLocale() == 'ar')
                                 <a href="{{ route('language', 'en') }}">
                                     En
@@ -67,8 +67,8 @@
                                     ع
                                 </a>
                             @endif
-                        </div>
-                        <div class="text-right" style="float: right;">
+                        </div> --}}
+                        <div class="text-left" style="float: right;">
                             <a href="{{ route('homeBranchIndex', [$product->restaurant->name_barcode, $product->branch->name_en, $product->menu_category->id]) }}"
                                 style='color: black' class="back">
                                 <i class="fa-solid fa-angle-right" style="padding: 8px;"></i>

@@ -391,6 +391,7 @@ return [
     "change_lang_en" => 'تغيير الغة الي الانجليزية',
     'description' => 'الوصف',
     'more' => 'المذيد',
+    'easy_footer' => 'صنع بحب في ايزي مينو',
     // start
 
     // end

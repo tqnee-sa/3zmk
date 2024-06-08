@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('site/css/all.min.css')}}"/>
     <!-- style sheet -->
     <link rel="stylesheet" href="{{asset('site/css/global.css')}}"/>
+    <link rel="stylesheet" href="{{asset('site/css/global2.css')}}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -55,63 +56,10 @@
             margin-right: 20px;
         }
 
-        #country-select + .select2-container .select2-selection__rendered img, .img-flag {
-            width: 35px;
-            height: 35px;
-            margin-right: 50px;
-            vertical-align: middle;
-        }
-
-        #country-select + .select2-container .select2-dropdown {
-            display: none;
-        }
-
-        .select2-container--default .select2-selection--single {
-            background-color: #ECF2FF;
-            /*border: 1px solid #aaa;*/
-            width: 110px;
-            height: 40px;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #444;
-            line-height: 30px;
-        }
-
-        .select2-container--default .select2-results > .select2-results__options {
-            max-height: 200px;
-            overflow-y: auto;
-            width: 100px;
-        }
-
-        select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 26px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            width: 0px;
-        }
-        .phone{
-            width:300px
-        }
-        .country{
-            width: 150px;
-            margin-top: 22px;
-        }
-        @media only screen and (max-width: 768px) {
-            /* For mobile phones: */
-            .phone{
-                width:235px
-            }
-            .country{
-                width: 115px;
-                margin-top: 22px;
-            }
-        }
 
     </style>
 
-
+    @stack('styles')
 </head>
 <body>
 
@@ -120,9 +68,9 @@
         class="d-flex align-items-center justify-content-between bg-white p-3"
     >
         <a href="{{route('homeBranchIndex' , [$restaurant->name_barcode , $branch->name_en])}}" style='color: black'>
-            <i class="fa-solid fa-angle-right"></i>
+            <i class="fa-solid fa-house-chimney-user"></i>
         </a>
-        <h5>@lang('messages.login')</h5>
+        {{-- <h5>@lang('messages.login')</h5> --}}
         @if(app()->getLocale() == 'ar')
             <a href="{{route('language' , 'en')}}">
                 En
@@ -229,5 +177,6 @@
         });
     });
 </script>
+@stack('scripts')
 </body>
 </html>

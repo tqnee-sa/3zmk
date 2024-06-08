@@ -388,4 +388,5 @@ return [
     "change_lang_en" => 'Change language to EN',
     'description' => 'Description' ,
     'more' => 'More',
+    'easy_footer' => 'Made with love at Easy Menu',
 ];
