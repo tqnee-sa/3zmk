@@ -162,7 +162,7 @@
                                         <div class="offcanvas-body small">
                                             <div class="row">
                                                 @foreach($occasions as $occasion)
-                                                    <div class="col-sm-2 choose_input xxxxx text-center" onclick="clickHandler(this);"
+                                                    <div class="col-sm-2 choose_input xxxxx text-center"   data-bs-dismiss="offcanvas" onclick="clickHandler(this);"
                                                          id="{{$occasion->id}}">
                                                         <img src="{{asset('/uploads/occasions/' . $occasion->icon)}}"
                                                              height="25" width="35"
@@ -238,8 +238,8 @@
 
 
                         <button style="background-color: {{$restaurant->az_color ?->icons}} !important;"
-                                class="global_btn d-block m-auto" type="submit">
-                            @lang('messages.next')
+                                class="global_btn btn d-block m-auto" type="submit">
+                            @lang('messages.pay')
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
                     </form>

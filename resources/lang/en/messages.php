@@ -390,4 +390,6 @@ return [
     'more' => 'More',
     'easy_footer' => 'Made with love at Easy Menu',
     'required' => 'Required',
+    'azmak' => 'Azmak',
+    'pay' => 'Pay',
 ];

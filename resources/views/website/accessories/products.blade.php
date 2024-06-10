@@ -4,7 +4,7 @@
         <ul class="nav nav-tabs btn-product-theme" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
-                    style="background-color: {{ $restaurant->az_color?->icons }} !important; color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important"
+                    style=" color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important"
                     class="nav-link {{ $restaurant->az_info->menu_show_type == 'style1' ? 'active' : '' }}"
                     id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
                     aria-controls="contact" aria-selected="false">
@@ -14,7 +14,7 @@
 
             <li class="nav-item" role="presentation">
                 <button
-                    style="background-color: {{ $restaurant->az_color?->icons }} !important; color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important"
+                    style=" color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important"
                     class="nav-link {{ $restaurant->az_info->menu_show_type == 'style2' ? 'active' : '' }}"
                     id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
                     aria-controls="profile" aria-selected="false">
@@ -23,7 +23,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button
-                    style="background-color: {{ $restaurant->az_color?->icons }} !important; color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important"
+                    style=" color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important"
                     class="nav-link {{ $restaurant->az_info->menu_show_type == 'style3' ? 'active' : '' }}"
                     id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
                     aria-controls="home" aria-selected="true">

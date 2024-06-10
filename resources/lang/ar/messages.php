@@ -393,8 +393,9 @@ return [
     'more' => 'المذيد',
     'easy_footer' => 'صنع بحب في ايزي مينو',
     'required' => 'مطلوب',
-
-    // start
     'azmak' => 'عزمك',
+    'pay' => 'الدفع',
+    // start
+
     // end
 ];
