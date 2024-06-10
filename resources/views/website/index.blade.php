@@ -54,106 +54,114 @@
             transition: max-height 0.2s ease-out;
             /*background-color: #f1f1f1;*/
         }
+        .image{
+            text-align: center;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 
 <body>
     <div class="mycontainer">
         <div class="main_open">
-            <div class="image">
-                @if ($restaurant->az_logo)
-                    <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}" width="150"
-                        height="100" alt="3azmak_title" />
-                @else
-                    <img src="{{ asset('/3azmkheader.jpg') }}" width="150" height="100" alt="3azmak_title" />
-                @endif
-            </div>
             <div>
-                @php
-                    $checkRestaurantSubscription = App\Models\AzSubscription::whereRestaurantId(
-                        $restaurant->id,
-                    )->first();
-                @endphp
-                @if (
-                    $checkRestaurantSubscription and
-                        ($checkRestaurantSubscription->status == 'active' or $checkRestaurantSubscription->status == 'free'))
-                    <p>@lang('messages.az_welcome')</p>
-                    <div>
-                        @if ($branches->count() == 1)
-                            @php
-                                $branch = \App\Models\Restaurant\Azmak\AZBranch::whereRestaurantId(
-                                    $restaurant->id,
-                                )->first();
-                            @endphp
-                            <a href="{{ route('homeBranch', $branch->id) }}" class="btn btn_custom">
-                                <i class="fa-solid fa-angle-right"></i>
-                                <span> @lang('messages.continue') </span>
-                            </a>
-                        @elseif($branches->count() > 1)
-                            <button class="btn btn_custom" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                <i class="fa-solid fa-angle-right"></i>
-                                <span> @lang('messages.continue') </span>
-                            </button>
-                        @endif
-                        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-                            aria-labelledby="offcanvasBottomLabel">
+                <div class="image">
+                    @if ($restaurant->az_logo)
+                        <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}" width="150"
+                            height="150" alt="3azmak_title" />
+                    @else
+                        <img src="{{ asset('/3azmkheader.jpg') }}" width="150" height="150" alt="3azmak_title" />
+                    @endif
+                </div>
+                <div>
+                    @php
+                        $checkRestaurantSubscription = App\Models\AzSubscription::whereRestaurantId(
+                            $restaurant->id,
+                        )->first();
+                        $restName = @$restaurant->name ?? trans('messages.azmak')
+                    @endphp
+                    @if (
+                        $checkRestaurantSubscription and
+                            ($checkRestaurantSubscription->status == 'active' or $checkRestaurantSubscription->status == 'free'))
+                        <p>@lang('messages.az_welcome' , ['name' => $restName])</p>
+                        <div>
+                            @if ($branches->count() == 1)
+                                @php
+                                    $branch = \App\Models\Restaurant\Azmak\AZBranch::whereRestaurantId(
+                                        $restaurant->id,
+                                    )->first();
+                                @endphp
+                                <a href="{{ route('homeBranch', $branch->id) }}" class="btn btn_custom">
+                                    {{-- <i class="fa-solid fa-angle-right"></i> --}}
+                                    <span> @lang('messages.continue') </span>
+                                </a>
+                            @elseif($branches->count() > 1)
+                                <button class="btn btn_custom" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                    {{-- <i class="fa-solid fa-angle-right"></i> --}}
+                                    <span> @lang('messages.continue') </span>
+                                </button>
+                            @endif
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                                aria-labelledby="offcanvasBottomLabel">
 
-                            <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-                                    @lang('messages.choose_branch')
-                                </h5>
-                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body small">
-                                <form method="post" action="{{ route('homeBranch') }}">
-                                    @csrf
-                                    @if ($branches->count() == 1)
-                                        @foreach ($branches as $branch)
-                                            <div>
-                                                <input type="hidden" id="city{{ $branch->id }}" name="branch"
-                                                    value="{{ $branch->id }}" />
-                                            </div>
-                                            <hr />
-                                        @endforeach
-                                    @elseif($branches->count() > 1)
-                                        @foreach ($cities as $city)
-                                            <div>
-                                                <a class="collapsible">
-                                                    {{ app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en }}
-                                                </a>
-                                                <div class="content">
-                                                    @foreach ($city->branches()->whereRestaurantId($restaurant->id)->get() as $branch)
-                                                        <div class="branch-item">
-                                                            <input type="radio" id="city{{ $branch->id }}"
-                                                                name="branch" value="{{ $branch->id }}" required />
-                                                            <label for="city{{ $branch->id }}">
-                                                                {{ app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en }}
-                                                            </label>
-
-                                                        </div>
-                                                    @endforeach
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+                                        @lang('messages.choose_branch')
+                                    </h5>
+                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body small">
+                                    <form method="post" action="{{ route('homeBranch') }}">
+                                        @csrf
+                                        @if ($branches->count() == 1)
+                                            @foreach ($branches as $branch)
+                                                <div>
+                                                    <input type="hidden" id="city{{ $branch->id }}" name="branch"
+                                                        value="{{ $branch->id }}" />
                                                 </div>
-                                            </div>
-                                            <hr />
-                                        @endforeach
-                                    @endif
-                                    <input type="submit" value="@lang('messages.continue')" />
-                                </form>
+                                                <hr />
+                                            @endforeach
+                                        @elseif($branches->count() > 1)
+                                            @foreach ($cities as $city)
+                                                <div>
+                                                    <a class="collapsible">
+                                                        {{ app()->getLocale() == 'ar' ? $city->name_ar : $city->name_en }}
+                                                    </a>
+                                                    <div class="content">
+                                                        @foreach ($city->branches()->whereRestaurantId($restaurant->id)->get() as $branch)
+                                                            <div class="branch-item">
+                                                                <input type="radio" id="city{{ $branch->id }}"
+                                                                    name="branch" value="{{ $branch->id }}"
+                                                                    required />
+                                                                <label for="city{{ $branch->id }}">
+                                                                    {{ app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en }}
+                                                                </label>
+
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            @endforeach
+                                        @endif
+                                        <input type="submit" value="@lang('messages.continue')" />
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @elseif($checkRestaurantSubscription and $checkRestaurantSubscription->status == 'finished')
-                    <p style="color: red"> @lang('messages.finished_subscription') </p>
-                    <p style="font-size:50px">&#128546;</p>
-                @elseif($checkRestaurantSubscription and $checkRestaurantSubscription->status == 'commission_hold')
-                    <p style="color: red"> @lang('messages.restaurant_closed_now') </p>
-                    <p style="font-size:50px">&#128546;</p>
-                @elseif($checkRestaurantSubscription == null)
-                    <p style="color: red"> @lang('messages.notSubscribedYet') </p>
-                    <p style="font-size:50px">&#128522;</p>
-                @endif
+                    @elseif($checkRestaurantSubscription and $checkRestaurantSubscription->status == 'finished')
+                        <p style="color: red"> @lang('messages.finished_subscription') </p>
+                        <p style="font-size:50px">&#128546;</p>
+                    @elseif($checkRestaurantSubscription and $checkRestaurantSubscription->status == 'commission_hold')
+                        <p style="color: red"> @lang('messages.restaurant_closed_now') </p>
+                        <p style="font-size:50px">&#128546;</p>
+                    @elseif($checkRestaurantSubscription == null)
+                        <p style="color: red"> @lang('messages.notSubscribedYet') </p>
+                        <p style="font-size:50px">&#128522;</p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

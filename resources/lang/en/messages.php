@@ -97,7 +97,7 @@ return [
     'poster' => 'Poster',
     'continue' => 'Continue',
     'choose_branch' => 'Choose Branch',
-    'az_welcome' => 'Welcome To Azmak !',
+    'az_welcome' => 'Welcome To :name',
     'type' => 'Type',
     'image_gif' => 'Gif Image',
     'youtube_link_code' => 'Youtube Link Code',

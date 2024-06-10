@@ -4174,13 +4174,13 @@ function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
         "clientEmail" => $email,
         "clientMobile" => $phone,
         "clientName" => $name,
-        "note" => "This invoice is for VIP client.",
+        // "note" => "This invoice is for VIP client.",
         "orderNumber" => $orderNo,
         "products" => array(
             array(
-                "description" => "Brown Hand bag leather for ladies",
-                "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
-                "isDigital" => true,
+                // "description" => "Brown Hand bag leather for ladies",
+                // "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
+                "isDigital" => false,
                 "price" => $amount,
                 "qty" => 1,
                 "title" => "Hand bag"
@@ -4224,13 +4224,13 @@ function payLinkAddInvoiceOrders($restaurant , $amount , $email,$phone,$name,$or
         "clientEmail" => $email,
         "clientMobile" => $phone,
         "clientName" => $name,
-        "note" => "This invoice is for VIP client.",
+        // "note" => "This invoice is for VIP client.",
         "orderNumber" => $orderNo,
         "products" => array(
             array(
-                "description" => "Brown Hand bag leather for ladies",
-                "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
-                "isDigital" => true,
+                // "description" => "Brown Hand bag leather for ladies",
+                // "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
+                "isDigital" => false,
                 "price" => $amount,
                 "qty" => 1,
                 "title" => "Hand bag"
@@ -4293,9 +4293,9 @@ function payLinkPayment($token)
         ),
         "products" => array(
             array(
-                "description" => "Brown Hand bag leather for ladies",
-                "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
-                "isDigital" => true,
+                // "description" => "Brown Hand bag leather for ladies",
+                // "imageSrc" => "http://merchantwebsite.com/img/img1.jpg",
+                "isDigital" => false,
                 "price" => 150,
                 "qty" => 1,
                 "title" => "Hand bag"
