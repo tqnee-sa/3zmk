@@ -427,6 +427,9 @@ body {
 [dir=ltr] .product-theme-3 .content_list{
     text-align: left;
 }
+.btn-product-theme button{
+    background-color: transparent !important;
+}
 .cart-count{
     padding: 0;
     margin-bottom: 0px;
