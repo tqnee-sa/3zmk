@@ -228,15 +228,15 @@
                             @endif
 
                             <div class="des d-flex align-items-center justify-content-between">
-                                @if ($product->description_ar or $product->description_en)
-                                    <a class="description"
-                                        style="color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important;"
-                                        href='{{ route('product_details', $product->id) }}'>
-                                        <p class="description_meal">
-                                            {{ app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)) }}
-                                        </p>
-                                    </a>
-                                @endif
+
+                                <a class="description"
+                                    style="color: {{ $restaurant->az_color ? $restaurant->az_color->options_description : '' }} !important;"
+                                    href='{{ route('product_details', $product->id) }}'>
+                                    <p class="description_meal">
+                                        {{ app()->getLocale() == 'ar' ? strip_tags(str_replace('&nbsp;', ' ', $product->description_ar)) : strip_tags(str_replace('&nbsp;', ' ', $product->description_en)) }}
+                                    </p>
+                                </a>
+
 
 
 
@@ -351,18 +351,18 @@
                                 @endif
                             </div>
 
-                        <div class="more_details d-flex align-items-center justify-content-between">
-                            <div class="sensitivities">
-                                @if ($product->sensitivities && $product->sensitivities->count() > 0)
-                                    @php $loopCount = 0; @endphp
-                                    @foreach ($product->sensitivities as $product_sensitivity)
-                                        @if ($loopCount < 4)
-                                            <i>
-                                                <img src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
-                                                    height="25" width="25" class="sens-image">
-                                            </i>
-                                            @php $loopCount++; @endphp
-                                        @else
+                            <div class="more_details d-flex align-items-center justify-content-between">
+                                <div class="sensitivities">
+                                    @if ($product->sensitivities && $product->sensitivities->count() > 0)
+                                        @php $loopCount = 0; @endphp
+                                        @foreach ($product->sensitivities as $product_sensitivity)
+                                            @if ($loopCount < 4)
+                                                <i>
+                                                    <img src="{{ asset('/uploads/sensitivities/' . $product_sensitivity->sensitivity->photo) }}"
+                                                        height="25" width="25" class="sens-image">
+                                                </i>
+                                                @php $loopCount++; @endphp
+                                            @else
                                             @break
                                         @endif
                                     @endforeach
