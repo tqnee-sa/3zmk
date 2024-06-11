@@ -71,7 +71,7 @@ class MenuController extends Controller
         if ($posters->count() > 0) {
             foreach ($posters as $poster) {
                 $image = null;
-                $check_poster = AZRestaurantPoster::whereRestaurantId($restaurant->id)->whereNameAr($poster->name_ar)->first();
+//                $check_poster = AZRestaurantPoster::whereRestaurantId($restaurant->id)->whereNameAr($poster->name_ar)->first();
                 if (isset($poster->poster)) {
                     $path = 'https://easymenu.site/uploads/posters/' . $poster->poster;
                     $headers = @get_headers($path);
@@ -89,15 +89,13 @@ class MenuController extends Controller
                         })->save($destinationPath . '/' . $image);
                     }
                 }
-                if (!isset($check_poster)) {
-                    AZRestaurantPoster::create([
-                        'restaurant_id' => $restaurant->id,
-                        'name_ar' => $poster->name_ar,
-                        'name_en' => $poster->name_en,
-                        'poster' => $image,
-                        'easy_id' => $poster->id,
-                    ]);
-                }
+                AZRestaurantPoster::create([
+                    'restaurant_id' => $restaurant->id,
+                    'name_ar' => $poster->name_ar,
+                    'name_en' => $poster->name_en,
+                    'poster' => $image,
+                    'easy_id' => $poster->id,
+                ]);
             }
         }
 
