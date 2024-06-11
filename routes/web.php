@@ -89,6 +89,7 @@ use \App\Http\Controllers\EmployeeController\HomeController as EmployeeHome;
 use \App\Http\Controllers\EmployeeController\UserController as UserEmployee;
 use \App\Http\Controllers\EmployeeController\Order\OrderController as EmployeeOrder;
 use App\Http\Controllers\EmployeeController\Order\OrderController as OrderOrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
