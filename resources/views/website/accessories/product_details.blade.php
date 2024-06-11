@@ -30,27 +30,7 @@
 @endpush
 @section('content')
     <div class="mycontainer bg-white product-detail">
-        {{--    <header --}}
-        {{--        style="background-color: {{$restaurant->az_color?->background}} !important;" --}}
-        {{--        class="d-flex align-items-center justify-content-between bg-white p-3" --}}
-        {{--    > --}}
-        {{--        <a href="{{route('homeBranchIndex' , [$product->restaurant->name_barcode , $product->branch->name_en , $product->menu_category->id])}}" --}}
-        {{--           style='color: black'> --}}
-        {{--            <i class="fa-solid fa-angle-right"></i> --}}
-        {{--        </a> --}}
-        {{--        <h6 style="color: {{$restaurant->az_color?->main_heads}}"> --}}
-        {{--            @lang('messages.product_details') --}}
-        {{--        </h6> --}}
-        {{--        @if (app()->getLocale() == 'ar') --}}
-        {{--            <a href="{{route('language' , 'en')}}"> --}}
-        {{--                En --}}
-        {{--            </a> --}}
-        {{--        @else --}}
-        {{--            <a href="{{route('language' , 'ar')}}"> --}}
-        {{--                ع --}}
-        {{--            </a> --}}
-        {{--        @endif --}}
-        {{--    </header> --}}
+
         <!-- end header -->
         <main style="background-color: {{ $restaurant->az_color?->background }}">
             <div class="top-icon">
@@ -63,20 +43,13 @@
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            {{-- <div class="d-flex align-items-center justify-content-between  p-3 header">
-                            @if (app()->getLocale() == 'ar')
-                                <a href="{{ route('language', 'en') }}">
-                                    En
-                                </a>
+                            @if($product->photo)
+                                <img src="{{ asset('/uploads/products/' . $product->photo) }}" class="d-block w-100"
+                                     alt="..." />
                             @else
-                                <a href="{{ route('language', 'ar') }}">
-                                    ع
-                                </a>
+                                <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}" class="d-block w-100"
+                                     alt="..." />
                             @endif
-                        </div> --}}
-
-                            <img src="{{ asset('/uploads/products/' . $product->photo) }}" class="d-block w-100"
-                                alt="..." />
                         </div>
                     </div>
                 </div>
