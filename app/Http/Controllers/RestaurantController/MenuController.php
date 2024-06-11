@@ -176,7 +176,9 @@ class MenuController extends Controller
         }
 
         // copy branches
-        $branches = DB::table('branches')->whereRestaurantId($restaurant->id)->get();
+        $branches = DB::table('branches')->whereRestaurantId($restaurant->id)
+            ->whereIn('status' , ['active' , 'tentative'])
+            ->get();
         if ($branches->count() > 0) {
             foreach ($branches as $branch) {
                 $az_branch = AZBranch::create([
@@ -281,9 +283,14 @@ class MenuController extends Controller
                     if ($products->count() > 0) {
                         foreach ($products as $product) {
                             $sub_category_id = AZRestaurantSubCategory::where('easy_id', $product->sub_category_id)->first();
-                            $poster_id = AZRestaurantPoster::whereRestaurantId($restaurant->id)
-                                ->where('easy_id', $product->poster_id)
-                                ->first();
+                            if ($product->poster_id != null)
+                            {
+                                $poster_id = AZRestaurantPoster::whereRestaurantId($restaurant->id)
+                                    ->where('easy_id', $product->poster_id)
+                                    ->first();
+                            }else{
+                                $poster_id = null;
+                            }
                             $PImage = null;
                             if (isset($product->photo) and $product->photo != 'default.png') {
                                 // product photo
