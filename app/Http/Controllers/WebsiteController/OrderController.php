@@ -46,6 +46,11 @@ class OrderController extends Controller
             'occasion' => ($request->occasion == 'other' or $request->occasion == 'أخري') ? $request->occasion_text : $request->occasion,
             'occasion_message' => $request->message,
         ]);
+        if ($order->total_price <=5)
+        {
+            flash(trans('messages.lessPaymentAmount'))->error();
+            return redirect()->back();
+        }
         // move to payment
         // check restaurant payment company
         if ($order->restaurant->a_z_orders_payment_type == 'tap') {

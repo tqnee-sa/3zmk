@@ -392,4 +392,5 @@ return [
     'required' => 'Required',
     'azmak' => 'Azmak',
     'pay' => 'Pay',
+    'lessPaymentAmount' => 'Less Payment Amount Is',
 ];

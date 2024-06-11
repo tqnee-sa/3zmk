@@ -395,7 +395,5 @@ return [
     'required' => 'مطلوب',
     'azmak' => 'عزمك',
     'pay' => 'الدفع',
-    // start
-
-    // end
+    'lessPaymentAmount' => 'اقل قيمة لدفع الطلب هي 5 ريال',
 ];

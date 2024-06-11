@@ -6,6 +6,7 @@
     @lang('messages.cart')
 @endsection
 @section('content')
+    @include('flash::message')
     <main>
         <div class="teeeeest my-1 mx-2">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">

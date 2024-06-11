@@ -56,8 +56,13 @@
                                     @foreach($order->items as $item)
                                         <div class="cart-item">
                                             <div class="image">
-                                                <img src="{{asset('/uploads/products/' . $item->product->photo)}}"
-                                                     alt=""/>
+                                                @if($item->product->photo)
+                                                    <img src="{{asset('/uploads/products/' . $item->product->photo)}}"
+                                                         alt=""/>
+                                                @else
+                                                    <img src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}"
+                                                         alt="..." />
+                                                @endif
                                             </div>
                                             <div class="details">
                                                 <h6 style="color: {{$restaurant->az_color?->main_heads}} !important;">
