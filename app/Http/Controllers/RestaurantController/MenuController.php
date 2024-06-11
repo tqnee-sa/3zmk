@@ -244,11 +244,29 @@ class MenuController extends Controller
                         ->get();
                     if ($sub_categories->count() > 0) {
                         foreach ($sub_categories as $sub_category) {
+                            $SImage = null;
+                            if (isset($menu_category->photo)) {
+                                $path = 'https://easymenu.site/uploads/sub_menu_categories/' . $sub_category->image;
+                                $headers = @get_headers($path);
+                                if($headers && strpos( $headers[0], '200')) {
+                                    $info = pathinfo($path);
+                                    $contents = file_get_contents($path);
+                                    $file = '/tmp/' . $info['basename'];
+                                    file_put_contents($file, $contents);
+
+                                    $SImage = $info['basename'];
+                                    $destinationPath = public_path('/' . 'uploads/sub_menu_categories');
+                                    $img = Image::make($file);
+                                    $img->resize(500, 500, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    })->save($destinationPath . '/' . $SImage);
+                                }
+                            }
                             AZRestaurantSubCategory::create([
                                 'menu_category_id' => $az_menu_category->id,
                                 'name_ar' => $sub_category->name_ar,
                                 'name_en' => $sub_category->name_en,
-                                'image' => $sub_category->image,
+                                'image' => $SImage,
                                 'easy_id' => $sub_category->id,
                             ]);
                         }
