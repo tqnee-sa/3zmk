@@ -39,26 +39,30 @@ class MenuController extends Controller
             foreach ($sliders as $slider) {
                 $image = null;
                 if (isset($slider->photo) and ($slider->type == 'image' or $slider->type == 'gif')) {
-                    $info = pathinfo('https://easymenu.site/uploads/sliders/' . $slider->photo);
-                    $contents = file_get_contents('https://easymenu.site/uploads/sliders/' . $slider->photo);
-                    $file = '/tmp/' . $info['basename'];
-                    file_put_contents($file, $contents);
-                    $image = $info['basename'];
-                    $destinationPath = public_path('/' . 'uploads/sliders');
-                    $img = Image::make($file);
-                    $img->resize(500, 500, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $image);
+                    $path = 'https://easymenu.site/uploads/sliders/' . $slider->photo;
+                    $headers = @get_headers($path);
+                    if($headers && strpos( $headers[0], '200')) {
+                        $info = pathinfo($path);
+                        $contents = file_get_contents($path);
+                        $file = '/tmp/' . $info['basename'];
+                        file_put_contents($file, $contents);
+                        $image = $info['basename'];
+                        $destinationPath = public_path('/' . 'uploads/sliders');
+                        $img = Image::make($file);
+                        $img->resize(500, 500, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationPath . '/' . $image);
+                        AzRestaurantSlider::create([
+                            'restaurant_id' => $restaurant->id,
+                            'photo' => $image,
+                            'type' => $slider->type,
+                            'youtube' => $slider->youtube,
+                            'description_en' => $slider->description_en,
+                            'description_ar' => $slider->description_ar,
+                            'stop' => $slider->stop,
+                        ]);
+                    }
                 }
-                AzRestaurantSlider::create([
-                    'restaurant_id' => $restaurant->id,
-                    'photo' => $image,
-                    'type' => $slider->type,
-                    'youtube' => $slider->youtube,
-                    'description_en' => $slider->description_en,
-                    'description_ar' => $slider->description_ar,
-                    'stop' => $slider->stop,
-                ]);
             }
         }
 
@@ -69,17 +73,21 @@ class MenuController extends Controller
                 $image = null;
                 $check_poster = AZRestaurantPoster::whereRestaurantId($restaurant->id)->whereNameAr($poster->name_ar)->first();
                 if (isset($poster->poster)) {
-                    $info = pathinfo('https://easymenu.site/uploads/posters/' . $poster->poster);
-                    $contents = file_get_contents('https://easymenu.site/uploads/posters/' . $poster->poster);
-                    $file = '/tmp/' . $info['basename'];
-                    file_put_contents($file, $contents);
+                    $path = 'https://easymenu.site/uploads/posters/' . $poster->poster;
+                    $headers = @get_headers($path);
+                    if($headers && strpos( $headers[0], '200')) {
+                        $info = pathinfo($path);
+                        $contents = file_get_contents($path);
+                        $file = '/tmp/' . $info['basename'];
+                        file_put_contents($file, $contents);
 
-                    $image = $info['basename'];
-                    $destinationPath = public_path('/' . 'uploads/posters');
-                    $img = Image::make($file);
-                    $img->resize(500, 500, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $image);
+                        $image = $info['basename'];
+                        $destinationPath = public_path('/' . 'uploads/posters');
+                        $img = Image::make($file);
+                        $img->resize(500, 500, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationPath . '/' . $image);
+                    }
                 }
                 if (!isset($check_poster)) {
                     AZRestaurantPoster::create([
@@ -100,17 +108,21 @@ class MenuController extends Controller
                 $check_sensitivity = AZRestaurantSensitivity::whereRestaurantId($restaurant->id)->whereNameAr($sensitivity->name_ar)->first();
                 $image = null;
                 if (isset($sensitivity->photo)) {
-                    $info = pathinfo('https://easymenu.site/uploads/sensitivities/' . $sensitivity->photo);
-                    $contents = file_get_contents('https://easymenu.site/uploads/sensitivities/' . $sensitivity->photo);
-                    $file = '/tmp/' . $info['basename'];
-                    file_put_contents($file, $contents);
+                    $path = 'https://easymenu.site/uploads/sensitivities/' . $sensitivity->photo;
+                    $headers = @get_headers($path);
+                    if($headers && strpos( $headers[0], '200')) {
+                        $info = pathinfo($path);
+                        $contents = file_get_contents($path);
+                        $file = '/tmp/' . $info['basename'];
+                        file_put_contents($file, $contents);
 
-                    $image = $info['basename'];
-                    $destinationPath = public_path('/' . 'uploads/sensitivities');
-                    $img = Image::make($file);
-                    $img->resize(500, 500, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' . $image);
+                        $image = $info['basename'];
+                        $destinationPath = public_path('/' . 'uploads/sensitivities');
+                        $img = Image::make($file);
+                        $img->resize(500, 500, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationPath . '/' . $image);
+                    }
                 }
                 if (!isset($check_sensitivity)) {
                     AZRestaurantSensitivity::create([
@@ -171,7 +183,7 @@ class MenuController extends Controller
                     'restaurant_id' => $restaurant->id,
                     'city_id' => $branch->city_id,
                     'name_ar' => $branch->name_ar,
-                    'name_en' => $branch->name_en,
+                    'name_en' => $branch->name_barcode,
                     'latitude' => $branch->latitude,
                     'longitude' => $branch->longitude,
                 ]);
@@ -181,19 +193,23 @@ class MenuController extends Controller
                     ->whereBranchId($branch->id)
                     ->get();
                 foreach ($menu_categories as $menu_category) {
-                    $image = 'default.jpg';
+                    $image = null;
                     if (isset($menu_category->photo)) {
-                        $info = pathinfo('https://easymenu.site/uploads/menu_categories/' . $menu_category->photo);
-                        $contents = file_get_contents('https://easymenu.site/uploads/menu_categories/' . $menu_category->photo);
-                        $file = '/tmp/' . $info['basename'];
-                        file_put_contents($file, $contents);
+                        $path = 'https://easymenu.site/uploads/menu_categories/' . $menu_category->photo;
+                        $headers = @get_headers($path);
+                        if($headers && strpos( $headers[0], '200')) {
+                            $info = pathinfo($path);
+                            $contents = file_get_contents($path);
+                            $file = '/tmp/' . $info['basename'];
+                            file_put_contents($file, $contents);
 
-                        $image = $info['basename'];
-                        $destinationPath = public_path('/' . 'uploads/menu_categories');
-                        $img = Image::make($file);
-                        $img->resize(500, 500, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })->save($destinationPath . '/' . $image);
+                            $image = $info['basename'];
+                            $destinationPath = public_path('/' . 'uploads/menu_categories');
+                            $img = Image::make($file);
+                            $img->resize(500, 500, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->save($destinationPath . '/' . $image);
+                        }
                     }
                     $az_menu_category = AZMenuCategory::create([
                         'restaurant_id' => $restaurant->id,
@@ -250,20 +266,24 @@ class MenuController extends Controller
                             $poster_id = AZRestaurantPoster::whereRestaurantId($restaurant->id)
                                 ->where('easy_id', $product->poster_id)
                                 ->first();
-                            $PImage = 'default.jpg';;
+                            $PImage = null;
                             if (isset($product->photo) and $product->photo != 'default.png') {
                                 // product photo
-                                $info = pathinfo('https://easymenu.site/uploads/products/' . $product->photo);
-                                $contents = file_get_contents('https://easymenu.site/uploads/products/' . $product->photo);
-                                $file = '/tmp/' . $info['basename'];
-                                file_put_contents($file, $contents);
+                                $path = 'https://easymenu.site/uploads/products/' . $product->photo;
+                                $headers = @get_headers($path);
+                                if($headers && strpos( $headers[0], '200')) {
+                                    $info = pathinfo($path);
+                                    $contents = file_get_contents($path);
+                                    $file = '/tmp/' . $info['basename'];
+                                    file_put_contents($file, $contents);
 
-                                $PImage = $info['basename'];
-                                $destinationPath = public_path('/' . 'uploads/products');
-                                $img = Image::make($file);
-                                $img->resize(500, 500, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->save($destinationPath . '/' . $PImage);
+                                    $PImage = $info['basename'];
+                                    $destinationPath = public_path('/' . 'uploads/products');
+                                    $img = Image::make($file);
+                                    $img->resize(500, 500, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    })->save($destinationPath . '/' . $PImage);
+                                }
                             }
 
                             $az_product = AZProduct::create([

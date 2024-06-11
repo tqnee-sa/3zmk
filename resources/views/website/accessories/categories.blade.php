@@ -27,13 +27,21 @@
                                     <div class="main-category">
                                         <div
                                             class="card__image {{ $category->id == $category_id ? 'active_category' : '' }}">
-                                            <a href="javascript:;" id="{{ $category->id }}" class="category_item" data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
-                                                <img src="{{ asset('/uploads/menu_categories/' . $category->photo) }}"
-                                                    alt="image" width="200" height="200" class="card__img" />
+                                            <a href="javascript:;" id="{{ $category->id }}" class="category_item"
+                                               data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
+                                                @if($category->photo)
+                                                    <img
+                                                        src="{{ asset('/uploads/menu_categories/' . $category->photo) }}"
+                                                        alt="image" width="200" height="200" class="card__img"/>
+                                                @else
+                                                    <img
+                                                        src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}"
+                                                        alt="image" width="200" height="200" class="card__img"/>
+                                                @endif
                                                 @if ($category->poster != null)
                                                     <img style="text-align: right"
-                                                        src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
-                                                        height="10" width="10" class="poster_image">
+                                                         src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
+                                                         height="10" width="10" class="poster_image">
                                                 @endif
                                             </a>
                                         </div>
@@ -41,8 +49,8 @@
                                         <div class="card__data">
                                             <h5 class="card__name">
                                                 <a href="javascript:;" id="{{ $category->id }}" class="category_item"
-                                                    data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}"
-                                                    style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;">
+                                                   data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}"
+                                                   style="color: {{ $restaurant->az_color ? $restaurant->az_color->main_heads : '' }} !important;">
                                                     {{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}
                                                 </a>
                                             </h5>
@@ -54,20 +62,29 @@
                                     <div class="main-category ">
                                         <div
                                             class="card__image {{ $category->id == $category_id ? 'active_category' : '' }}">
-                                            <a href="javascript:;" id="{{ $category->id }}" class="category_item" data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
-                                                <img src="{{ asset('/uploads/menu_categories/' . $category->photo) }}"
-                                                    alt="image" class="card__img" />
+                                            <a href="javascript:;" id="{{ $category->id }}" class="category_item"
+                                               data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
+                                                @if($category->photo)
+                                                    <img
+                                                        src="{{ asset('/uploads/menu_categories/' . $category->photo) }}"
+                                                        alt="image" width="200" height="200" class="card__img"/>
+                                                @else
+                                                    <img
+                                                        src="{{ asset('/uploads/restaurants/logo/' . $restaurant->az_logo) }}"
+                                                        alt="image" width="200" height="200" class="card__img"/>
+                                                @endif
                                                 @if ($category->poster != null)
                                                     <img style="text-align: right"
-                                                        src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
-                                                        height="10" width="10" class="poster_image">
+                                                         src="{{ asset('/uploads/posters/' . $category->poster->poster) }}"
+                                                         height="10" width="10" class="poster_image">
                                                 @endif
                                             </a>
                                         </div>
 
                                         <div class="card__data">
                                             <h5 class="card__name">
-                                                <a href="javascript:;" id="{{ $category->id }}" class="category_item" data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
+                                                <a href="javascript:;" id="{{ $category->id }}" class="category_item"
+                                                   data-url="{{ route('homeBranchIndex', [$restaurant->name_barcode, $branch->name_en, $category->id]) }}">
                                                     {{ app()->getLocale() == 'ar' ? $category->name_ar : $category->name_en }}
                                                 </a>
                                             </h5>
@@ -91,10 +108,9 @@
 </div>
 
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
     });
 </script>

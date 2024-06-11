@@ -236,9 +236,9 @@
                             @endif
                         @endif
 
-
+{{--                        <a onclick="payment(this);">pay</a>--}}
                         <button style="background-color: {{$restaurant->az_color ?->icons}} !important;"
-                                class="global_btn btn d-block m-auto" type="submit">
+                                class="global_btn btn d-block m-auto" type="submit" onclick="payment()">
                             @lang('messages.pay')
                             <i class="fa-solid fa-angle-left"></i>
                         </button>
@@ -247,6 +247,9 @@
             </div>
         </div>
     </main>
+    @php
+        $token = payLinkToken('test' , 'APP_ID_1123453311' , '0662abb5-13c7-38ab-cd12-236e58f43766');
+    @endphp
     <style>
         .choose_input {
             background: #f4f4f4;
@@ -288,5 +291,27 @@
             }
         }
     </script>
+
+{{--    <script src="https://paylink.sa/assets/js/paylink.js"></script>--}}
+{{--    <script>--}}
+{{--        function payment(){--}}
+{{--            let token = '{{$token}}';--}}
+{{--            let payment = new PaylinkPayments({mode: 'test', defaultLang: 'ar', backgroundColor: '#EEE'});--}}
+{{--            let order = new Order({--}}
+{{--                callBackUrl: 'http://127.0.0.1:8000/payLinkSuccess', // callback page URL (for example http://localhost:6655 processPayment.php) in your site to be called after payment is processed. (mandatory)--}}
+{{--                clientName: 'John Smith', // the name of the buyer. (mandatory)--}}
+{{--                clientMobile: '0509200900', // the mobile of the buyer. (mandatory)--}}
+{{--                amount: 50, // the total amount of the order (including VAT or discount). (mandatory). NOTE: This amount is used regardless of total amount of products listed below.--}}
+{{--                orderNumber: 'ANY_UNIQUE_ORDER', // the order number in your system. (mandatory)--}}
+{{--                clientEmail: 'myemail@example.com', // the email of the buyer (optional)--}}
+{{--                products: [ // list of products (optional)--}}
+{{--                    {title: 'Dress 1', price: 120, qty: 2},--}}
+{{--                    {title: 'Dress 2', price: 120, qty: 2},--}}
+{{--                    {title: 'Dress 3', price: 70, qty: 2}--}}
+{{--                ],--}}
+{{--            });--}}
+{{--            payment.openPayment(token, order, 'http://127.0.0.1:8000/payLinkSuccess');--}}
+{{--        }--}}
+{{--    </script>--}}
 @endsection
 
