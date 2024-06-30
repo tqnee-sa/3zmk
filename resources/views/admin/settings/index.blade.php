@@ -145,7 +145,7 @@
                                 <div id="payLink" style="display: {{$settings->online_payment == 'paylink' ? 'block' : 'none'}}">
                                     <div class="form-group">
                                         <label class="control-label"> @lang('messages.token_payment_type') </label>
-                                        <select name="pay_link_payment_type" class="form-control">
+                                        <select name="pay_link_payment_type" class="form-control" onchange="showTestInfo(this)">
                                             <option disabled selected> @lang('messages.choose_one') </option>
                                             <option value="test" {{$settings->pay_link_payment_type == 'test' ? 'selected' : ''}}> @lang('messages.test') </option>
                                             <option value="online" {{$settings->pay_link_payment_type == 'online' ? 'selected' : ''}}> @lang('messages.online') </option>
@@ -158,7 +158,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"> @lang('messages.pay_link_app_id') </label>
-                                        <input name="pay_link_app_id" value="{{$settings->pay_link_app_id}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_app_id')">
+                                        <input name="pay_link_app_id" id="pay_link_app_id" value="{{$settings->pay_link_app_id}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_app_id')">
                                         @if ($errors->has('pay_link_app_id'))
                                             <span class="help-block">
                                             <strong style="color: red;">{{ $errors->first('pay_link_app_id') }}</strong>
@@ -167,7 +167,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"> @lang('messages.pay_link_secret_key') </label>
-                                        <input name="pay_link_secret_key" value="{{$settings->pay_link_secret_key}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_secret_key')">
+                                        <input name="pay_link_secret_key" id="pay_link_secret_key" value="{{$settings->pay_link_secret_key}}" type="text" class="form-control" placeholder="@lang('messages.pay_link_secret_key')">
                                         @if ($errors->has('pay_link_secret_key'))
                                             <span class="help-block">
                                             <strong style="color: red;">{{ $errors->first('pay_link_secret_key') }}</strong>
@@ -222,5 +222,14 @@
                 document.getElementById('payLink').style.display = 'none';
             }
         }
+        function showTestInfo(element) {
+
+            if (element.value == 'test') {
+                document.getElementById("pay_link_app_id").value = 'APP_ID_1123453311';
+                document.getElementById("pay_link_secret_key").value = '0662abb5-13c7-38ab-cd12-236e58f43766';
+            }
+
+        }
+
     </script>
 @endsection

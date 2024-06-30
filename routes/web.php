@@ -106,6 +106,9 @@ Route::get('/payLinkSuccess' , function (){
 Route::get('/payLinkError' , function (){
     echo "error payLink Payment";
 });
+Route::get('/logistic_create_order' , function (){
+    logistics_delete_order();
+});
 
 Route::get('/test' , function (){
     return route('homeBranchIndex', ['home', 'test', 2]);

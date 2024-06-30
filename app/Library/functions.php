@@ -3876,13 +3876,14 @@ function updateCurrency()
 
 function checkWordsCount($string, $count, $isTag = false)
 {
-    $words  = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
+    $words = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
     if (count($words) > $count) return true;
     return false;
 }
-function getShortDescription($string, $start, $last =  0, $isTag = false)
+
+function getShortDescription($string, $start, $last = 0, $isTag = false)
 {
-    $words  = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
+    $words = $isTag == true ? explode(' ', strip_tags($string)) : explode(' ', $string);
     $results = '';
     foreach ($words as $index => $temp) :
         if ($index >= $start and ($last == 0 or $index <= $last)) $results .= $temp . ' ';
@@ -4123,7 +4124,7 @@ function edfa_payment($merchant_key, $password, $amount, $success_url, $order_id
     return $result->redirect_url;
 }
 
-function payLinkToken($type,$appId , $secretKey)
+function payLinkToken($type, $appId, $secretKey)
 {
     $basURL = ($type == 'test' ? "https://restpilot.paylink.sa" : "https://restapi.paylink.sa") . "/api/auth";
     $headers = array(
@@ -4157,11 +4158,11 @@ function payLinkToken($type,$appId , $secretKey)
     }
 }
 
-function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
+function payLinkAddInvoice($amount, $email, $phone, $name, $orderNo, $url)
 {
     $setting = AzmakSetting::first();
     $basURL = ($setting->pay_link_payment_type == 'test' ? "https://restpilot.paylink.sa" : "https://restapi.paylink.sa") . "/api/addInvoice";
-    $token = payLinkToken($setting->pay_link_payment_type , $setting->pay_link_app_id , $setting->pay_link_secret_key);
+    $token = payLinkToken($setting->pay_link_payment_type, $setting->pay_link_app_id, $setting->pay_link_secret_key);
     $headers = array(
         'Content-type: application/json',
         'Accept: application/json',
@@ -4208,10 +4209,11 @@ function payLinkAddInvoice($amount , $email,$phone,$name,$orderNo,$url)
         return $response->url;
     }
 }
-function payLinkAddInvoiceOrders($restaurant , $amount , $email,$phone,$name,$orderNo,$url)
+
+function payLinkAddInvoiceOrders($restaurant, $amount, $email, $phone, $name, $orderNo, $url)
 {
     $basURL = ($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? "https://restpilot.paylink.sa" : "https://restapi.paylink.sa") . "/api/addInvoice";
-    $token = payLinkToken(($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? 'test' : 'online') , $restaurant->pay_link_app_id , $restaurant->pay_link_secret_key);
+    $token = payLinkToken(($restaurant->pay_link_app_id == 'APP_ID_1123453311' ? 'test' : 'online'), $restaurant->pay_link_app_id, $restaurant->pay_link_secret_key);
     $headers = array(
         'Content-type: application/json',
         'Accept: application/json',
@@ -4271,8 +4273,8 @@ function payLinkPayment($token)
     $members = [
         [
             'id' => 1,
-            'type' => 'type' ,
-            'type_id' =>1
+            'type' => 'type',
+            'type_id' => 1
         ]
     ];
     $data = array(
@@ -4321,5 +4323,112 @@ function payLinkPayment($token)
         $response = json_decode($response);
         dd($response);
         return $response->transaction->url;
+    }
+}
+
+function logistic_create_order()
+{
+    $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMCIsImp0aSI6ImQxY2M1Yzg2NTBhYzI2YWI5MjBhYTllODk0YzBkMzlhNjc0YzM3OTM3OWJkMWU4YTQ2ZTk2MzJiOTNkY2RjOTY2YmNlNTQzMDJlYzQwNGVjIiwiaWF0IjoxNzE4MTc1NjE4LjY1NjU2LCJuYmYiOjE3MTgxNzU2MTguNjU2NTYzLCJleHAiOjQ4NzM4NDkyMTguNjUyNzEyLCJzdWIiOiI0MjciLCJzY29wZXMiOltdfQ.Urn0-oRXLhq7DKS20vh2E3w0y9j2tfQGBIHnFsmBC6MxPP-zfM5e_xpOuE3CTzUBmwc5WxbpUhSc0ZkH6KyYbgii6t_qlgQZ-COxv-Zxt5j4GJIYbRNq2pwosIZXBS6S1FIs_ntNkyIRTWIJUJg5MsvdnReHOsmDq_Flksw6KD9GkFX1HAQQUSnyMmrJZfr5PnUXRJYZG-MXOHHg_tQPyjCV2AF8-f_IhSl5JWJegCYDrlpa4H6SKJcg8Lkuhhkn847LRJFt2t7ISAqepvkUo6sVAMSaG9Kc7orrSlr-hXJIhfjoAZpirivY5nA17tK0fJAOB-g9nTuJX_ezWmrgDFNPxg5Fv7Lf7HGXCu3jt5EKxk7tWOT2CdGcT6XLfg0u1v1V7-KCkFw932QItMKoyuZrKmYL7WgvG3a8sApVcl15AWLKMZmwxKyHWVBTAHemkkKTiYCAR1ZFRoBO1JsRD3NmgHbNAP98I-SGDC5RJ2riqVgzrlv9ZzZXfm-iQIv6H3vnCAy-3gz58r-vUlBoopAtSeq7o0fvKYfgGsQSAbpy9kCmo2nDg1lBkTK0sKVow-g6eiHhXA9MAsWkN-UxWGyQuEPy_KqrvKfWub33kGpGLxwVTiRM37x8varcmoQKM-xN-qsWefxUXAuAIiM5c4KpdZz0-dkFpu54pTiTB5w';
+    $basURL = 'https://staging.4ulogistic.com/api/partner/orders';
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+        'Authorization: Bearer ' . $token,
+    );
+
+    $data = array(
+        "id" => 2,
+        "shop_id" => "821016231", // Use Shop ID or Pick up details
+        "delivery_details" => array(
+            "name" => "Nour",
+            "phone" => "96633611637",
+            "coordinate" => array(
+                "latitude" => 26.083391,
+                "longitude" => 43.993213
+            ),
+            "address" => "6 October"
+        ),
+        "order" => array(
+            "payment_type" => 0, #If the number =0 then it will be prepaid and number 1 is representing COD & 10 for swiping machine
+            "delivery_charge" => 20,
+            "total" => 100,
+            "notes" => "Please add delivery notes"
+        ),
+    );
+
+    $order = json_encode($data);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $order,
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        dd($response);
+    }
+}
+function logistics_get_order()
+{
+    $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMCIsImp0aSI6ImQxY2M1Yzg2NTBhYzI2YWI5MjBhYTllODk0YzBkMzlhNjc0YzM3OTM3OWJkMWU4YTQ2ZTk2MzJiOTNkY2RjOTY2YmNlNTQzMDJlYzQwNGVjIiwiaWF0IjoxNzE4MTc1NjE4LjY1NjU2LCJuYmYiOjE3MTgxNzU2MTguNjU2NTYzLCJleHAiOjQ4NzM4NDkyMTguNjUyNzEyLCJzdWIiOiI0MjciLCJzY29wZXMiOltdfQ.Urn0-oRXLhq7DKS20vh2E3w0y9j2tfQGBIHnFsmBC6MxPP-zfM5e_xpOuE3CTzUBmwc5WxbpUhSc0ZkH6KyYbgii6t_qlgQZ-COxv-Zxt5j4GJIYbRNq2pwosIZXBS6S1FIs_ntNkyIRTWIJUJg5MsvdnReHOsmDq_Flksw6KD9GkFX1HAQQUSnyMmrJZfr5PnUXRJYZG-MXOHHg_tQPyjCV2AF8-f_IhSl5JWJegCYDrlpa4H6SKJcg8Lkuhhkn847LRJFt2t7ISAqepvkUo6sVAMSaG9Kc7orrSlr-hXJIhfjoAZpirivY5nA17tK0fJAOB-g9nTuJX_ezWmrgDFNPxg5Fv7Lf7HGXCu3jt5EKxk7tWOT2CdGcT6XLfg0u1v1V7-KCkFw932QItMKoyuZrKmYL7WgvG3a8sApVcl15AWLKMZmwxKyHWVBTAHemkkKTiYCAR1ZFRoBO1JsRD3NmgHbNAP98I-SGDC5RJ2riqVgzrlv9ZzZXfm-iQIv6H3vnCAy-3gz58r-vUlBoopAtSeq7o0fvKYfgGsQSAbpy9kCmo2nDg1lBkTK0sKVow-g6eiHhXA9MAsWkN-UxWGyQuEPy_KqrvKfWub33kGpGLxwVTiRM37x8varcmoQKM-xN-qsWefxUXAuAIiM5c4KpdZz0-dkFpu54pTiTB5w';
+    $basURL = 'https://staging.4ulogistic.com/api/partner/orders/1118';
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+        'Authorization: Bearer ' . $token,
+    );
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        dd($response);
+    }
+}
+function logistics_delete_order()
+{
+    $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMCIsImp0aSI6ImQxY2M1Yzg2NTBhYzI2YWI5MjBhYTllODk0YzBkMzlhNjc0YzM3OTM3OWJkMWU4YTQ2ZTk2MzJiOTNkY2RjOTY2YmNlNTQzMDJlYzQwNGVjIiwiaWF0IjoxNzE4MTc1NjE4LjY1NjU2LCJuYmYiOjE3MTgxNzU2MTguNjU2NTYzLCJleHAiOjQ4NzM4NDkyMTguNjUyNzEyLCJzdWIiOiI0MjciLCJzY29wZXMiOltdfQ.Urn0-oRXLhq7DKS20vh2E3w0y9j2tfQGBIHnFsmBC6MxPP-zfM5e_xpOuE3CTzUBmwc5WxbpUhSc0ZkH6KyYbgii6t_qlgQZ-COxv-Zxt5j4GJIYbRNq2pwosIZXBS6S1FIs_ntNkyIRTWIJUJg5MsvdnReHOsmDq_Flksw6KD9GkFX1HAQQUSnyMmrJZfr5PnUXRJYZG-MXOHHg_tQPyjCV2AF8-f_IhSl5JWJegCYDrlpa4H6SKJcg8Lkuhhkn847LRJFt2t7ISAqepvkUo6sVAMSaG9Kc7orrSlr-hXJIhfjoAZpirivY5nA17tK0fJAOB-g9nTuJX_ezWmrgDFNPxg5Fv7Lf7HGXCu3jt5EKxk7tWOT2CdGcT6XLfg0u1v1V7-KCkFw932QItMKoyuZrKmYL7WgvG3a8sApVcl15AWLKMZmwxKyHWVBTAHemkkKTiYCAR1ZFRoBO1JsRD3NmgHbNAP98I-SGDC5RJ2riqVgzrlv9ZzZXfm-iQIv6H3vnCAy-3gz58r-vUlBoopAtSeq7o0fvKYfgGsQSAbpy9kCmo2nDg1lBkTK0sKVow-g6eiHhXA9MAsWkN-UxWGyQuEPy_KqrvKfWub33kGpGLxwVTiRM37x8varcmoQKM-xN-qsWefxUXAuAIiM5c4KpdZz0-dkFpu54pTiTB5w';
+    $basURL = 'https://staging.4ulogistic.com/api/partner/orders/1117';
+    $headers = array(
+        'Content-type: application/json',
+        'Accept: application/json',
+        'Authorization: Bearer ' . $token,
+    );
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $basURL,
+        CURLOPT_CUSTOMREQUEST => "DELETE",
+        CURLOPT_HTTPHEADER => $headers,
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        return $err;
+    } else {
+        $response = json_decode($response);
+        dd($response);
     }
 }
