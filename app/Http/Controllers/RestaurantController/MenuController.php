@@ -153,16 +153,31 @@ class MenuController extends Controller
         $modifiers = DB::table('modifiers')->whereRestaurantId($restaurant->id)->get();
         if ($modifiers->count() > 0) {
             foreach ($modifiers as $modifier) {
-                AZModifier::create([
-                    'restaurant_id' => $restaurant->id,
-                    'name_ar' => $modifier->name_ar,
-                    'name_en' => $modifier->name_en,
-                    'is_ready' => $modifier->is_ready,
-                    'choose' => $modifier->choose,
-                    'sort' => $modifier->sort,
-                    'custom' => $modifier->custom,
-                    'easy_id' => $modifier->id,
-                ]);
+                $check_modifier = AZModifier::whereRestaurantId($restaurant->id)
+                    ->whereEasyId($modifier->id)
+                    ->first();
+                if ($check_modifier)
+                {
+                    $check_modifier->update([
+                        'name_ar' => $modifier->name_ar,
+                        'name_en' => $modifier->name_en,
+                        'is_ready' => $modifier->is_ready,
+                        'choose' => $modifier->choose,
+                        'sort' => $modifier->sort,
+                        'custom' => $modifier->custom,
+                    ]);
+                }else{
+                    AZModifier::create([
+                        'restaurant_id' => $restaurant->id,
+                        'name_ar' => $modifier->name_ar,
+                        'name_en' => $modifier->name_en,
+                        'is_ready' => $modifier->is_ready,
+                        'choose' => $modifier->choose,
+                        'sort' => $modifier->sort,
+                        'custom' => $modifier->custom,
+                        'easy_id' => $modifier->id,
+                    ]);
+                }
             }
         }
 
