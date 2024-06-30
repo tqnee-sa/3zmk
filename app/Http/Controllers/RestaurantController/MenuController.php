@@ -186,7 +186,10 @@ class MenuController extends Controller
         if ($options->count() > 0) {
             foreach ($options as $option) {
                 $modifier = AZModifier::whereEasyId($option->modifier_id)->first();
-                if (isset($modifier)) {
+                $check_option = AZOption::whereRestaurantId($restaurant->id)
+                    ->whereEasyId($option->id)
+                    ->first();
+                if (isset($modifier) and $check_option == null) {
                     AZOption::create([
                         'restaurant_id' => $restaurant->id,
                         'modifier_id' => $modifier?->id,
