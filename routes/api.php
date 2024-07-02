@@ -18,3 +18,7 @@ Route::group(['middleware' => ['cors', 'localization']], function () {
         return redirect()->to(payLinkAddInvoice(9 , 'test@email.com' , '050000000' , 'nour' , 105));
     });
 });
+
+// / 1 - you logo here
+// 2 - يمسح كل صور السلايدر  عادي
+

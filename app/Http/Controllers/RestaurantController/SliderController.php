@@ -210,10 +210,10 @@ class SliderController extends Controller
     {
         $slider = AzRestaurantSlider::findOrFail($id);
 
-        if(AzRestaurantSlider::where('restaurant_id' , $slider->restaurant_id)->count() <= 1):
-            flash(trans('messages.error_slider_count'))->error();
-            return redirect(route('sliders.index') . '?type=' . $slider->slider_type);
-        endif;
+//        if(AzRestaurantSlider::where('restaurant_id' , $slider->restaurant_id)->count() <= 1):
+//            flash(trans('messages.error_slider_count'))->error();
+//            return redirect(route('sliders.index') . '?type=' . $slider->slider_type);
+//        endif;
         if ($slider->photo != null and !in_array($slider->photo , ['slider2.png' , 'slider1.png']))
         {
             @unlink(public_path('/uploads/sliders/' . $slider->photo));

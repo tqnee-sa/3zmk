@@ -149,6 +149,7 @@ class MenuController extends Controller
             }
         }
 
+
         // copy restaurant modifiers
         $modifiers = DB::table('modifiers')->whereRestaurantId($restaurant->id)->get();
         if ($modifiers->count() > 0) {
